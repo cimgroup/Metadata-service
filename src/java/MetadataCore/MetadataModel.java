@@ -4,10 +4,7 @@
  */
 package MetadataCore;
 
-import MetadataObjects.Bug;
-import MetadataObjects.Issue;
-import MetadataObjects.MetadataPerson;
-import MetadataObjects.foaf_Person;
+import MetadataObjects.*;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -62,7 +59,7 @@ public class MetadataModel {
     }
     
     /** 
-     * @summary Method for saving new bug
+     * @summary Method for saving new issue
      * @startRealisation Sasa Stojanovic 31.08.2011.
      * @finalModification Sasa Stojanovic 31.08.2011.
      * @param sEventId - event id
@@ -72,6 +69,19 @@ public class MetadataModel {
     {
         oIssue = MetadataRDFConverter.SaveIssue(oIssue);
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_issue_replyNewUpdate, sEventId, oIssue);
+    }
+    
+    /** 
+     * @summary Method for saving new commit
+     * @startRealisation Sasa Stojanovic 16.01.2012.
+     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @param sEventId - event id
+     * @param oCommit - issue object
+     */
+    static void SaveObjectNewCommit(String sEventId, Commit oCommit) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
+    {
+        oCommit = MetadataRDFConverter.SaveCommit(oCommit);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, oCommit);
     }
     
     /**

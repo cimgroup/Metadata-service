@@ -4,36 +4,7 @@
  */
 package MetadataCore;
 
-import MetadataObjects.Activity;
-import MetadataObjects.Assigned;
-import MetadataObjects.Attachment;
-import MetadataObjects.Blocker;
-import MetadataObjects.Bug;
-import MetadataObjects.Closed;
-import MetadataObjects.Comment;
-import MetadataObjects.Component;
-import MetadataObjects.ComputerSystem;
-import MetadataObjects.Critical;
-import MetadataObjects.Duplicate;
-import MetadataObjects.Fixed;
-import MetadataObjects.Invalid;
-import MetadataObjects.Issue;
-import MetadataObjects.Later;
-import MetadataObjects.Major;
-import MetadataObjects.Milestone;
-import MetadataObjects.Minor;
-import MetadataObjects.Open;
-import MetadataObjects.Priority;
-import MetadataObjects.Product;
-import MetadataObjects.Remind;
-import MetadataObjects.Resolved;
-import MetadataObjects.ThirdParty;
-import MetadataObjects.Trivial;
-import MetadataObjects.Verified;
-import MetadataObjects.WontFix;
-import MetadataObjects.WorksForMe;
-import MetadataObjects.doap_Project;
-import MetadataObjects.foaf_Person;
+import MetadataObjects.*;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -99,6 +70,10 @@ public class MetadataXMLReader {
             {
                 NewUpdateIssue(dDoc);
             }
+            if (sEventName.equals(MetadataConstants.c_ET_commit_requestNew))
+            {
+                NewCommit(dDoc);
+            }
             if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
             {
                 NewPerson(dDoc);
@@ -120,138 +95,9 @@ public class MetadataXMLReader {
 
     // <editor-fold desc="Event handler methods">
 
-//    /**
-//     * @summary Method for reading new bug event from XML
-//     * @startRealisation Sasa Stojanovic 23.06.2011.
-//     * @finalModification Sasa Stojanovic 23.06.2011.
-//     * @param dDoc - input XML document to read
-//     */
-//    private static void NewBugEvent(Document dDoc)
-//    {
-//        try
-//        {
-//            String sBugID = "";
-//            String sBugName = "";
-//            URI uriBugURI = URI.create("");
-//            String sBugStatusDescription = "";
-//            String sBugIsAboutDescription = "";
-//            int iBugIsAboutImportance = -1;
-//            String sBugIsAboutSeverity = "";
-//
-//            NodeList nlEventType = dDoc.getElementsByTagName(MetadataConstants.c_XMLE_eventType);   //getting node for tag eventType
-//
-//            if (nlEventType != null && nlEventType.getLength() > 0)
-//            {
-//                Element eEventType = (Element) nlEventType.item(0);
-//
-//                NodeList nlProperty = eEventType.getElementsByTagName(MetadataConstants.c_XMLE_ontoProperty);   //getting node for tag <onto:property>
-//
-//                if (nlProperty != null && nlProperty.getLength() > 0)
-//                {
-//                    Element eProperty = (Element) nlProperty.item(0);
-//                    OntoProperty oBug = ReadOntoProperty(eProperty);    //read all XML data to oBug object
-//
-//                    uriBugURI = URI.create(oBug.oClass.sValue);
-//
-//                    for (int i = 0; i < oBug.oClass.oProperties.size(); i++)
-//                    {
-//                        if (oBug.oClass.oProperties.get(i).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasID))
-//                        {
-//                            sBugID = oBug.oClass.oProperties.get(i).sValue;
-//                        }
-//                        if (oBug.oClass.oProperties.get(i).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasName))
-//                        {
-//                            sBugName = oBug.oClass.oProperties.get(i).sValue;
-//                        }
-//                        if (oBug.oClass.oProperties.get(i).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasStatus))
-//                        {
-//                            if (oBug.oClass.oProperties.get(i).oClass.oProperties.size() > 0
-//                                && oBug.oClass.oProperties.get(i).oClass.oProperties.get(0).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasDescription))
-//                            {
-//                                sBugStatusDescription = oBug.oClass.oProperties.get(i).oClass.oProperties.get(0).sValue;
-//                            }
-//                        }
-//                        if (oBug.oClass.oProperties.get(i).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_isAbout))
-//                        {
-//                            for (int j = 0; j < oBug.oClass.oProperties.get(i).oClass.oProperties.size(); j++)
-//                            {
-//                                if (oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasDescription))
-//                                {
-//                                    sBugIsAboutDescription = oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sValue;
-//                                }
-//                                if (oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasImportance))
-//                                {
-//                                    iBugIsAboutImportance = Integer.parseInt(oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sValue);
-//                                }
-//                                if (oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sName.equals(MetadataConstants.c_XMLE_NewBugEvent_hasSeverity))
-//                                {
-//                                    sBugIsAboutSeverity = oBug.oClass.oProperties.get(i).oClass.oProperties.get(j).sValue;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    MetadataModel.SaveObjectNewIssue(sBugID, sBugName, uriBugURI, sBugStatusDescription, sBugIsAboutDescription, iBugIsAboutImportance, sBugIsAboutSeverity);
-//                }
-//            }
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    /**
-//     * @summary Method for reading query bug person event from XML
-//     * @startRealisation Sasa Stojanovic 23.06.2011.
-//     * @finalModification Sasa Stojanovic 23.06.2011.
-//     * @param dDoc - input XML document to read
-//     */
-//    private static void QueryBugPerson(Document dDoc) {
-//        try
-//        {
-//            ArrayList <String> arBugIDs = new ArrayList<String>();
-//
-//            NodeList nlEventType = dDoc.getElementsByTagName(MetadataConstants.c_XMLE_eventType);   //getting node for tag eventType
-//
-//            if (nlEventType != null && nlEventType.getLength() > 0)
-//            {
-//                Element eEventType = (Element) nlEventType.item(0);
-//
-//                NodeList nlProperty = eEventType.getElementsByTagName(MetadataConstants.c_XMLE_ontoProperty);   //getting node for tag <onto:property>
-//
-//                if (nlProperty != null)
-//                {
-//                    for (int i = 0; i < nlProperty.getLength(); i++)
-//                    {
-//                        Node nEventType = nlEventType.item(0);
-//                        Node nProperty = nlProperty.item(i);
-//
-//                        if (ChildNode(nEventType, nProperty))
-//                        {
-//                            Element eProperty = (Element) nlProperty.item(i);
-//                            OntoProperty oQuery = ReadOntoProperty(eProperty);    //read all XML data to oBug object
-//
-//                            for (int j = 0; j < oQuery.oClass.oProperties.size(); j++)
-//                            {
-//                                if (oQuery.oClass.oProperties.get(j).sName.equals(MetadataConstants.c_XMLE_QueryBugPerson_hasID))
-//                                {
-//                                    arBugIDs.add(oQuery.oClass.oProperties.get(j).sValue);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    MetadataModel.SearchForIDs(MetadataConstants.c_ET_QueryBugPerson, arBugIDs);
-//                }
-//            }
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
-     * @summary Method for reading new bug event from XML
+     * @summary Method for reading new/update issue event from XML
      * @startRealisation Sasa Stojanovic 01.09.2011.
      * @finalModification Sasa Stojanovic 01.09.2011.
      * @param dDoc - input XML document to read
@@ -559,6 +405,59 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewIssue(sEventId, oIssue);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * @summary Method for reading new commit event from XML
+     * @startRealisation Sasa Stojanovic 16.01.2012.
+     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @param dDoc - input XML document to read
+     */
+    private static void NewCommit(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+
+            Commit oCommit = MetadataObjectFactory.CreateNewCommit();
+
+            NodeList nlCommit = dDoc.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commit);   //getting node for tag commit
+
+            if (nlCommit != null && nlCommit.getLength() > 0)
+            {
+                Element eIssue = (Element) nlCommit.item(0);
+
+                oCommit.m_oIsCommitOfRepository = new Repository();
+                oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
+                
+                oCommit.m_sRevisionTag = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitAuthor);
+                
+                NodeList nlAuthor = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueAssignedTo);
+                if (nlAuthor != null && nlAuthor.getLength() > 0)
+                {
+                    Element eAuthor = (Element) nlAuthor.item(0);
+                    oCommit.m_oHasAuthor = GetPersonObject(eAuthor);
+                }
+                
+                NodeList nlCommiter = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitCommiter);
+                if (nlCommiter != null && nlCommiter.getLength() > 0)
+                {
+                    Element eCommiter = (Element) nlCommiter.item(0);
+                    oCommit.m_oHasCommiter = GetPersonObject(eCommiter);
+                }
+
+                oCommit.m_dtmCommitDate = MetadataGlobal.GetDateTime(GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitDate));
+                
+                oCommit.m_sCommitMessage = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitMessageLog);
+            }
+
+            MetadataModel.SaveObjectNewCommit(sEventId, oCommit);
 
         }
         catch (Exception e)

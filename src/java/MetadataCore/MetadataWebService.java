@@ -73,7 +73,7 @@ public class MetadataWebService {
     {
         try
         {
-            //implemented
+            //implemented events
             String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestNew.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
             //API Calls

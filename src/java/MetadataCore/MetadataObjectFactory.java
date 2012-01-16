@@ -6,6 +6,7 @@ package MetadataCore;
 
 import MetadataObjects.Component;
 import MetadataObjects.Issue;
+import MetadataObjects.Commit;
 import MetadataObjects.MetadataPerson;
 import MetadataObjects.foaf_Person;
 
@@ -27,6 +28,26 @@ public class MetadataObjectFactory {
         {
             Issue oIssue = new Issue();
             return oIssue;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /** 
+     * @summary Method for creating new commit
+     * @startRealisation Sasa Stojanovic 16.01.2012.
+     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @return Bug object
+     */
+    public static Commit CreateNewCommit()
+    {
+        try
+        {
+            Commit oCommit = new Commit();
+            return oCommit;
         }
         catch(Exception e)
         {
