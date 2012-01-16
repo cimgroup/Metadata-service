@@ -73,6 +73,7 @@ public class MetadataRDFConverter {
             
             String sTEst = "dasdas";
             String sTest2 = "dsadas";
+            String sTest3 = "dsadas";
                         
             oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModelIts, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID, oModel);
             Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
