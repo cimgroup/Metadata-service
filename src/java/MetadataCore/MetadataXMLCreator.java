@@ -217,7 +217,7 @@ public class MetadataXMLCreator {
      * @param iEventID - id of event
      * @param arResult - list of objects
      */
-    public static void CreateXMLAPIResponse(String sEventId, MetadataGlobal.APIResponseData oData)
+    public static void CreateXMLAPIResponse(String sAPICall, String sEventId, MetadataGlobal.APIResponseData oData)
     {
         try
         {
@@ -226,6 +226,10 @@ public class MetadataXMLCreator {
             dbfFactory.setNamespaceAware(true);
             DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
             Document dDoc = dbBuilder.newDocument();
+            
+            dDoc.setXmlVersion("1.0");
+            
+            Element eWSTN = CreateWSNTStructure(dDoc);
             
             //XML root
             Element eEvent = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_event);
@@ -240,7 +244,7 @@ public class MetadataXMLCreator {
             eEvent.setAttribute("xmlns:s3", "http://www.alert-project.eu/APIcall-response");
             eEvent.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             eEvent.setAttribute("xsi:schemaLocation", "http://www.alert-project.eu/alert-root.xsd");
-            dDoc.appendChild(eEvent);
+            eWSTN.appendChild(eEvent);
             
             Text tText;
             
@@ -290,14 +294,20 @@ public class MetadataXMLCreator {
                     //eventName
                     Element eEventName = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventName);
                     eMeta.appendChild(eEventName);
-                    tText = dDoc.createTextNode(MetadataConstants.c_ET_APICallResponse);
+                    tText = dDoc.createTextNode(MetadataConstants.c_ET_APICall_reply);
                     eEventName.appendChild(tText);
                     
                     //eventId
                     Element eEventId = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventId);
                     eMeta.appendChild(eEventId);
-                    tText = dDoc.createTextNode(sEventId + "Response");
+                    tText = dDoc.createTextNode(sEventId);
                     eEventId.appendChild(tText);
+                    
+                    //eventType
+                    Element eEventType = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventType);
+                    eMeta.appendChild(eEventType);
+                    tText = dDoc.createTextNode(MetadataConstants.c_XMLV_reply);
+                    eEventType.appendChild(tText);
                     
                     
                 //eventData element
@@ -305,19 +315,15 @@ public class MetadataXMLCreator {
                 ePayload.appendChild(eEventData);
                     
                     //apiresponse
-                    Element eAPIResponse = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_apiresponse);
+                    Element eAPIResponse = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_apiResponse);
                     eEventData.appendChild(eAPIResponse);
                     
-                        //refersToRequest
-                        Element eRefersToRequest = dDoc.createElement("s3:" + MetadataConstants.c_XMLE_refersToRequest);
-                        eAPIResponse.appendChild(eRefersToRequest);
-                        
-                            //requestEventId
-                            Element eRequestEventId = dDoc.createElement("s3:" + MetadataConstants.c_XMLE_requestEventId);
-                            eRefersToRequest.appendChild(eRequestEventId);
-                            tText = dDoc.createTextNode(sEventId + "Request");
-                            eRequestEventId.appendChild(tText);
-                            
+                        //apicall
+                        Element eAPICall = dDoc.createElement("s3:" + MetadataConstants.c_XMLE_apiCall);
+                        eAPIResponse.appendChild(eAPICall);
+                        tText = dDoc.createTextNode(sAPICall);
+                        eAPICall.appendChild(tText);
+                                                    
                         //responseData
                         Element eResponseData = dDoc.createElement("s3:" + MetadataConstants.c_XMLE_responseData);
                         eAPIResponse.appendChild(eResponseData);
@@ -335,7 +341,7 @@ public class MetadataXMLCreator {
     }
     
     /** 
-     * @summary Method for creating XML structure
+     * @summary Method for creating API Response structure
      * @startRealisation Sasa Stojanovic 01.11.2011.
      * @finalModification Sasa Stojanovic 01.11.2011.
      * @param dDoc - XML document
@@ -398,6 +404,8 @@ public class MetadataXMLCreator {
             DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
             Document dDoc = dbBuilder.newDocument();
             
+            Element eWSTN = CreateWSNTStructure(dDoc);
+            
             //XML root
             Element eEvent = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_event);
             eEvent.setAttribute("xmlns:ns1", "http://www.alert-project.eu/");
@@ -409,7 +417,7 @@ public class MetadataXMLCreator {
             eEvent.setAttribute("xmlns:s1", "http://www.alert-project.eu/strevents-keui");
             eEvent.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             eEvent.setAttribute("xsi:schemaLocation", "http://www.alert-project.eu/alert-root.xsd");
-            dDoc.appendChild(eEvent);
+            eWSTN.appendChild(eEvent);
             
             Text tText;
             
@@ -465,8 +473,14 @@ public class MetadataXMLCreator {
                     //eventId
                     Element eEventId = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventId);
                     eMeta.appendChild(eEventId);
-                    tText = dDoc.createTextNode(sEventId + "Response");
+                    tText = dDoc.createTextNode(sEventId);
                     eEventId.appendChild(tText);
+                    
+                    //eventType
+                    Element eEventType = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventType);
+                    eMeta.appendChild(eEventType);
+                    tText = dDoc.createTextNode(MetadataConstants.c_XMLV_reply);
+                    eEventType.appendChild(tText);
                     
                     
                 //eventData element
@@ -619,6 +633,8 @@ public class MetadataXMLCreator {
             dbfFactory.setNamespaceAware(true);
             DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
             Document dDoc = dbBuilder.newDocument();
+                       
+            Element eWSTN = CreateWSNTStructure(dDoc);
             
             //XML root
             Element eEvent = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_event);
@@ -631,7 +647,7 @@ public class MetadataXMLCreator {
             eEvent.setAttribute("xmlns:s1", "http://www.alert-project.eu/strevents-keui");
             eEvent.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             eEvent.setAttribute("xsi:schemaLocation", "http://www.alert-project.eu/alert-root.xsd");
-            dDoc.appendChild(eEvent);
+            eWSTN.appendChild(eEvent);
             
             Text tText;
             
@@ -686,14 +702,20 @@ public class MetadataXMLCreator {
                     //eventId
                     Element eEventId = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventId);
                     eMeta.appendChild(eEventId);
-                    tText = dDoc.createTextNode(sEventId + "Response");
+                    tText = dDoc.createTextNode(sEventId);
                     eEventId.appendChild(tText);
+                    
+                    //eventType
+                    Element eEventType = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventType);
+                    eMeta.appendChild(eEventType);
+                    tText = dDoc.createTextNode(MetadataConstants.c_XMLV_reply);
+                    eEventType.appendChild(tText);
                     
                 //eventData element
                 Element eEventData = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventData);
                 ePayload.appendChild(eEventData);
                     
-                    CreateNewItemResponseStructure(dDoc, ePayload, oObject);
+                    CreateNewItemResponseStructure(dDoc, eEventData, oObject);
 
             //Send created XML document
             MetadataCommunicator.SendXML(dDoc);
@@ -779,6 +801,68 @@ public class MetadataXMLCreator {
     }
     
     /** 
+     * @summary Method for creating WSNT structure
+     * @startRealisation Sasa Stojanovic 05.12.2011.
+     * @finalModification Sasa Stojanovic 05.12.2011.
+     * @param dDoc - XML document
+     * @return message element
+     */
+    private static Element CreateWSNTStructure(Document dDoc) {
+        try
+        {
+            Element eEnvelope = dDoc.createElement("s:Envelope");
+            eEnvelope.setAttribute("xmlns:s", "http://www.w3.org/2003/05/soap-envelope");
+            eEnvelope.setAttribute("xmlns:wsnt", "http://docs.oasis-open.org/wsn/b-2");
+            eEnvelope.setAttribute("xmlns:wsa", "http://www.w3.org/2005/08/addressing");
+            dDoc.appendChild(eEnvelope);
+            
+            Text tText;
+            
+            //header element
+            Element eHeader = dDoc.createElement("s:Header");
+            eEnvelope.appendChild(eHeader);
+            
+            //body element
+            Element eBody = dDoc.createElement("s:Body");
+            eEnvelope.appendChild(eBody);
+            
+                //notify element
+                Element eNotify = dDoc.createElement("wsnt:Notify");
+                eBody.appendChild(eNotify);
+                    
+                    //notification message element
+                    Element eNotificationMessage = dDoc.createElement("wsnt:NotificationMessage");
+                    eNotify.appendChild(eNotificationMessage);
+                        
+                        //topic element
+                        Element eTopic = dDoc.createElement("wsnt:Topic");
+                        eNotificationMessage.appendChild(eTopic);
+                        
+                        //producer reference element
+                        Element eProducerReference = dDoc.createElement("wsnt:ProducerReference");
+                        eNotificationMessage.appendChild(eProducerReference);
+                            
+                            //address element
+                            Element eAddress = dDoc.createElement("wsa:Address");
+                            eProducerReference.appendChild(eAddress);
+                            tText = dDoc.createTextNode(MetadataConstants.c_XMLV_metadataserviceaddress);
+                            eAddress.appendChild(tText);
+
+                        //message element
+                        Element eMessage = dDoc.createElement("wsnt:Message");
+                        eNotificationMessage.appendChild(eMessage);
+                        
+            return eMessage;
+                    
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /** 
      * @summary Method for creating XML for API response
      * @startRealisation Sasa Stojanovic 31.08.2011.
      * @finalModification Sasa Stojanovic 31.08.2011.
@@ -857,7 +941,7 @@ public class MetadataXMLCreator {
                     //eventName
                     Element eEventName = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventName);
                     eMeta.appendChild(eEventName);
-                    tText = dDoc.createTextNode(MetadataConstants.c_ET_MemberResponse);
+                    tText = dDoc.createTextNode(MetadataConstants.c_ET_member_reply);
                     eEventName.appendChild(tText);
                     
                     //eventId

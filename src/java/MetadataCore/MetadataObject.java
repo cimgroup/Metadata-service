@@ -15,6 +15,7 @@ public abstract class MetadataObject {
     public String m_sObjectURI;
     public String m_sName;
     public String m_sReturnConfig;  //YY#path
+    public Boolean m_bRemoved = false;
 
     public MetadataObject() {
 

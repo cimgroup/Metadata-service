@@ -65,6 +65,13 @@ public class MetadataCommunicator {
             Result result = new StreamResult(stringWriter);
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer transformer = factory.newTransformer();
+            
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");           
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
             
@@ -82,7 +89,7 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Alert\\XML\\Response.xml"));
+            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Response.xml"));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)

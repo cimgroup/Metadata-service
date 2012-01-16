@@ -95,19 +95,19 @@ public class MetadataXMLReader {
     {
         try
         {
-            if(sEventName.equals(MetadataConstants.c_ET_newIssueRequest))   //if event type is new bug event
+            if(sEventName.equals(MetadataConstants.c_ET_issue_requestNew) || sEventName.equals(MetadataConstants.c_ET_issue_requestUpdate))   //if event type is new issue event
             {
-                NewIssue(dDoc);
+                NewUpdateIssue(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_newPersonRequest))   //if event type is new person
+            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
             {
                 NewPerson(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_APICallRequest))   //if event type is new person
+            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
             {
                 APICallRequest(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_MemberRequest))   //if event type is new person
+            if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
             {
                 InstanceRequest(dDoc);
             }
@@ -256,12 +256,11 @@ public class MetadataXMLReader {
      * @finalModification Sasa Stojanovic 01.09.2011.
      * @param dDoc - input XML document to read
      */
-    private static void NewIssue(Document dDoc)
+    private static void NewUpdateIssue(Document dDoc)
     {
         try
         {
             String sEventId = GetEventId(dDoc);
-            sEventId = sEventId.replaceFirst("Request", "");    //deleting Request string from id
 
             Issue oIssue = MetadataObjectFactory.CreateNewIssue();
 
@@ -280,39 +279,39 @@ public class MetadataXMLReader {
                     oIssue.m_oHasReporter = GetPersonObject(eReporter);
                     //oIssue.m_oHasReporter.m_oIsReporterOf = new Issue[1];
                     //oIssue.m_oHasReporter.m_oIsReporterOf[0] = oIssue;
-                }
+                }           
                 
-                String sBugState = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueStatus);
-                if (sBugState.equals("Assigned"))
+                String sIssueState = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueStatus);
+                if (sIssueState.equals("Assigned"))
                     oIssue.m_oHasState = new Assigned();
-                if (sBugState.equals("Open"))
+                if (sIssueState.equals("Open"))
                     oIssue.m_oHasState = new Open();
-                if (sBugState.equals("Verified"))
+                if (sIssueState.equals("Verified"))
                     oIssue.m_oHasState = new Verified();
-                if (sBugState.equals("Resolved"))
+                if (sIssueState.equals("Resolved"))
                     oIssue.m_oHasState = new Resolved();
-                if (sBugState.equals("Closed"))
+                if (sIssueState.equals("Closed"))
                     oIssue.m_oHasState = new Closed();
 
                 //if (oIssue.m_oHasState != null)
                 //    oIssue.m_oHasState.m_oIsStateOf = oIssue;
 
-                String sBugResolution = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueResolution);
-                if (sBugResolution.equals("Duplicate"))
+                String sIssueResolution = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueResolution);
+                if (sIssueResolution.equals("Duplicate"))
                     oIssue.m_oHasResolution = new Duplicate();
-                if (sBugResolution.equals("Fixed"))
+                if (sIssueResolution.equals("Fixed"))
                     oIssue.m_oHasResolution = new Fixed();
-                if (sBugResolution.equals("Invalid"))
+                if (sIssueResolution.equals("Invalid"))
                     oIssue.m_oHasResolution = new Invalid();
-                if (sBugResolution.equals("ThirdParty"))
+                if (sIssueResolution.equals("ThirdParty"))
                     oIssue.m_oHasResolution = new ThirdParty();
-                if (sBugResolution.equals("WontFix"))
+                if (sIssueResolution.equals("WontFix"))
                     oIssue.m_oHasResolution = new WontFix();
-                if (sBugResolution.equals("WorksForMe"))
+                if (sIssueResolution.equals("WorksForMe"))
                     oIssue.m_oHasResolution = new WorksForMe();
-                if (sBugResolution.equals("Later"))
+                if (sIssueResolution.equals("Later"))
                     oIssue.m_oHasResolution = new Later();
-                if (sBugResolution.equals("Remind"))
+                if (sIssueResolution.equals("Remind"))
                     oIssue.m_oHasResolution = new Remind();
 
                 oIssue.m_sDescription = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueDescription);
@@ -349,16 +348,16 @@ public class MetadataXMLReader {
                     oIssue.m_oHasPriority.m_iPriority = Integer.parseInt(GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issuePriority));
 
 
-                String sBugSeverity = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueSeverity);
-                if (sBugSeverity.equals("Blocker"))
+                String sIssueSeverity = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueSeverity);
+                if (sIssueSeverity.equals("Blocker"))
                     oIssue.m_oHasSeverity = new Blocker();
-                if (sBugSeverity.equals("Critical"))
+                if (sIssueSeverity.equals("Critical"))
                     oIssue.m_oHasSeverity = new Critical();
-                if (sBugSeverity.equals("Major"))
+                if (sIssueSeverity.equals("Major"))
                     oIssue.m_oHasSeverity = new Major();
-                if (sBugSeverity.equals("Minor"))
+                if (sIssueSeverity.equals("Minor"))
                     oIssue.m_oHasSeverity = new Minor();
-                if (sBugSeverity.equals("Trivial"))
+                if (sIssueSeverity.equals("Trivial"))
                     oIssue.m_oHasSeverity = new Trivial();
 
                 NodeList nlAssignee = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueAssignedTo);   //getting node for tag issueAssignedTo
@@ -371,25 +370,84 @@ public class MetadataXMLReader {
                 }
 
                 NodeList nlCCPerson = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueCCPerson);
-                if (nlCCPerson != null && nlCCPerson.getLength() > 0)
+                NodeList nlCCPersonRemoved = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Removed);
+                if (nlCCPerson != null && nlCCPersonRemoved != null)
                 {
-                    oIssue.m_oHasCCPerson = new foaf_Person[nlCCPerson.getLength()];
-                    for (int i = 0; i < nlCCPerson.getLength(); i++)
+                    oIssue.m_oHasCCPerson = new foaf_Person[nlCCPerson.getLength() + nlCCPersonRemoved.getLength()];
+                    if (nlCCPerson.getLength() > 0)
                     {
-                        Element eCCPerson = (Element)nlCCPerson.item(i);
-                        oIssue.m_oHasCCPerson[i] = GetPersonObject(eCCPerson);
-                        //oIssue.m_oHasCCPerson[i].m_oIsCcPersonOf = new Issue[1];
-                        //oIssue.m_oHasCCPerson[i].m_oIsCcPersonOf[0] = oIssue;
+                        for (int i = 0; i < nlCCPerson.getLength(); i++)
+                        {
+                            Element eCCPerson = (Element)nlCCPerson.item(i);
+                            oIssue.m_oHasCCPerson[i] = GetPersonObject(eCCPerson);
+                            //oIssue.m_oHasCCPerson[i].m_oIsCcPersonOf = new Issue[1];
+                            //oIssue.m_oHasCCPerson[i].m_oIsCcPersonOf[0] = oIssue;
+                        }
+                    }
+                    if (nlCCPersonRemoved.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlCCPersonRemoved.getLength(); i++)
+                        {
+                            Element eCCPersonRemoved = (Element)nlCCPersonRemoved.item(i);
+                            oIssue.m_oHasCCPerson[i + nlCCPerson.getLength()] = GetPersonObject(eCCPersonRemoved);
+                            oIssue.m_oHasCCPerson[i + nlCCPerson.getLength()].m_bRemoved = true;
+                        }
                     }
                 }
 
                 oIssue.m_sBugURL = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueUrl);
 
-                oIssue.m_oDependsOn = new Issue();
-                oIssue.m_oDependsOn.m_sID = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Id);
-
-                oIssue.m_oBlocks = new Issue();
-                oIssue.m_oBlocks.m_sID = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Id);
+                NodeList nlDependsOn = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Id);
+                NodeList nlDependsOnRemoved = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Removed + MetadataConstants.c_XMLE_Id);
+                if (nlDependsOn != null && nlDependsOnRemoved != null)
+                {
+                    oIssue.m_oDependsOn = new Issue[nlDependsOn.getLength() + nlDependsOnRemoved.getLength()];
+                    if (nlDependsOn.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlDependsOn.getLength(); i++)
+                        {
+                            Element eDependsOn = (Element)nlDependsOn.item(i);
+                            oIssue.m_oDependsOn[i] = new Issue();
+                            oIssue.m_oDependsOn[i].m_sID = eDependsOn.getFirstChild().getNodeValue();
+                        }
+                    }
+                    if (nlDependsOnRemoved.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlDependsOnRemoved.getLength(); i++)
+                        {
+                            Element eDependsOnRemoved = (Element)nlDependsOnRemoved.item(i);
+                            oIssue.m_oDependsOn[i + nlDependsOn.getLength()] = new Issue();
+                            oIssue.m_oDependsOn[i + nlDependsOn.getLength()].m_sID = eDependsOnRemoved.getFirstChild().getNodeValue();
+                            oIssue.m_oDependsOn[i + nlDependsOn.getLength()].m_bRemoved = true;
+                        }
+                    }
+                }
+                
+                NodeList nlBlocks = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Id);
+                NodeList nlBlocksRemoved = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Removed + MetadataConstants.c_XMLE_Id);
+                if (nlBlocks != null && nlBlocksRemoved != null)
+                {
+                    oIssue.m_oBlocks = new Issue[nlBlocks.getLength() + nlBlocksRemoved.getLength()];
+                    if (nlBlocks.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlBlocks.getLength(); i++)
+                        {
+                            Element eBlocks = (Element)nlBlocks.item(i);
+                            oIssue.m_oBlocks[i] = new Issue();
+                            oIssue.m_oBlocks[i].m_sID = eBlocks.getFirstChild().getNodeValue();
+                        }
+                    }
+                    if (nlBlocksRemoved.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlBlocksRemoved.getLength(); i++)
+                        {
+                            Element eBlocksRemoved = (Element)nlBlocksRemoved.item(i);
+                            oIssue.m_oBlocks[i + nlBlocks.getLength()] = new Issue();
+                            oIssue.m_oBlocks[i + nlBlocks.getLength()].m_sID = eBlocksRemoved.getFirstChild().getNodeValue();
+                            oIssue.m_oBlocks[i + nlBlocks.getLength()].m_bRemoved = true;
+                        }
+                    }
+                }
 
                 oIssue.m_oIsDuplicateOf = new Issue();
                 oIssue.m_oIsDuplicateOf.m_sID = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Id);
@@ -462,21 +520,29 @@ public class MetadataXMLReader {
                 }
 
                 NodeList nlActivity = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueActivity);
-                if (nlActivity != null && nlActivity.getLength() > 0)
+                NodeList nlActivityWRA = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_activityWRA);
+                if (nlActivityWRA != null && nlActivityWRA.getLength() > 0)
                 {
-                    oIssue.m_oHasActivity = new Activity[nlActivity.getLength()];
+                    oIssue.m_oHasActivity = new Activity[nlActivityWRA.getLength()];
+                    int iNum = 0;
                     for (int i = 0; i < nlActivity.getLength(); i++)
                     {
                         Element eActivity = (Element)nlActivity.item(i);
-                        oIssue.m_oHasActivity[i] = new Activity();
-                        oIssue.m_oHasActivity[i].m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id);
-                        oIssue.m_oHasActivity[i].m_oHasInvolvedPerson = new foaf_Person();
-                        oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWho);
-                        oIssue.m_oHasActivity[i].m_dtmWhen = MetadataGlobal.GetDateTime(GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhen));
-                        oIssue.m_oHasActivity[i].m_sWhat = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhat);
-                        oIssue.m_oHasActivity[i].m_sRemoved = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityRemoved);
-                        oIssue.m_oHasActivity[i].m_sAdded = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityAdded);
-                        //oIssue.m_oHasActivity[i].m_oIsActivityOf = oIssue;
+                        nlActivityWRA = eActivity.getElementsByTagName("s:" + MetadataConstants.c_XMLE_activityWRA);
+                        for (int j = 0; j < nlActivityWRA.getLength(); j++)
+                        {
+                            Element eActivityWRA = (Element)nlActivityWRA.item(j);
+                            oIssue.m_oHasActivity[iNum] = new Activity();
+                            oIssue.m_oHasActivity[iNum].m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id);
+                            oIssue.m_oHasActivity[iNum].m_oHasInvolvedPerson = new foaf_Person();
+                            oIssue.m_oHasActivity[iNum].m_oHasInvolvedPerson.m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWho);
+                            oIssue.m_oHasActivity[iNum].m_dtmWhen = MetadataGlobal.GetDateTime(GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhen));
+                            oIssue.m_oHasActivity[iNum].m_sWhat = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityWhat);
+                            oIssue.m_oHasActivity[iNum].m_sRemoved = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityRemoved);
+                            oIssue.m_oHasActivity[iNum].m_sAdded = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityAdded);
+                            //oIssue.m_oHasActivity[i].m_oIsActivityOf = oIssue;
+                            iNum++;
+                        }
                     }
                 }
 
@@ -489,6 +555,7 @@ public class MetadataXMLReader {
                         //dodati snimanje za issuetracker
                     }
                 }
+                
             }
 
             MetadataModel.SaveObjectNewIssue(sEventId, oIssue);
@@ -511,7 +578,6 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
-            sEventId = sEventId.replaceFirst("Request", "");    //deleting Request string from id
 
             foaf_Person oPerson = MetadataObjectFactory.CreateNewPerson();
 
@@ -537,17 +603,15 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new api request event from XML
      * @startRealisation Sasa Stojanovic 06.09.2011.
-     * @finalModification Sasa Stojanovic 06.09.2011.
+     * @finalModification Sasa Stojanovic 16.12.2011.
      * @param dDoc - input XML document to read
      */
     private static void APICallRequest(Document dDoc) {
         try
         {
             String sEventId = GetEventId(dDoc);
-            sEventId = sEventId.replaceFirst("Request", "");    //deleting Request string from id
 
-
-            NodeList nlAPIRequest = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_apirequest);   //getting node for apirequest
+            NodeList nlAPIRequest = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_apiRequest);   //getting node for apirequest
 
             if (nlAPIRequest != null && nlAPIRequest.getLength() > 0)
             {
@@ -555,9 +619,11 @@ public class MetadataXMLReader {
 
                 String sAPICall = GetValue(eAPIRequest, "s2:" + MetadataConstants.c_XMLE_apiCall);
 
-                if (sAPICall.equals(MetadataConstants.c_XMLAC_getAllMembers))
+                ///////////////////////////////// sparql /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_sparql))
                 {
-                    String sOntClass = "";
+                    String sSPARQL = "";
+                    String sOntModelSpec = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -567,12 +633,129 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_OntClass))
-                                sOntClass = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_ontModelSpec))
+                                sOntModelSpec = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_sparql))
+                                sSPARQL = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_GetAllIndividuals(sEventId, sOntClass);
+                    MetadataModel.ac_sparql(sEventId, sSPARQL, sOntModelSpec);
+                }
+                
+                ///////////////////////////////// issue_getAllForProduct /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForProduct))
+                {
+                    String sProductUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_productUri))
+                                sProductUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getAllForProduct(sEventId, sProductUri);
+                }
+                
+                ///////////////////////////////// issue_getAllForMethod /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForMethod))
+                {
+                    ArrayList <String> sMethodUri = new ArrayList();
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_methodUri))
+                            {
+                                NodeList nlValue = eInputParameter.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_value);
+                                if (nlValue != null && nlValue.getLength() > 0)
+                                {
+                                    for (int j = 0; j < nlValue.getLength(); j++)
+                                    {
+                                        Element eValue = (Element)nlValue.item(j);
+                                        sMethodUri.add(eValue.getFirstChild().getNodeValue());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getAllForMethod(sEventId, sMethodUri);
+                }
+                
+                ///////////////////////////////// issue_getAnnotationStatus /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAnnotationStatus))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getAnnotationStatus(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// issue_getInfo /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getInfo))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getInfo(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// issue_getDuplicates /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getDuplicates))
+                {
+                    String sIssueDuplicatesSPARQL = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueDuplicatesSPARQL))
+                                sIssueDuplicatesSPARQL = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getDuplicates(sEventId, sIssueDuplicatesSPARQL);
                 }
             }
         }

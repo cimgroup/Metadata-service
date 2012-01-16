@@ -8,6 +8,7 @@ import MetadataObjects.Bug;
 import MetadataObjects.Issue;
 import MetadataObjects.MetadataPerson;
 import MetadataObjects.foaf_Person;
+import com.hp.hpl.jena.ontology.OntModelSpec;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.net.URI;
@@ -30,36 +31,7 @@ public class MetadataModel {
         
     }
     
-    /** 
-     * @summary Method for saving new bug
-     * @startRealisation Sasa Stojanovic 24.06.2011.
-     * @finalModification Sasa Stojanovic 24.06.2011.
-     * @param sID - bug ID
-     * @param uriUri - bug URI
-     * @param sStatusDescription - bug resolution
-     * @param sIsAboutDescription - related topic
-     * @param iIsAboutImportance - bug priority
-     * @param sIsAboutSeverity - bug severity
-     */
-    public static void SaveObjectNewBug(String sID, String sName, URI uriURI, String sStatusDescription, String sIsAboutDescription, int iIsAboutImportance, String sIsAboutSeverity) {
-        try
-        {
-            //Issue oBug = MetadataObjectFactory.CreateNewIssue();
-            //oBug.m_sID = sID;
-            //oBug.m_sName = sName;
-            //oBug.m_sObjectURI = uriURI;
-            //oBug.m_sResolution = sStatusDescription;
-            //oBug.m_sTopic = sIsAboutDescription;
-            //oBug.m_iProirity = iIsAboutImportance;
-            //oBug.m_sSeverity = sIsAboutSeverity;
-            //MetadataRDFConverter.SaveNewDataInOWL(oBug);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
+   
     /** 
      * @summary Method for performing search for given IDS
      * @startRealisation Sasa Stojanovic 24.06.2011.
@@ -78,62 +50,7 @@ public class MetadataModel {
         }
     }
     
-    /** 
-     * @summary Method for performing search for given IDS
-     * @startRealisation Sasa Stojanovic 24.06.2011.
-     * @finalModification Sasa Stojanovic 24.06.2011.
-     * @param sSearchType - type of search
-     * @param arCollection - list of IDs
-     */
-//    public static void ReturnForIDs(String sSearchType, ArrayList<ArrayList <String>> arCollection)
-//    {
-//        try
-//        {
-//            ArrayList arResult = new ArrayList();
-//            for (int i = 0; i < arCollection.size(); i++)
-//            {
-//                ArrayList arItem = new ArrayList();
-//                Issue oBug = MetadataObjectFactory.CreateNewIssue();
-//                oBug.m_sID = arCollection.get(i).get(0);
-//                arItem.add(oBug);
-//                
-//                for (int j = 1; j < arCollection.get(i).size(); j++)
-//                {
-//                    foaf_Person oPerson = MetadataObjectFactory.CreateNewPerson();
-//                    oPerson.m_sID = arCollection.get(i).get(j);
-//                    arItem.add(oPerson);
-//                }
-//                
-//                arResult.add(arItem);
-//            }
-//            
-//            MetadataXMLCreator.CreateXMLSearch(sSearchType, arResult);
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-    
-//    /** 
-//     * @summary Method for creating API response
-//     * @startRealisation Sasa Stojanovic 31.08.2011.
-//     * @finalModification Sasa Stojanovic 31.08.2011.
-//     */
-//    public static void CreateAPIResponse(String sAPICall, String sEventId, ArrayList<String> arResult)
-//    {
-//        sEventName = "allPersonIndividuals";
-//        sEventId = "9378";
-//        
-//        ArrayList arItem = new ArrayList();
-//        arItem.add("http://alert-project.com/Persons#Person1");
-//        arItem.add("http://alert-project.com/Persons#Person2");
-//        arItem.add("http://alert-project.com/Persons#Person3");
-//        arItem.add("http://alert-project.com/Persons#Person4");
-//        
-//        MetadataXMLCreator.CreateXMLAPIResponse(sAPICall, sEventId, arItem);
-//    }
-    
+
     /** 
      * @summary Method for creating response to Keui
      * @startRealisation Sasa Stojanovic 31.08.2011.
@@ -141,7 +58,6 @@ public class MetadataModel {
      */
     public static void CreateNewItemKeuiResponse(String sEventName, String sEventId, ArrayList<String> arResult)
     {
-
         MetadataXMLCreator.CreateXMLNewItemKeuiResponse(sEventName, sEventId, arResult);
     }
     
@@ -150,12 +66,12 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 31.08.2011.
      * @finalModification Sasa Stojanovic 31.08.2011.
      * @param sEventId - event id
-     * @param oPerson - bug object
+     * @param oIssue - issue object
      */
     static void SaveObjectNewIssue(String sEventId, Issue oIssue) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
     {
         oIssue = MetadataRDFConverter.SaveIssue(oIssue);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_newIssueResponse, sEventId, oIssue);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_issue_replyNewUpdate, sEventId, oIssue);
     }
     
     /**
@@ -168,20 +84,98 @@ public class MetadataModel {
     static void SaveObjectNewPerson(String sEventId, foaf_Person oPerson)
     {
         oPerson = MetadataRDFConverter.SavePerson(oPerson);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_newPersonResponse, sEventId, oPerson);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
     }
     
     /**
      * @summary API Call Method for getting all individuals
-     * @startRealisation Sasa Stojanovic 06.09.2011.
-     * @finalModification Sasa Stojanovic 06.09.2011.
+     * @startRealisation Sasa Stojanovic 15.12.2011.
+     * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
-     * @param sOntClass - class url
+     * @param sSPARQL - sparql query
      */
-    static void ac_GetAllIndividuals(String sEventId, String sOntClass)
+    static void ac_sparql(String sEventId, String sSPARQL, String sOntModelSpec)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.GetAllMembers(sOntClass);       
-        MetadataXMLCreator.CreateXMLAPIResponse(sEventId, oData);
+        OntModelSpec oOntModelSpec = OntModelSpec.OWL_MEM;
+        
+        if (sOntModelSpec.equals("OWL_MEM_MICRO_RULE_INF"))
+            oOntModelSpec = OntModelSpec.OWL_MEM_MICRO_RULE_INF;
+        if (sOntModelSpec.equals("OWL_MEM_MINI_RULE_INF"))
+            oOntModelSpec = OntModelSpec.OWL_MEM_MINI_RULE_INF;
+        if (sOntModelSpec.equals("OWL_MEM_RDFS_INF"))
+            oOntModelSpec = OntModelSpec.OWL_MEM_RDFS_INF;
+        if (sOntModelSpec.equals("OWL_MEM_RULE_INF"))
+            oOntModelSpec = OntModelSpec.OWL_MEM_RULE_INF;
+        if (sOntModelSpec.equals("OWL_MEM_TRANS_INF"))
+            oOntModelSpec = OntModelSpec.OWL_MEM_TRANS_INF;
+                
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_sparql(sSPARQL, oOntModelSpec);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_sparql, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all individuals
+     * @startRealisation Sasa Stojanovic 13.12.2011.
+     * @finalModification Sasa Stojanovic 13.12.2011.
+     * @param sEventId - event id
+     * @param sProductUri - product URI
+     */
+    static void ac_issue_getAllForProduct(String sEventId, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAllForProduct, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all individuals
+     * @startRealisation Sasa Stojanovic 14.12.2011.
+     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @param sEventId - event id
+     * @param sMethodUri - methods' URIs
+     */
+    static void ac_issue_getAllForMethod(String sEventId, ArrayList <String> sMethodUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForMethod(sMethodUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAllForMethod, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all individuals
+     * @startRealisation Sasa Stojanovic 14.12.2011.
+     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @param sEventId - event id
+     * @param sIssueUri - issue uri
+     */
+    static void ac_issue_getAnnotationStatus(String sEventId, String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAnnotationStatus(sIssueUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAnnotationStatus, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all individuals
+     * @startRealisation Sasa Stojanovic 14.12.2011.
+     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @param sEventId - event id
+     * @param sIssueUri - issue uri
+     */
+    static void ac_issue_getInfo(String sEventId, String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getInfo(sIssueUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getInfo, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all individuals
+     * @startRealisation Sasa Stojanovic 15.12.2011.
+     * @finalModification Sasa Stojanovic 15.12.2011.
+     * @param sEventId - event id
+     * @param sIssueUri - issue uri
+     */
+    static void ac_issue_getDuplicates(String sEventId, String sIssueDuplicatesSPARQL)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getDuplicates, sEventId, oData);
     }
     
     /**

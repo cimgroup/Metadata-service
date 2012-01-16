@@ -73,8 +73,17 @@ public class MetadataWebService {
     {
         try
         {
-            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\newIssueRequest-ver1.xml");
-            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\APIRequest.xml");
+            //implemented
+            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestNew.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
+            //API Calls
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\sparql\\APIRequest - sparql.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAllForProduct\\APIRequest - issue.getAllForProduct.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAllForMethod\\APIRequest - issue.getAllForMethod.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAnnotationStatus\\APIRequest - issue.getAnnotationStatus.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getInfo\\APIRequest - issue.getInfo.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getDuplicates\\APIRequest - issue.getDuplicates.xml");
+            
             MetadataWebService oServis = new MetadataWebService();
             String sTest = oServis.XMLRequest(sRequest);
             sTest = "a";
@@ -83,6 +92,5 @@ public class MetadataWebService {
         {
             ex.printStackTrace();
         }
-        
     }
 }

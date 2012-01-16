@@ -23,8 +23,8 @@ public class Issue extends MetadataObject {
     public String m_sIssueURL;
     public Date m_dtmLastModified;
     public Integer m_iNumber;
-    public Issue m_oBlocks;
-    public Issue m_oDependsOn;
+    public Issue[] m_oBlocks;
+    public Issue[] m_oDependsOn;
     public doap_Version m_oFixes;
     public Activity[] m_oHasActivity;
     public Attachment[] m_oHasAttachment;
@@ -73,19 +73,19 @@ public class Issue extends MetadataObject {
         m_iNumber = iNumber;
     }
 
-    public Issue GetBlocks() {
+    public Issue[] GetBlocks() {
         return m_oBlocks;
     }
 
-    public void SetBlocks(Issue oBlocks) {
+    public void SetBlocks(Issue[] oBlocks) {
         m_oBlocks = oBlocks;
     }
 
-    public Issue GetDependsOn() {
+    public Issue[] GetDependsOn() {
         return m_oDependsOn;
     }
 
-    public void SetDependsOn(Issue oDependsOn) {
+    public void SetDependsOn(Issue[] oDependsOn) {
         m_oDependsOn = oDependsOn;
     }
 

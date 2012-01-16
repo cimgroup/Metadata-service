@@ -28,14 +28,16 @@ public class MetadataConstants {
     public static String c_http = "http://";
     
     // <editor-fold desc="Event types">
-    public static String c_ET_newIssueRequest = "newIssueRequest";
-    public static String c_ET_newIssueResponse = "newIssueResponse";
-    public static String c_ET_newPersonRequest = "newPersonRequest";
-    public static String c_ET_newPersonResponse = "newPersonResponse";
-    public static String c_ET_APICallRequest = "APICallRequest";
-    public static String c_ET_APICallResponse = "APICallResponse";
-    public static String c_ET_MemberRequest = "MemberRequest";
-    public static String c_ET_MemberResponse = "MemberResponse";
+    public static String c_ET_issue_requestNew = "Metadata.issue.requestNew";
+    public static String c_ET_issue_requestUpdate = "Metadata.issue.requestUpdate";
+    public static String c_ET_issue_replyNewUpdate = "Metadata.issue.replyNewUpdate";
+    public static String c_ET_person_requestNew = "Metadata.person.requestNew";
+    public static String c_ET_person_requestUpdate = "Metadata.person.requestUpdate";
+    public static String c_ET_person_replyNewUpdate = "Metadata.person.replyNewUpdate";
+    public static String c_ET_APICall_request = "Metadata.APICall.request";
+    public static String c_ET_APICall_reply = "Metadata.APICall.reply";
+    public static String c_ET_member_request = "Metadata.member.request";
+    public static String c_ET_member_reply = "Metadata.member.reply";
     
     //public static String c_ET_QueryBugPerson = "QueryBugPerson";
     //public static String c_ET_ResultBugPerson = "ResultBugPerson";
@@ -53,6 +55,7 @@ public class MetadataConstants {
     public static String c_XMLE_endTime = "endTime";
     public static String c_XMLE_eventName = "eventName";
     public static String c_XMLE_eventId = "eventId";
+    public static String c_XMLE_eventType = "eventType";
     public static String c_XMLE_sentby = "sentby";
     
     public static String c_XMLE_keui = "keui";
@@ -76,7 +79,6 @@ public class MetadataConstants {
     public static String c_XMLE_requestEventId = "requestEventId";
     public static String c_XMLE_responseData = "responseData";
     public static String c_XMLE_item = "item";
-    public static String c_XMLE_eventType = "eventType";
     public static String c_XMLE_isRelatedTo = "isRelatedTo";
        
     public static String c_XMLE_StringType = "http://www.w3.org/TR/xmlschema-2/#string";
@@ -93,12 +95,15 @@ public class MetadataConstants {
     //public static String c_XMLE_NewBugEvent_hasImportance = "hasImportance";
     //public static String c_XMLE_NewBugEvent_hasSeverity = "hasSeverity";
     
+    public static String c_XMLE_Removed = "Removed";
+    
     public static String c_XMLE_issue = "issue";
     public static String c_XMLE_issueAuthor = "issueAuthor";
     public static String c_XMLE_issueStatus = "issueStatus";
     public static String c_XMLE_issueResolution = "issueResolution";
     public static String c_XMLE_issueDescription = "issueDescription";
     public static String c_XMLE_issueKeyword = "issueKeyword";
+    public static String c_XMLE_issueNumber = "issueNumber";
     public static String c_XMLE_issueProduct = "issueProduct";
     public static String c_XMLE_product = "product";
     public static String c_XMLE_productComponent = "productComponent";
@@ -136,6 +141,7 @@ public class MetadataConstants {
     public static String c_XMLE_activity = "activity";
     public static String c_XMLE_activityWho = "activityWho";
     public static String c_XMLE_activityWhen = "activityWhen";
+    public static String c_XMLE_activityWRA = "activityWRA";
     public static String c_XMLE_activityWhat = "activityWhat";
     public static String c_XMLE_activityRemoved = "activityRemoved";
     public static String c_XMLE_activityAdded = "activityAdded";
@@ -143,13 +149,15 @@ public class MetadataConstants {
     public static String c_XMLE_issueTrackerType = "issueTrackerType";
     public static String c_XMLE_issueTrackerURL = "issueTrackerURL";
     
+    public static String c_XMLE_issueAnnotationStatus = "issueAnnotationStatus";
+    
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
     public static String c_XMLE_personGender = "personGender";
     
-    public static String c_XMLE_apirequest = "apirequest";
-    public static String c_XMLE_apiresponse = "apiresponse";
+    public static String c_XMLE_apiRequest = "apiRequest";
+    public static String c_XMLE_apiResponse = "apiResponse";
     public static String c_XMLE_apiCall = "apiCall";
     public static String c_XMLE_requestData = "requestData";
     public static String c_XMLE_inputParameter = "inputParameter";
@@ -160,24 +168,58 @@ public class MetadataConstants {
     public static String c_XMLE_email = "email";
     public static String c_XMLE_id = "id";
     
+    public static String c_XMLE_result = "result";
+    
     // </editor-fold>
     
     // <editor-fold desc="XML values">
     
     public static String c_XMLV_metadataservice = "METADATASERVICE";
+    public static String c_XMLV_metadataserviceaddress = "http://www.alert-project.eu/metadata";
+    public static String c_XMLV_request = "request";
+    public static String c_XMLV_reply = "reply";
     public static String c_XMLV_OntClass = "OntClass";
     public static String c_XMLV_MemberURL = "MemberURL";
+    
+    public static String c_XMLV_sparql = "sparql";
+    public static String c_XMLV_ontModelSpec = "ontModelSpec";
+    public static String c_XMLV_productUri = "productUri";
+    public static String c_XMLV_methodUri = "methodUri";
+    public static String c_XMLV_issueUri = "issueUri";
+    public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     
     // </editor-fold>
     
     // <editor-fold desc="API Call">
     
-    public static String c_XMLAC_getAllMembers = "getAllMembers";
+    public static String c_XMLAC_sparql = "sparql";
+    public static String c_XMLAC_commit_getRelatedToIssue = "commit.getRelatedToIssue";
+    public static String c_XMLAC_commit_getRelatedToKeyword = "commit.getRelatedToKeyword";
+    public static String c_XMLAC_competency_getPersonForIssue = "competency.getPersonForIssue";
+    public static String c_XMLAC_identity_getForPerson = "identity.getForPerson";
+    public static String c_XMLAC_issue_getAllForMethod = "issue.getAllForMethod";
+    public static String c_XMLAC_issue_getAllForProduct = "issue.getAllForProduct";
+    public static String c_XMLAC_issue_getAnnotationStatus = "issue.getAnnotationStatus";
+    public static String c_XMLAC_issue_getDuplicates = "issue.getDuplicates";
+    public static String c_XMLAC_issue_getInfo = "issue.getInfo";
+    public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
+    public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
+    public static String c_XMLAC_mail_getRelatedToIssue = "mail.getRelatedToIssue";
+    public static String c_XMLAC_mail_getRelatedToKeyword = "mail.getRelatedToKeyword";
+    public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
+    public static String c_XMLAC_method_getRelatedCode = "method.getRelatedCode";
+    public static String c_XMLAC_person_getAllForEmail = "person.getAllForEmail";
+    public static String c_XMLAC_person_getInfo = "person.getInfo";
+    public static String c_XMLAC_post_getRelatedToIssue = "post.getRelatedToIssue";
+    public static String c_XMLAC_post_getRelatedToKeyword = "post.getRelatedToKeyword";
+    public static String c_XMLAC_wiki_getRelatedToIssue = "wiki.getRelatedToIssue";
+    public static String c_XMLAC_wiki_getRelatedToKeyword = "wiki.getRelatedToKeyword";
     
     // </editor-fold>
     
     // <editor-fold desc="Ontology Class">
     
+    public static String c_OWLClass_Issue = "Issue";
     public static String c_OWLClass_Bug = "Bug";
     public static String c_OWLClass_Person = "Person";
     public static String c_OWLClass_Milestone = "Milestone";
@@ -283,6 +325,9 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasInvolvedPerson = "hasInvolvedPerson";
     public static String c_OWLObjectProperty_IsIssueOf = "isIssueOf";
     public static String c_OWLObjectProperty_IsComponentOf = "isComponentOf";
+    public static String c_OWLObjectProperty_RelatedToSourceCode = "relatedtoSourceCode";
+    
+    public static String c_OWLAnnotationProperty_comment = "http://www.w3.org/2000/01/rdf-schema#comment";
     
     // </editor-fold>
         

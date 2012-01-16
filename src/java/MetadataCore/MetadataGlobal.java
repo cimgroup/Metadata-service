@@ -61,6 +61,7 @@ public class MetadataGlobal {
      * @summary Load ontology file
      * @startRealisation Ivan Obradovic 31.08.2011.
      * @finalModification Ivan Obradovic 31.08.2011.
+     * @param sLocation - location of owl file
      * @return OntModel
      */
     public static OntModel LoadOWL(String sLocation) throws FileNotFoundException, IOException
@@ -68,17 +69,61 @@ public class MetadataGlobal {
         OntModel omModel = null;
         try
         {
-        
-        omModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
-        omModel.read(sLocation, "RDF/XML" );
-        return omModel;
+            omModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM ); //OWL_MEM_RULE_INF
+            omModel.read(sLocation, "RDF/XML" );
+            return omModel;
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
         return omModel;
     }
+    
+    /**
+     * @summary Load ontology file with given spec
+     * @startRealisation Sasa Stojanovic 15.12.2011.
+     * @finalModification Sasa Stojanovic 15.12.2011.
+     * @param sLocation - location of owl file
+     * @param oModelSpec - specification of model
+     * @return OntModel
+     */
+    public static OntModel LoadOWLWithModelSpec(String sLocation, OntModelSpec oModelSpec) throws FileNotFoundException, IOException
+    {
+        OntModel omModel = null;
+        try
+        {
+            omModel = ModelFactory.createOntologyModel(oModelSpec);
+            omModel.read(sLocation, "RDF/XML" );
+            return omModel;
+        }
+        catch (Exception e)
+        {
+        }
+        return omModel;
+    }
+    
+    /**
+     * @summary loading OntModel depending on URI
+     * @startRealisation Sasa Stojanovic 13.12.2011.
+     * @finalModification Sasa Stojanovic 13.12.2011.
+     * @param sProductUri - class/member URI
+     * @return - OntModel
+     */
+//    public static OntModel LoadModel(String sURI)
+//    {
+//        OntModel oModel = null;
+//        try
+//        {
+//            if (sURI.contains(MetadataConstants.c_NS_Alert_Its) || sURI.contains(MetadataConstants.c_NS_Ifi))
+//                oModel = LoadOWL(MetadataConstants.sLocationLoadAlertIts);
+//            else
+//                oModel = LoadOWL(MetadataConstants.sLocationLoadAlert);
+//        }
+//        catch (Exception e)
+//        {
+//        }
+//        return oModel;
+//    }
     
     /**
      * @summary Save data to owl file
@@ -104,7 +149,6 @@ public class MetadataGlobal {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return bIsSaved;
         }
     }
@@ -146,7 +190,6 @@ public class MetadataGlobal {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -160,7 +203,7 @@ public class MetadataGlobal {
      * @param sID - id of member
      * @return object URI
      */
-    public static String GetObjectURI(OntModel omModel, String sClassURI, String sID, OntModel omID)
+    public static String GetObjectURI(OntModel omModel, String sClassURI, String sID)
     {
         try
         {
@@ -170,13 +213,13 @@ public class MetadataGlobal {
             if (sID != null && !sID.isEmpty())
             {
                 String sQuery = "SELECT ?uri WHERE "
-                        + "{?uri  <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + ">  \"" + sID + "\" . "
+                        + "{?uri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sID + "\" . "
                         + "?uri a <" + sClassURI + ">}";
 
                 QueryExecution qeURI = QueryExecutionFactory.create(sQuery, omModel);
                 ResultSet rsURI = qeURI.execSelect();
-
-                if(rsURI.hasNext())
+                              
+                if (rsURI.hasNext())
                 {
                     QuerySolution qlURI = rsURI.nextSolution();
                     Resource resMember = qlURI.getResource("?uri");
@@ -184,27 +227,62 @@ public class MetadataGlobal {
                 }
                 else
                     bNew = true;
+                
+                qeURI.close();
+                
+                //delete after solving the ontology problem
+                //temp code starts
+                bNew = true;
+                ArrayList <String> sUriId = new ArrayList();
+                
+                sQuery = "SELECT ?uri WHERE "
+                        + "{?uri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sID + "\"}";
+                rsURI = QueryExecutionFactory.create(sQuery, omModel).execSelect();
+                while (rsURI.hasNext())
+                {
+                    sUriId.add(rsURI.nextSolution().getResource("?uri").getURI());
+                }
+
+                sQuery = "SELECT ?uri WHERE "
+                        + "{?uri a <" + sClassURI + ">}";
+                rsURI = QueryExecutionFactory.create(sQuery, omModel).execSelect();
+                while (rsURI.hasNext())
+                {
+                    sURI = rsURI.nextSolution().getResource("?uri").getURI();
+                    if (sUriId.contains(sURI))
+                    {
+                        bNew = false;
+                        break;
+                    }
+                }
+                //temp code ends
             }
             else
                 bNew = true;
             
-            if(bNew)
+            if (bNew)
             {
                 OntClass ocClass = omModel.getOntClass(sClassURI);
                 sURI = sClassURI + MetadataGlobal.GetNextId(omModel, ocClass);
-                Resource resMember = omModel.createResource(sURI, ocClass);
-                DatatypeProperty dtpID = omID.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
-                resMember.addProperty(dtpID, sID);
+                //Resource resMember = omModel.createResource(sURI, ocClass);
+                //DatatypeProperty dtpID = omID.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
+                //resMember.addProperty(dtpID, sID);
+                
+                Resource resMember = omModel.getResource(sURI);
+                DatatypeProperty dtpId = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
+                resMember.removeAll(dtpId);
+                resMember.addProperty(dtpId, sID);
             }
             
             return sURI;      
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return "";
         }
     }
+    
+
     
     public static Date GetDateTime(String sDateTime)
     {
@@ -214,7 +292,6 @@ public class MetadataGlobal {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return null;
         }
     }
