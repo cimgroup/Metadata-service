@@ -229,33 +229,6 @@ public class MetadataGlobal {
                     bNew = true;
                 
                 qeURI.close();
-                
-                //delete after solving the ontology problem
-                //temp code starts
-//                bNew = true;
-//                ArrayList <String> sUriId = new ArrayList();
-//                
-//                sQuery = "SELECT ?uri WHERE "
-//                        + "{?uri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sID + "\"}";
-//                rsURI = QueryExecutionFactory.create(sQuery, omModel).execSelect();
-//                while (rsURI.hasNext())
-//                {
-//                    sUriId.add(rsURI.nextSolution().getResource("?uri").getURI());
-//                }
-//
-//                sQuery = "SELECT ?uri WHERE "
-//                        + "{?uri a <" + sClassURI + ">}";
-//                rsURI = QueryExecutionFactory.create(sQuery, omModel).execSelect();
-//                while (rsURI.hasNext())
-//                {
-//                    sURI = rsURI.nextSolution().getResource("?uri").getURI();
-//                    if (sUriId.contains(sURI))
-//                    {
-//                        bNew = false;
-//                        break;
-//                    }
-//                }
-                //temp code ends
             }
             else
                 bNew = true;
