@@ -74,8 +74,9 @@ public class MetadataWebService {
         try
         {
             //implemented events
-            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestNew.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestNew.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
+            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.commit.requestNew.xml");
             //API Calls
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\sparql\\APIRequest - sparql.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAllForProduct\\APIRequest - issue.getAllForProduct.xml");

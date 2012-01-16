@@ -692,15 +692,15 @@ public class MetadataRDFConverter {
                 oCommit.m_oHasAuthor.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitAuthor + MetadataConstants.c_XMLE_Uri;
             }
             
-            //commitCommiter
-            if (oCommit.m_oHasCommiter != null && !oCommit.m_oHasCommiter.m_sID.isEmpty())
+            //commitCommitter
+            if (oCommit.m_oHasCommitter != null && !oCommit.m_oHasCommitter.m_sID.isEmpty())
             {
-                SavePersonData(oCommit.m_oHasCommiter, oModel);
-                ObjectProperty opHasCommiter = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommiter);
-                Resource resHasCommiter = oModel.getResource(oCommit.m_oHasCommiter.m_sObjectURI);
-                resCommit.removeAll(opHasCommiter);
-                resCommit.addProperty(opHasCommiter, resHasCommiter.asResource());
-                oCommit.m_oHasCommiter.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitCommiter + MetadataConstants.c_XMLE_Uri;
+                SavePersonData(oCommit.m_oHasCommitter, oModel);
+                ObjectProperty opHasCommitter = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter);
+                Resource resHasCommitter = oModel.getResource(oCommit.m_oHasCommitter.m_sObjectURI);
+                resCommit.removeAll(opHasCommitter);
+                resCommit.addProperty(opHasCommitter, resHasCommitter.asResource());
+                oCommit.m_oHasCommitter.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitCommtter + MetadataConstants.c_XMLE_Uri;
             }
             
             //commitDate
@@ -796,8 +796,6 @@ public class MetadataRDFConverter {
                 resPerson.removeAll(dtpEmail);
                 resPerson.addProperty(dtpEmail, oPerson.m_sEmail);
             }
-            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlertScm);
-            
         }
         catch (Exception e)
         {

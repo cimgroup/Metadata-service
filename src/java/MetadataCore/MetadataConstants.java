@@ -85,15 +85,6 @@ public class MetadataConstants {
     
     public static String c_XMLE_BugType = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Bug";
     
-    //public static String c_XMLE_NewBugEvent_hasCommiter = "hasCommiter";
-    //public static String c_XMLE_NewBugEvent_isRelatedTo = "isRelatedTo";
-    //public static String c_XMLE_NewBugEvent_hasID = "hasID";
-    //public static String c_XMLE_NewBugEvent_hasName = "hasName";
-    //public static String c_XMLE_NewBugEvent_hasStatus = "hasStatus";
-    //public static String c_XMLE_NewBugEvent_hasDescription = "hasDescription";
-    //public static String c_XMLE_NewBugEvent_isAbout = "isAbout";
-    //public static String c_XMLE_NewBugEvent_hasImportance = "hasImportance";
-    //public static String c_XMLE_NewBugEvent_hasSeverity = "hasSeverity";
     
     public static String c_XMLE_Removed = "Removed";
     
@@ -155,7 +146,7 @@ public class MetadataConstants {
     public static String c_XMLE_commitRepository = "commitRepository";
     public static String c_XMLE_commitRevisionTag = "commitRevisionTag";
     public static String c_XMLE_commitAuthor = "commitAuthor";
-    public static String c_XMLE_commitCommiter = "commitCommiter";
+    public static String c_XMLE_commitCommtter = "commitCommitter";
     public static String c_XMLE_commitDate = "commitDate";
     public static String c_XMLE_commitMessageLog = "commitMessageLog";
     
@@ -341,7 +332,7 @@ public class MetadataConstants {
     
     public static String c_OWLObjectProperty_IsCommitOfRepository = "isCommitOfRepository";
     public static String c_OWLObjectProperty_HasAuthor = "hasAuthor";
-    public static String c_OWLObjectProperty_HasCommiter = "hasCommiter";            
+    public static String c_OWLObjectProperty_HasCommitter = "hasCommitter";            
     // </editor-fold>
             
     // <editor-fold desc="Ontology AnnotationProperty">
