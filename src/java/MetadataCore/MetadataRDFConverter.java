@@ -5,32 +5,7 @@
 package MetadataCore;
 
 import MetadataCore.MetadataGlobal.OntoProperty;
-import MetadataObjects.Assigned;
-import MetadataObjects.Blocker;
-import MetadataObjects.Bug;
-import MetadataObjects.Closed;
-import MetadataObjects.ComputerSystem;
-import MetadataObjects.Critical;
-import MetadataObjects.Duplicate;
-import MetadataObjects.Fixed;
-import MetadataObjects.Invalid;
-import MetadataObjects.Issue;
-import MetadataObjects.Later;
-import MetadataObjects.Major;
-import MetadataObjects.Milestone;
-import MetadataObjects.Minor;
-import MetadataObjects.Open;
-import MetadataObjects.Priority;
-import MetadataObjects.Remind;
-import MetadataObjects.Resolved;
-import MetadataObjects.ThirdParty;
-import MetadataObjects.Trivial;
-import MetadataObjects.Verified;
-import MetadataObjects.WontFix;
-import MetadataObjects.WorksForMe;
-import MetadataObjects.doap_Project;
-import MetadataObjects.doap_Version;
-import MetadataObjects.foaf_Person;
+import MetadataObjects.*;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.ontology.AnnotationProperty;
 import com.hp.hpl.jena.ontology.DatatypeProperty;
@@ -55,6 +30,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.Class;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -70,7 +46,7 @@ public class MetadataRDFConverter {
     /**
      * @summary Save issue data
      * @startRealisation Ivan Obradovic 31.08.2011.
-     * @finalModification Ivan Obradovic 31.08.2011.
+     * @finalModification Sasa Stojanovic 16.01.2012.
      * @param oIssue 
      */
     public static Issue SaveIssue(Issue oIssue)
@@ -669,6 +645,88 @@ public class MetadataRDFConverter {
         {
         }
         return oIssue;
+    }
+    
+    /**
+     * @summary Save issue data
+     * @startRealisation Sasa Stojanovic 16.01.2012.
+     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @param oCommit 
+     */
+    public static Commit SaveCommit(Commit oCommit)
+    {
+        try {
+            
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            oCommit.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit, oCommit.m_sID);
+            Resource resCommit = oModel.getResource(oCommit.m_sObjectURI);
+            oCommit.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_commit + "/s:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+            
+            //commitRepository
+            if (oCommit.m_oIsCommitOfRepository != null && !oCommit.m_oIsCommitOfRepository.m_sObjectURI.isEmpty())
+            {
+                ObjectProperty opIsCommitOfRepository = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_IsCommitOfRepository);
+                Resource resIsCommitOfRepository = oModel.getResource(oCommit.m_oIsCommitOfRepository.m_sObjectURI);
+                resCommit.removeAll(opIsCommitOfRepository);
+                resCommit.addProperty(opIsCommitOfRepository, resIsCommitOfRepository.asResource());
+                oCommit.m_oIsCommitOfRepository.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri;
+            }
+            
+            //revisionTag
+            if (!oCommit.m_sRevisionTag.isEmpty())
+            {
+                DatatypeProperty dtpRevisionTag = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_RevisionTag);
+                resCommit.removeAll(dtpRevisionTag);
+                resCommit.addProperty(dtpRevisionTag, oCommit.m_sRevisionTag);
+            }
+            
+            //commitAuthor
+            if (oCommit.m_oHasAuthor != null && !oCommit.m_oHasAuthor.m_sID.isEmpty())
+            {
+                SavePersonData(oCommit.m_oHasAuthor, oModel);
+                ObjectProperty opHasAuthor = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor);
+                Resource resHasAuthor = oModel.getResource(oCommit.m_oHasAuthor.m_sObjectURI);
+                resCommit.removeAll(opHasAuthor);
+                resCommit.addProperty(opHasAuthor, resHasAuthor.asResource());
+                oCommit.m_oHasAuthor.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitAuthor + MetadataConstants.c_XMLE_Uri;
+            }
+            
+            //commitCommiter
+            if (oCommit.m_oHasCommiter != null && !oCommit.m_oHasCommiter.m_sID.isEmpty())
+            {
+                SavePersonData(oCommit.m_oHasCommiter, oModel);
+                ObjectProperty opHasCommiter = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommiter);
+                Resource resHasCommiter = oModel.getResource(oCommit.m_oHasCommiter.m_sObjectURI);
+                resCommit.removeAll(opHasCommiter);
+                resCommit.addProperty(opHasCommiter, resHasCommiter.asResource());
+                oCommit.m_oHasCommiter.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitCommiter + MetadataConstants.c_XMLE_Uri;
+            }
+            
+            //commitDate
+            if (oCommit.m_dtmCommitDate != null)
+            {
+                DatatypeProperty dtpCommitDate = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate);
+                resCommit.removeAll(dtpCommitDate);
+                resCommit.addProperty(dtpCommitDate, oCommit.m_dtmCommitDate.toString());
+            }
+            
+            //commitMessageLog
+            if (!oCommit.m_sCommitMessage.isEmpty())
+            {
+                DatatypeProperty dtpCommitMessage = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage);
+                resCommit.removeAll(dtpCommitMessage);
+                resCommit.addProperty(dtpCommitMessage, oCommit.m_sCommitMessage);
+            }
+            
+            //save data
+            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            
+        }
+        catch (Exception ex)
+        {
+        }
+        return oCommit;
     }
     
     /**

@@ -34,13 +34,13 @@ public class MetadataConstants {
     public static String c_ET_person_requestNew = "Metadata.person.requestNew";
     public static String c_ET_person_requestUpdate = "Metadata.person.requestUpdate";
     public static String c_ET_person_replyNewUpdate = "Metadata.person.replyNewUpdate";
+    public static String c_ET_commit_requestNew = "Metadata.commit.requestNew";
+    public static String c_ET_commit_replyNew = "Metadata.commit.replyNew";
     public static String c_ET_APICall_request = "Metadata.APICall.request";
     public static String c_ET_APICall_reply = "Metadata.APICall.reply";
     public static String c_ET_member_request = "Metadata.member.request";
     public static String c_ET_member_reply = "Metadata.member.reply";
     
-    //public static String c_ET_QueryBugPerson = "QueryBugPerson";
-    //public static String c_ET_ResultBugPerson = "ResultBugPerson";
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
@@ -151,6 +151,14 @@ public class MetadataConstants {
     
     public static String c_XMLE_issueAnnotationStatus = "issueAnnotationStatus";
     
+    public static String c_XMLE_commit = "commit";
+    public static String c_XMLE_commitRepository = "commitRepository";
+    public static String c_XMLE_commitRevisionTag = "commitRevisionTag";
+    public static String c_XMLE_commitAuthor = "commitAuthor";
+    public static String c_XMLE_commitCommiter = "commitCommiter";
+    public static String c_XMLE_commitDate = "commitDate";
+    public static String c_XMLE_commitMessageLog = "commitMessageLog";
+    
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
@@ -229,6 +237,7 @@ public class MetadataConstants {
     public static String c_OWLClass_ComputerSystem = "ComputerSystem";
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
+    public static String c_OWLClass_Commit = "Commit";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -298,6 +307,9 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_FirstName = "firstName";
     public static String c_OWLDataProperty_LastName = "lastName";
 
+    public static String c_OWLDataProperty_RevisionTag = "revisionTag";
+    public static String c_OWLDataProperty_CommitDate = "commitDate";
+    public static String c_OWLDataProperty_CommitMessage = "commitMessage";
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">
@@ -326,6 +338,13 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsIssueOf = "isIssueOf";
     public static String c_OWLObjectProperty_IsComponentOf = "isComponentOf";
     public static String c_OWLObjectProperty_RelatedToSourceCode = "relatedtoSourceCode";
+    
+    public static String c_OWLObjectProperty_IsCommitOfRepository = "isCommitOfRepository";
+    public static String c_OWLObjectProperty_HasAuthor = "hasAuthor";
+    public static String c_OWLObjectProperty_HasCommiter = "hasCommiter";            
+    // </editor-fold>
+            
+    // <editor-fold desc="Ontology AnnotationProperty">
     
     public static String c_OWLAnnotationProperty_comment = "http://www.w3.org/2000/01/rdf-schema#comment";
     
