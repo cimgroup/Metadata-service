@@ -22,9 +22,7 @@ public class MetadataConstants {
     public static String sLocationLoad = "file://hpserver/Aktuelni projekti/ALERT/Kod/ontology/alert5.owl";
     public static String sLocationSaveLoc = "D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
     public static String sLocationLoadLoc = "file:D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
-    
-    public static String sOWLrdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-       
+          
     public static String c_http = "http://";
     
     // <editor-fold desc="Event types">
@@ -186,6 +184,7 @@ public class MetadataConstants {
     public static String c_XMLV_methodUri = "methodUri";
     public static String c_XMLV_issueUri = "issueUri";
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
+    public static String c_XMLV_keyword = "keyword";
     
     // </editor-fold>
     
@@ -349,6 +348,8 @@ public class MetadataConstants {
     public static String c_NS_Alert_Scm = "http://www.alert-project.eu/ontologies/alert_scm.owl#";
     public static String c_NS_foaf = "http://xmlns.com/foaf/0.1/";
     public static String c_NS_doap = "http://usefulinc.com/ns/doap#";
+    public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
 
     // </editor-fold>
     
