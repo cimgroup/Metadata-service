@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataObjects.Component;
 import MetadataObjects.Issue;
 import MetadataObjects.Commit;
@@ -94,5 +95,24 @@ public class MetadataObjectFactory {
             return null;
         }
     }
-
+    
+    /** 
+     * @summary Method for creating new bug annotation.
+     * @startRealisation  Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 16.01.2012.
+     * @return Bug object
+     */
+    public static AnnotationData CreateNewAnnotation()
+    {
+        try
+        {
+            AnnotationData oAnnotation = new AnnotationData();
+            return oAnnotation;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

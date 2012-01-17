@@ -300,5 +300,40 @@ public class MetadataGlobal {
         String sData;
         ArrayList <APIResponseData> oData = new ArrayList<APIResponseData>();
     }
+    
+    /**
+     * @summary Class for storing annotation data.
+     * @startRealisation  Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 16.01.2012.
+     */
+    public static class AnnotationData extends MetadataObject
+    {
+        //m_sObjectURI
+        AnnotationProp[] oAnnotated;
+        ConceptProp[] oConcepts;
+    }
+    
+    /**
+     * @summary Class for storing annotation properties.
+     * @startRealisation  Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 16.01.2012.
+     */
+    public static class AnnotationProp
+    {
+        String sName;
+        String sValue;
+    }
+    
+    /**
+     * @summary Class for storing concept properties.
+     * @startRealisation  Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 16.01.2012.
+     */
+    public static class ConceptProp
+    {
+        String sId;
+        String sName;
+        String sCount;
+    }
     // </editor-fold>
 }

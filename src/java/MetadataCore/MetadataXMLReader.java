@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataObjects.*;
 import java.net.URI;
 import java.text.DateFormat;
@@ -58,7 +59,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for calling appropriate method based on event type
      * @startRealisation Sasa Stojanovic 23.06.2011.
-     * @finalModification Sasa Stojanovic 23.06.2011.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
      * @param sEventName  - event type
      * @param dDoc - input XML document to read
      */
@@ -70,7 +71,7 @@ public class MetadataXMLReader {
             {
                 NewUpdateIssue(dDoc);
             }
-            if (sEventName.equals(MetadataConstants.c_ET_commit_requestNew))
+            if(sEventName.equals(MetadataConstants.c_ET_commit_requestNew))
             {
                 NewCommit(dDoc);
             }
@@ -85,6 +86,18 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
             {
                 InstanceRequest(dDoc);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_issue_requestAnnotation)) //if event type is new issue annotation
+            {
+                NewIssueAnnotation(dDoc);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_comment_requestAnnotation)) //if event type is new comment annotation
+            {
+                NewCommentAnnotation(dDoc);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_commit_requestAnnotation)) //if event type is new commit annotation
+            {
+                NewCommitAnnotation(dDoc);
             }
         }
         catch (Exception e)
@@ -721,6 +734,392 @@ public class MetadataXMLReader {
         }
     }
 
+    /**
+     * @summary Method for reading new issue annotation event from XML.
+     * @startRealisation  Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param dDoc - input XML document to read
+     */
+    private static void NewIssueAnnotation(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+
+            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+
+            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
+            {
+                Element eAnnotation = (Element) nlAnnotation.item(0);
+            
+                //URI
+                NodeList nlUri = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_itemUri);
+                if (nlUri != null && nlUri.getLength() > 0)
+                {
+                    oAnnotation.m_sObjectURI = nlUri.item(0).getNodeValue();
+                }
+                
+                //Annotations
+                NodeList nlSubjectAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_subjectAnnotated);
+                NodeList nlDescAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_descriptionAnnotated);
+                if (nlSubjectAnnotated != null && nlDescAnnotated != null)
+                {
+                    int iSubjectLength = nlSubjectAnnotated.getLength();
+                    int iDescLength = nlDescAnnotated.getLength();
+                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iSubjectLength + iDescLength];
+                    if (iSubjectLength > 0)
+                    {
+                        for (int i = 0; i < iSubjectLength; i++)
+                        {
+                            Element eSubjectAnnotated = (Element)nlSubjectAnnotated.item(i);
+                            oAnnotation.oAnnotated[i] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i].sName = MetadataConstants.c_XMLE_subjectAnnotated;
+                            oAnnotation.oAnnotated[i].sValue = eSubjectAnnotated.getNodeValue();
+                        }
+                    }
+                    if (iDescLength > 0)
+                    {
+                        for (int i = 0; i < iDescLength; i++)
+                        {
+                            Element eDescAnnotated = (Element)nlDescAnnotated.item(i);
+                            oAnnotation.oAnnotated[i + iSubjectLength] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i + iSubjectLength].sName = MetadataConstants.c_XMLE_descriptionAnnotated;
+                            oAnnotation.oAnnotated[i + iSubjectLength].sValue = eDescAnnotated.getNodeValue();
+                        }
+                    }
+                }
+                
+                //Concepts
+                NodeList nlSConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_subjectConcepts);
+                NodeList nlDConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_descriptionConcepts);
+                if (nlSConcepts != null && nlDConcepts != null &&
+                    nlSConcepts.getLength() > 0 && nlDConcepts.getLength() > 0)
+                {
+                    Element eSubjectConcepts = (Element) nlSConcepts.item(0);
+                    Element eDescConcepts = (Element) nlDConcepts.item(0);
+                    NodeList nlDescConcepts = eDescConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    NodeList nlSubjectConcepts = eSubjectConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    if (nlSubjectConcepts != null && nlDescConcepts != null)
+                    {
+                        int iSubjectLength = nlSubjectConcepts.getLength();
+                        int iDescLength = nlDescConcepts.getLength();
+                        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[iSubjectLength + iDescLength];
+                        for (int i = 0; i < iSubjectLength; i++)
+                        {
+                            Element eSConcept = (Element)nlSubjectConcepts.item(i);
+                            NodeList nlCID = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_subjectConcepts;
+                                oAnnotation.oConcepts[i].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                        for (int i = 0; i < iDescLength; i++)
+                        {
+                            Element eDConcept = (Element)nlDescConcepts.item(i);
+                            NodeList nlCID = eDConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eDConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i + iSubjectLength] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i + iSubjectLength].sName = MetadataConstants.c_XMLE_descriptionConcepts;
+                                oAnnotation.oConcepts[i + iSubjectLength].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i + iSubjectLength].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            //MetadataModel.SaveObjectNewIssueAnnotation(sEventId, oAnnotation);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * @summary Method for reading new comment annotation event from XML.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param dDoc - input XML document to read
+     */
+    private static void NewCommentAnnotation(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+
+            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+
+            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
+            {
+                Element eAnnotation = (Element) nlAnnotation.item(0);
+            
+                //URI
+                NodeList nlUri = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_itemUri);
+                if (nlUri != null && nlUri.getLength() > 0)
+                {
+                    oAnnotation.m_sObjectURI = nlUri.item(0).getNodeValue();
+                }
+                
+                //Annotations
+                NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentAnnotated);
+                if (nlCommentAnnotated != null)
+                {
+                    int iCommentLength = nlCommentAnnotated.getLength();
+                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iCommentLength];
+                    if (iCommentLength > 0)
+                    {
+                        for (int i = 0; i < iCommentLength; i++)
+                        {
+                            Element eCommentAnnotated = (Element)nlCommentAnnotated.item(i);
+                            oAnnotation.oAnnotated[i] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i].sName = MetadataConstants.c_XMLE_commentAnnotated;
+                            oAnnotation.oAnnotated[i].sValue = eCommentAnnotated.getNodeValue();
+                        }
+                    }
+                }
+                
+                //Concepts
+                NodeList nlCConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentConcepts);
+                if (nlCConcepts != null && nlCConcepts.getLength() > 0)
+                {
+                    Element eCommConcepts = (Element) nlCConcepts.item(0);
+                    NodeList nlCommConcepts = eCommConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    if (nlCommConcepts != null)
+                    {
+                        int iCommentLength = nlCommConcepts.getLength();
+                        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[iCommentLength];
+                        for (int i = 0; i < iCommentLength; i++)
+                        {
+                            Element eSConcept = (Element)nlCommConcepts.item(i);
+                            NodeList nlCID = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_commentConcepts;
+                                oAnnotation.oConcepts[i].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            //MetadataModel.SaveObjectNewCommAnnotation(sEventId, oAnnotation);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * @summary Method for reading new commit annotation event from XML.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param dDoc - input XML document to read
+     */
+    private static void NewCommitAnnotation(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+
+            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+
+            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
+            {
+                Element eAnnotation = (Element) nlAnnotation.item(0);
+            
+                //URI
+                NodeList nlUri = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_itemUri);
+                if (nlUri != null && nlUri.getLength() > 0)
+                {
+                    oAnnotation.m_sObjectURI = nlUri.item(0).getNodeValue();
+                }
+                
+                //Annotations
+                NodeList nlCommitAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commitAnnotated);
+                if (nlCommitAnnotated != null)
+                {
+                    int iCommitLength = nlCommitAnnotated.getLength();
+                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iCommitLength];
+                    if (iCommitLength > 0)
+                    {
+                        for (int i = 0; i < iCommitLength; i++)
+                        {
+                            Element eCommitAnnotated = (Element)nlCommitAnnotated.item(i);
+                            oAnnotation.oAnnotated[i] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i].sName = MetadataConstants.c_XMLE_commitAnnotated;
+                            oAnnotation.oAnnotated[i].sValue = eCommitAnnotated.getNodeValue();
+                        }
+                    }
+                }
+                
+                //Concepts
+                NodeList nlCConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commitConcepts);
+                if (nlCConcepts != null && nlCConcepts.getLength() > 0)
+                {
+                    Element eCommConcepts = (Element) nlCConcepts.item(0);
+                    NodeList nlCommConcepts = eCommConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    if (nlCommConcepts != null)
+                    {
+                        int iCommentLength = nlCommConcepts.getLength();
+                        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[iCommentLength];
+                        for (int i = 0; i < iCommentLength; i++)
+                        {
+                            Element eSConcept = (Element)nlCommConcepts.item(i);
+                            NodeList nlCID = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eSConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_commitConcepts;
+                                oAnnotation.oConcepts[i].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            //MetadataModel.SaveObjectNewCommitAnnotation(sEventId, oAnnotation);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * @summary Method for reading new forum post annotation event from XML.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param dDoc - input XML document to read
+     */
+    private static void NewForumPostAnnotation(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+
+            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+
+            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
+            {
+                Element eAnnotation = (Element) nlAnnotation.item(0);
+            
+                //URI
+                NodeList nlUri = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_itemUri);
+                if (nlUri != null && nlUri.getLength() > 0)
+                {
+                    oAnnotation.m_sObjectURI = nlUri.item(0).getNodeValue();
+                }
+                
+                //Annotations
+                NodeList nlTitleAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_titleAnnotated);
+                NodeList nlBodyAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_bodyAnnotated);
+                if (nlTitleAnnotated != null && nlBodyAnnotated != null)
+                {
+                    int iTitleLength = nlTitleAnnotated.getLength();
+                    int iBodyLength = nlBodyAnnotated.getLength();
+                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iTitleLength + iBodyLength];
+                    if (iTitleLength > 0)
+                    {
+                        for (int i = 0; i < iTitleLength; i++)
+                        {
+                            Element eTitleAnnotated = (Element)nlTitleAnnotated.item(i);
+                            oAnnotation.oAnnotated[i] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i].sName = MetadataConstants.c_XMLE_titleAnnotated;
+                            oAnnotation.oAnnotated[i].sValue = eTitleAnnotated.getNodeValue();
+                        }
+                    }
+                    if (iBodyLength > 0)
+                    {
+                        for (int i = 0; i < iBodyLength; i++)
+                        {
+                            Element eBodyAnnotated = (Element)nlBodyAnnotated.item(i);
+                            oAnnotation.oAnnotated[i + iTitleLength] = new MetadataGlobal.AnnotationProp();
+                            oAnnotation.oAnnotated[i + iTitleLength].sName = MetadataConstants.c_XMLE_bodyAnnotated;
+                            oAnnotation.oAnnotated[i + iTitleLength].sValue = eBodyAnnotated.getNodeValue();
+                        }
+                    }
+                }
+                
+                //Concepts
+                NodeList nlTConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_titleConcepts);
+                NodeList nlBConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_bodyConcepts);
+                if (nlTConcepts != null && nlBConcepts != null &&
+                    nlTConcepts.getLength() > 0 && nlBConcepts.getLength() > 0)
+                {
+                    Element eTitleConcepts = (Element) nlTConcepts.item(0);
+                    Element eBodyConcepts = (Element) nlBConcepts.item(0);
+                    NodeList nlTitleConcepts = eTitleConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    NodeList nlBodyConcepts = eBodyConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+                    if (nlTitleConcepts != null && nlBodyConcepts != null)
+                    {
+                        int iTitleLength = nlTitleConcepts.getLength();
+                        int iBodyLength = nlBodyConcepts.getLength();
+                        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[iTitleLength + iBodyLength];
+                        for (int i = 0; i < iTitleLength; i++)
+                        {
+                            Element eTConcept = (Element)nlTitleConcepts.item(i);
+                            NodeList nlCID = eTConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eTConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_titleConcepts;
+                                oAnnotation.oConcepts[i].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                        for (int i = 0; i < iBodyLength; i++)
+                        {
+                            Element eBConcept = (Element)nlBodyConcepts.item(i);
+                            NodeList nlCID = eBConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_id);
+                            NodeList nlCCount = eBConcept.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_count);
+                            if (nlCID != null && nlCID.getLength() > 0 &&
+                                nlCCount != null && nlCCount.getLength() > 0)
+                            {
+                                oAnnotation.oConcepts[i + iTitleLength] = new MetadataGlobal.ConceptProp();
+                                oAnnotation.oConcepts[i + iTitleLength].sName = MetadataConstants.c_XMLE_bodyConcepts;
+                                oAnnotation.oConcepts[i + iTitleLength].sId = nlCID.item(0).getNodeValue();
+                                oAnnotation.oConcepts[i + iTitleLength].sCount = nlCCount.item(0).getNodeValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            //MetadataModel.SaveObjectNewForumAnnotation(sEventId, oAnnotation);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
     // </editor-fold>
 
     // <editor-fold desc="XML reading methods">

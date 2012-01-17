@@ -38,7 +38,13 @@ public class MetadataConstants {
     public static String c_ET_APICall_reply = "Metadata.APICall.reply";
     public static String c_ET_member_request = "Metadata.member.request";
     public static String c_ET_member_reply = "Metadata.member.reply";
-    
+    public static String c_ET_issue_requestAnnotation = "Metadata.issue.requestAnnotation";
+    public static String c_ET_comment_requestAnnotation = "Metadata.comment.requestAnnotation";
+    public static String c_ET_commit_requestAnnotation = "Metadata.commit.requestAnnotation";
+    public static String c_ET_forumPost_requestAnnotation = "Metadata.forumPost.requestAnnotation";
+    public static String c_ET_mail_requestAnnotation = "Metadata.mail.requestAnnotation";
+    public static String c_ET_wikiPost_requestAnnotation = "Metadata.wikiPost.requestAnnotation";
+
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
@@ -167,6 +173,23 @@ public class MetadataConstants {
     
     public static String c_XMLE_result = "result";
     
+    public static String c_XMLE_annotation = "annotation";
+    public static String c_XMLE_itemUri = "itemUri";
+    public static String c_XMLE_subjectAnnotated = "subjectAnnotated";
+    public static String c_XMLE_descriptionAnnotated = "descriptionAnnotated";
+    public static String c_XMLE_commentAnnotated = "commentAnnotated";
+    public static String c_XMLE_commitAnnotated = "commitAnnotated";
+    public static String c_XMLE_titleAnnotated = "titleAnnotated";
+    public static String c_XMLE_bodyAnnotated = "bodyAnnotated";
+    public static String c_XMLE_subjectConcepts = "subjectConcepts";
+    public static String c_XMLE_descriptionConcepts = "descriptionConcepts";
+    public static String c_XMLE_commentConcepts = "commentConcepts";
+    public static String c_XMLE_commitConcepts = "commitConcepts";
+    public static String c_XMLE_titleConcepts = "titleConcepts";
+    public static String c_XMLE_bodyConcepts = "bodyConcepts";
+    public static String c_XMLE_concept = "concept";
+    public static String c_XMLE_count = "count";
+
     // </editor-fold>
     
     // <editor-fold desc="XML values">
@@ -337,6 +360,12 @@ public class MetadataConstants {
     // <editor-fold desc="Ontology AnnotationProperty">
     
     public static String c_OWLAnnotationProperty_comment = "http://www.w3.org/2000/01/rdf-schema#comment";
+    public static String c_OWLAnnotationProperty_apDescription = "apDescription";
+    public static String c_OWLAnnotationProperty_apSubject = "apSubject";
+    public static String c_OWLAnnotationProperty_apComment = "apComment";
+    public static String c_OWLAnnotationProperty_apCommit = "apCommit";
+    public static String c_OWLAnnotationProperty_apTitle = "apTitle";
+    public static String c_OWLAnnotationProperty_apBody = "apBody";
     
     // </editor-fold>
         
