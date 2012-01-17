@@ -1228,7 +1228,7 @@ public class MetadataRDFConverter {
             //if keyword exists in comment annotation or in commit message
             String sQuery = "SELECT ?commitUri WHERE {"
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
-                    + "?commitUri <" + MetadataConstants.c_OWLAnnotationProperty_comment + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apComment + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessage . FILTER regex(?commitMessage, \"" + sKeyword + "\", \"i\")}"
