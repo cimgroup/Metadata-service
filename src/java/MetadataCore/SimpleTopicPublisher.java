@@ -8,7 +8,7 @@ package MetadataCore;
 import javax.jms.*;
 import javax.naming.*;
 import java.util.*;
-import org.apache.activemq.jndi.*;
+//import org.apache.activemq.jndi.*;
 /**
  *
  * @author dusan.marjanovic
