@@ -172,6 +172,8 @@ public class MetadataConstants {
     public static String c_XMLE_id = "id";
     
     public static String c_XMLE_result = "result";
+    public static String c_XMLE_post = "post";
+    public static String c_XMLE_wikiPage = "wikiPage";
     
     public static String c_XMLE_annotation = "annotation";
     public static String c_XMLE_itemUri = "itemUri";
@@ -225,8 +227,8 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getInfo = "issue.getInfo";
     public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
-    public static String c_XMLAC_mail_getRelatedToIssue = "mail.getRelatedToIssue";
-    public static String c_XMLAC_mail_getRelatedToKeyword = "mail.getRelatedToKeyword";
+    public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
+    public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
     public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
     public static String c_XMLAC_method_getRelatedCode = "method.getRelatedCode";
     public static String c_XMLAC_person_getAllForEmail = "person.getAllForEmail";
@@ -251,6 +253,9 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
+    public static String c_OWLClass_Email = "Email";
+    public static String c_OWLClass_post = "post";
+    public static String c_OWLClass_WikiPage = "WikiPage";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -323,6 +328,8 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_RevisionTag = "revisionTag";
     public static String c_OWLDataProperty_CommitDate = "commitDate";
     public static String c_OWLDataProperty_CommitMessage = "commitMessage";
+    
+    public static String c_OWLDataProperty_Subject = "subject";
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">

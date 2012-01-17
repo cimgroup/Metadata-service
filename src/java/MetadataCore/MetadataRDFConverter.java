@@ -58,7 +58,7 @@ public class MetadataRDFConverter {
             oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
             Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
             oIssue.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issue + "/s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
-            
+
             //already done in GetObjectURI method
             //bug id
             //if (!oIssue.m_sID.isEmpty())
@@ -912,14 +912,16 @@ public class MetadataRDFConverter {
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-            OntResource resBug = oModel.getOntResource(sIssueUri);
-            StmtIterator siProperties = resBug.listProperties();
+            OntResource resIssue = oModel.getOntResource(sIssueUri);
+            StmtIterator siProperties = resIssue.listProperties();
             
             String sIssueAnnotationStatus = "false";
             while (siProperties.hasNext())
             {
                 //if annotation property comment exists
-                if (siProperties.next().getPredicate().getURI().equals(MetadataConstants.c_OWLAnnotationProperty_comment))
+                String sPropertyURI = siProperties.next().getPredicate().getURI();
+                if (sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject)
+                 || sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription))
                 {
                     sIssueAnnotationStatus = "true";
                     break;
@@ -1212,6 +1214,53 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary issue_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            
+            //if keyword exists in description/subject annotation or in issue keyword
+            String sQuery = "SELECT ?issueUri WHERE {"
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . FILTER regex(?description, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Keyword + "> ?keyword . FILTER regex(?keyword, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+
+                oData.oData.add(oIssueUri);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
      * @summary commit_getRelatedToKeyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.
@@ -1228,7 +1277,7 @@ public class MetadataRDFConverter {
             //if keyword exists in comment annotation or in commit message
             String sQuery = "SELECT ?commitUri WHERE {"
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apComment + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apCommit + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessage . FILTER regex(?commitMessage, \"" + sKeyword + "\", \"i\")}"
@@ -1245,6 +1294,144 @@ public class MetadataRDFConverter {
                 oCommitUri.sData = qsCommit.get("?commitUri").toString();
 
                 oData.oData.add(oCommitUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary mail_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_email_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in subject/body annotation or in mail subject
+            String sQuery = "SELECT ?emailUri WHERE {"
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsEmail = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsEmail.hasNext())
+            {
+                QuerySolution qsIssue = rsEmail.nextSolution();
+                
+                MetadataGlobal.APIResponseData oEmailUri = new MetadataGlobal.APIResponseData();
+                oEmailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                oEmailUri.sData = qsIssue.get("?emailUri").toString();
+
+                oData.oData.add(oEmailUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary mail_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_post_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in title/body annotation or in mail subject
+            String sQuery = "SELECT ?postUri WHERE {"
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsPost = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPost.hasNext())
+            {
+                QuerySolution qsPost = rsPost.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPostUri = new MetadataGlobal.APIResponseData();
+                oPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
+                oPostUri.sData = qsPost.get("?postUri").toString();
+
+                oData.oData.add(oPostUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary wiki_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_wiki_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in title/body annotation or in mail subject
+            String sQuery = "SELECT ?wikiPagesUri WHERE {"
+                    + "{?wikiPagesUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPagesUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?wikiPagesUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPagesUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?wikiPagesUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPagesUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsWikiPage = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsWikiPage.hasNext())
+            {
+                QuerySolution qsWikiPage = rsWikiPage.nextSolution();
+                
+                MetadataGlobal.APIResponseData oWikiPageUri = new MetadataGlobal.APIResponseData();
+                oWikiPageUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+                oWikiPageUri.sData = qsWikiPage.get("?wikiPagesUri").toString();
+
+                oData.oData.add(oWikiPageUri);
             }
         }
         catch (Exception e)

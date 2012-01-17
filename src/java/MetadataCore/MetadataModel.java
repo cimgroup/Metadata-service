@@ -191,15 +191,67 @@ public class MetadataModel {
     
     /**
      * @summary API Call Method for getting commits related to keyword
-     * @startRealisation Sasa Stojanovic 15.12.2011.
-     * @finalModification Sasa Stojanovic 15.12.2011.
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
      * @param sEventId - event id
-     * @param sKeyword - issue uri
+     * @param sKeyword - keyword
+     */
+    static void ac_issue_getRelatedToKeyword(String sEventId, String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getRelatedToKeyword(sKeyword);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getRelatedToKeyword, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting commits related to keyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sKeyword - keyword
      */
     static void ac_commit_getRelatedToKeyword(String sEventId, String sKeyword)
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getRelatedToKeyword(sKeyword);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getRelatedToKeyword, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting emails related to keyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sKeyword - keyword
+     */
+    static void ac_email_getRelatedToKeyword(String sEventId, String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_email_getRelatedToKeyword(sKeyword);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_email_getRelatedToKeyword, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting emails related to keyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sKeyword - keyword
+     */
+    static void ac_post_getRelatedToKeyword(String sEventId, String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_post_getRelatedToKeyword(sKeyword);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_post_getRelatedToKeyword, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting emails related to keyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sKeyword - keyword
+     */
+    static void ac_wiki_getRelatedToKeyword(String sEventId, String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_wiki_getRelatedToKeyword(sKeyword);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_wiki_getRelatedToKeyword, sEventId, oData);
     }
     
     /**
