@@ -16,7 +16,7 @@ public class Commit  extends MetadataObject {
     // <editor-fold desc="Members">
     
     public foaf_Person m_oHasAuthor;
-    public foaf_Person m_oHasCommiter;
+    public foaf_Person m_oHasCommitter;
     public Repository m_oIsCommitOfRepository;
     public Date m_dtmCommitDate;
     public String m_sCommitMessage;

@@ -449,20 +449,20 @@ public class MetadataXMLReader {
                 oCommit.m_oIsCommitOfRepository = new Repository();
                 oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
                 
-                oCommit.m_sRevisionTag = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitAuthor);
+                oCommit.m_sRevisionTag = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitRevisionTag);
                 
-                NodeList nlAuthor = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueAssignedTo);
+                NodeList nlAuthor = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitAuthor);
                 if (nlAuthor != null && nlAuthor.getLength() > 0)
                 {
                     Element eAuthor = (Element) nlAuthor.item(0);
                     oCommit.m_oHasAuthor = GetPersonObject(eAuthor);
                 }
                 
-                NodeList nlCommiter = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitCommiter);
+                NodeList nlCommiter = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitCommtter);
                 if (nlCommiter != null && nlCommiter.getLength() > 0)
                 {
                     Element eCommiter = (Element) nlCommiter.item(0);
-                    oCommit.m_oHasCommiter = GetPersonObject(eCommiter);
+                    oCommit.m_oHasCommitter = GetPersonObject(eCommiter);
                 }
 
                 oCommit.m_dtmCommitDate = MetadataGlobal.GetDateTime(GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitDate));
