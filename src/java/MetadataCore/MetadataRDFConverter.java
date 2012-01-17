@@ -1212,6 +1212,49 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary commit_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_commit_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in comment annotation or in commit message
+            String sQuery = "SELECT ?commitUri WHERE {"
+                    + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apComment + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessage . FILTER regex(?commitMessage, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsCommit.hasNext())
+            {
+                QuerySolution qsCommit = rsCommit.nextSolution();
+                
+                MetadataGlobal.APIResponseData oCommitUri = new MetadataGlobal.APIResponseData();
+                oCommitUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+                oCommitUri.sData = qsCommit.get("?commitUri").toString();
+
+                oData.oData.add(oCommitUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
      * @summary issue_getAllForMethod
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
@@ -1412,7 +1455,7 @@ public static void CreateTriples()
 //            ResIterator resourceIter;
 // 
 //             model.read(MetadataConstants.sLocationFile);  
-//             String NS = MetadataConstants.sOWLrdf;
+//             String NS = MetadataConstants.c_NS_w3_rdf_syntax;
 //             OntClass place = model.getOntClass( NS + "Property" );
 //             String anchor = "rdf:Bug#";
 //

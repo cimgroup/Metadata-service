@@ -103,6 +103,7 @@ public class MetadataModel {
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
      * @param sSPARQL - sparql query
+     * @param sOntModelSpec - specification of ontology model
      */
     static void ac_sparql(String sEventId, String sSPARQL, String sOntModelSpec)
     {
@@ -180,12 +181,25 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
-     * @param sIssueUri - issue uri
+     * @param sIssueDuplicatesSPARQL - SPARQL for issue duplicates
      */
     static void ac_issue_getDuplicates(String sEventId, String sIssueDuplicatesSPARQL)
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getDuplicates, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting commits related to keyword
+     * @startRealisation Sasa Stojanovic 15.12.2011.
+     * @finalModification Sasa Stojanovic 15.12.2011.
+     * @param sEventId - event id
+     * @param sKeyword - issue uri
+     */
+    static void ac_commit_getRelatedToKeyword(String sEventId, String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getRelatedToKeyword(sKeyword);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getRelatedToKeyword, sEventId, oData);
     }
     
     /**

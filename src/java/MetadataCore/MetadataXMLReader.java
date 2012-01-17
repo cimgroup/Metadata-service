@@ -669,6 +669,27 @@ public class MetadataXMLReader {
                     
                     MetadataModel.ac_issue_getDuplicates(sEventId, sIssueDuplicatesSPARQL);
                 }
+                
+                ///////////////////////////////// commit_getRelatedToKeyword /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getRelatedToKeyword))
+                {
+                    String sKeyword = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_keyword))
+                                sKeyword = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_commit_getRelatedToKeyword(sEventId, sKeyword);
+                }
             }
         }
         catch (Exception e)
