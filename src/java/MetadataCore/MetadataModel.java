@@ -190,7 +190,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting commits related to keyword
+     * @summary API Call Method for getting issues related to keyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.
      * @param sEventId - event id
@@ -229,7 +229,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting emails related to keyword
+     * @summary API Call Method for getting posts related to keyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.
      * @param sEventId - event id
@@ -242,7 +242,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting emails related to keyword
+     * @summary API Call Method for getting wiki pages related to keyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.
      * @param sEventId - event id
@@ -252,6 +252,71 @@ public class MetadataModel {
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_wiki_getRelatedToKeyword(sKeyword);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_wiki_getRelatedToKeyword, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting issues related to issue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - keyword
+     */
+    static void ac_issue_getRelatedToIssue(String sEventId, String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getRelatedToIssue(sIssueUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getRelatedToIssue, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting commits related to issue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - keyword
+     */
+    static void ac_commit_getRelatedToIssue(String sEventId, String sIssueUri)
+    {
+        //MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getRelatedToIssue(sIssueUri);       
+        //MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getRelatedToIssue, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting emails related to issue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - keyword
+     */
+    static void ac_email_getRelatedToIssue(String sEventId, String sIssueUri)
+    {
+        //MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_email_getRelatedToIssue(sIssueUri);       
+        //MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_email_getRelatedToIssue, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting posts related to issue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - keyword
+     */
+    static void ac_post_getRelatedToIssue(String sEventId, String sIssueUri)
+    {
+        //MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_post_getRelatedToIssue(sIssueUri);       
+        //MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_post_getRelatedToIssue, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting wiki pages related to issue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - keyword
+     */
+    static void ac_wiki_getRelatedToIssue(String sEventId, String sIssueUri)
+    {
+        //MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_wiki_getRelatedToIssue(sIssueUri);       
+        //MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_wiki_getRelatedToIssue, sEventId, oData);
     }
     
     /**

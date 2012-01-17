@@ -774,6 +774,111 @@ public class MetadataXMLReader {
                     
                     MetadataModel.ac_wiki_getRelatedToKeyword(sEventId, sKeyword);
                 }
+                
+                ///////////////////////////////// issue_getRelatedToIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getRelatedToIssue))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getRelatedToIssue(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// commit_getRelatedToIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getRelatedToIssue))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_commit_getRelatedToIssue(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// email_getRelatedToIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_email_getRelatedToIssue))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_email_getRelatedToIssue(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// post_getRelatedToIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_post_getRelatedToIssue))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_post_getRelatedToIssue(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// wiki_getRelatedToIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_wiki_getRelatedToIssue))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_wiki_getRelatedToIssue(sEventId, sIssueUri);
+                }
             }
         }
         catch (Exception e)

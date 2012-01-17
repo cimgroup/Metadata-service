@@ -1251,7 +1251,6 @@ public class MetadataRDFConverter {
 
                 oData.oData.add(oIssueUri);
             }
-
         }
         catch (Exception e)
         {
@@ -1432,6 +1431,53 @@ public class MetadataRDFConverter {
                 oWikiPageUri.sData = qsWikiPage.get("?wikiPagesUri").toString();
 
                 oData.oData.add(oWikiPageUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            
+            //if issues have same description/subject annotation
+            String sQuery = "SELECT ?issueUri WHERE {"
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . "
+                    + "FILTER (?issueUri != <" + sIssueUri + ">)}"
+                    + " UNION "
+                     + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "FILTER (?issueUri != <" + sIssueUri + ">)}"
+                    + "}";
+                            
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+
+                oData.oData.add(oIssueUri);
             }
         }
         catch (Exception e)
