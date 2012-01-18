@@ -942,7 +942,7 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAnnotationStatus
+     * @summary issue_getInfo
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sIssueUri - issue URI
@@ -1179,7 +1179,7 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAllForMethod
+     * @summary issue_getDuplicates
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sMethodUri - methods' URIs
@@ -1205,6 +1205,82 @@ public class MetadataRDFConverter {
                 oIssueUri.sData = qsIssue.get("?issueUri").toString();
 
                 oData.oData.add(oIssueUri);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary person_getInfo
+     * @startRealisation Sasa Stojanovic 14.12.2011.
+     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @param sPersonUri - person URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_person_getInfo(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resPerson = oModel.getOntResource(sPersonUri);
+            StmtIterator siProperties = resPerson.listProperties();
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oPersonData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_id;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personEmail;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personFirstName;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personLastName;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                
+                if (oPersonData.sReturnConfig != null)
+                    oData.oData.add(oPersonData);
+            }
+            
+            //spajanje imena i prezimena u jedan objekat
+            String sName = "";
+            for (int i = 0; i < oData.oData.size(); i++)
+            {
+                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personFirstName))
+                {
+                    sName = oData.oData.get(i).sData + sName;
+                    oData.oData.remove(i);
+                }
+                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personLastName))
+                {
+                    sName = sName + " " + oData.oData.get(i).sData;
+                    oData.oData.remove(i);
+                }
+            }
+            if (!sName.isEmpty())
+            {
+                MetadataGlobal.APIResponseData oName = new MetadataGlobal.APIResponseData();
+                oName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personName;
+                oName.sData = sName;
+                oData.oData.add(oName);
             }
         }
         catch (Exception e)

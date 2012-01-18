@@ -98,7 +98,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for executing custom SPARQL query
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
@@ -125,7 +125,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for getting all issues for product
      * @startRealisation Sasa Stojanovic 13.12.2011.
      * @finalModification Sasa Stojanovic 13.12.2011.
      * @param sEventId - event id
@@ -138,7 +138,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for getting all issues for method
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sEventId - event id
@@ -151,7 +151,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for getting issue annotation status
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sEventId - event id
@@ -164,7 +164,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for getting issue info
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sEventId - event id
@@ -177,7 +177,7 @@ public class MetadataModel {
     }
     
     /**
-     * @summary API Call Method for getting all individuals
+     * @summary API Call Method for getting duplicates for issue
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
@@ -187,6 +187,19 @@ public class MetadataModel {
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getDuplicates, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting person info
+     * @startRealisation Sasa Stojanovic 14.12.2011.
+     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @param sEventId - event id
+     * @param sPersonUri - person uri
+     */
+    static void ac_person_getInfo(String sEventId, String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_person_getInfo(sPersonUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_person_getInfo, sEventId, oData);
     }
     
     /**

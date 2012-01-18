@@ -157,7 +157,9 @@ public class MetadataConstants {
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
+    public static String c_XMLE_personName = "personName";
     public static String c_XMLE_personGender = "personGender";
+    public static String c_XMLE_personEmail = "personEmail";
     
     public static String c_XMLE_apiRequest = "apiRequest";
     public static String c_XMLE_apiResponse = "apiResponse";
@@ -210,6 +212,8 @@ public class MetadataConstants {
     public static String c_XMLV_issueUri = "issueUri";
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
+    
+    public static String c_XMLV_personUri = "personUri";
     
     // </editor-fold>
     
