@@ -1182,7 +1182,7 @@ public class MetadataRDFConverter {
      * @summary issue_getDuplicates
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
-     * @param sMethodUri - methods' URIs
+     * @param sIssueDuplicatesSPARQL - SPARQL query
      * @return - APIResponseData object with results
      */
     public static MetadataGlobal.APIResponseData ac_issue_getDuplicates(String sIssueDuplicatesSPARQL)
@@ -1215,8 +1215,8 @@ public class MetadataRDFConverter {
     
     /**
      * @summary person_getInfo
-     * @startRealisation Sasa Stojanovic 14.12.2011.
-     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
      * @param sPersonUri - person URI
      * @return - APIResponseData object with results
      */
@@ -1289,6 +1289,95 @@ public class MetadataRDFConverter {
         return oData;
     }
     
+    /**
+     * @summary issue_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sFirstName - person first name
+     * @param sLastName - person last name
+     * @param sEmail - person email
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_identity_getForPerson(String sFirstName, String sLastName, String sEmail)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            if (!sFirstName.isEmpty() || !sLastName.isEmpty() || !sEmail.isEmpty())
+            {
+                //if person has same data as identity
+                String sQuery = "SELECT ?personUri WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . ";
+                
+                if (!sFirstName.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName + "> ?firstName . FILTER regex(?firstName, \"" + sFirstName + "\", \"i\") . ";
+                            
+                if (!sLastName.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName + "> ?lastName . FILTER regex(?lastName, \"" + sLastName + "\", \"i\") . ";
+                
+                if (!sEmail.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . FILTER regex(?email, \"" + sEmail + "\", \"i\") . ";
+                
+                sQuery += "}";
+
+                ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+
+                while (rsPerson.hasNext())
+                {
+                    QuerySolution qsPerson = rsPerson.nextSolution();
+
+                    MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                    oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                    oPersonUri.sData = qsPerson.get("?personUri").toString();
+
+                    oData.oData.add(oPersonUri);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary competency_getPersonForIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonForIssueSPARQL - SPARQL query
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_competency_getPersonForIssue(String sPersonForIssueSPARQL)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?personUri WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . " + sPersonForIssueSPARQL + "}";
+                            
+            ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPerson.hasNext())
+            {
+                QuerySolution qsPerson = rsPerson.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                oPersonUri.sData = qsPerson.get("?personUri").toString();
+
+                oData.oData.add(oPersonUri);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+            
+            
     /**
      * @summary issue_getRelatedToKeyword
      * @startRealisation Sasa Stojanovic 17.01.2012.

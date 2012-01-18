@@ -191,8 +191,8 @@ public class MetadataModel {
     
     /**
      * @summary API Call Method for getting person info
-     * @startRealisation Sasa Stojanovic 14.12.2011.
-     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
      * @param sEventId - event id
      * @param sPersonUri - person uri
      */
@@ -200,6 +200,35 @@ public class MetadataModel {
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_person_getInfo(sPersonUri);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_person_getInfo, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting identity for provided person information
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEventId - event id
+     * @param sFirstName - person first name
+     * @param sLastName - person last name
+     * @param sEmail - person email
+     */
+    static void ac_identity_getForPerson(String sEventId, String sFirstName, String sLastName, String sEmail)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_identity_getForPerson(sFirstName, sLastName, sEmail);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_identity_getForPerson, sEventId, oData);
+    }
+    
+    
+    /**
+     * @summary API Call Method for getting person for issue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEventId - event id
+     * @param sPersonForIssueSPARQL - SPARQL for person for issue
+     */
+    static void ac_competency_getPersonForIssue(String sEventId, String sPersonForIssueSPARQL)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_competency_getPersonForIssue(sPersonForIssueSPARQL);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_competency_getPersonForIssue, sEventId, oData);
     }
     
     /**

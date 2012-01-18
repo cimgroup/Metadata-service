@@ -691,6 +691,54 @@ public class MetadataXMLReader {
                     MetadataModel.ac_person_getInfo(sEventId, sPersonUri);
                 }
                 
+                ///////////////////////////////// identity_getForPerson /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_identity_getForPerson))
+                {
+                    String sFirstName = "";
+                    String sLastName = "";
+                    String sEmail = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_firstName))
+                                sFirstName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_lastName))
+                                sLastName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_email))
+                                sEmail = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_identity_getForPerson(sEventId, sFirstName, sLastName, sEmail);
+                }
+                
+                ///////////////////////////////// competency_getPersonForIssue /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_competency_getPersonForIssue))
+                {
+                    String sPersonForIssueSPARQL = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_personForIssueSPARQL))
+                                sPersonForIssueSPARQL = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_competency_getPersonForIssue(sEventId, sPersonForIssueSPARQL);
+                }
+                
                 ///////////////////////////////// issue_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getRelatedToKeyword))
                 {

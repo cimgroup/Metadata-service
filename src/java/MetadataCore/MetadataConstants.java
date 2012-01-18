@@ -213,6 +213,12 @@ public class MetadataConstants {
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
     
+    public static String c_XMLV_personForIssueSPARQL = "personForIssueSPARQL";
+    
+    public static String c_XMLV_firstName = "firstName";
+    public static String c_XMLV_lastName = "lastName";
+    public static String c_XMLV_email = "email";
+    
     public static String c_XMLV_personUri = "personUri";
     
     // </editor-fold>
