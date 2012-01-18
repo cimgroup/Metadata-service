@@ -691,6 +691,27 @@ public class MetadataXMLReader {
                     MetadataModel.ac_person_getInfo(sEventId, sPersonUri);
                 }
                 
+                ///////////////////////////////// person_getAllForEmail /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_person_getAllForEmail))
+                {
+                    String sEmail = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_email))
+                                sEmail = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_person_getAllForEmail(sEventId, sEmail);
+                }
+                
                 ///////////////////////////////// identity_getForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_identity_getForPerson))
                 {
@@ -737,6 +758,51 @@ public class MetadataXMLReader {
                     }
                     
                     MetadataModel.ac_competency_getPersonForIssue(sEventId, sPersonForIssueSPARQL);
+                }
+                
+                ///////////////////////////////// method_getAllForPerson /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getAllForPerson))
+                {
+                    String sPersonUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_personUri))
+                                sPersonUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_method_getAllForPerson(sEventId, sPersonUri);
+                }
+                
+                ///////////////////////////////// method_getRelatedCode /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getRelatedCode))
+                {
+                    String sPersonUri = "";
+                    String sProductUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_personUri))
+                                sPersonUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_productUri))
+                                sProductUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_method_getRelatedCode(sEventId, sPersonUri, sProductUri);
                 }
                 
                 ///////////////////////////////// issue_getRelatedToKeyword /////////////////////////////////

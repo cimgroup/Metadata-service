@@ -1290,6 +1290,54 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary person_getAllForEmail
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEmail - person email
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_person_getAllForEmail(String sEmail)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+                        
+            String sQuery = "SELECT ?personUri ?personFirstName ?personLastName WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . "
+                    + "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . "
+                    + "FILTER (?email = \"" + sEmail + "\") . "
+                    + "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName + "> ?personFirstName . "
+                    + "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName + "> ?personLastName}";                         
+            ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPerson.hasNext())
+            {
+                QuerySolution qsPerson = rsPerson.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPerson = new MetadataGlobal.APIResponseData();
+                oPerson.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + "/";
+                
+                MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                oPersonUri.sData = qsPerson.get("?personUri").toString();
+                oPerson.oData.add(oPersonUri);
+                
+                MetadataGlobal.APIResponseData oPersonName = new MetadataGlobal.APIResponseData();
+                oPersonName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personName;
+                oPersonName.sData = qsPerson.get("?personFirstName").toString() + " " + qsPerson.get("?personLastName").toString();
+                oPerson.oData.add(oPersonName);
+
+                oData.oData.add(oPerson);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
      * @summary issue_getRelatedToKeyword
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.
@@ -1373,10 +1421,83 @@ public class MetadataRDFConverter {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return oData;
     }
+    
+    /**
+     * @summary method_getAllForPerson
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonUri - person uri
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_method_getAllForPerson(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+                            
+            ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
+            while (rsMethod.hasNext())
+            {
+                QuerySolution qsMethod = rsMethod.nextSolution();
+                
+                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                oMethodUri.sData = qsMethod.get("?methodUri").toString();
+
+                oData.oData.add(oMethodUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary method_getRelatedCode
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonUri - person uri
+     * @param sProductUri - product uri
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_method_getRelatedCode(String sPersonUri, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+                            
+            ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsMethod.hasNext())
+            {
+                QuerySolution qsMethod = rsMethod.nextSolution();
+                
+                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                oMethodUri.sData = qsMethod.get("?methodUri").toString();
+
+                oData.oData.add(oMethodUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
             
     /**
      * @summary issue_getRelatedToKeyword

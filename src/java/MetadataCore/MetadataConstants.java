@@ -176,6 +176,7 @@ public class MetadataConstants {
     public static String c_XMLE_result = "result";
     public static String c_XMLE_post = "post";
     public static String c_XMLE_wikiPage = "wikiPage";
+    public static String c_XMLE_method = "method";
     
     public static String c_XMLE_annotation = "annotation";
     public static String c_XMLE_itemUri = "itemUri";
@@ -266,6 +267,7 @@ public class MetadataConstants {
     public static String c_OWLClass_Email = "Email";
     public static String c_OWLClass_post = "post";
     public static String c_OWLClass_WikiPage = "WikiPage";
+    public static String c_OWLClass_Method = "Method";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";

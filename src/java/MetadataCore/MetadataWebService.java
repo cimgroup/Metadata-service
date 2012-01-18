@@ -86,8 +86,14 @@ public class MetadataWebService {
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getDuplicates\\APIRequest - issue.getDuplicates.xml");
             
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\person.getInfo\\APIRequest - person.getInfo.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\person.getAllForEmail\\APIRequest - person.getAllForEmail.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\identity.getForPerson\\APIRequest - identity.getForPerson.xml");
-            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\competency.getPersonForIssue\\APIRequest - competency.getPersonForIssue.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\competency.getPersonForIssue\\APIRequest - competency.getPersonForIssue.xml");
+            
+            //not implemented yet
+            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\method.getAllForPerson\\APIRequest - method.getAllForPerson.xml");
+            //not implemented yet
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\method.getRelatedCode\\APIRequest - method.getRelatedCode.xml");
             
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getRelatedToKeyword\\APIRequest - issue.getRelatedToKeyword.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\commit.getRelatedToKeyword\\APIRequest - commit.getRelatedToKeyword.xml");

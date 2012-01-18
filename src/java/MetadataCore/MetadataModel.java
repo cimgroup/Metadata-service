@@ -203,6 +203,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting persons for email
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEventId - event id
+     * @param eMail - person email
+     */
+    static void ac_person_getAllForEmail(String sEventId, String eMail)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_person_getAllForEmail(eMail);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_person_getAllForEmail, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting identity for provided person information
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.
@@ -229,6 +242,34 @@ public class MetadataModel {
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_competency_getPersonForIssue(sPersonForIssueSPARQL);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_competency_getPersonForIssue, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting method for person
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEventId - event id
+     * @param sPersonUri - person uri
+     */
+    static void ac_method_getAllForPerson(String sEventId, String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_method_getAllForPerson, sEventId, oData);
+    }
+    
+    
+    /**
+     * @summary API Call Method for getting method for person and product
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEventId - event id
+     * @param sPersonUri - person uri
+     * @param sProductUri - product uri
+     */
+    static void ac_method_getRelatedCode(String sEventId, String sPersonUri, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_method_getRelatedCode(sPersonUri, sProductUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_method_getRelatedCode, sEventId, oData);
     }
     
     /**
