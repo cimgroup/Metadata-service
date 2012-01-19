@@ -46,7 +46,9 @@ public class MetadataConstants {
     public static String c_ET_forumPost_requestAnnotation = "Metadata.forumPost.requestAnnotation";
     public static String c_ET_mail_requestAnnotation = "Metadata.mail.requestAnnotation";
     public static String c_ET_wikiPost_requestAnnotation = "Metadata.wikiPost.requestAnnotation";
-
+    public static String c_ET_forumPost_requestNew = "Metadata.forumPost.requestNew";
+    public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
+    
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
@@ -192,6 +194,18 @@ public class MetadataConstants {
     public static String c_XMLE_concept = "concept";
     public static String c_XMLE_count = "count";
 
+    public static String c_XMLE_forum = "forum";
+    public static String c_XMLE_forumPost = "forumPost";
+    public static String c_XMLE_thread = "thread";
+    public static String c_XMLE_threadId = "threadId";
+    public static String c_XMLE_forumId = "forumId";
+    public static String c_XMLE_postId = "postId";
+    public static String c_XMLE_time = "time";
+    public static String c_XMLE_subject = "subject";
+    public static String c_XMLE_body = "body";
+    public static String c_XMLE_author = "author";
+    public static String c_XMLE_category = "category";
+
     // </editor-fold>
     
     // <editor-fold desc="XML values">
@@ -252,6 +266,9 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
+    public static String c_OWLClass_post = "post";
+    public static String c_OWLClass_threads = "threads";
+    public static String c_OWLClass_forum = "forum";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -324,6 +341,11 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_RevisionTag = "revisionTag";
     public static String c_OWLDataProperty_CommitDate = "commitDate";
     public static String c_OWLDataProperty_CommitMessage = "commitMessage";
+    
+    public static String c_OWLDataProperty_Subject = "subject";
+    public static String c_OWLObjectProperty_HasPosts = "hasPosts";
+    public static String c_OWLObjectProperty_HasThreads = "hasThreads";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">

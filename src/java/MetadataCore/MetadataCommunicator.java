@@ -89,7 +89,7 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Response.xml"));
+            Result rsLocation = new StreamResult(new File("D:\\Response.xml"));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)

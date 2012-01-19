@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataObjects.*;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import java.lang.reflect.Array;
@@ -95,6 +96,32 @@ public class MetadataModel {
     {
         oPerson = MetadataRDFConverter.SavePerson(oPerson);
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
+    }
+ 
+    /**
+     * @summary Method for saving new forum post.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 18.01.2012.
+     * @param sEventId - event id.
+     * @param oForumPost - forum post object.
+     */
+    static void SaveObjectNewForumPost(String sEventId, NewForumPost oForumPost)
+    {
+        oForumPost = MetadataRDFConverter.SaveForumPost(oForumPost);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, oForumPost);
+    }
+
+    /**
+     * @summary Method for saving new issue annotation.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param sEventId - event id.
+     * @param oAnnotation - annotation data object.
+     */
+    static void SaveObjectNewAnnotationData(String sEventId, AnnotationData oAnnotation)
+    {
+        MetadataRDFConverter.SaveAnnotationData(oAnnotation);
+        //MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
     }
     
     /**

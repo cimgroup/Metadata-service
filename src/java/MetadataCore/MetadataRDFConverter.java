@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataCore.MetadataGlobal.OntoProperty;
 import MetadataObjects.*;
 import com.hp.hpl.jena.graph.Node;
@@ -802,6 +803,178 @@ public class MetadataRDFConverter {
         }
     }
     
+    /**
+     * @summary Save annotation data.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param oAnnotation - AnnotationData object
+     */
+    public static void SaveAnnotationData(AnnotationData oAnnotation)
+    {
+        try
+        {
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
+            if (resObject != null && oAnnotation.oAnnotated != null)
+            {
+                int iCount = oAnnotation.oAnnotated.length;
+                for (int i = 0; i < iCount; i++)
+                {
+                    String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
+                    if (!sOWLDataProperty.isEmpty())
+                    {
+                        String sOWLFullPropertyName = MetadataConstants.c_NS_Alert + sOWLDataProperty;
+                        AnnotationProperty apAnnotation = omModel.getAnnotationProperty(sOWLFullPropertyName);
+                        if (apAnnotation == null)
+                        {
+                            apAnnotation = omModel.createAnnotationProperty(sOWLFullPropertyName);
+                        }
+                        resObject.addProperty(apAnnotation, oAnnotation.oAnnotated[i].sValue);
+                    }
+                }
+            }
+            
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Get annotation property name for annotation.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param sAnnotationName - annotation name.
+     * @return - data property name for annotation.
+     */
+    private static String GetAnnotationPropName(String sAnnotationName)
+    {
+        String sAnnotationPropertyName = "";
+        
+        if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apSubject;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_descriptionAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apDescription;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apComment;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apCommit;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_titleAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apTitle;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_bodyAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apBody;
+        }
+       
+        return sAnnotationPropertyName;
+    }
+    
+    /**
+     * @summary Save forum post data.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 18.01.2012.
+     * @param oForumPost - NewForumPost object
+     */
+    public static NewForumPost SaveForumPost(NewForumPost oForumPost)
+    {
+        try
+        {
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            oForumPost.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post, oForumPost.m_sID);
+            Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
+            oForumPost.m_sReturnConfig = "YY#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+            
+            ////Time
+            //if (!oForumPost.m_sTime != null)
+            //{
+            //    DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
+            //    resPost.removeAll(dtpTime);
+            //    resPost.addProperty(dtpTime, oForumPost.m_sTime.toString());
+            //}
+            
+            //Subject
+            if (!oForumPost.m_sSubject.isEmpty())
+            {
+                DatatypeProperty dtpSubject = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
+                resPost.removeAll(dtpSubject);
+                resPost.addProperty(dtpSubject, oForumPost.m_sSubject);
+            }
+
+            //Body
+            //if (!oForumPost.m_sBody.isEmpty())
+            //{
+            //    DatatypeProperty dtpBody = omModel.getDatatypeProperty(MetadataConstants.c_NS_doap + MetadataConstants.c_OWLDataProperty_Description);
+            //    resPost.removeAll(dtpBody);
+            //    resPost.addProperty(dtpBody, oForumPost.m_sBody);
+            //}
+            
+            //HasAutor
+            //if (oForumPost.m_oHasAuthor != null && !oForumPost.m_oHasAuthor.m_sID.isEmpty())
+            //{
+            //    SavePersonData(oForumPost.m_oHasAuthor, omModel);
+            //    ObjectProperty opHasAuthor = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAuthor);
+            //    Resource resHasAuthor = omModel.getResource(oForumPost.m_oHasAuthor.m_sObjectURI);
+            //    resPost.removeAll(opHasAuthor);
+            //    resPost.addProperty(opHasAuthor, resHasAuthor.asResource());
+            //    oForumPost.m_oHasAuthor.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_author + MetadataConstants.c_XMLE_Uri;
+            //}
+            
+            ////Category
+            //if (!oForumPost.m_sCategory.isEmpty())
+            //{
+            //    DatatypeProperty dtpCategory = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category);
+            //    resPost.removeAll(dtpCategory);
+            //    resPost.addProperty(dtpCategory, oForumPost.m_sCategory);
+            //}
+            
+            //HasPost - thread
+            if (oForumPost.m_sForumThread != null)
+            {
+                //String sThreadUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_sThreadID);
+                oForumPost.m_sForumThread.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_sForumThread.m_sID);
+                //Resource resThread = omModel.getResource(sThreadUri);
+                Resource resThread = omModel.getResource(oForumPost.m_sForumThread.m_sObjectURI);
+                //oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                ObjectProperty opHasPosts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasPosts);
+                resThread.addProperty(opHasPosts, resPost.asResource());
+            
+                //HasThread - forum
+                if (oForumPost.m_sForum != null)
+                {
+                    //String sForumUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_sForumID);
+                    oForumPost.m_sForum.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_sForum.m_sID);
+                    //Resource resForum = omModel.getResource(sForumUri);
+                    Resource resForum = omModel.getResource(oForumPost.m_sForum.m_sObjectURI);
+                    //oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    ObjectProperty opHasThreads = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasThreads);
+                    resForum.addProperty(opHasThreads, resThread.asResource());
+                }
+            }
+            
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+        
+        return oForumPost;
+    }
+
     // <editor-fold desc="API Calls">
     
     /**
@@ -1402,7 +1575,7 @@ public class MetadataRDFConverter {
     }
     
     
-public static void CreateTriples()
+    public static void CreateTriples()
     {
 //        try {
 //
@@ -1479,9 +1652,4 @@ public static void CreateTriples()
 //  
 //         }
     }
-
-    
-
-    
-
 }
