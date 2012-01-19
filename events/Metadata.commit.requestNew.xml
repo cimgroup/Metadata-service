@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+	<s:Header></s:Header>
+	<s:Body>
+		<wsnt:Notify>
+			<wsnt:NotificationMessage>
+				<wsnt:Topic></wsnt:Topic>
+				<wsnt:ProducerReference>
+					<wsa:Address>http://www.alert-project.eu/kesi</wsa:Address>
+				</wsnt:ProducerReference>
+				<wsnt:Message>
+					<ns1:event xmlns:ns1="http://www.alert-project.eu/"	xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki"	xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+						<ns1:head>
+							<ns1:sender>KESI</ns1:sender>
+							<ns1:timestamp>10000</ns1:timestamp>
+							<ns1:sequencenumber>1</ns1:sequencenumber>
+						</ns1:head>
+						<ns1:payload>
+							<ns1:meta>
+								<ns1:startTime>10010</ns1:startTime>
+								<ns1:endTime>10010</ns1:endTime>
+								<ns1:eventName>Metadata.commit.requestNew</ns1:eventName>
+								<ns1:eventId>5748</ns1:eventId>
+								<ns1:eventType>request</ns1:eventType>
+							</ns1:meta>
+							<ns1:eventData>
+								<s:commit>
+									<s:commitRepositoryUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Repository1</s:commitRepositoryUri>
+									<s:commitRevisionTag>1</s:commitRevisionTag>
+									<s:commitAuthor>
+										<s:name>Sasa Stojanovic</s:name>
+										<s:id>sasa.stojanovic@cimcollege.rs</s:id>
+										<s:email>sasa.stojanovic@cimcollege.rs</s:email>
+									</s:commitAuthor>
+									<s:commitCommitter>
+										<s:name>Ivan Obradovic</s:name>
+										<s:id>ivan.obradovic@cimcollege.rs</s:id>
+										<s:email>ivan.obradovic@cimcollege.rs</s:email>
+									</s:commitCommitter>
+									<s:commitDate>2012-01-16 16:31</s:commitDate>
+									<s:commitMessageLog>comment of commit</s:commitMessageLog>
+									<s:commitFile>
+										<!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
+										<s:fileAction></s:fileAction>
+										<s:fileBranch></s:fileBranch>
+										<s:fileModules>
+											<s:moduleName></s:moduleName>
+											<s:moduleStartLine></s:moduleStartLine>
+											<s:moduleEndLine></s:moduleEndLine>
+											<s:moduleMethods>
+												<s:methodName></s:methodName>
+												<s:methodStartLine></s:methodStartLine>
+												<s:methodEndLine></s:methodEndLine>
+											</s:moduleMethods>
+											<s:moduleMethods>
+												<s:methodName></s:methodName>
+												<s:methodStartLine></s:methodStartLine>
+												<s:methodEndLine></s:methodEndLine>
+											</s:moduleMethods>
+										</s:fileModules>
+										<s:fileModules>
+											<s:moduleName></s:moduleName>
+											<s:moduleStartLine></s:moduleStartLine>
+											<s:moduleEndLine></s:moduleEndLine>
+											<s:moduleMethods>
+												<s:methodName></s:methodName>
+												<s:methodStartLine></s:methodStartLine>
+												<s:methodEndLine></s:methodEndLine>
+											</s:moduleMethods>
+										</s:fileModules>
+									</s:commitFile>
+									<s:commitFile>
+										<!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
+										<s:fileAction></s:fileAction>
+										<s:fileBranch></s:fileBranch>
+										<s:fileModules>
+											<s:moduleName></s:moduleName>
+											<s:moduleStartLine></s:moduleStartLine>
+											<s:moduleEndLine></s:moduleEndLine>
+											<s:moduleMethods>
+												<s:methodName></s:methodName>
+												<s:methodStartLine></s:methodStartLine>
+												<s:methodEndLine></s:methodEndLine>
+											</s:moduleMethods>
+										</s:fileModules>
+									</s:commitFile>
+								</s:commit>
+							</ns1:eventData>
+						</ns1:payload>
+					</ns1:event>
+				</wsnt:Message>
+			</wsnt:NotificationMessage>
+		</wsnt:Notify>
+	</s:Body>
+</s:Envelope>
