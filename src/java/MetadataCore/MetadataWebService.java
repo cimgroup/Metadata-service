@@ -75,7 +75,7 @@ public class MetadataWebService {
         {
             //implemented events
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestNew.xml");
-            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.commit.requestNew.xml");
             
             //String sRequest = LoadXML("F:\\Events\\2011_12 Events\\Metadata.issue.requestNew.xml");
@@ -84,6 +84,9 @@ public class MetadataWebService {
             //String sRequest = LoadXML("F:\\Events\\Metadata - KEUI events\\Metadata.commit.requestAnnotation.xml");
             //String sRequest = LoadXML("F:\\Events\\Metadata - KEUI events\\Metadata.forumPost.requestNew.xml");
         
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.commit.requestNew.xml");
+
             //API Calls
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\sparql\\APIRequest - sparql.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAllForProduct\\APIRequest - issue.getAllForProduct.xml");
@@ -91,6 +94,28 @@ public class MetadataWebService {
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getAnnotationStatus\\APIRequest - issue.getAnnotationStatus.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getInfo\\APIRequest - issue.getInfo.xml");
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getDuplicates\\APIRequest - issue.getDuplicates.xml");
+            
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\person.getInfo\\APIRequest - person.getInfo.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\person.getAllForEmail\\APIRequest - person.getAllForEmail.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\identity.getForPerson\\APIRequest - identity.getForPerson.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\competency.getPersonForIssue\\APIRequest - competency.getPersonForIssue.xml");
+            
+            //not implemented yet
+            String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\method.getAllForPerson\\APIRequest - method.getAllForPerson.xml");
+            //not implemented yet
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\method.getRelatedCode\\APIRequest - method.getRelatedCode.xml");
+            
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getRelatedToKeyword\\APIRequest - issue.getRelatedToKeyword.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\commit.getRelatedToKeyword\\APIRequest - commit.getRelatedToKeyword.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\email.getRelatedToKeyword\\APIRequest - email.getRelatedToKeyword.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\post.getRelatedToKeyword\\APIRequest - post.getRelatedToKeyword.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\wiki.getRelatedToKeyword\\APIRequest - wiki.getRelatedToKeyword.xml");
+            
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\issue.getRelatedToIssue\\APIRequest - issue.getRelatedToIssue.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\commit.getRelatedToIssue\\APIRequest - commit.getRelatedToIssue.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\email.getRelatedToIssue\\APIRequest - email.getRelatedToIssue.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\post.getRelatedToIssue\\APIRequest - post.getRelatedToIssue.xml");
+            //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Defined API Calls\\wiki.getRelatedToIssue\\APIRequest - wiki.getRelatedToIssue.xml");
             
             MetadataWebService oServis = new MetadataWebService();
             String sTest = oServis.XMLRequest(sRequest);

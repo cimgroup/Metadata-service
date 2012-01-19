@@ -22,9 +22,7 @@ public class MetadataConstants {
     public static String sLocationLoad = "file://hpserver/Aktuelni projekti/ALERT/Kod/ontology/alert5.owl";
     public static String sLocationSaveLoc = "D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
     public static String sLocationLoadLoc = "file:D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
-    
-    public static String sOWLrdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-       
+          
     public static String c_http = "http://";
     
     // <editor-fold desc="Event types">
@@ -161,7 +159,9 @@ public class MetadataConstants {
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
+    public static String c_XMLE_personName = "personName";
     public static String c_XMLE_personGender = "personGender";
+    public static String c_XMLE_personEmail = "personEmail";
     
     public static String c_XMLE_apiRequest = "apiRequest";
     public static String c_XMLE_apiResponse = "apiResponse";
@@ -176,6 +176,9 @@ public class MetadataConstants {
     public static String c_XMLE_id = "id";
     
     public static String c_XMLE_result = "result";
+    public static String c_XMLE_post = "post";
+    public static String c_XMLE_wikiPage = "wikiPage";
+    public static String c_XMLE_method = "method";
     
     public static String c_XMLE_annotation = "annotation";
     public static String c_XMLE_itemUri = "itemUri";
@@ -223,6 +226,15 @@ public class MetadataConstants {
     public static String c_XMLV_methodUri = "methodUri";
     public static String c_XMLV_issueUri = "issueUri";
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
+    public static String c_XMLV_keyword = "keyword";
+    
+    public static String c_XMLV_personForIssueSPARQL = "personForIssueSPARQL";
+    
+    public static String c_XMLV_firstName = "firstName";
+    public static String c_XMLV_lastName = "lastName";
+    public static String c_XMLV_email = "email";
+    
+    public static String c_XMLV_personUri = "personUri";
     
     // </editor-fold>
     
@@ -240,8 +252,8 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getInfo = "issue.getInfo";
     public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
-    public static String c_XMLAC_mail_getRelatedToIssue = "mail.getRelatedToIssue";
-    public static String c_XMLAC_mail_getRelatedToKeyword = "mail.getRelatedToKeyword";
+    public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
+    public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
     public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
     public static String c_XMLAC_method_getRelatedCode = "method.getRelatedCode";
     public static String c_XMLAC_person_getAllForEmail = "person.getAllForEmail";
@@ -266,9 +278,13 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
+    
     public static String c_OWLClass_post = "post";
     public static String c_OWLClass_threads = "threads";
     public static String c_OWLClass_forum = "forum";
+    public static String c_OWLClass_Email = "Email";
+    public static String c_OWLClass_WikiPage = "WikiPage";
+    public static String c_OWLClass_Method = "Method";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -400,6 +416,8 @@ public class MetadataConstants {
     public static String c_NS_Alert_Scm = "http://www.alert-project.eu/ontologies/alert_scm.owl#";
     public static String c_NS_foaf = "http://xmlns.com/foaf/0.1/";
     public static String c_NS_doap = "http://usefulinc.com/ns/doap#";
+    public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
 
     // </editor-fold>
     
