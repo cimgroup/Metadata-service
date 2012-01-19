@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+	<s:Header></s:Header>
+	<s:Body>
+		<wsnt:Notify>
+			<wsnt:NotificationMessage>
+				<wsnt:Topic></wsnt:Topic>
+				<wsnt:ProducerReference>
+					<wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+				</wsnt:ProducerReference>
+				<wsnt:Message>
+					<ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+						<ns1:head>
+							<ns1:sender>METADATASERVICE</ns1:sender>
+							<ns1:timestamp>10003</ns1:timestamp>
+							<ns1:sequencenumber>1</ns1:sequencenumber>
+						</ns1:head>
+						<ns1:payload>
+							<ns1:meta>
+								<ns1:startTime>10010</ns1:startTime>
+								<ns1:endTime>10020</ns1:endTime>
+								<!-- name of event -->
+								<ns1:eventName>Metadata.issue.replyNewUpdate</ns1:eventName>
+								<ns1:eventId>5748</ns1:eventId>
+								<ns1:eventType>reply</ns1:eventType>
+							</ns1:meta>
+							<ns1:eventData>
+								<s:issue>
+									<!-- issue uri -->
+									<s:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s:issueUri>
+									<!-- uri of issue author person -->
+									<s:issueAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s:issueAuthorUri>
+									<s:issueProduct>
+										<!-- uri of issue project -->
+										<s:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s:productUri>
+										<!-- uri of project component -->
+										<s:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</s:productComponentUri>
+									</s:issueProduct>
+									<s:issueComputerSystem>
+										<!-- uri of computer system -->
+										<s:computerSystemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1</s:computerSystemUri>
+									</s:issueComputerSystem>
+									<!-- uri of issue assigned person -->
+									<s:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</s:issueAssignedToUri>
+									<!-- uris of issue CC persons -->
+									<s:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</s:issueCCPersonUri>
+									<s:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person4</s:issueCCPersonUri>
+									<!-- uris of related issues -->
+									<s:issueDependsOnUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s:issueDependsOnUri>
+									<s:issueBlocksUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3</s:issueBlocksUri>
+									<s:issueDuplicateOfUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug4</s:issueDuplicateOfUri>
+									<s:issueMergedIntoUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug5</s:issueMergedIntoUri>
+									<s:issueMilestone>
+										<s:milestoneUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Milestone1</s:milestoneUri>
+									</s:issueMilestone>
+									<!-- issue comments -->
+									<s:issueComment>
+										<s:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s:commentUri>
+										<s:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s:commentPersonUri>
+									</s:issueComment>
+									<!-- issue attachments -->
+									<s:issueAttachment>
+										<s:attachmentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Attachment1</s:attachmentUri>
+									</s:issueAttachment>
+									<!-- issue activities -->
+									<s:issueActivity>
+										<s:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1</s:activityUri>
+										<s:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s:activityWhoUri>
+									</s:issueActivity>
+									<s:issueActivity>
+										<s:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity2</s:activityUri>
+										<s:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s:activityWhoUri>
+									</s:issueActivity>
+									<!-- issue issue tracker -->
+									<s:issueTracker>
+										<s:issueTrackerUri>http://www.alert-project.eu/ontologies/alert_its.owl#IssueTracker1</s:issueTrackerUri>
+									</s:issueTracker>
+								</s:issue>
+							</ns1:eventData>
+						</ns1:payload>
+					</ns1:event>
+				</wsnt:Message>
+			</wsnt:NotificationMessage>
+		</wsnt:Notify>
+	</s:Body>
+</s:Envelope>
