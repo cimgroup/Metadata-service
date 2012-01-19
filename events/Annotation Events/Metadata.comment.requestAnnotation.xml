@@ -29,7 +29,7 @@
 									<!-- item Uri -->
 									<s1:itemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s1:itemUri>
 									<!-- comment annotations -->
-									<s1:commentAnnotated>This is test annotation for comment</s1:commentAnnotated>
+									<s1:commentAnnotated><![CDATA[This is test <concept id="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for comment]]></s1:commentAnnotated>
 									<!-- comment concepts -->
 									<s1:commentConcepts>
 										<s1:concept>
