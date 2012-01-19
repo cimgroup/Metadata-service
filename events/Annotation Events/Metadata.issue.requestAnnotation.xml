@@ -29,25 +29,25 @@
 									<!-- item Uri -->
 									<s1:itemUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:itemUri>
 									<!-- subject annotations -->
-									<s1:subjectAnnotated>This is test annotation for subject</s1:subjectAnnotated>
+									<s1:subjectAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug2">subject</concept>]]></s1:subjectAnnotated>
 									<!-- subject concepts -->
 									<s1:subjectConcepts>
 										<s1:concept>
-											<s1:id>1</s1:id>
-											<s1:count>2</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 										<s1:concept>
-											<s1:id>2</s1:id>
-											<s1:count>4</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:subjectConcepts>
 									<!-- description annotations -->
-									<s1:descriptionAnnotated>This is test annotation for description</s1:descriptionAnnotated>
+									<s1:descriptionAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for description]]></s1:descriptionAnnotated>
 									<!-- description concepts -->
 									<s1:descriptionConcepts>
 										<s1:concept>
-											<s1:id>3</s1:id>
-											<s1:count>6</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:descriptionConcepts>
 								</s1:annotation>

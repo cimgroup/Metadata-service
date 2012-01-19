@@ -29,12 +29,12 @@
 									<!-- item Uri -->
 									<s1:itemUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit1</s1:itemUri>
 									<!-- commit annotations -->
-									<s1:commitAnnotated>This is test annotation for commit</s1:commitAnnotated>
+									<s1:commitAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for commit]]></s1:commitAnnotated>
 									<!-- commit concepts -->
 									<s1:commitConcepts>
 										<s1:concept>
-											<s1:id>5</s1:id>
-											<s1:count>2</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:commitConcepts>
 								</s1:annotation>

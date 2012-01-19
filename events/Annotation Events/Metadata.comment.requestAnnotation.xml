@@ -29,12 +29,12 @@
 									<!-- item Uri -->
 									<s1:itemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s1:itemUri>
 									<!-- comment annotations -->
-									<s1:commentAnnotated><![CDATA[This is test <concept id="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for comment]]></s1:commentAnnotated>
+									<s1:commentAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for comment]]></s1:commentAnnotated>
 									<!-- comment concepts -->
 									<s1:commentConcepts>
 										<s1:concept>
-											<s1:id>4</s1:id>
-											<s1:count>5</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:commentConcepts>
 								</s1:annotation>

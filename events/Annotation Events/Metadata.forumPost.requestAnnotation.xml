@@ -29,21 +29,21 @@
 									<!-- item Uri -->
 									<s1:itemUri></s1:itemUri>
 									<!-- title annotations -->
-									<s1:titleAnnotated>This is test annotation for post title</s1:titleAnnotated>
+									<s1:titleAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post title]]></s1:titleAnnotated>
 									<!-- title concepts -->
 									<s1:titleConcepts>
 										<s1:concept>
-											<s1:id>6</s1:id>
-											<s1:count>3</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:titleConcepts>
 									<!-- body annotations -->
-									<s1:bodyAnnotated>This is test annotation for post body</s1:bodyAnnotated>
+									<s1:bodyAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post body]]></s1:bodyAnnotated>
 									<!-- body concepts -->
 									<s1:bodyConcepts>
 										<s1:concept>
-											<s1:id>7</s1:id>
-											<s1:count>2</s1:count>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:bodyConcepts>
 								</s1:annotation>
