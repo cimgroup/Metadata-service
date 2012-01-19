@@ -941,26 +941,26 @@ public class MetadataRDFConverter {
             //}
             
             //HasPost - thread
-            if (oForumPost.m_sForumThread != null)
+            if (oForumPost.m_oForumThread != null)
             {
                 //String sThreadUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_sThreadID);
-                oForumPost.m_sForumThread.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_sForumThread.m_sID);
+                oForumPost.m_oForumThread.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_oForumThread.m_sID);
                 //Resource resThread = omModel.getResource(sThreadUri);
-                Resource resThread = omModel.getResource(oForumPost.m_sForumThread.m_sObjectURI);
+                Resource resThread = omModel.getResource(oForumPost.m_oForumThread.m_sObjectURI);
                 //oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
-                oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                oForumPost.m_oForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
                 ObjectProperty opHasPosts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasPosts);
                 resThread.addProperty(opHasPosts, resPost.asResource());
             
                 //HasThread - forum
-                if (oForumPost.m_sForum != null)
+                if (oForumPost.m_oForum != null)
                 {
                     //String sForumUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_sForumID);
-                    oForumPost.m_sForum.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_sForum.m_sID);
+                    oForumPost.m_oForum.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_oForum.m_sID);
                     //Resource resForum = omModel.getResource(sForumUri);
-                    Resource resForum = omModel.getResource(oForumPost.m_sForum.m_sObjectURI);
+                    Resource resForum = omModel.getResource(oForumPost.m_oForum.m_sObjectURI);
                     //oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
-                    oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    oForumPost.m_oForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
                     ObjectProperty opHasThreads = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasThreads);
                     resForum.addProperty(opHasThreads, resThread.asResource());
                 }

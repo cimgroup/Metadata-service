@@ -1523,13 +1523,13 @@ public class MetadataXMLReader {
                 Element eForum = (Element) nlForum.item(0);
             
                 //forumID
-                oForumPost.m_sForum = new ForumEvent();
-                oForumPost.m_sForum.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumId);
+                oForumPost.m_oForum = new ForumEvent();
+                oForumPost.m_oForum.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumId);
                 //oForumPost.m_sForumID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumId);
 
                 //threadID
-                oForumPost.m_sForumThread = new NewForumThread();
-                oForumPost.m_sForumThread.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_threadId);
+                oForumPost.m_oForumThread = new NewForumThread();
+                oForumPost.m_oForumThread.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_threadId);
                 //oForumPost.m_sThreadID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_threadId);
 
                 //postID

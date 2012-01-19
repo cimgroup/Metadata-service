@@ -15,8 +15,8 @@ public class NewForumPost extends ForumEvent {
     // <editor-fold desc="Members">
     
     //m_sID - post ID
-    public NewForumThread m_sForumThread;
-    public ForumEvent m_sForum;
+    public NewForumThread m_oForumThread;
+    public ForumEvent m_oForum;
     ////public String m_sForumID;
     ////public String m_sThreadID;
     //public Date m_dtmTime; // not in ontology
