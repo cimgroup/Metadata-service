@@ -79,6 +79,7 @@ public class MetadataWebService {
             //String sRequest = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\2011_12 Events\\Metadata.commit.requestNew.xml");
             
             //String sRequest = LoadXML("F:\\Events\\2011_12 Events\\Metadata.issue.requestNew.xml");
+            //String sRequest = LoadXML("F:\\Events\\2011_12 Events\\Metadata.issue.requestUpdate.xml");
             //String sRequest = LoadXML("F:\\Events\\2011_12 Events\\Metadata.commit.requestNew.xml");
             //String sRequest = LoadXML("F:\\Events\\Metadata - KEUI events\\Metadata.issue.requestAnnotation.xml");
             //String sRequest = LoadXML("F:\\Events\\Metadata - KEUI events\\Metadata.commit.requestAnnotation.xml");

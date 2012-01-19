@@ -60,6 +60,7 @@ public class MetadataCommunicator {
     {
         try
         {
+            dDoc.setXmlStandalone(true); //needed for OutputKeys.STANDALONE to have an effect
             Source source = new DOMSource(dDoc);
             StringWriter stringWriter = new StringWriter();
             Result result = new StreamResult(stringWriter);
@@ -67,8 +68,9 @@ public class MetadataCommunicator {
             Transformer transformer = factory.newTransformer();
             
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");           
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            //transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             
@@ -82,8 +84,9 @@ public class MetadataCommunicator {
             Transformer tTransformer = tFactory.newTransformer();
             //Output Types (text/xml/html)
             tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
-            tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
             tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            //tTransformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
             tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
             tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
