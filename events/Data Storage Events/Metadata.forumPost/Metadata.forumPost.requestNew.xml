@@ -26,6 +26,8 @@
 							</ns1:meta>
 							<ns1:eventData>
 								<s1:forum>
+									<!-- forum item ID -->
+									<s1:forumItemId>1423</s1:forumItemId>
 									<!-- forum ID -->
 									<s1:forumId>3558</s1:forumId>
 									<!-- thread ID -->
@@ -33,7 +35,7 @@
 									<!-- post ID -->
 									<s1:postId>3560</s1:postId>
 									<!-- time -->
-									<s1:time>100001</s1:time>
+									<s1:time>2011-04-15 10:55:57</s1:time>
 									<!-- subject -->
 									<s1:subject>This is a test subject for post</s1:subject>
 									<!-- body -->
