@@ -8,7 +8,9 @@ package MetadataCore;
 import javax.jms.*;
 import javax.naming.*;
 import java.util.*;
-//import org.apache.activemq.jndi.*;
+import org.apache.activemq.jndi.*;
+
+
 /**
  *
  * @author dusan.marjanovic
@@ -31,7 +33,7 @@ public class SimpleTopicPublisher {
         //    System.exit(1);
         //}
         //topicName = new String(args[0]);
-        topicName = "Test_Topic";
+        topicName = "MyTopic";
         System.out.println("Topic name is " + topicName);
         if (args.length == 2){
             NUM_MSGS = (new Integer(args[1])).intValue();
@@ -44,9 +46,12 @@ public class SimpleTopicPublisher {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
+            env.setProperty("topic.MyTopic", topicName);
             
+                    
             jndiContext = new InitialContext(env);
+            //jndiContext = new InitialContext();
             }catch (NamingException e){
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());
                 e.printStackTrace();
@@ -58,9 +63,8 @@ public class SimpleTopicPublisher {
         try {
 
 
-            topicConnectionFactory = (TopicConnectionFactory)
-            jndiContext.lookup("TopicConnectionFactory");
-//          topic = (Topic) jndiContext.lookup(topicName);
+            topicConnectionFactory = (TopicConnectionFactory) jndiContext.lookup("TopicConnectionFactory");
+            topic = (Topic) jndiContext.lookup(topicName);
             }catch (NamingException e) {
                 System.out.println("JNDI API lookup failed: " +  e.toString());
                 e.printStackTrace();
