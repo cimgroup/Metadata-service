@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import ActiveMQ.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -76,6 +77,9 @@ public class MetadataCommunicator {
             
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
+            SimpleTopicPublisher.publish("MyTopic", m_sXML);
+          
+            
             
             //Create transformer
             //Transformer tTransformer = TransformerFactory.newInstance().newTransformer();

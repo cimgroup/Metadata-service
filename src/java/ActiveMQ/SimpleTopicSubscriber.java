@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package MetadataCore;
+package ActiveMQ;
 
 import javax.jms.*;
 import javax.naming.*;
@@ -41,7 +41,7 @@ public class SimpleTopicSubscriber {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
+            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
             env.setProperty("topic.MyTopic", topicName);
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
