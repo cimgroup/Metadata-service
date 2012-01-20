@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package MetadataCore;
+package ActiveMQ;
 
 import javax.jms.*;
+import MetadataCore.*;
 
 /**
  *
@@ -18,7 +19,9 @@ public class TextListener implements MessageListener{
     try{
         if (message instanceof TextMessage) {
         msg = (TextMessage) message;
-        System.out.println("Reading message: " + msg.getText());
+        MetadataCommunicator.ReceiveXML(msg.getText());
+        
+     //   System.out.println("Reading message: " + msg.getText());
         } else {
             System.out.println("Message of wrong type: " + message.getClass().getName());
         }
