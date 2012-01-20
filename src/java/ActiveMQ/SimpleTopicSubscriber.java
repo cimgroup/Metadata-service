@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package MetadataCore;
+package ActiveMQ;
 
 import javax.jms.*;
 import javax.naming.*;
@@ -33,7 +33,7 @@ public class SimpleTopicSubscriber {
             System.out.println("Usage: java " + "SimpleTopicSubscriber <topic-name>");
             System.exit(1);
         }*/
-        topicName = "Test_Topic";
+        topicName = "MyTopic";
         System.out.println("Topic name is " + topicName);
         
 //*  Create a JNDI API InitialContext object if none exists yet.
@@ -42,6 +42,7 @@ public class SimpleTopicSubscriber {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
             env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+            env.setProperty("topic.MyTopic", topicName);
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());
@@ -54,7 +55,7 @@ public class SimpleTopicSubscriber {
         try {
             topicConnectionFactory = (TopicConnectionFactory)
             jndiContext.lookup("TopicConnectionFactory");
-//          topic = (Topic) jndiContext.lookup(topicName);
+            topic = (Topic) jndiContext.lookup(topicName);
             } catch (NamingException e) {
                 System.out.println("JNDI API lookup failed: " + e.toString());
                 e.printStackTrace();
