@@ -2127,10 +2127,10 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAllForMethod
+     * @summary sparql
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
-     * @param sMethodUri - methods' URIs
+     * @param sSPARQL - SPARQL query
      * @return - APIResponseData object with results
      */
     public static MetadataGlobal.APIResponseData ac_sparql(String sSPARQL, OntModelSpec oOntModelSpec)
