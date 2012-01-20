@@ -41,18 +41,17 @@ public class SimpleTopicPublisher {
         
 //  *  Create a JNDI API InitialContext object if none exists yet.
         
-        try{
+        try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
-            javax.naming.Context ctx = new InitialContext(env);
+            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
             
             jndiContext = new InitialContext(env);
-        }catch (NamingException e){
-            System.out.println("Could not create JNDI API " + "context: " + e.toString());
-            e.printStackTrace();
-            System.exit(1);
-        }
+            }catch (NamingException e){
+                System.out.println("Could not create JNDI API " + "context: " + e.toString());
+                e.printStackTrace();
+                System.exit(1);
+            }
         
 //  *  Look up connection factory and topic. If either does not exist, exit.
         
@@ -61,12 +60,12 @@ public class SimpleTopicPublisher {
 
             topicConnectionFactory = (TopicConnectionFactory)
             jndiContext.lookup("TopicConnectionFactory");
-            topic = (Topic) jndiContext.lookup(topicName);
-        } catch (NamingException e) {
-            System.out.println("JNDI API lookup failed: " +  e.toString());
-            e.printStackTrace();
-            System.exit(1);
-        }
+//          topic = (Topic) jndiContext.lookup(topicName);
+            }catch (NamingException e) {
+                System.out.println("JNDI API lookup failed: " +  e.toString());
+                e.printStackTrace();
+                System.exit(1);
+            }
 /*
     * Create connection.
     * Create session from connection; false means session is not transacted.
