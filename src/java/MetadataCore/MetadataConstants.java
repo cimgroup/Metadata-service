@@ -285,6 +285,8 @@ public class MetadataConstants {
     public static String c_OWLClass_Email = "Email";
     public static String c_OWLClass_WikiPage = "WikiPage";
     public static String c_OWLClass_Method = "Method";
+    public static String c_OWLClass_Annotation = "Annotation";
+    public static String c_OWLClass_Concept = "Concept";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -359,8 +361,6 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_CommitMessage = "commitMessage";
     
     public static String c_OWLDataProperty_Subject = "subject";
-    public static String c_OWLObjectProperty_HasPosts = "hasPosts";
-    public static String c_OWLObjectProperty_HasThreads = "hasThreads";
     
     // </editor-fold>
     
@@ -393,7 +393,14 @@ public class MetadataConstants {
     
     public static String c_OWLObjectProperty_IsCommitOfRepository = "isCommitOfRepository";
     public static String c_OWLObjectProperty_HasAuthor = "hasAuthor";
-    public static String c_OWLObjectProperty_HasCommitter = "hasCommitter";            
+    public static String c_OWLObjectProperty_HasCommitter = "hasCommitter";
+    
+    public static String c_OWLObjectProperty_HasPosts = "hasPosts";
+    public static String c_OWLObjectProperty_HasThreads = "hasThreads";
+    public static String c_OWLObjectProperty_HasAnnotations = "hasAnnotations";
+    public static String c_OWLObjectProperty_HasConcepts = "hasConcepts";
+    
+    
     // </editor-fold>
             
     // <editor-fold desc="Ontology AnnotationProperty">
