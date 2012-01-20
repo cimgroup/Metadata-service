@@ -4,11 +4,7 @@
  */
 package MetadataCore;
 
-import com.hp.hpl.jena.ontology.AnnotationProperty;
-import com.hp.hpl.jena.ontology.DatatypeProperty;
-import com.hp.hpl.jena.ontology.OntClass;
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.ontology.*;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -26,6 +22,9 @@ import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -102,13 +101,13 @@ public class MetadataGlobal {
         return omModel;
     }
     
-    /**
-     * @summary loading OntModel depending on URI
-     * @startRealisation Sasa Stojanovic 13.12.2011.
-     * @finalModification Sasa Stojanovic 13.12.2011.
-     * @param sProductUri - class/member URI
-     * @return - OntModel
-     */
+//    /**
+//     * @summary loading OntModel depending on URI
+//     * @startRealisation Sasa Stojanovic 13.12.2011.
+//     * @finalModification Sasa Stojanovic 13.12.2011.
+//     * @param sProductUri - class/member URI
+//     * @return - OntModel
+//     */
 //    public static OntModel LoadModel(String sURI)
 //    {
 //        OntModel oModel = null;
@@ -272,6 +271,97 @@ public class MetadataGlobal {
         }
     }
     
+    /**
+     * @summary Class for storing annotation data.
+     * @startRealisation  Dejan Milosavljevic 20.01.2012.
+     * @finalModification Dejan Milosavljevic 20.01.2012.
+     */
+    public static void ExpandOntology()
+    {
+        try
+        {
+            String sAnnotationClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Annotation;
+            String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
+            String sUriDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri;
+            String sCountDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count;
+            String sTextDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text;
+            String sBodyDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body;
+            String sCategoryDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category;
+            String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
+            String sKeywordAnnotationProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
+            
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //Creating Annotation class if not exist
+            OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
+            if (ocAnnotation == null)
+            {
+                ocAnnotation = omModel.createClass(sAnnotationClass);
+            }
+            
+            //Creating AnnotationConcept class if not exist
+            OntClass ocConcept = omModel.getOntClass(sConceptClass);
+            if (ocConcept == null)
+            {
+                ocConcept = omModel.createClass(sConceptClass);
+            }
+            
+            //Creating uri DataProperty
+            DatatypeProperty dtpUri = omModel.getDatatypeProperty(sUriDataProperty);
+            if (dtpUri == null)
+            {
+                dtpUri = omModel.createDatatypeProperty(sUriDataProperty);
+            }
+            
+            //Creating count DataProperty
+            DatatypeProperty dtpCount = omModel.getDatatypeProperty(sCountDataProperty);
+            if (dtpCount == null)
+            {
+                dtpCount = omModel.createDatatypeProperty(sCountDataProperty);
+            }
+            
+            //Creating text DataProperty
+            DatatypeProperty dtpText = omModel.getDatatypeProperty(sTextDataProperty);
+            if (dtpText == null)
+            {
+                dtpText = omModel.createDatatypeProperty(sTextDataProperty);
+            }
+
+            //Creating body DataProperty
+            DatatypeProperty dtpBody = omModel.getDatatypeProperty(sBodyDataProperty);
+            if (dtpBody == null)
+            {
+                dtpBody = omModel.createDatatypeProperty(sBodyDataProperty);
+            }
+
+            //Creating category DataProperty
+            DatatypeProperty dtpCategory = omModel.getDatatypeProperty(sCategoryDataProperty);
+            if (dtpCategory == null)
+            {
+                dtpCategory = omModel.createDatatypeProperty(sCategoryDataProperty);
+            }
+
+            //Creating hasConcepts ObjectProperty
+            ObjectProperty opHasConcepts = omModel.getObjectProperty(sHasConceptObjectProperty);
+            if (opHasConcepts == null)
+            {
+                opHasConcepts = omModel.createObjectProperty(sHasConceptObjectProperty);
+            }
+            
+            //Creating apKeyword AnnotationProperty
+            AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordAnnotationProperty);
+            if (apKeyword == null)
+            {
+                apKeyword = omModel.createAnnotationProperty(sKeywordAnnotationProperty);
+            }
+            
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
      // </editor-fold>
     
     // <editor-fold desc="Classes">
@@ -304,35 +394,98 @@ public class MetadataGlobal {
     /**
      * @summary Class for storing annotation data.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 19.01.2012.
      */
     public static class AnnotationData extends MetadataObject
     {
-        //m_sObjectURI
+        //m_sObjectURI - from MetadataObject (URI of object wich is being anotated)
         AnnotationProp[] oAnnotated;
         ConceptProp[] oConcepts;
+        String[] oKeywords;
+        
+        /**
+         * @summary Method for creating keywords from annotatons.
+         * @startRealisation  Dejan Milosavljevic 19.01.2012.
+         * @finalModification Dejan Milosavljevic 19.01.2012.
+         */
+        public void SetKeywords()
+        {
+            ArrayList oKw = new ArrayList();
+            if (oAnnotated != null && oAnnotated.length > 0)
+            {
+                for (int i = 0; i < oAnnotated.length; i++)
+                {
+                    String sValue = oAnnotated[i].sValue;
+                    if (!sValue.isEmpty())
+                    {
+                        int iIndexS = sValue.indexOf("<concept uri=");
+                        while (iIndexS != -1)
+                        {
+                            if (iIndexS != -1)
+                            {
+                                sValue = sValue.substring(iIndexS + 1); //added 1 because of quoutation marks
+                                int iIndexKwS = sValue.indexOf(">");
+                                if (iIndexKwS != -1)
+                                {
+                                    sValue = sValue.substring(iIndexKwS);
+                                    
+                                    int iIndexKwE = sValue.indexOf("</concept>");
+                                    if (iIndexKwE != -1)
+                                    {
+                                        String sKeyword = sValue = sValue.substring(0, iIndexKwE);
+                                        sValue = sValue.substring(iIndexKwS);
+                                        if (!sKeyword.isEmpty()) oKw.add(sKeyword);
+                                    }
+                                }
+                            }
+                            iIndexS = sValue.indexOf("<concept uri=");
+                        }
+                    }
+                }
+            }
+
+            oKeywords = (String[])oKw.toArray(new String[0]);
+        }
     }
     
     /**
      * @summary Class for storing annotation properties.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 19.01.2012.
      */
-    public static class AnnotationProp
+    public static class AnnotationProp extends MetadataObject
     {
         String sName;
+        //m_sObjectURI - from MetadataObject
         String sValue;
+        
+        /**
+         * @summary Method for extracting text from xml element.
+         * @startRealisation  Dejan Milosavljevic 19.01.2012.
+         * @finalModification Dejan Milosavljevic 19.01.2012.
+         * @param eAnnotated - xml element
+         */
+        public void SetAnnotationText(Element eAnnotated)
+        {
+            String sText = eAnnotated.getTextContent();
+            if (sText.startsWith("<![CDATA["))
+            {
+                sText = sText.substring(9, sText.length() - 3);
+            }
+            sValue = sText;
+        }
     }
     
     /**
      * @summary Class for storing concept properties.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 16.01.2012.
+     * @finalModification Dejan Milosavljevic 20.01.2012.
      */
-    public static class ConceptProp
+    public static class ConceptProp extends MetadataObject
     {
-        String sId;
         String sName;
+        //m_sObjectURI - from MetadataObject
+        String sUri;
         String sCount;
     }
     // </editor-fold>

@@ -202,6 +202,7 @@ public class MetadataConstants {
     public static String c_XMLE_thread = "thread";
     public static String c_XMLE_threadId = "threadId";
     public static String c_XMLE_forumId = "forumId";
+    public static String c_XMLE_forumItemId = "forumItemId";
     public static String c_XMLE_postId = "postId";
     public static String c_XMLE_time = "time";
     public static String c_XMLE_subject = "subject";
@@ -286,7 +287,7 @@ public class MetadataConstants {
     public static String c_OWLClass_WikiPage = "WikiPage";
     public static String c_OWLClass_Method = "Method";
     public static String c_OWLClass_Annotation = "Annotation";
-    public static String c_OWLClass_Concept = "Concept";
+    public static String c_OWLClass_AnnotationConcept = "AnnotationConcept";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -361,6 +362,11 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_CommitMessage = "commitMessage";
     
     public static String c_OWLDataProperty_Subject = "subject";
+    public static String c_OWLDataProperty_Body = "body";
+    public static String c_OWLDataProperty_Category = "category";
+    public static String c_OWLDataProperty_Name = "name";
+    public static String c_OWLDataProperty_Uri = "uri";
+    public static String c_OWLDataProperty_Count = "count";
     
     // </editor-fold>
     
@@ -412,6 +418,7 @@ public class MetadataConstants {
     public static String c_OWLAnnotationProperty_apCommit = "apCommit";
     public static String c_OWLAnnotationProperty_apTitle = "apTitle";
     public static String c_OWLAnnotationProperty_apBody = "apBody";
+    public static String c_OWLAnnotationProperty_apKeyword = "apKeyword";
     
     // </editor-fold>
         
