@@ -33,7 +33,7 @@ public class SimpleTopicSubscriber {
             System.out.println("Usage: java " + "SimpleTopicSubscriber <topic-name>");
             System.exit(1);
         }*/
-        topicName = "Test_Topic";
+        topicName = "MyTopic";
         System.out.println("Topic name is " + topicName);
         
 //*  Create a JNDI API InitialContext object if none exists yet.
@@ -41,7 +41,8 @@ public class SimpleTopicSubscriber {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
+            env.setProperty("topic.MyTopic", topicName);
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());
@@ -54,7 +55,7 @@ public class SimpleTopicSubscriber {
         try {
             topicConnectionFactory = (TopicConnectionFactory)
             jndiContext.lookup("TopicConnectionFactory");
-//          topic = (Topic) jndiContext.lookup(topicName);
+            topic = (Topic) jndiContext.lookup(topicName);
             } catch (NamingException e) {
                 System.out.println("JNDI API lookup failed: " + e.toString());
                 e.printStackTrace();
