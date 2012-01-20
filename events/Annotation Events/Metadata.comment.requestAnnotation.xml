@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+	<s:Header></s:Header>
+	<s:Body>
+		<wsnt:Notify>
+			<wsnt:NotificationMessage>
+				<wsnt:Topic></wsnt:Topic>
+				<wsnt:ProducerReference>
+					<wsa:Address>http://www.alert-project.eu/keui</wsa:Address>
+				</wsnt:ProducerReference>
+				<wsnt:Message>
+					<ns1:event xmlns:ns1="http://www.alert-project.eu/"	xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki"	xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+						<ns1:head>
+							<ns1:sender>KEUI</ns1:sender>
+							<ns1:timestamp>10000</ns1:timestamp>
+							<ns1:sequencenumber>1</ns1:sequencenumber>
+						</ns1:head>
+						<ns1:payload>
+							<ns1:meta>
+								<ns1:startTime>10010</ns1:startTime>
+								<ns1:endTime>10010</ns1:endTime>
+								<!-- name of event -->
+								<ns1:eventName>Metadata.comment.requestAnnotation</ns1:eventName>
+								<ns1:eventId>5748</ns1:eventId>
+								<ns1:eventType>request</ns1:eventType>
+							</ns1:meta>
+							<ns1:eventData>
+								<s1:annotation>
+									<!-- item Uri -->
+									<s1:itemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s1:itemUri>
+									<!-- comment annotations -->
+									<s1:commentAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for comment]]></s1:commentAnnotated>
+									<!-- comment concepts -->
+									<s1:commentConcepts>
+										<s1:concept>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
+										</s1:concept>
+									</s1:commentConcepts>
+								</s1:annotation>
+							</ns1:eventData>
+						</ns1:payload>
+					</ns1:event>
+				</wsnt:Message>
+			</wsnt:NotificationMessage>
+		</wsnt:Notify>
+	</s:Body>
+</s:Envelope>

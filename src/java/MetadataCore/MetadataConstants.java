@@ -44,7 +44,9 @@ public class MetadataConstants {
     public static String c_ET_forumPost_requestAnnotation = "Metadata.forumPost.requestAnnotation";
     public static String c_ET_mail_requestAnnotation = "Metadata.mail.requestAnnotation";
     public static String c_ET_wikiPost_requestAnnotation = "Metadata.wikiPost.requestAnnotation";
-
+    public static String c_ET_forumPost_requestNew = "Metadata.forumPost.requestNew";
+    public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
+    
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
@@ -157,7 +159,9 @@ public class MetadataConstants {
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
+    public static String c_XMLE_personName = "personName";
     public static String c_XMLE_personGender = "personGender";
+    public static String c_XMLE_personEmail = "personEmail";
     
     public static String c_XMLE_apiRequest = "apiRequest";
     public static String c_XMLE_apiResponse = "apiResponse";
@@ -172,6 +176,9 @@ public class MetadataConstants {
     public static String c_XMLE_id = "id";
     
     public static String c_XMLE_result = "result";
+    public static String c_XMLE_post = "post";
+    public static String c_XMLE_wikiPage = "wikiPage";
+    public static String c_XMLE_method = "method";
     
     public static String c_XMLE_annotation = "annotation";
     public static String c_XMLE_itemUri = "itemUri";
@@ -189,6 +196,18 @@ public class MetadataConstants {
     public static String c_XMLE_bodyConcepts = "bodyConcepts";
     public static String c_XMLE_concept = "concept";
     public static String c_XMLE_count = "count";
+
+    public static String c_XMLE_forum = "forum";
+    public static String c_XMLE_forumPost = "forumPost";
+    public static String c_XMLE_thread = "thread";
+    public static String c_XMLE_threadId = "threadId";
+    public static String c_XMLE_forumId = "forumId";
+    public static String c_XMLE_postId = "postId";
+    public static String c_XMLE_time = "time";
+    public static String c_XMLE_subject = "subject";
+    public static String c_XMLE_body = "body";
+    public static String c_XMLE_author = "author";
+    public static String c_XMLE_category = "category";
 
     // </editor-fold>
     
@@ -209,6 +228,14 @@ public class MetadataConstants {
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
     
+    public static String c_XMLV_personForIssueSPARQL = "personForIssueSPARQL";
+    
+    public static String c_XMLV_firstName = "firstName";
+    public static String c_XMLV_lastName = "lastName";
+    public static String c_XMLV_email = "email";
+    
+    public static String c_XMLV_personUri = "personUri";
+    
     // </editor-fold>
     
     // <editor-fold desc="API Call">
@@ -225,8 +252,8 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getInfo = "issue.getInfo";
     public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
-    public static String c_XMLAC_mail_getRelatedToIssue = "mail.getRelatedToIssue";
-    public static String c_XMLAC_mail_getRelatedToKeyword = "mail.getRelatedToKeyword";
+    public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
+    public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
     public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
     public static String c_XMLAC_method_getRelatedCode = "method.getRelatedCode";
     public static String c_XMLAC_person_getAllForEmail = "person.getAllForEmail";
@@ -251,6 +278,13 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
+    
+    public static String c_OWLClass_post = "post";
+    public static String c_OWLClass_threads = "threads";
+    public static String c_OWLClass_forum = "forum";
+    public static String c_OWLClass_Email = "Email";
+    public static String c_OWLClass_WikiPage = "WikiPage";
+    public static String c_OWLClass_Method = "Method";
     
     //state
     public static String c_OWLClass_Assigned = "Assigned";
@@ -323,6 +357,11 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_RevisionTag = "revisionTag";
     public static String c_OWLDataProperty_CommitDate = "commitDate";
     public static String c_OWLDataProperty_CommitMessage = "commitMessage";
+    
+    public static String c_OWLDataProperty_Subject = "subject";
+    public static String c_OWLObjectProperty_HasPosts = "hasPosts";
+    public static String c_OWLObjectProperty_HasThreads = "hasThreads";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">

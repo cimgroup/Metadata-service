@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataCore.MetadataGlobal.OntoProperty;
 import MetadataObjects.*;
 import com.hp.hpl.jena.graph.Node;
@@ -58,7 +59,7 @@ public class MetadataRDFConverter {
             oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
             Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
             oIssue.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issue + "/s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
-            
+
             //already done in GetObjectURI method
             //bug id
             //if (!oIssue.m_sID.isEmpty())
@@ -802,6 +803,178 @@ public class MetadataRDFConverter {
         }
     }
     
+    /**
+     * @summary Save annotation data.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param oAnnotation - AnnotationData object
+     */
+    public static void SaveAnnotationData(AnnotationData oAnnotation)
+    {
+        try
+        {
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
+            if (resObject != null && oAnnotation.oAnnotated != null)
+            {
+                int iCount = oAnnotation.oAnnotated.length;
+                for (int i = 0; i < iCount; i++)
+                {
+                    String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
+                    if (!sOWLDataProperty.isEmpty())
+                    {
+                        String sOWLFullPropertyName = MetadataConstants.c_NS_Alert + sOWLDataProperty;
+                        AnnotationProperty apAnnotation = omModel.getAnnotationProperty(sOWLFullPropertyName);
+                        if (apAnnotation == null)
+                        {
+                            apAnnotation = omModel.createAnnotationProperty(sOWLFullPropertyName);
+                        }
+                        resObject.addProperty(apAnnotation, oAnnotation.oAnnotated[i].sValue);
+                    }
+                }
+            }
+            
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Get annotation property name for annotation.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param sAnnotationName - annotation name.
+     * @return - data property name for annotation.
+     */
+    private static String GetAnnotationPropName(String sAnnotationName)
+    {
+        String sAnnotationPropertyName = "";
+        
+        if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apSubject;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_descriptionAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apDescription;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apComment;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apCommit;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_titleAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apTitle;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_bodyAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apBody;
+        }
+       
+        return sAnnotationPropertyName;
+    }
+    
+    /**
+     * @summary Save forum post data.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 18.01.2012.
+     * @param oForumPost - NewForumPost object
+     */
+    public static NewForumPost SaveForumPost(NewForumPost oForumPost)
+    {
+        try
+        {
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            oForumPost.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post, oForumPost.m_sID);
+            Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
+            oForumPost.m_sReturnConfig = "YY#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+            
+            ////Time
+            //if (!oForumPost.m_sTime != null)
+            //{
+            //    DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
+            //    resPost.removeAll(dtpTime);
+            //    resPost.addProperty(dtpTime, oForumPost.m_sTime.toString());
+            //}
+            
+            //Subject
+            if (!oForumPost.m_sSubject.isEmpty())
+            {
+                DatatypeProperty dtpSubject = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
+                resPost.removeAll(dtpSubject);
+                resPost.addProperty(dtpSubject, oForumPost.m_sSubject);
+            }
+
+            //Body
+            //if (!oForumPost.m_sBody.isEmpty())
+            //{
+            //    DatatypeProperty dtpBody = omModel.getDatatypeProperty(MetadataConstants.c_NS_doap + MetadataConstants.c_OWLDataProperty_Description);
+            //    resPost.removeAll(dtpBody);
+            //    resPost.addProperty(dtpBody, oForumPost.m_sBody);
+            //}
+            
+            //HasAutor
+            //if (oForumPost.m_oHasAuthor != null && !oForumPost.m_oHasAuthor.m_sID.isEmpty())
+            //{
+            //    SavePersonData(oForumPost.m_oHasAuthor, omModel);
+            //    ObjectProperty opHasAuthor = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAuthor);
+            //    Resource resHasAuthor = omModel.getResource(oForumPost.m_oHasAuthor.m_sObjectURI);
+            //    resPost.removeAll(opHasAuthor);
+            //    resPost.addProperty(opHasAuthor, resHasAuthor.asResource());
+            //    oForumPost.m_oHasAuthor.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_author + MetadataConstants.c_XMLE_Uri;
+            //}
+            
+            ////Category
+            //if (!oForumPost.m_sCategory.isEmpty())
+            //{
+            //    DatatypeProperty dtpCategory = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category);
+            //    resPost.removeAll(dtpCategory);
+            //    resPost.addProperty(dtpCategory, oForumPost.m_sCategory);
+            //}
+            
+            //HasPost - thread
+            if (oForumPost.m_oForumThread != null)
+            {
+                //String sThreadUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_sThreadID);
+                oForumPost.m_oForumThread.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_threads, oForumPost.m_oForumThread.m_sID);
+                //Resource resThread = omModel.getResource(sThreadUri);
+                Resource resThread = omModel.getResource(oForumPost.m_oForumThread.m_sObjectURI);
+                //oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                oForumPost.m_oForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                ObjectProperty opHasPosts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasPosts);
+                resThread.addProperty(opHasPosts, resPost.asResource());
+            
+                //HasThread - forum
+                if (oForumPost.m_oForum != null)
+                {
+                    //String sForumUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_sForumID);
+                    oForumPost.m_oForum.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_forum, oForumPost.m_oForum.m_sID);
+                    //Resource resForum = omModel.getResource(sForumUri);
+                    Resource resForum = omModel.getResource(oForumPost.m_oForum.m_sObjectURI);
+                    //oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    oForumPost.m_oForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    ObjectProperty opHasThreads = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasThreads);
+                    resForum.addProperty(opHasThreads, resThread.asResource());
+                }
+            }
+            
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+        
+        return oForumPost;
+    }
+
     // <editor-fold desc="API Calls">
     
     /**
@@ -912,14 +1085,16 @@ public class MetadataRDFConverter {
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-            OntResource resBug = oModel.getOntResource(sIssueUri);
-            StmtIterator siProperties = resBug.listProperties();
+            OntResource resIssue = oModel.getOntResource(sIssueUri);
+            StmtIterator siProperties = resIssue.listProperties();
             
             String sIssueAnnotationStatus = "false";
             while (siProperties.hasNext())
             {
                 //if annotation property comment exists
-                if (siProperties.next().getPredicate().getURI().equals(MetadataConstants.c_OWLAnnotationProperty_comment))
+                String sPropertyURI = siProperties.next().getPredicate().getURI();
+                if (sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject)
+                 || sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription))
                 {
                     sIssueAnnotationStatus = "true";
                     break;
@@ -940,7 +1115,7 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAnnotationStatus
+     * @summary issue_getInfo
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sIssueUri - issue URI
@@ -1177,10 +1352,10 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAllForMethod
+     * @summary issue_getDuplicates
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
-     * @param sMethodUri - methods' URIs
+     * @param sIssueDuplicatesSPARQL - SPARQL query
      * @return - APIResponseData object with results
      */
     public static MetadataGlobal.APIResponseData ac_issue_getDuplicates(String sIssueDuplicatesSPARQL)
@@ -1212,6 +1387,338 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary person_getInfo
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonUri - person URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_person_getInfo(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resPerson = oModel.getOntResource(sPersonUri);
+            StmtIterator siProperties = resPerson.listProperties();
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oPersonData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_id;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personEmail;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personFirstName;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personLastName;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                
+                if (oPersonData.sReturnConfig != null)
+                    oData.oData.add(oPersonData);
+            }
+            
+            //spajanje imena i prezimena u jedan objekat
+            String sName = "";
+            for (int i = 0; i < oData.oData.size(); i++)
+            {
+                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personFirstName))
+                {
+                    sName = oData.oData.get(i).sData + sName;
+                    oData.oData.remove(i);
+                }
+                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personLastName))
+                {
+                    sName = sName + " " + oData.oData.get(i).sData;
+                    oData.oData.remove(i);
+                }
+            }
+            if (!sName.isEmpty())
+            {
+                MetadataGlobal.APIResponseData oName = new MetadataGlobal.APIResponseData();
+                oName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personName;
+                oName.sData = sName;
+                oData.oData.add(oName);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary person_getAllForEmail
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sEmail - person email
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_person_getAllForEmail(String sEmail)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+                        
+            String sQuery = "SELECT ?personUri ?personFirstName ?personLastName WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . "
+                    + "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . "
+                    + "FILTER (?email = \"" + sEmail + "\") . "
+                    + "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName + "> ?personFirstName . "
+                    + "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName + "> ?personLastName}";                         
+            ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPerson.hasNext())
+            {
+                QuerySolution qsPerson = rsPerson.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPerson = new MetadataGlobal.APIResponseData();
+                oPerson.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + "/";
+                
+                MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                oPersonUri.sData = qsPerson.get("?personUri").toString();
+                oPerson.oData.add(oPersonUri);
+                
+                MetadataGlobal.APIResponseData oPersonName = new MetadataGlobal.APIResponseData();
+                oPersonName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personName;
+                oPersonName.sData = qsPerson.get("?personFirstName").toString() + " " + qsPerson.get("?personLastName").toString();
+                oPerson.oData.add(oPersonName);
+
+                oData.oData.add(oPerson);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sFirstName - person first name
+     * @param sLastName - person last name
+     * @param sEmail - person email
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_identity_getForPerson(String sFirstName, String sLastName, String sEmail)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            if (!sFirstName.isEmpty() || !sLastName.isEmpty() || !sEmail.isEmpty())
+            {
+                //if person has same data as identity
+                String sQuery = "SELECT ?personUri WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . ";
+                
+                if (!sFirstName.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName + "> ?firstName . FILTER regex(?firstName, \"" + sFirstName + "\", \"i\") . ";
+                            
+                if (!sLastName.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName + "> ?lastName . FILTER regex(?lastName, \"" + sLastName + "\", \"i\") . ";
+                
+                if (!sEmail.isEmpty())
+                    sQuery += "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . FILTER regex(?email, \"" + sEmail + "\", \"i\") . ";
+                
+                sQuery += "}";
+
+                ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+
+                while (rsPerson.hasNext())
+                {
+                    QuerySolution qsPerson = rsPerson.nextSolution();
+
+                    MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                    oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                    oPersonUri.sData = qsPerson.get("?personUri").toString();
+
+                    oData.oData.add(oPersonUri);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary competency_getPersonForIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonForIssueSPARQL - SPARQL query
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_competency_getPersonForIssue(String sPersonForIssueSPARQL)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?personUri WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . " + sPersonForIssueSPARQL + "}";
+                            
+            ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPerson.hasNext())
+            {
+                QuerySolution qsPerson = rsPerson.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+                oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
+                oPersonUri.sData = qsPerson.get("?personUri").toString();
+
+                oData.oData.add(oPersonUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary method_getAllForPerson
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonUri - person uri
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_method_getAllForPerson(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+                            
+            ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsMethod.hasNext())
+            {
+                QuerySolution qsMethod = rsMethod.nextSolution();
+                
+                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                oMethodUri.sData = qsMethod.get("?methodUri").toString();
+
+                oData.oData.add(oMethodUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary method_getRelatedCode
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sPersonUri - person uri
+     * @param sProductUri - product uri
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_method_getRelatedCode(String sPersonUri, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+                        
+            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+                            
+            ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsMethod.hasNext())
+            {
+                QuerySolution qsMethod = rsMethod.nextSolution();
+                
+                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                oMethodUri.sData = qsMethod.get("?methodUri").toString();
+
+                oData.oData.add(oMethodUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+            
+    /**
+     * @summary issue_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            
+            //if keyword exists in description/subject annotation or in issue keyword
+            String sQuery = "SELECT ?issueUri WHERE {"
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . FILTER regex(?description, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Keyword + "> ?keyword . FILTER regex(?keyword, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+
+                oData.oData.add(oIssueUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
      * @summary commit_getRelatedToKeyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.
@@ -1228,7 +1735,7 @@ public class MetadataRDFConverter {
             //if keyword exists in comment annotation or in commit message
             String sQuery = "SELECT ?commitUri WHERE {"
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apComment + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apCommit + "> ?comment . FILTER regex(?comment, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessage . FILTER regex(?commitMessage, \"" + sKeyword + "\", \"i\")}"
@@ -1245,6 +1752,371 @@ public class MetadataRDFConverter {
                 oCommitUri.sData = qsCommit.get("?commitUri").toString();
 
                 oData.oData.add(oCommitUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary mail_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_email_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in subject/body annotation or in mail subject
+            String sQuery = "SELECT ?emailUri WHERE {"
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsEmail = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsEmail.hasNext())
+            {
+                QuerySolution qsIssue = rsEmail.nextSolution();
+                
+                MetadataGlobal.APIResponseData oEmailUri = new MetadataGlobal.APIResponseData();
+                oEmailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                oEmailUri.sData = qsIssue.get("?emailUri").toString();
+
+                oData.oData.add(oEmailUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary mail_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_post_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in title/body annotation or in mail subject
+            String sQuery = "SELECT ?postUri WHERE {"
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+                            
+            ResultSet rsPost = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPost.hasNext())
+            {
+                QuerySolution qsPost = rsPost.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPostUri = new MetadataGlobal.APIResponseData();
+                oPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
+                oPostUri.sData = qsPost.get("?postUri").toString();
+
+                oData.oData.add(oPostUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary wiki_getRelatedToKeyword
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_wiki_getRelatedToKeyword(String sKeyword)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if keyword exists in title/body annotation or in mail subject
+            String sQuery = "SELECT ?wikiPageUri WHERE {"
+                    + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPagesUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
+                    + " UNION "
+                    + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "}";
+            
+            ResultSet rsWikiPage = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsWikiPage.hasNext())
+            {
+                QuerySolution qsWikiPage = rsWikiPage.nextSolution();
+                
+                MetadataGlobal.APIResponseData oWikiPageUri = new MetadataGlobal.APIResponseData();
+                oWikiPageUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+                oWikiPageUri.sData = qsWikiPage.get("?wikiPageUri").toString();
+
+                oData.oData.add(oWikiPageUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 17.01.2012.
+     * @finalModification Sasa Stojanovic 17.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            
+            //if issues have same description/subject annotation
+            String sQuery = "SELECT ?issueUri WHERE {"
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . "
+                    + "FILTER (?issueUri != <" + sIssueUri + ">)}"
+                    + " UNION "
+                    + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "FILTER (?issueUri != <" + sIssueUri + ">)}"
+                    + "}";
+            
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+
+                oData.oData.add(oIssueUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary commit_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_commit_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if issue has same description/subject annotation as commit commit annotation
+            String sQuery = "SELECT ?commitUri WHERE {"
+                    + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apCommit + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
+                    + " UNION "
+                    + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apCommit + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "}";
+            
+            ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsCommit.hasNext())
+            {
+                QuerySolution qsCommit = rsCommit.nextSolution();
+                
+                MetadataGlobal.APIResponseData oCommitUri = new MetadataGlobal.APIResponseData();
+                oCommitUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+                oCommitUri.sData = qsCommit.get("?commitUri").toString();
+
+                oData.oData.add(oCommitUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary email_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_email_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if issue has same description/subject annotation as email body/subject annotation
+            String sQuery = "SELECT ?emailUri WHERE {"
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
+                    + " UNION "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "}";
+            
+            ResultSet rsEmail = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsEmail.hasNext())
+            {
+                QuerySolution qsEmail = rsEmail.nextSolution();
+                
+                MetadataGlobal.APIResponseData oEmailUri = new MetadataGlobal.APIResponseData();
+                oEmailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                oEmailUri.sData = qsEmail.get("?emailUri").toString();
+
+                oData.oData.add(oEmailUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary commit_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_post_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if issue has same description/subject annotation as post body/title annotation
+            String sQuery = "SELECT ?postUri WHERE {"
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
+                    + " UNION "
+                    + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "}";
+            
+            ResultSet rsPost = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsPost.hasNext())
+            {
+                QuerySolution qsPost = rsPost.nextSolution();
+                
+                MetadataGlobal.APIResponseData oPostUri = new MetadataGlobal.APIResponseData();
+                oPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
+                oPostUri.sData = qsPost.get("?postUri").toString();
+
+                oData.oData.add(oPostUri);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary commit_getRelatedToIssue
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @param sIssueUri - issueUri which is issue related to
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_wiki_getRelatedToIssue(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if issue has same description/subject annotation as wiki page body/title annotation
+            String sQuery = "SELECT ?wikiPageUri WHERE {"
+                    + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?description . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
+                    + " UNION "
+                    + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "}";
+            
+            ResultSet rsWikiPage = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsWikiPage.hasNext())
+            {
+                QuerySolution qsWikiPage = rsWikiPage.nextSolution();
+                
+                MetadataGlobal.APIResponseData oWikiPageUri = new MetadataGlobal.APIResponseData();
+                oWikiPageUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+                oWikiPageUri.sData = qsWikiPage.get("?wikiPageUri").toString();
+
+                oData.oData.add(oWikiPageUri);
             }
         }
         catch (Exception e)
@@ -1445,7 +2317,7 @@ public class MetadataRDFConverter {
     }
     
     
-public static void CreateTriples()
+    public static void CreateTriples()
     {
 //        try {
 //
@@ -1522,9 +2394,4 @@ public static void CreateTriples()
 //  
 //         }
     }
-
-    
-
-    
-
 }

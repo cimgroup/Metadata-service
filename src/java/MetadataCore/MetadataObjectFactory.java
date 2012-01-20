@@ -5,11 +5,7 @@
 package MetadataCore;
 
 import MetadataCore.MetadataGlobal.AnnotationData;
-import MetadataObjects.Component;
-import MetadataObjects.Issue;
-import MetadataObjects.Commit;
-import MetadataObjects.MetadataPerson;
-import MetadataObjects.foaf_Person;
+import MetadataObjects.*;
 
 /**
  *
@@ -97,7 +93,7 @@ public class MetadataObjectFactory {
     }
     
     /** 
-     * @summary Method for creating new bug annotation.
+     * @summary Method for creating new annotation.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
      * @finalModification Dejan Milosavljevic 16.01.2012.
      * @return Bug object
@@ -108,6 +104,26 @@ public class MetadataObjectFactory {
         {
             AnnotationData oAnnotation = new AnnotationData();
             return oAnnotation;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /** 
+     * @summary Method for creating new forum post.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @return Bug object
+     */
+    public static NewForumPost CreateNewForumPost()
+    {
+        try
+        {
+            NewForumPost oForumPost = new NewForumPost();
+            return oForumPost;
         }
         catch(Exception e)
         {
