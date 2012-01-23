@@ -36,7 +36,8 @@ public class MetadataGlobal {
     
     // <editor-fold desc="Members">
     
-    public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static DateFormat m_dfFormatSS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     // </editor-fold>
     
@@ -258,17 +259,35 @@ public class MetadataGlobal {
     }
     
 
-    
+    /**
+     * @summary Get Date from String
+     * @startRealisation  Sasa Stojanovic     31.10.2011.
+     * @finalModification Dejan Milosavljevic 23.01.2012.
+     * @return parsed Date
+     */
     public static Date GetDateTime(String sDateTime)
     {
+        Date oDate;
         try
         {
-            return m_dfFormat.parse(sDateTime);
+            oDate = m_dfFormatSS.parse(sDateTime);
         }
         catch (Exception e)
         {
-            return null;
+            oDate = null;
         }
+        if (oDate == null)
+        {
+            try
+            {
+                oDate = m_dfFormat.parse(sDateTime);
+            }
+            catch (Exception e)
+            {
+                oDate = null;
+            }
+        }
+        return oDate;
     }
     
     /**
