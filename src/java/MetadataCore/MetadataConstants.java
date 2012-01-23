@@ -367,6 +367,8 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Name = "name";
     public static String c_OWLDataProperty_Uri = "uri";
     public static String c_OWLDataProperty_Count = "count";
+    public static String c_OWLDataProperty_ForumItemID = "forumItemId";
+    public static String c_OWLDataProperty_PostTime = "postTime";
     
     // </editor-fold>
     
