@@ -36,7 +36,7 @@ public class MetadataGlobal {
     
     // <editor-fold desc="Members">
     
-    public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     // </editor-fold>
     
