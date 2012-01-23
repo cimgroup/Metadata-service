@@ -26,7 +26,9 @@
 							</ns1:meta>
 							<ns1:eventData>
 								<s1:forum>
-									<!-- forum ID -->
+									<!-- forum item ID -->
+									<s1:forumItemId>3557</s1:forumItemId>
+                                                                        <!-- forum ID -->
 									<s1:forumId>3558</s1:forumId>
 									<!-- thread ID -->
 									<s1:threadId>3559</s1:threadId>
