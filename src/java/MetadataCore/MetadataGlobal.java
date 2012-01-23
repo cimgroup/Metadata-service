@@ -285,6 +285,8 @@ public class MetadataGlobal {
             String sUriDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri;
             String sCountDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count;
             String sTextDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text;
+            String sForumItemIDDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ForumItemID;
+            String sPostTimeDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime;
             String sBodyDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body;
             String sCategoryDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category;
             String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
@@ -327,6 +329,20 @@ public class MetadataGlobal {
                 dtpText = omModel.createDatatypeProperty(sTextDataProperty);
             }
 
+            //Creating forumItemId DataProperty
+            DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(sForumItemIDDataProperty);
+            if (dtpForumItemID == null)
+            {
+                dtpForumItemID = omModel.createDatatypeProperty(sForumItemIDDataProperty);
+            }
+            
+            //Creating postTime DataProperty
+            DatatypeProperty dtpPostTime = omModel.getDatatypeProperty(sPostTimeDataProperty);
+            if (dtpPostTime == null)
+            {
+                dtpPostTime = omModel.createDatatypeProperty(sPostTimeDataProperty);
+            }
+            
             //Creating body DataProperty
             DatatypeProperty dtpBody = omModel.getDatatypeProperty(sBodyDataProperty);
             if (dtpBody == null)

@@ -1017,21 +1017,21 @@ public class MetadataRDFConverter {
             Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
             oForumPost.m_sReturnConfig = "YY#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
             
-//            //ForumItemID
-//            if (!oForumPost.m_sForumItemID.isEmpty())
-//            {
-//                DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_forumItemID);
-//                resPost.removeAll(dtpForumItemID);
-//                resPost.addProperty(dtpForumItemID, oForumPost.m_sForumItemID);
-//            }
+            //ForumItemID
+            if (!oForumPost.m_sForumItemID.isEmpty())
+            {
+                DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ForumItemID);
+                resPost.removeAll(dtpForumItemID);
+                resPost.addProperty(dtpForumItemID, oForumPost.m_sForumItemID);
+            }
             
-            ////Time
-            //if (!oForumPost.m_sTime != null)
-            //{
-            //    DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
-            //    resPost.removeAll(dtpTime);
-            //    resPost.addProperty(dtpTime, oForumPost.m_sTime.toString());
-            //}
+            //Time
+            if (oForumPost.m_dtmTime != null)
+            {
+                DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime);
+                resPost.removeAll(dtpTime);
+                resPost.addProperty(dtpTime, oForumPost.m_dtmTime.toString());
+            }
             
             //Subject
             if (!oForumPost.m_sSubject.isEmpty())
