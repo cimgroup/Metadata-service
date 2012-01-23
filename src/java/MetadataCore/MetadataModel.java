@@ -19,34 +19,34 @@ import java.util.ArrayList;
 public class MetadataModel {
 
 
-    public void LoadObject()
-    {
-        
-    }
+//    public void LoadObject()
+//    {
+//        
+//    }
     
-    public static void SaveObject()
-    {
-        
-    }
+//    public static void SaveObject()
+//    {
+//        
+//    }
     
    
-    /** 
-     * @summary Method for performing search for given IDS
-     * @startRealisation Sasa Stojanovic 24.06.2011.
-     * @finalModification Sasa Stojanovic 24.06.2011.
-     * @param sSearchType - type of search
-     * @param sIDs - list of IDs
-     */
-    public static void SearchForIDs(String sSearchType, ArrayList<String> arIDs) {
-        try
-        {
-            MetadataRDFConverter.SearchForIDs(sSearchType, arIDs);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    /** 
+//     * @summary Method for performing search for given IDS
+//     * @startRealisation Sasa Stojanovic 24.06.2011.
+//     * @finalModification Sasa Stojanovic 24.06.2011.
+//     * @param sSearchType - type of search
+//     * @param sIDs - list of IDs
+//     */
+//    public static void SearchForIDs(String sSearchType, ArrayList<String> arIDs) {
+//        try
+//        {
+//            MetadataRDFConverter.SearchForIDs(sSearchType, arIDs);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
     
 
     /** 

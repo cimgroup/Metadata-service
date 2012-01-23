@@ -21,18 +21,18 @@ import java.lang.reflect.Field;
  */
 public class MetadataXMLCreator {
 
-    public void CreateXML()
-    {
-        
-    }
+//    public void CreateXML()
+//    {
+//        
+//    }
     
-    /** 
-     * @summary Method for creating XML for search results
-     * @startRealisation Sasa Stojanovic 24.06.2011.
-     * @finalModification Sasa Stojanovic 24.06.2011.
-     * @param sSearchType - type of search
-     * @param arResult - list of objects
-     */
+//    /** 
+//     * @summary Method for creating XML for search results
+//     * @startRealisation Sasa Stojanovic 24.06.2011.
+//     * @finalModification Sasa Stojanovic 24.06.2011.
+//     * @param sSearchType - type of search
+//     * @param arResult - list of objects
+//     */
 //    public static void CreateXMLSearch(String sSearchType, ArrayList<ArrayList> arResult)
 //    {
 //        try

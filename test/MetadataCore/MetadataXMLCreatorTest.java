@@ -36,19 +36,6 @@ public class MetadataXMLCreatorTest {
     }
 
     /**
-     * Test of CreateXML method, of class MetadataXMLCreator.
-     */
-    @Ignore
-    @Test
-    public void testCreateXML() {
-        System.out.println("* MetadataXMLCreatorTest: CreateXML");
-        MetadataXMLCreator instance = new MetadataXMLCreator();
-        instance.CreateXML();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of CreateXMLAPIResponse method, of class MetadataXMLCreator.
      */
     @Ignore

@@ -2410,8 +2410,8 @@ public class MetadataRDFConverter {
     }
     
     
-    public static void CreateQuery() throws FileNotFoundException, IOException
-    {
+//    public static void CreateQuery() throws FileNotFoundException, IOException
+//    {
 //       try {
 //         OntModel ontologyModel = LoadOWL();
 //         CreateNewQuery(ontologyModel);
@@ -2424,10 +2424,10 @@ public class MetadataRDFConverter {
 //            ex.printStackTrace();
 //  
 //         }
-    }
+//    }
     
-    private static void CreateNewQuery(OntModel ontologyModel)
-    {
+//    private static void CreateNewQuery(OntModel ontologyModel)
+//    {
 //        String queryString = "Select * Where {?s ?p ?o}";
 //         // Execute the query and obtain results
 //        QueryExecution qe = QueryExecutionFactory.create(queryString, ontologyModel);
@@ -2442,11 +2442,11 @@ public class MetadataRDFConverter {
 //          Literal l = soln.getLiteral("Object") ;   // Get a result variable - must be a literal
 //        }
 //      } finally { qe.close() ; }
-    }
+//    }
     
     
-    public static void CreateTriples()
-    {
+//    public static void CreateTriples()
+//    {
 //        try {
 //
 // 
@@ -2483,9 +2483,9 @@ public class MetadataRDFConverter {
 //        } catch (Exception ex) {
 //      ex.printStackTrace();
 //    }
-  }
+//  }
 
-    public static void SearchForIDs(String sSearchType, ArrayList<String> sIDs)  throws FileNotFoundException, IOException {
+//    public static void SearchForIDs(String sSearchType, ArrayList<String> sIDs)  throws FileNotFoundException, IOException {
 //        try {
 //            
 //         OntModel ontologyModel = LoadOWL();
@@ -2521,5 +2521,5 @@ public class MetadataRDFConverter {
 //            ex.printStackTrace();
 //  
 //         }
-    }
+//    }
 }

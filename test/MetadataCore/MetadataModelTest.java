@@ -39,45 +39,6 @@ public class MetadataModelTest {
     }
 
     /**
-     * Test of LoadObject method, of class MetadataModel.
-     */
-    @Ignore
-    @Test
-    public void testLoadObject() {
-        System.out.println("* MetadataModelTest: LoadObject");
-        MetadataModel instance = new MetadataModel();
-        instance.LoadObject();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of SaveObject method, of class MetadataModel.
-     */
-    @Ignore
-    @Test
-    public void testSaveObject() {
-        System.out.println("* MetadataModelTest: SaveObject");
-        MetadataModel.SaveObject();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of SearchForIDs method, of class MetadataModel.
-     */
-    @Ignore
-    @Test
-    public void testSearchForIDs() {
-        System.out.println("* MetadataModelTest: SearchForIDs");
-        String sSearchType = "";
-        ArrayList<String> arIDs = null;
-        MetadataModel.SearchForIDs(sSearchType, arIDs);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of CreateNewItemKeuiResponse method, of class MetadataModel.
      */
     @Ignore
