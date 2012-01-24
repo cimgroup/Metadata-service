@@ -17,13 +17,13 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({MetadataCore.MetadataObjectFactoryTest.class, 
+                     MetadataCore.MetadataGlobalTest.class,
                      MetadataCore.MetadataRDFConverterTest.class, 
-                     MetadataCore.MetadataWebServiceTest.class, 
                      MetadataCore.MetadataXMLCreatorTest.class, 
                      MetadataCore.MetadataXMLReaderTest.class, 
-                     MetadataCore.MetadataGlobalTest.class, 
                      MetadataCore.MetadataCommunicatorTest.class, 
-                     MetadataCore.MetadataModelTest.class})
+                     MetadataCore.MetadataModelTest.class, 
+                     MetadataCore.MetadataWebServiceTest.class})
 public class MetadataCoreSuite {
 
     @BeforeClass

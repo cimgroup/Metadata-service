@@ -45,7 +45,7 @@ public class MetadataObjectFactoryTest {
         Issue result = MetadataObjectFactory.CreateNewIssue();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -60,7 +60,7 @@ public class MetadataObjectFactoryTest {
         Commit result = MetadataObjectFactory.CreateNewCommit();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -75,7 +75,7 @@ public class MetadataObjectFactoryTest {
         foaf_Person result = MetadataObjectFactory.CreateNewPerson();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -90,7 +90,7 @@ public class MetadataObjectFactoryTest {
         Component result = MetadataObjectFactory.CreateNewComponent();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -105,7 +105,7 @@ public class MetadataObjectFactoryTest {
         AnnotationData result = MetadataObjectFactory.CreateNewAnnotation();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -120,7 +120,7 @@ public class MetadataObjectFactoryTest {
         NewForumPost result = MetadataObjectFactory.CreateNewForumPost();
         assertNotNull(result);
         //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 }

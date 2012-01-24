@@ -808,8 +808,9 @@ public class MetadataRDFConverter {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 17.01.2012.
      * @param oAnnotation - AnnotationData object
+     * @return - same AnnotationData object with filled m_sObjectURI
      */
-    public static void SaveAnnotationData(AnnotationData oAnnotation)
+    public static AnnotationData SaveAnnotationData(AnnotationData oAnnotation)
     {
         try
         {
@@ -928,6 +929,7 @@ public class MetadataRDFConverter {
         catch (Exception e)
         {
         }
+        return oAnnotation;
     }
     
     private static String GetConceptName(String sAnnotationName)

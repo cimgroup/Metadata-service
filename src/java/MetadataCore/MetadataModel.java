@@ -120,7 +120,7 @@ public class MetadataModel {
      */
     static void SaveObjectNewAnnotationData(String sEventId, AnnotationData oAnnotation)
     {
-        MetadataRDFConverter.SaveAnnotationData(oAnnotation);
+        oAnnotation = MetadataRDFConverter.SaveAnnotationData(oAnnotation);
         //MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
     }
     

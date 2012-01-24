@@ -42,7 +42,7 @@ public class MetadataGlobalTest {
     @Test
     public void testLoadOWL() throws Exception {
         System.out.println("* MetadataGlobalTest: LoadOWL");
-        String sLocation = "file:D:/Alert onlogija/alert5.owl";
+        String sLocation = MetadataConstants.sLocationLoadAlert;
         //OntModel expResult = null;
         OntModel result = MetadataGlobal.LoadOWL(sLocation);
         assertNotNull(result);
@@ -57,7 +57,7 @@ public class MetadataGlobalTest {
     @Test
     public void testLoadOWLWithModelSpec() throws Exception {
         System.out.println("* MetadataGlobalTest: LoadOWLWithModelSpec");
-        String sLocation = "file:D:/Alert onlogija/alert5.owl";
+        String sLocation = MetadataConstants.sLocationLoadAlert;
         OntModelSpec oModelSpec = OntModelSpec.OWL_MEM_MICRO_RULE_INF;
         //OntModel expResult = null;
         OntModel result = MetadataGlobal.LoadOWLWithModelSpec(sLocation, oModelSpec);
@@ -90,30 +90,61 @@ public class MetadataGlobalTest {
     @Test
     public void testGetNextId() {
         System.out.println("* MetadataGlobalTest: GetNextId");
-        OntModel omModel = null;
-        OntClass ocClass = null;
+        OntModel omModelNull = null;
+        OntClass ocClassNull = null;
         int expResult = 0;
-        int result = MetadataGlobal.GetNextId(omModel, ocClass);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int resultNull = MetadataGlobal.GetNextId(omModelNull, ocClassNull);
+        assertEquals(expResult, resultNull);
+        
+        try
+        {
+            String sLocation = MetadataConstants.sLocationLoadAlert;
+            OntModel omModel = MetadataGlobal.LoadOWL(sLocation);
+            String sClassName = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Bug;
+            OntClass ocClass = omModel.getOntClass(sClassName);
+            int resultFirst = MetadataGlobal.GetNextId(omModel, ocClass);
+//            String sClassURI = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Bug;
+//            String sBugUri = MetadataGlobal.GetObjectURI(omModel, sClassURI, "184695");
+//            boolean bOK = MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            int resultSecond = MetadataGlobal.GetNextId(omModel, ocClass);
+            assertEquals(resultFirst + 1, resultSecond);
+        }
+        catch (Exception ex)
+        {
+            fail("Error:" + ex.getMessage());
+        }
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of GetObjectURI method, of class MetadataGlobal.
      */
-    @Ignore
     @Test
     public void testGetObjectURI() {
         System.out.println("* MetadataGlobalTest: GetObjectURI");
-        OntModel omModel = null;
-        String sClassURI = "";
-        String sID = "";
+        OntModel omModelNull = null;
+        String sClassURINull = "";
+        String sIDNull = "";
         String expResult = "";
-        String result = MetadataGlobal.GetObjectURI(omModel, sClassURI, sID);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String resultNull = MetadataGlobal.GetObjectURI(omModelNull, sClassURINull, sIDNull);
+        assertEquals(expResult, resultNull);
+        
+        try
+        {
+            String sLocation = MetadataConstants.sLocationLoadAlert;
+            OntModel omModel = MetadataGlobal.LoadOWL(sLocation);
+            String sClassURI = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Bug;
+            String sID = "184671";
+            String result = MetadataGlobal.GetObjectURI(omModel, sClassURI, sID);
+            assertEquals(result.isEmpty(), false);
+        }
+        catch (Exception ex)
+        {
+            fail("Error:" + ex.getMessage());
+        }
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -139,12 +170,26 @@ public class MetadataGlobalTest {
     /**
      * Test of ExpandOntology method, of class MetadataGlobal.
      */
-    @Ignore
     @Test
     public void testExpandOntology() {
         System.out.println("* MetadataGlobalTest: ExpandOntology");
         MetadataGlobal.ExpandOntology();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        try
+        {
+            String sAnnotationClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Annotation;
+            String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
+            OntClass ocConcept = omModel.getOntClass(sConceptClass);
+            assertNotNull(ocAnnotation);
+            assertNotNull(ocConcept);
+        }
+        catch (Exception ex)
+        {
+            fail("Error:" + ex.getMessage());
+        }
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 }

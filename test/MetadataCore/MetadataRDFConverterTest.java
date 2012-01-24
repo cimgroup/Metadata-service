@@ -168,9 +168,29 @@ public class MetadataRDFConverterTest {
         Issue oIssue = GetIssueExample();
         Issue result = MetadataRDFConverter.SaveIssue(oIssue);
         assertNotNull(result);
-        assertNotSame("", result.m_sObjectURI);
+        assertEquals(result.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasReporter.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oIsIssueOf.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasComputerSystem.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasAssignee.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasCCPerson[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oDependsOn[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oDependsOn[1].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oBlocks[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oBlocks[1].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oIsDuplicateOf.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oIsMergedInto.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasMilestone.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasComment[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasComment[0].m_oHasCommentor.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasComment[1].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasComment[1].m_oHasCommentor.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasActivity[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasActivity[1].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasActivity[2].m_sObjectURI.isEmpty(), false);
+       //assertNotSame("", result.m_sObjectURI);
         
-        // TODO review the generated test code and remove the default call to fail.
+        //// TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -204,9 +224,12 @@ public class MetadataRDFConverterTest {
                
         Commit result = MetadataRDFConverter.SaveCommit(oCommit);
         assertNotNull(result);
-        assertNotSame("", result.m_sObjectURI);
+        assertEquals(result.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasAuthor.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oHasCommitter.m_sObjectURI.isEmpty(), false);
+        //assertNotSame("", result.m_sObjectURI);
         
-        // TODO review the generated test code and remove the default call to fail.
+        //// TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
@@ -221,424 +244,739 @@ public class MetadataRDFConverterTest {
         foaf_Person resultNull = MetadataRDFConverter.SavePerson(oPersonNull);
         assertEquals(expResult, resultNull);
         
-        foaf_Person oPerson = null;
+        foaf_Person oPerson = new foaf_Person();
         oPerson.m_sFirstName = "Ivan";
         oPerson.m_sLastName = "Obradovic";
         oPerson.m_sGender = ""; //???
         oPerson.m_sID = "ivan.obradovic@cimcollege.rs";
-        oPerson.m_sEmail = "ivan.obradovic@cimcollege.rs"; //???
+        //oPerson.m_sEmail = "ivan.obradovic@cimcollege.rs"; //???
 
         foaf_Person result = MetadataRDFConverter.SavePerson(oPerson);
         assertNotNull(result);
-        assertNotSame("", result.m_sObjectURI);
+        assertEquals(result.m_sObjectURI.isEmpty(), false);
+        //assertNotSame("", result.m_sObjectURI);
         
-        // TODO review the generated test code and remove the default call to fail.
+        //// TO-DO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
     /**
      * Test of SavePersonData method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testSavePersonData() {
         System.out.println("* MetadataRDFConverterTest: SavePersonData");
-        foaf_Person oPerson = null;
-        OntModel oModel = null;
-        MetadataRDFConverter.SavePersonData(oPerson, oModel);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try
+        {
+            foaf_Person oPersonNull = null;
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            MetadataRDFConverter.SavePersonData(oPersonNull, oModel);
+            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+ 
+            foaf_Person oPerson = new foaf_Person();
+            oPerson.m_sFirstName = "Ivan";
+            oPerson.m_sLastName = "Obradovic";
+            //oPerson.m_sGender = ""; //???
+            oPerson.m_sID = "ivan.obradovic@cimcollege.rs";
+            oPerson.m_sEmail = "ivan.obradovic@cimcollege.rs"; //???
+            MetadataRDFConverter.SavePersonData(oPerson, oModel);
+            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            assertNotNull(oPerson);
+            assertEquals(oPerson.m_sObjectURI.isEmpty(), false);
+            
+            //// TO-DO review the generated test code and remove the default call to fail.
+            //fail("The test case is a prototype.");
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }
 
     /**
      * Test of SaveAnnotationData method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testSaveAnnotationData() {
         System.out.println("* MetadataRDFConverterTest: SaveAnnotationData");
-        AnnotationData oAnnotation = null;
-        MetadataRDFConverter.SaveAnnotationData(oAnnotation);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        AnnotationData oAnnotationNull = null;
+        AnnotationData expResult = null;
+        AnnotationData resultNull = MetadataRDFConverter.SaveAnnotationData(oAnnotationNull);
+        assertEquals(expResult, resultNull);
+        
+        AnnotationData oAnnotation = new AnnotationData();
+        oAnnotation.m_sObjectURI = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
+        oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[2];
+        oAnnotation.oAnnotated[0] = new MetadataGlobal.AnnotationProp();
+        oAnnotation.oAnnotated[0].sName = MetadataConstants.c_XMLE_subjectAnnotated;
+        oAnnotation.oAnnotated[0].sValue = "This is test <concept uri=\"http://www.alert-project.eu/ontologies/alert_its.owl#Bug1\">annotation</concept> for subject";
+        oAnnotation.oAnnotated[1] = new MetadataGlobal.AnnotationProp();
+        oAnnotation.oAnnotated[1].sName = MetadataConstants.c_XMLE_descriptionAnnotated;
+        oAnnotation.oAnnotated[1].sValue = "This is test <concept uri=\"http://www.alert-project.eu/ontologies/alert_its.owl#Bug1\">annotation</concept> for description";
+        oAnnotation.SetKeywords();
+        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[2];
+        oAnnotation.oConcepts[0] = new MetadataGlobal.ConceptProp();
+        oAnnotation.oConcepts[0].sName = MetadataConstants.c_XMLE_subjectConcepts;
+        oAnnotation.oConcepts[0].sUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
+        oAnnotation.oConcepts[0].sCount = "1";
+        oAnnotation.oConcepts[1] = new MetadataGlobal.ConceptProp();
+        oAnnotation.oConcepts[1].sName = MetadataConstants.c_XMLE_descriptionConcepts;
+        oAnnotation.oConcepts[1].sUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
+        oAnnotation.oConcepts[1].sCount = "1";    
+        AnnotationData result = MetadataRDFConverter.SaveAnnotationData(oAnnotation);
+        assertNotNull(result);
+        assertNotNull(result.oAnnotated);
+        assertNotNull(result.oConcepts);
+        assertEquals(result.oAnnotated[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.oAnnotated[1].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.oConcepts[0].m_sObjectURI.isEmpty(), false);
+        assertEquals(result.oConcepts[1].m_sObjectURI.isEmpty(), false);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of SaveForumPost method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testSaveForumPost() {
         System.out.println("* MetadataRDFConverterTest: SaveForumPost");
-        NewForumPost oForumPost = null;
+        NewForumPost oForumPostNull = null;
         NewForumPost expResult = null;
+        NewForumPost resultNull = MetadataRDFConverter.SaveForumPost(oForumPostNull);
+        assertEquals(expResult, resultNull);
+        
+        NewForumPost oForumPost = new NewForumPost();
+        oForumPost.m_sForumItemID = "3557";
+        oForumPost.m_oForum = new ForumEvent();
+        oForumPost.m_oForum.m_sID = "3558";
+        oForumPost.m_oForumThread = new NewForumThread();
+        oForumPost.m_oForumThread.m_sID = "3559";
+        oForumPost.m_sID = "3560";
+        oForumPost.m_dtmTime = new Date(112, 0, 16, 16, 31);
+        oForumPost.m_sSubject = "This is a test subject for post";
+        oForumPost.m_sBody = "This is a test body for post";
+        oForumPost.m_oHasAuthor = new foaf_Person();
+        oForumPost.m_oHasAuthor.m_sFirstName = "Angel";
+        oForumPost.m_oHasAuthor.m_sLastName = "Blue";
+        oForumPost.m_oHasAuthor.m_sID = "angel_blue_co2004@yahoo.com";
+        oForumPost.m_oHasAuthor.m_sEmail = "angel_blue_co2004@yahoo.com";
         NewForumPost result = MetadataRDFConverter.SaveForumPost(oForumPost);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertEquals(result.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oForum.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oForumThread.m_sObjectURI.isEmpty(), false);
+        //assertEquals(result.m_oHasAuthor.m_sObjectURI.isEmpty(), false);
+        //assertEquals(expResult, result);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getAllForProduct method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getAllForProduct() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getAllForProduct");
-        String sProductUri = "";
-        APIResponseData expResult = null;
+        String sProductUriEmpty = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUriEmpty);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sProductUri = "http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1";
         APIResponseData result = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        //assertEquals(expResult, result);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getAllForMethod method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getAllForMethod() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getAllForMethod");
-        ArrayList<String> sMethodUri = null;
-        APIResponseData expResult = null;
+        ArrayList<String> sMethodUriNull = null;
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getAllForMethod(sMethodUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        ArrayList<String> sMethodUriString = new ArrayList<String>();
+        sMethodUriString.add(null);
+        APIResponseData resultStringNull = MetadataRDFConverter.ac_issue_getAllForMethod(sMethodUriString);
+        //assertEquals(expResult, resultStringNull);
+        assertNotNull(resultStringNull);
+        assertNotNull(resultStringNull.oData);
+        assertEquals(resultStringNull.oData.size(), 0);
+        
+        ArrayList<String> sMethodUriEmpty = new ArrayList<String>();
+        sMethodUriEmpty.add("");
+        APIResponseData resultStringEmpty = MetadataRDFConverter.ac_issue_getAllForMethod(sMethodUriEmpty);
+        //assertEquals(expResult, resultStringEmpty);
+        assertNotNull(resultStringEmpty);
+        assertNotNull(resultStringEmpty.oData);
+        assertEquals(resultStringEmpty.oData.size(), 0);
+        
+        ArrayList<String> sMethodUri = new ArrayList<String>();
+        sMethodUri.add("http://www.alert-project.eu/ontologies/alert.owl#Method1");
+        sMethodUri.add("http://www.alert-project.eu/ontologies/alert.owl#Method2");
+        sMethodUri.add("http://www.alert-project.eu/ontologies/alert.owl#Method3");
         APIResponseData result = MetadataRDFConverter.ac_issue_getAllForMethod(sMethodUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        //assertEquals(expResult, result);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getAnnotationStatus method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getAnnotationStatus() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getAnnotationStatus");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getAnnotationStatus(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_issue_getAnnotationStatus(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        //assertEquals(expResult, result);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getInfo method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getInfo() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getInfo");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getInfo(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_issue_getInfo(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getDuplicates method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getDuplicates() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getDuplicates");
-        String sIssueDuplicatesSPARQL = "";
-        APIResponseData expResult = null;
+        String sIssueDuplicatesSPARQLNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQLNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueDuplicatesSPARQL = " ?issueUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword . <http://www.alert-project.eu/ontologies/alert_its.owl#Bug1> <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword ";
         APIResponseData result = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_person_getInfo method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_person_getInfo() {
         System.out.println("* MetadataRDFConverterTest: ac_person_getInfo");
-        String sPersonUri = "";
-        APIResponseData expResult = null;
+        String sPersonUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_person_getInfo(sPersonUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sPersonUri = "http://www.alert-project.eu/ontologies/alert_scm.owl#Person5";
         APIResponseData result = MetadataRDFConverter.ac_person_getInfo(sPersonUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_person_getAllForEmail method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_person_getAllForEmail() {
         System.out.println("* MetadataRDFConverterTest: ac_person_getAllForEmail");
-        String sEmail = "";
-        APIResponseData expResult = null;
+        String sEmailNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_person_getAllForEmail(sEmailNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sEmail = "sasa.stojanovic@cimcollege.rs";
         APIResponseData result = MetadataRDFConverter.ac_person_getAllForEmail(sEmail);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_identity_getForPerson method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_identity_getForPerson() {
         System.out.println("* MetadataRDFConverterTest: ac_identity_getForPerson");
-        String sFirstName = "";
-        String sLastName = "";
-        String sEmail = "";
-        APIResponseData expResult = null;
+        String sFirstNameNull = "";
+        String sLastNameNull = "";
+        String sEmailNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_identity_getForPerson(sFirstNameNull, sLastNameNull, sEmailNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sFirstName = "Sasa";
+        String sLastName = "Stojanovic";
+        String sEmail = "sasa.stojanovic@cimcollege.rs";
         APIResponseData result = MetadataRDFConverter.ac_identity_getForPerson(sFirstName, sLastName, sEmail);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_competency_getPersonForIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_competency_getPersonForIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_competency_getPersonForIssue");
-        String sPersonForIssueSPARQL = "";
-        APIResponseData expResult = null;
+        String sPersonForIssueSPARQLNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_competency_getPersonForIssue(sPersonForIssueSPARQLNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sPersonForIssueSPARQL = " <http://www.alert-project.eu/ontologies/alert_its.owl#Bug1> <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasAssignee> ?personUri ";
         APIResponseData result = MetadataRDFConverter.ac_competency_getPersonForIssue(sPersonForIssueSPARQL);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_method_getAllForPerson method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_method_getAllForPerson() {
         System.out.println("* MetadataRDFConverterTest: ac_method_getAllForPerson");
-        String sPersonUri = "";
-        APIResponseData expResult = null;
+        String sPersonUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sPersonUri = "http://www.alert-project.eu/ontologies/alert_scm.owl#Person1";
         APIResponseData result = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_method_getRelatedCode method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_method_getRelatedCode() {
         System.out.println("* MetadataRDFConverterTest: ac_method_getRelatedCode");
-        String sPersonUri = "";
-        String sProductUri = "";
-        APIResponseData expResult = null;
+        String sPersonUriNull = "";
+        String sProductUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_method_getRelatedCode(sPersonUriNull, sProductUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sPersonUri = "http://www.alert-project.eu/ontologies/alert_scm.owl#Person1";
+        String sProductUri = "http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1";
         APIResponseData result = MetadataRDFConverter.ac_method_getRelatedCode(sPersonUri, sProductUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getRelatedToKeyword method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getRelatedToKeyword() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getRelatedToKeyword");
-        String sKeyword = "";
-        APIResponseData expResult = null;
+        String sKeywordNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getRelatedToKeyword(sKeywordNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sKeyword = "desc";
         APIResponseData result = MetadataRDFConverter.ac_issue_getRelatedToKeyword(sKeyword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_commit_getRelatedToKeyword method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_commit_getRelatedToKeyword() {
         System.out.println("* MetadataRDFConverterTest: ac_commit_getRelatedToKeyword");
-        String sKeyword = "";
-        APIResponseData expResult = null;
+        String sKeywordNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_commit_getRelatedToKeyword(sKeywordNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sKeyword = "zajednicka";
         APIResponseData result = MetadataRDFConverter.ac_commit_getRelatedToKeyword(sKeyword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_email_getRelatedToKeyword method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_email_getRelatedToKeyword() {
         System.out.println("* MetadataRDFConverterTest: ac_email_getRelatedToKeyword");
-        String sKeyword = "";
-        APIResponseData expResult = null;
+        String sKeywordNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_email_getRelatedToKeyword(sKeywordNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sKeyword = "test";
         APIResponseData result = MetadataRDFConverter.ac_email_getRelatedToKeyword(sKeyword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_post_getRelatedToKeyword method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_post_getRelatedToKeyword() {
         System.out.println("* MetadataRDFConverterTest: ac_post_getRelatedToKeyword");
-        String sKeyword = "";
-        APIResponseData expResult = null;
+        String sKeywordNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_post_getRelatedToKeyword(sKeywordNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sKeyword = "test";
         APIResponseData result = MetadataRDFConverter.ac_post_getRelatedToKeyword(sKeyword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_wiki_getRelatedToKeyword method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_wiki_getRelatedToKeyword() {
         System.out.println("* MetadataRDFConverterTest: ac_wiki_getRelatedToKeyword");
-        String sKeyword = "";
-        APIResponseData expResult = null;
+        String sKeywordNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_wiki_getRelatedToKeyword(sKeywordNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sKeyword = "test";
         APIResponseData result = MetadataRDFConverter.ac_wiki_getRelatedToKeyword(sKeyword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_issue_getRelatedToIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_issue_getRelatedToIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getRelatedToIssue");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getRelatedToIssue(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_issue_getRelatedToIssue(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_commit_getRelatedToIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_commit_getRelatedToIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_commit_getRelatedToIssue");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_commit_getRelatedToIssue(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_commit_getRelatedToIssue(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_email_getRelatedToIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_email_getRelatedToIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_email_getRelatedToIssue");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_email_getRelatedToIssue(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_email_getRelatedToIssue(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_post_getRelatedToIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_post_getRelatedToIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_post_getRelatedToIssue");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_post_getRelatedToIssue(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_post_getRelatedToIssue(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_wiki_getRelatedToIssue method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_wiki_getRelatedToIssue() {
         System.out.println("* MetadataRDFConverterTest: ac_wiki_getRelatedToIssue");
-        String sIssueUri = "";
-        APIResponseData expResult = null;
+        String sIssueUriNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_wiki_getRelatedToIssue(sIssueUriNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sIssueUri = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         APIResponseData result = MetadataRDFConverter.ac_wiki_getRelatedToIssue(sIssueUri);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of ac_sparql method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testAc_sparql() {
         System.out.println("* MetadataRDFConverterTest: ac_sparql");
-        String sSPARQL = "";
-        OntModelSpec oOntModelSpec = null;
-        APIResponseData expResult = null;
+        String sSPARQLNull = "";
+        OntModelSpec oOntModelSpecNull = null;
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.ac_sparql(sSPARQLNull, oOntModelSpecNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sSPARQL = "SELECT ?issueUri ?issueId ?issueDescription WHERE {?issueUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#isIssueOf> ?componentUri . ?componentUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#isComponentOf> <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1> . ?issueUri <http://www.alert-project.eu/ontologies/alert.owl#ID> ?issueId . ?issueUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#description> ?issueDescription}";
+        OntModelSpec oOntModelSpec = OntModelSpec.OWL_MEM_RULE_INF;
         APIResponseData result = MetadataRDFConverter.ac_sparql(sSPARQL, oOntModelSpec);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of GetAllMembers method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testGetAllMembers() {
         System.out.println("* MetadataRDFConverterTest: GetAllMembers");
-        String sOntClass = "";
-        APIResponseData expResult = null;
+        String sOntClassNull = "";
+        //APIResponseData expResult = null;
+        APIResponseData resultNull = MetadataRDFConverter.GetAllMembers(sOntClassNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oData);
+        assertEquals(resultNull.oData.size(), 0);
+        
+        String sOntClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Bug;
         APIResponseData result = MetadataRDFConverter.GetAllMembers(sOntClass);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oData);
+        assertEquals(result.oData.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of GetMember method, of class MetadataRDFConverter.
      */
-    @Ignore
     @Test
     public void testGetMember() {
         System.out.println("* MetadataRDFConverterTest: GetMember");
-        String sMemberURL = "";
-        OntoProperty expResult = null;
+        String sMemberURLNull = "";
+        //OntoProperty expResult = null;
+        OntoProperty resultNull = MetadataRDFConverter.GetMember(sMemberURLNull);
+        //assertEquals(expResult, resultNull);
+        assertNotNull(resultNull);
+        assertNotNull(resultNull.oProperties);
+        assertEquals(resultNull.oProperties.size(), 0);
+                
+        String sMemberURL = "http://www.alert-project.eu/ontologies/alert_its.owl#Bug1";
         OntoProperty result = MetadataRDFConverter.GetMember(sMemberURL);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        assertNotNull(result.oProperties);
+        assertEquals(result.oProperties.size() > 0, true);
+        
+        //// TO-DO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 }
