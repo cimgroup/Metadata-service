@@ -65,20 +65,20 @@ public class MetadataXMLCreatorTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of CreateXMLNewItemResponse method, of class MetadataXMLCreator.
-     */
-    @Ignore
-    @Test
-    public void testCreateXMLNewItemResponse() {
-        System.out.println("* MetadataXMLCreatorTest: CreateXMLNewItemResponse");
-        String sEventName = "";
-        String sEventId = "";
-        Object oObject = null;
-        MetadataXMLCreator.CreateXMLNewItemResponse(sEventName, sEventId, oObject);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of CreateXMLNewItemResponse method, of class MetadataXMLCreator.
+//     */
+//    @Ignore
+//    @Test
+//    public void testCreateXMLNewItemResponse() {
+//        System.out.println("* MetadataXMLCreatorTest: CreateXMLNewItemResponse");
+//        String sEventName = "";
+//        String sEventId = "";
+//        Object oObject = null;
+//        MetadataXMLCreator.CreateXMLNewItemResponse(sEventName, sEventId, oObject);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of CreateXMLInstanceResponse method, of class MetadataXMLCreator.
