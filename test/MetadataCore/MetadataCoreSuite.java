@@ -22,8 +22,7 @@ import org.junit.runners.Suite;
                      MetadataCore.MetadataXMLCreatorTest.class, 
                      MetadataCore.MetadataXMLReaderTest.class, 
                      MetadataCore.MetadataCommunicatorTest.class, 
-                     MetadataCore.MetadataModelTest.class, 
-                     MetadataCore.MetadataWebServiceTest.class})
+                     MetadataCore.MetadataModelTest.class})
 public class MetadataCoreSuite {
 
     @BeforeClass
