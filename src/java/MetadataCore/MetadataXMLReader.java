@@ -128,8 +128,9 @@ public class MetadataXMLReader {
      * @startRealisation Sasa Stojanovic 01.09.2011.
      * @finalModification Sasa Stojanovic 01.09.2011.
      * @param dDoc - input XML document to read
+     * @return - returns Issue object
      */
-    private static void NewUpdateIssue(Document dDoc)
+    public static Issue NewUpdateIssue(Document dDoc)
     {
         try
         {
@@ -432,11 +433,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewIssue(sEventId, oIssue);
-
+            
+            return oIssue;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -445,8 +448,9 @@ public class MetadataXMLReader {
      * @startRealisation Sasa Stojanovic 16.01.2012.
      * @finalModification Sasa Stojanovic 16.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns Commit object
      */
-    private static void NewCommit(Document dDoc)
+    public static Commit NewCommit(Document dDoc)
     {
         try
         {
@@ -485,11 +489,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewCommit(sEventId, oCommit);
-
+            
+            return oCommit;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -1036,7 +1042,6 @@ public class MetadataXMLReader {
         }
     }
     
-    
     /**
      * @summary Method for reading new instance request event from XML
      * @startRealisation Sasa Stojanovic 06.09.2011.
@@ -1077,8 +1082,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns AnnotationData object
      */
-    private static void NewIssueAnnotation(Document dDoc)
+    public static AnnotationData NewIssueAnnotation(Document dDoc)
     {
         try
         {
@@ -1164,10 +1170,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            
+            return oAnnotation;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -1176,8 +1185,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns AnnotationData object
      */
-    private static void NewCommentAnnotation(Document dDoc)
+    public static AnnotationData NewCommentAnnotation(Document dDoc)
     {
         try
         {
@@ -1237,10 +1247,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            
+            return oAnnotation;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -1249,8 +1262,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns AnnotationData object
      */
-    private static void NewCommitAnnotation(Document dDoc)
+    public static AnnotationData NewCommitAnnotation(Document dDoc)
     {
         try
         {
@@ -1310,10 +1324,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            
+            return oAnnotation;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -1322,8 +1339,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns AnnotationData object
      */
-    private static void NewFWPostAnnotation(Document dDoc)
+    public static AnnotationData NewFWPostAnnotation(Document dDoc)
     {
         try
         {
@@ -1409,10 +1427,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            
+            return oAnnotation;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -1421,8 +1442,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns AnnotationData object
      */
-    private static void NewMailAnnotation(Document dDoc)
+    public static AnnotationData NewMailAnnotation(Document dDoc)
     {
         try
         {
@@ -1508,10 +1530,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            
+            return oAnnotation;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -1520,8 +1545,9 @@ public class MetadataXMLReader {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 17.01.2012.
      * @param dDoc - input XML document to read
+     * @return - returns NewForumPost object
      */
-    private static void NewForumPostData(Document dDoc)
+    public static NewForumPost NewForumPostData(Document dDoc)
     {
         try
         {
@@ -1573,10 +1599,13 @@ public class MetadataXMLReader {
             }
 
             MetadataModel.SaveObjectNewForumPost(sEventId, oForumPost);
+            
+            return oForumPost;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
 
