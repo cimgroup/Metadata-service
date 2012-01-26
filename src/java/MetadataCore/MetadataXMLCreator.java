@@ -217,7 +217,7 @@ public class MetadataXMLCreator {
      * @param iEventID - id of event
      * @param arResult - list of objects
      */
-    public static void CreateXMLAPIResponse(String sAPICall, String sEventId, MetadataGlobal.APIResponseData oData)
+    public static Document CreateXMLAPIResponse(String sAPICall, String sEventId, MetadataGlobal.APIResponseData oData)
     {
         try
         {
@@ -333,10 +333,13 @@ public class MetadataXMLCreator {
             //Send created XML document
             MetadataCommunicator.SendXML(dDoc);
             
+            return dDoc;
+            
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -624,7 +627,7 @@ public class MetadataXMLCreator {
      * @param iEventID - id of event
      * @param oObject - new item object
      */
-    static void CreateXMLNewItemResponse(String sEventName, String sEventId, Object oObject)
+    public static Document CreateXMLNewItemResponse(String sEventName, String sEventId, Object oObject)
     {
         try
         {
@@ -719,10 +722,13 @@ public class MetadataXMLCreator {
 
             //Send created XML document
             MetadataCommunicator.SendXML(dDoc);
+            
+            return dDoc;
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     

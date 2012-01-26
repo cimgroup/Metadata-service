@@ -40,6 +40,12 @@ public class MetadataRDFConverterTest {
     public void tearDown() {
     }
 
+    /**
+     * Creates example Isue.
+     * @startRealisation  Dejan Milosavljevic 24.01.2012.
+     * @finalModification Dejan Milosavljevic 24.01.2012.
+     * @return 
+     */
     private Issue GetIssueExample() {
         Issue oIssue = new Issue();
         oIssue.m_sID = "184671";

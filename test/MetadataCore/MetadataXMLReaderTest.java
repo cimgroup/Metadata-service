@@ -1363,14 +1363,14 @@ public class MetadataXMLReaderTest {
                                       "KESI", "Metadata.issue.requestNew",
                                       "5748", "000000000000000000000000");
         Issue resultNull = MetadataXMLReader.NewUpdateIssue(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
                              "KESI", "Metadata.issue.requestNew",
                              "5748", "222222222222222222222222");
         Issue resultEmpty = MetadataXMLReader.NewUpdateIssue(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
@@ -1395,14 +1395,14 @@ public class MetadataXMLReaderTest {
                                       "KESI", "Metadata.commit.requestNew",
                                       "5748", "0000000");
         Commit resultNull = MetadataXMLReader.NewCommit(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
                              "KESI", "Metadata.commit.requestNew",
                              "5748", "2222222");
         Commit resultEmpty = MetadataXMLReader.NewCommit(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
@@ -1427,14 +1427,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.forumPost.requestNew",
                                       "5748", "000000000");
         NewForumPost resultNull = MetadataXMLReader.NewForumPostData(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestNew",
                              "5748", "222222222");
         NewForumPost resultEmpty = MetadataXMLReader.NewForumPostData(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1459,14 +1459,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.issue.requestAnnotation",
                                       "5748", "00000");
         AnnotationData resultNull = MetadataXMLReader.NewIssueAnnotation(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.issue.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultEmpty = MetadataXMLReader.NewIssueAnnotation(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1491,14 +1491,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.comment.requestAnnotation",
                                       "5748", "00000");
         AnnotationData resultNull = MetadataXMLReader.NewCommentAnnotation(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.comment.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultEmpty = MetadataXMLReader.NewCommentAnnotation(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1523,14 +1523,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.commit.requestAnnotation",
                                       "5748", "00000");
         AnnotationData resultNull = MetadataXMLReader.NewCommitAnnotation(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.commit.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultEmpty = MetadataXMLReader.NewCommitAnnotation(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1557,14 +1557,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.forumPost.requestAnnotation",
                                       "5748", "00000");
         AnnotationData resultNull = MetadataXMLReader.NewFWPostAnnotation(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1579,14 +1579,14 @@ public class MetadataXMLReaderTest {
                              "KEUI", "Metadata.wikiPost.requestAnnotation",
                              "5748", "00000");
         AnnotationData resultWNull = MetadataXMLReader.NewFWPostAnnotation(dDoc);
-        assertNull(resultWNull);
+        assertNotNull(resultWNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.wikiPost.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultWEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc);
-        assertNull(resultWEmpty);
+        assertNotNull(resultWEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
@@ -1612,14 +1612,14 @@ public class MetadataXMLReaderTest {
                                       "KEUI", "Metadata.mail.requestAnnotation",
                                       "5748", "00000");
         AnnotationData resultNull = MetadataXMLReader.NewMailAnnotation(dDoc);
-        assertNull(resultNull);
+        assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.mail.requestAnnotation",
                              "5748", "22222");
         AnnotationData resultEmpty = MetadataXMLReader.NewMailAnnotation(dDoc);
-        assertNull(resultEmpty);
+        assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
