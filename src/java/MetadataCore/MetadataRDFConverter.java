@@ -808,8 +808,9 @@ public class MetadataRDFConverter {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 17.01.2012.
      * @param oAnnotation - AnnotationData object
+     * @return - same AnnotationData object with filled m_sObjectURI
      */
-    public static void SaveAnnotationData(AnnotationData oAnnotation)
+    public static AnnotationData SaveAnnotationData(AnnotationData oAnnotation)
     {
         try
         {
@@ -818,19 +819,107 @@ public class MetadataRDFConverter {
             Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
             if (resObject != null && oAnnotation.oAnnotated != null)
             {
-                int iCount = oAnnotation.oAnnotated.length;
-                for (int i = 0; i < iCount; i++)
+                //Anotation concepts
+                String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
+                if (oAnnotation.oConcepts != null)
                 {
-                    String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
-                    if (!sOWLDataProperty.isEmpty())
+                    int iCCount = oAnnotation.oConcepts.length;
+                    for (int i = 0; i < iCCount; i++)
                     {
-                        String sOWLFullPropertyName = MetadataConstants.c_NS_Alert + sOWLDataProperty;
-                        AnnotationProperty apAnnotation = omModel.getAnnotationProperty(sOWLFullPropertyName);
-                        if (apAnnotation == null)
+                        OntClass ocConcept = omModel.getOntClass(sConceptClass);
+            
+                        oAnnotation.oConcepts[i].m_sObjectURI = sConceptClass + MetadataGlobal.GetNextId(omModel, ocConcept);
+                        
+                        Resource resConcept = omModel.createResource(oAnnotation.oConcepts[i].m_sObjectURI, ocConcept);
+                        oAnnotation.oConcepts[i].m_sReturnConfig = "YN#s1:" + oAnnotation.oConcepts[i].sName + MetadataConstants.c_XMLE_Uri;
+                        
+                        //Uri
+                        DatatypeProperty dtpUri = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
+                        //if (dtpUri == null)
+                        //{
+                        //    dtpUri = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
+                        //}
+                        resConcept.addProperty(dtpUri, oAnnotation.oConcepts[i].sUri);
+                        
+                        //Count
+                        DatatypeProperty dtpCount = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count);
+                        //if (dtpCount == null)
+                        //{
+                        //    dtpCount = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count);
+                        //}
+                        resConcept.addProperty(dtpCount, oAnnotation.oConcepts[i].sCount);
+                    }
+                }
+                
+                //Annotations
+                String sAnnotationClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Annotation;
+                int iACount = oAnnotation.oAnnotated.length;
+                for (int i = 0; i < iACount; i++)
+                {
+                    OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
+                    oAnnotation.oAnnotated[i].m_sObjectURI = sAnnotationClass + MetadataGlobal.GetNextId(omModel, ocAnnotation);
+                    Resource resAnnotation = omModel.createResource(oAnnotation.oAnnotated[i].m_sObjectURI, ocAnnotation);
+                    oAnnotation.oAnnotated[i].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
+                    
+                    //Name
+                    DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                    //if (dtpName == null)
+                    //{
+                    //    dtpName = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                    //}
+                    resAnnotation.addProperty(dtpName, oAnnotation.oAnnotated[i].sName);
+                    
+                    //Text
+                    DatatypeProperty dtpText = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
+                    //if (dtpText == null)
+                    //{
+                    //    dtpText = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
+                    //}
+                    resAnnotation.addProperty(dtpText, oAnnotation.oAnnotated[i].sValue);
+                        
+                    //HasConcept
+                    for (int j = 0; j < oAnnotation.oConcepts.length; j++)
+                    {
+                        String sConceptName = GetConceptName(oAnnotation.oAnnotated[i].sName);
+                        if (!sConceptName.isEmpty() && sConceptName.equals(oAnnotation.oConcepts[j].sName))
                         {
-                            apAnnotation = omModel.createAnnotationProperty(sOWLFullPropertyName);
+                            Resource resConcept = omModel.getResource(oAnnotation.oConcepts[j].m_sObjectURI);
+                            //oAnnotation.oConcepts[j].m_sReturnConfig = "YN#s1:" + oAnnotation.oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
+                            ObjectProperty opHasConcepts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
+                            //if (opHasConcepts == null)
+                            //{
+                            //    opHasConcepts = omModel.createObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
+                            //}
+                            resAnnotation.addProperty(opHasConcepts, resConcept.asResource());
                         }
-                        resObject.addProperty(apAnnotation, oAnnotation.oAnnotated[i].sValue);
+                    }
+                    
+                    ////Old code
+                    //String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
+                    //if (!sOWLDataProperty.isEmpty())
+                    //{
+                    //    String sOWLFullPropertyName = MetadataConstants.c_NS_Alert + sOWLDataProperty;
+                    //    AnnotationProperty apAnnotation = omModel.getAnnotationProperty(sOWLFullPropertyName);
+                    //    if (apAnnotation == null)
+                    //    {
+                    //        apAnnotation = omModel.createAnnotationProperty(sOWLFullPropertyName);
+                    //    }
+                    //    resObject.addProperty(apAnnotation, oAnnotation.oAnnotated[i].sValue);
+                    //}
+                }
+                
+                //Kewords
+                if (oAnnotation.oKeywords != null)
+                {
+                    String sKeywordName =  MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
+                    for (int i = 0; i < oAnnotation.oKeywords.length; i++)
+                    {
+                        AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordName);
+                        //if (apKeyword == null)
+                        //{
+                        //    apKeyword = omModel.createAnnotationProperty(sKeywordName);
+                        //}
+                        resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
                     }
                 }
             }
@@ -840,6 +929,39 @@ public class MetadataRDFConverter {
         catch (Exception e)
         {
         }
+        return oAnnotation;
+    }
+    
+    private static String GetConceptName(String sAnnotationName)
+    {
+        String sConceptName = "";
+        
+        if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_subjectConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_descriptionAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_descriptionConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_commentConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_commitConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_titleAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_titleConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_bodyAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_bodyConcepts;
+        }
+                
+        return sConceptName;
     }
     
     /**
@@ -897,13 +1019,21 @@ public class MetadataRDFConverter {
             Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
             oForumPost.m_sReturnConfig = "YY#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
             
-            ////Time
-            //if (!oForumPost.m_sTime != null)
-            //{
-            //    DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
-            //    resPost.removeAll(dtpTime);
-            //    resPost.addProperty(dtpTime, oForumPost.m_sTime.toString());
-            //}
+            //ForumItemID
+            if (!oForumPost.m_sForumItemID.isEmpty())
+            {
+                DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ForumItemID);
+                resPost.removeAll(dtpForumItemID);
+                resPost.addProperty(dtpForumItemID, oForumPost.m_sForumItemID);
+            }
+            
+            //Time
+            if (oForumPost.m_dtmTime != null)
+            {
+                DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime);
+                resPost.removeAll(dtpTime);
+                resPost.addProperty(dtpTime, oForumPost.m_dtmTime.toString());
+            }
             
             //Subject
             if (!oForumPost.m_sSubject.isEmpty())
@@ -914,12 +1044,12 @@ public class MetadataRDFConverter {
             }
 
             //Body
-            //if (!oForumPost.m_sBody.isEmpty())
-            //{
-            //    DatatypeProperty dtpBody = omModel.getDatatypeProperty(MetadataConstants.c_NS_doap + MetadataConstants.c_OWLDataProperty_Description);
-            //    resPost.removeAll(dtpBody);
-            //    resPost.addProperty(dtpBody, oForumPost.m_sBody);
-            //}
+            if (!oForumPost.m_sBody.isEmpty())
+            {
+                DatatypeProperty dtpBody = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
+                resPost.removeAll(dtpBody);
+                resPost.addProperty(dtpBody, oForumPost.m_sBody);
+            }
             
             //HasAutor
             //if (oForumPost.m_oHasAuthor != null && !oForumPost.m_oHasAuthor.m_sID.isEmpty())
@@ -932,13 +1062,13 @@ public class MetadataRDFConverter {
             //    oForumPost.m_oHasAuthor.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_author + MetadataConstants.c_XMLE_Uri;
             //}
             
-            ////Category
-            //if (!oForumPost.m_sCategory.isEmpty())
-            //{
-            //    DatatypeProperty dtpCategory = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category);
-            //    resPost.removeAll(dtpCategory);
-            //    resPost.addProperty(dtpCategory, oForumPost.m_sCategory);
-            //}
+            //Category
+            if (!oForumPost.m_sCategory.isEmpty())
+            {
+                DatatypeProperty dtpCategory = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category);
+                resPost.removeAll(dtpCategory);
+                resPost.addProperty(dtpCategory, oForumPost.m_sCategory);
+            }
             
             //HasPost - thread
             if (oForumPost.m_oForumThread != null)
@@ -2282,8 +2412,8 @@ public class MetadataRDFConverter {
     }
     
     
-    public static void CreateQuery() throws FileNotFoundException, IOException
-    {
+//    public static void CreateQuery() throws FileNotFoundException, IOException
+//    {
 //       try {
 //         OntModel ontologyModel = LoadOWL();
 //         CreateNewQuery(ontologyModel);
@@ -2296,10 +2426,10 @@ public class MetadataRDFConverter {
 //            ex.printStackTrace();
 //  
 //         }
-    }
+//    }
     
-    private static void CreateNewQuery(OntModel ontologyModel)
-    {
+//    private static void CreateNewQuery(OntModel ontologyModel)
+//    {
 //        String queryString = "Select * Where {?s ?p ?o}";
 //         // Execute the query and obtain results
 //        QueryExecution qe = QueryExecutionFactory.create(queryString, ontologyModel);
@@ -2314,11 +2444,11 @@ public class MetadataRDFConverter {
 //          Literal l = soln.getLiteral("Object") ;   // Get a result variable - must be a literal
 //        }
 //      } finally { qe.close() ; }
-    }
+//    }
     
     
-    public static void CreateTriples()
-    {
+//    public static void CreateTriples()
+//    {
 //        try {
 //
 // 
@@ -2355,9 +2485,9 @@ public class MetadataRDFConverter {
 //        } catch (Exception ex) {
 //      ex.printStackTrace();
 //    }
-  }
+//  }
 
-    public static void SearchForIDs(String sSearchType, ArrayList<String> sIDs)  throws FileNotFoundException, IOException {
+//    public static void SearchForIDs(String sSearchType, ArrayList<String> sIDs)  throws FileNotFoundException, IOException {
 //        try {
 //            
 //         OntModel ontologyModel = LoadOWL();
@@ -2393,5 +2523,5 @@ public class MetadataRDFConverter {
 //            ex.printStackTrace();
 //  
 //         }
-    }
+//    }
 }

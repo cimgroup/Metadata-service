@@ -75,6 +75,7 @@ public class MetadataWebService {
         try
         {
             String sProjectPath = System.getProperty("user.dir");
+            MetadataGlobal.ExpandOntology();
             
             //implemented events
             

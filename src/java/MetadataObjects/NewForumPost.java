@@ -17,13 +17,14 @@ public class NewForumPost extends ForumEvent {
     //m_sID - post ID
     public NewForumThread m_oForumThread;
     public ForumEvent m_oForum;
+    public String m_sForumItemID;
     ////public String m_sForumID;
     ////public String m_sThreadID;
-    //public Date m_dtmTime; // not in ontology
+    public Date m_dtmTime; // not in ontology
     public String m_sSubject;
     public String m_sBody; // in ontology as description
     //m_oHasAuthor - author
-    //public String m_sCategory; // not in ontology
+    public String m_sCategory; // not in ontology
   
     // </editor-fold>
         
