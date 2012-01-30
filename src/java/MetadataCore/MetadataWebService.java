@@ -122,6 +122,8 @@ public class MetadataWebService {
             //String sRequest = LoadXML(sProjectPath + "\\Events\\API Call Events\\email.getRelatedToIssue\\APIRequest - email.getRelatedToIssue.xml");
             //String sRequest = LoadXML(sProjectPath + "\\Events\\API Call Events\\post.getRelatedToIssue\\APIRequest - post.getRelatedToIssue.xml");
             //String sRequest = LoadXML(sProjectPath + "\\Events\\API Call Events\\wiki.getRelatedToIssue\\APIRequest - wiki.getRelatedToIssue.xml");
+            
+            //String sRequest = LoadXML(sProjectPath + "\\Events\\API Call Events\\instance.getAllForConcept\\APIRequest - instance.getAllForConcept.xml");
                         
             MetadataWebService oServis = new MetadataWebService();
             String sTest = oServis.XMLRequest(sRequest);

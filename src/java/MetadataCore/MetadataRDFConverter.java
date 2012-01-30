@@ -2390,12 +2390,12 @@ public class MetadataRDFConverter {
                 }
                 else
                 {
-                    OntProperty opProperty = omModel.getOntProperty(sTypeOf);
-                    OntResource orResource = opProperty.getRange();
-                    if (orResource != null)
-                        sTypeOf = orResource.toString();
-                    else
-                        sTypeOf = "";
+                    //OntProperty opProperty = omModel.getOntProperty(sTypeOf);
+                    //OntResource orResource = opProperty.getRange();
+                    //if (orResource != null)
+                    //   sTypeOf = orResource.toString();
+                    //else
+                    //    sTypeOf = "";
                     
                     OntoProperty oSubProjeprty = new OntoProperty();
                     oSubProjeprty.sName = sName;
