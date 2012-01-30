@@ -2,4 +2,4 @@
 /dist/
 /build/
 /nbproject/
-/web/
+!/web/WEB-INF/

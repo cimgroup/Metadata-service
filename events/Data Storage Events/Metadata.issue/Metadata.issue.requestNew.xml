@@ -68,7 +68,7 @@
 									</s:issueAssignedTo>
 									<!-- ids of issue CC persons -->
 									<s:issueCCPerson>
-										<s:name></s:name>
+										<s:name>Angel Blue</s:name>
 										<s:id>angel_blue_co2004@yahoo.com</s:id>
 										<s:email>angel_blue_co2004@yahoo.com</s:email>
 									</s:issueCCPerson>
@@ -106,7 +106,7 @@
 										<s:commentNumber>1</s:commentNumber>
 										<s:commentText>If a driver is missing, clicking on the notification should open the package manager (by default) so the user can find a driver</s:commentText>
 										<s:commentPerson>
-											<s:name>Angel Blue01</s:name>
+											<s:name>Angel Blue</s:name>
 											<s:id>angel_blue_co2004@yahoo.com</s:id>
 											<s:email>angel_blue_co2004@yahoo.com</s:email>
 										</s:commentPerson>
@@ -118,7 +118,7 @@
 										<s:attachmentFilename>name</s:attachmentFilename>
 										<s:attachmentType>doc</s:attachmentType>
 										<s:attachmentCreator>
-											<s:name>Angel Blue01</s:name>
+											<s:name>Angel Blue</s:name>
 											<s:id>angel_blue_co2004@yahoo.com</s:id>
 											<s:email>angel_blue_co2004@yahoo.com</s:email>
 										</s:attachmentCreator>

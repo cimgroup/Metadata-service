@@ -25,12 +25,12 @@ import org.w3c.dom.Document;
  *
  * @author ivano
  */
-@WebService(serviceName = "MetadataWebService")
+
 public class MetadataWebService {
 
     /** Operation to request action from Metadata Service */
-    @WebMethod(operationName = "XMLRequest")
-    public String XMLRequest(@WebParam(name = "sDoc") String sDoc) throws FileNotFoundException
+
+    public String XMLRequest(String sDoc) throws FileNotFoundException
     {
         try
         {

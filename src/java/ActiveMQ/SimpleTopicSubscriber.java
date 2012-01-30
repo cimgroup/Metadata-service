@@ -14,7 +14,7 @@ import java.util.Properties;
  * @author dusan.marjanovic
  */
 public class SimpleTopicSubscriber {
-    public static void main(String[] args) {
+    public static void main() {
         String topicName = null;
         Context jndiContext = null;
         TopicConnectionFactory topicConnectionFactory = null;
@@ -33,7 +33,7 @@ public class SimpleTopicSubscriber {
             System.out.println("Usage: java " + "SimpleTopicSubscriber <topic-name>");
             System.exit(1);
         }*/
-        topicName = "MyTopic";
+        topicName = "MetadataIn";
         System.out.println("Topic name is " + topicName);
         
 //*  Create a JNDI API InitialContext object if none exists yet.
@@ -41,8 +41,8 @@ public class SimpleTopicSubscriber {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
-            env.setProperty("topic.MyTopic", topicName);
+            env.setProperty(Context.PROVIDER_URL,"tcp://93.87.17.114:61616");
+            env.setProperty("topic.MetadataIn", topicName);
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());
