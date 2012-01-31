@@ -40,18 +40,7 @@ public class MetadataCommunicator {
         MetadataXMLReader.ReadXML(dDoc);
         return m_sXML;
     }
-    
-    /**
-     * @summary Method for receiving XML local file 
-     * @startRealisation Ivan Obradovic  17.06.2011.
-     * @finalModification Sasa Stojanovic  23.06.2011.
-     */
-    public static void ReceiveXMLLocal()
-    {
-        Document dDoc = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\newIssueRequest.xml");
-        MetadataXMLReader.ReadXML(dDoc);
-    }
-    
+       
     /**
      * @summary Method for sending XML file
      * @startRealisation Ivan Obradovic  17.06.2011.
