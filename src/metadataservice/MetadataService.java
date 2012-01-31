@@ -5,6 +5,7 @@
 package metadataservice;
 
 import ActiveMQ.SimpleTopicSubscriber;
+import MetadataCore.MetadataGlobal;
 
 /**
  *
@@ -16,7 +17,8 @@ public class MetadataService {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //// TO-DO code application logic here
+        MetadataGlobal.ExpandOntology();
         SimpleTopicSubscriber.main();
     }
 }
