@@ -209,6 +209,21 @@ public class MetadataConstants {
     public static String c_XMLE_body = "body";
     public static String c_XMLE_author = "author";
     public static String c_XMLE_category = "category";
+    
+    public static String c_XMLE_commitFile = "commitFile";
+    public static String c_XMLE_file = "file";
+    public static String c_XMLE_fileAction = "fileAction";
+    public static String c_XMLE_fileBranch = "fileBranch";
+    public static String c_XMLE_fileModules = "fileModules";
+    public static String c_XMLE_module = "module";
+    public static String c_XMLE_moduleName = "moduleName";
+    public static String c_XMLE_moduleStartLine = "moduleStartLine";
+    public static String c_XMLE_moduleEndLine = "moduleEndLine";
+    public static String c_XMLE_fileMethods = "fileMethods";
+    public static String c_XMLE_methodName = "methodName";
+    public static String c_XMLE_methodStartLine = "methodStartLine";
+    public static String c_XMLE_methodEndLine = "methodEndLine";
+    //public static String 
 
     // </editor-fold>
     

@@ -462,30 +462,91 @@ public class MetadataXMLReader {
 
             if (nlCommit != null && nlCommit.getLength() > 0)
             {
-                Element eIssue = (Element) nlCommit.item(0);
+                Element eCommit = (Element) nlCommit.item(0);
 
                 oCommit.m_oIsCommitOfRepository = new Repository();
-                oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
+                oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
                 
-                oCommit.m_sRevisionTag = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitRevisionTag);
+                oCommit.m_sRevisionTag = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRevisionTag);
                 
-                NodeList nlAuthor = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitAuthor);
+                NodeList nlAuthor = eCommit.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitAuthor);
                 if (nlAuthor != null && nlAuthor.getLength() > 0)
                 {
                     Element eAuthor = (Element) nlAuthor.item(0);
                     oCommit.m_oHasAuthor = GetPersonObject("s:", eAuthor);
                 }
                 
-                NodeList nlCommiter = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitCommtter);
+                NodeList nlCommiter = eCommit.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitCommtter);
                 if (nlCommiter != null && nlCommiter.getLength() > 0)
                 {
                     Element eCommiter = (Element) nlCommiter.item(0);
                     oCommit.m_oHasCommitter = GetPersonObject("s:", eCommiter);
                 }
 
-                oCommit.m_dtmCommitDate = MetadataGlobal.GetDateTime(GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitDate));
+                oCommit.m_dtmCommitDate = MetadataGlobal.GetDateTime(GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitDate));
                 
-                oCommit.m_sCommitMessage = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_commitMessageLog);
+                oCommit.m_sCommitMessage = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitMessageLog);
+                
+                NodeList nlFile = eCommit.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitFile);
+                if (nlFile != null && nlFile.getLength() > 0)
+                {
+                    oCommit.m_oHasFile = new File[nlFile.getLength()];
+                    for (int i = 0; i < nlFile.getLength(); i++)
+                    {
+                        Element eFile = (Element)nlFile.item(i);
+                        oCommit.m_oHasFile[i] = new File();
+                        
+                        oCommit.m_oHasFile[i].m_sID = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Id);
+                        
+                        String sFileAction = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileAction);
+                        if (sFileAction.equals("Add"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new AddFile();
+                        if (sFileAction.equals("Copy"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new CopyFile();
+                        if (sFileAction.equals("Delete"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new DeleteFile();
+                        if (sFileAction.equals("Modify"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new ModifyFile();
+                        if (sFileAction.equals("Rename"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new RenameFile();
+                        if (sFileAction.equals("Replace"))
+                            oCommit.m_oHasFile[i].m_oHasAction = new ReplaceFile();
+                        
+                        oCommit.m_oHasFile[i].m_sBranch = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileBranch);
+                        
+                        NodeList nlModule = eFile.getElementsByTagName("s:" + MetadataConstants.c_XMLE_fileModules);
+                        if (nlModule != null && nlModule.getLength() > 0)
+                        {
+                            oCommit.m_oHasFile[i].m_oHasModule = new Module[nlModule.getLength()];
+                            for (int j = 0; j < nlModule.getLength(); j++)
+                            {
+                                Element eModule = (Element)nlModule.item(j);
+                                oCommit.m_oHasFile[i].m_oHasModule[j] = new Module();
+
+                                oCommit.m_oHasFile[i].m_oHasModule[j].m_sID = GetValue(eModule, "s:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id);
+                                oCommit.m_oHasFile[i].m_oHasModule[j].m_sName = GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleName);
+                                oCommit.m_oHasFile[i].m_oHasModule[j].m_iStartLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleStartLine));
+                                oCommit.m_oHasFile[i].m_oHasModule[j].m_iEndLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleEndLine));
+
+                                NodeList nlMethod = eModule.getElementsByTagName("s:" + MetadataConstants.c_XMLE_fileMethods);
+                                if (nlMethod != null && nlMethod.getLength() > 0)
+                                {
+                                    oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod = new Method[nlMethod.getLength()];
+                                    for (int k = 0; k < nlMethod.getLength(); k++)
+                                    {
+                                        Element eMethod = (Element)nlMethod.item(k);
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] = new Method();
+
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID = GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id);
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName = GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodName);
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine = Integer.parseInt(GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodStartLine));
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine = Integer.parseInt(GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodEndLine));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             MetadataModel.SaveObjectNewCommit(sEventId, oCommit);
