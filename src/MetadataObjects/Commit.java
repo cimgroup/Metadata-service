@@ -21,6 +21,7 @@ public class Commit  extends MetadataObject {
     public Date m_dtmCommitDate;
     public String m_sCommitMessage;
     public String m_sRevisionTag;
+    public File[] m_oHasFile;
 
      // </editor-fold>
     

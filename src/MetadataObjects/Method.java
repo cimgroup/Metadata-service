@@ -15,16 +15,11 @@ public class Method extends SourceCode {
     // <editor-fold desc="Members">
     
     public String m_sContains;
+    public String m_sName;
+    public int m_iStartLine;
+    public int m_iEndLine;
 
      // </editor-fold>
-
-    public String GetContains() {
-        return m_sContains;
-    }
-
-    public void SetContains(String sContains) {
-        m_sContains = sContains;
-    }
 
     // <editor-fold desc="Methods">
     
