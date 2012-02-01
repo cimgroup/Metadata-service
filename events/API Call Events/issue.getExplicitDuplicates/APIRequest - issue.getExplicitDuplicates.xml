@@ -27,16 +27,13 @@
 							<ns1:eventData>
 								<ns1:apiRequest>
 									<!-- name of method -->
-									<s2:apiCall>issue.getDuplicates</s2:apiCall>
+									<s2:apiCall>issue.getExplicitDuplicates</s2:apiCall>
 									<s2:requestData>
 										<!-- input parameters -->
 										<s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>issueDuplicatesSPARQL</s2:name>
-											<!-- condition part of SPARQL query -->
-											<!-- query: "SELECT ?issueUri WHERE {?issueUri a <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Issue> . [issueDuplicatesSPARQL parameter]}" -->
-											<s2:value><![CDATA[ ?issueUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword . <http://www.alert-project.eu/ontologies/alert_its.owl#Bug1> <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword ]]></s2:value>
-											<!--<s2:value><![CDATA[ ?issueUri <http://www.alert-project.eu/ontologies/alert_its.owl#isDuplicateOf> <http://www.alert-project.eu/ontologies/alert_its.owl#Bug1> ]]></s2:value>-->
+											<s2:name>issueUri</s2:name>
+											<s2:value>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>

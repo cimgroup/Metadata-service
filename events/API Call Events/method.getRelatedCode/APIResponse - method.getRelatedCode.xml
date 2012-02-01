@@ -30,9 +30,9 @@
 									<s3:apiCall>method.getRelatedCode</s3:apiCall>
 									<s3:responseData>
 										<!-- list (or any other structure) of results -->
-										<s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method1</s3:methodUri>
-										<s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method2</s3:methodUri>
-										<s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method3</s3:methodUri>
+										<s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</s3:methodUri>
+										<s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</s3:methodUri>
+										<s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method3</s3:methodUri>
 									</s3:responseData>
 								</ns1:apiResponse>
 							</ns1:eventData>

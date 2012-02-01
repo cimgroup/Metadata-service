@@ -734,10 +734,10 @@ public class MetadataXMLReader {
                     MetadataModel.ac_issue_getInfo(sEventId, sIssueUri);
                 }
                 
-                ///////////////////////////////// issue_getDuplicates /////////////////////////////////
-                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getDuplicates))
+                ///////////////////////////////// issue_getExplicitDuplicates /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getExplicitDuplicates))
                 {
-                    String sIssueDuplicatesSPARQL = "";
+                    String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -747,12 +747,12 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_issueDuplicatesSPARQL))
-                                sIssueDuplicatesSPARQL = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_issue_getDuplicates(sEventId, sIssueDuplicatesSPARQL);
+                    MetadataModel.ac_issue_getExplicitDuplicates(sEventId, sIssueUri);
                 }
                 
                 ///////////////////////////////// person_getInfo /////////////////////////////////
