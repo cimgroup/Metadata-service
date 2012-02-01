@@ -18,9 +18,8 @@ public class SimpleTopicSubscriber {
     public static void main() {
         
         
-        MetadataConstants.c_Topics.add("test1");
-        MetadataConstants.c_Topics.add("test2");
-        MetadataConstants.c_Topics.add("test3");
+        MetadataConstants.c_Topics.add("MetadataInTest");
+
         
         Context jndiContext = null;
         TopicConnectionFactory topicConnectionFactory = null;
@@ -46,7 +45,7 @@ public class SimpleTopicSubscriber {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+            env.setProperty(Context.PROVIDER_URL,"tcp://www.cimcollege.rs:61616");
             for(int i=0; i<MetadataConstants.c_Topics.size(); i++)
             {
                 env.setProperty("topic." + MetadataConstants.c_Topics.get(i), MetadataConstants.c_Topics.get(i));
