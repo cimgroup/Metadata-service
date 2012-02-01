@@ -368,6 +368,7 @@ public class MetadataRDFConverterTest {
         oForumPost.m_oHasAuthor.m_sLastName = "Blue";
         oForumPost.m_oHasAuthor.m_sID = "angel_blue_co2004@yahoo.com";
         oForumPost.m_oHasAuthor.m_sEmail = "angel_blue_co2004@yahoo.com";
+        oForumPost.m_sCategory = "xxxxxx";
         NewForumPost result = MetadataRDFConverter.SaveForumPost(oForumPost);
         assertNotNull(result);
         assertEquals(result.m_sObjectURI.isEmpty(), false);

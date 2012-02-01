@@ -458,17 +458,17 @@ public class MetadataGlobal {
                         {
                             if (iIndexS != -1)
                             {
-                                sValue = sValue.substring(iIndexS + 1); //added 1 because of quoutation marks
+                                sValue = sValue.substring(iIndexS + 14); //added 1 because of quoutation marks
                                 int iIndexKwS = sValue.indexOf(">");
                                 if (iIndexKwS != -1)
                                 {
-                                    sValue = sValue.substring(iIndexKwS);
+                                    sValue = sValue.substring(iIndexKwS + 1);
                                     
                                     int iIndexKwE = sValue.indexOf("</concept>");
                                     if (iIndexKwE != -1)
                                     {
-                                        String sKeyword = sValue = sValue.substring(0, iIndexKwE);
-                                        sValue = sValue.substring(iIndexKwS);
+                                        String sKeyword = sValue.substring(0, iIndexKwE);
+                                        sValue = sValue.substring(iIndexKwE + 10);
                                         if (!sKeyword.isEmpty()) oKw.add(sKeyword);
                                     }
                                 }

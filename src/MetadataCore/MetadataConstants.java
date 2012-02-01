@@ -4,6 +4,8 @@
  */
 package MetadataCore;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ivano
@@ -459,6 +461,8 @@ public class MetadataConstants {
     public static String c_OWLAnnotationProperty_apKeyword = "apKeyword";
     
     // </editor-fold>
+    
+    public static ArrayList <String> c_Topics = new ArrayList<String>();
         
     // <editor-fold desc="NameSpace">
     
