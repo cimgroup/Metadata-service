@@ -6,15 +6,13 @@ package MetadataCore;
 
 import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataObjects.*;
+import MetadataObjects.Comment;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 /**
  *
@@ -135,6 +133,7 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
 
             Issue oIssue = MetadataObjectFactory.CreateNewIssue();
 
@@ -143,6 +142,7 @@ public class MetadataXMLReader {
             if (nlIssue != null && nlIssue.getLength() > 0)
             {
                 Element eIssue = (Element) nlIssue.item(0);
+                eOriginalData = eIssue;
 
                 oIssue.m_sID = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id);
 
@@ -432,7 +432,8 @@ public class MetadataXMLReader {
                 
             }
 
-            MetadataModel.SaveObjectNewIssue(sEventId, oIssue);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            MetadataModel.SaveObjectNewIssue(sEventId, eOriginalData, oIssue);
             
             return oIssue;
         }
@@ -455,6 +456,7 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
 
             Commit oCommit = MetadataObjectFactory.CreateNewCommit();
 
@@ -463,6 +465,7 @@ public class MetadataXMLReader {
             if (nlCommit != null && nlCommit.getLength() > 0)
             {
                 Element eCommit = (Element) nlCommit.item(0);
+                eOriginalData = eCommit;
 
                 oCommit.m_oIsCommitOfRepository = new Repository();
                 oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
@@ -528,7 +531,7 @@ public class MetadataXMLReader {
                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_iStartLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleStartLine));
                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_iEndLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleEndLine));
 
-                                NodeList nlMethod = eModule.getElementsByTagName("s:" + MetadataConstants.c_XMLE_fileMethods);
+                                NodeList nlMethod = eModule.getElementsByTagName("s:" + MetadataConstants.c_XMLE_moduleMethods);
                                 if (nlMethod != null && nlMethod.getLength() > 0)
                                 {
                                     oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod = new Method[nlMethod.getLength()];
@@ -548,8 +551,9 @@ public class MetadataXMLReader {
                     }
                 }
             }
-
-            MetadataModel.SaveObjectNewCommit(sEventId, oCommit);
+            
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            MetadataModel.SaveObjectNewCommit(sEventId, eOriginalData, oCommit);
             
             return oCommit;
         }
@@ -1663,6 +1667,7 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
 
             NewForumPost oForumPost = MetadataObjectFactory.CreateNewForumPost();
 
@@ -1671,6 +1676,7 @@ public class MetadataXMLReader {
             if (nlForum != null && nlForum.getLength() > 0)
             {
                 Element eForum = (Element) nlForum.item(0);
+                eOriginalData = eForum;
                 
                 //forumItemID
                 oForumPost.m_sForumItemID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumItemId);
@@ -1709,7 +1715,8 @@ public class MetadataXMLReader {
                 oForumPost.m_sCategory = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_category);
             }
 
-            MetadataModel.SaveObjectNewForumPost(sEventId, oForumPost);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
             
             return oForumPost;
         }
@@ -1891,6 +1898,39 @@ public class MetadataXMLReader {
         return oPerson;
     }
 
+    /**
+     * @summary Method for changing element tag name
+     * @startRealisation Sasa Stojanovic 01.02.2012.
+     * @finalModification Sasa Stojanovic 01.02.2012.
+     * @param eElement - element to change tag name
+     * @param sTagName - new tag name
+     * @return - element with changed tag name
+     */
+    private static Element ChangeElementTagName(Document dDoc, Element eElement, String sTagName)
+    {
+        Element oElementNN = dDoc.createElement(sTagName);
+        try
+        {
+            // Copy the attributes to the new element
+            NamedNodeMap nnmAttributes = eElement.getAttributes();
+            for (int i = 0; i < nnmAttributes.getLength(); i++)
+            {
+                Attr atAttributesNN = (Attr)dDoc.importNode(nnmAttributes.item(i), true);
+                oElementNN.getAttributes().setNamedItem(atAttributesNN);
+            }
+
+            // Move all the children
+            while (eElement.hasChildNodes())
+            {
+                oElementNN.appendChild(eElement.getFirstChild());
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oElementNN;
+    }
 
     // </editor-fold>
 

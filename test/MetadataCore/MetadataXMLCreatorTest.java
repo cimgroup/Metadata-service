@@ -285,14 +285,14 @@ public class MetadataXMLCreatorTest {
         String sEventNameNull = "";
         String sEventIdNull = "";
         Object oObjectNull = null;
-        Document resultNull = MetadataXMLCreator.CreateXMLNewItemResponse(sEventNameNull, sEventIdNull, oObjectNull);
+        Document resultNull = MetadataXMLCreator.CreateXMLNewItemResponse(sEventNameNull, sEventIdNull, null, oObjectNull);
         assertNotNull(resultNull);
         
         //Issue
         String sEventNameEmpty = MetadataConstants.c_ET_issue_replyNewUpdate;
         String sEventIdEmpty = "5748";
         Issue oObjectEmpty = new Issue();
-        Document resultEmpty = MetadataXMLCreator.CreateXMLNewItemResponse(sEventNameEmpty, sEventIdEmpty, oObjectEmpty);
+        Document resultEmpty = MetadataXMLCreator.CreateXMLNewItemResponse(sEventNameEmpty, sEventIdEmpty, null, oObjectEmpty);
         assertNotNull(resultEmpty);
         NodeList nlIssueNull = resultEmpty.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issue);
         assertNotNull(nlIssueNull);
@@ -301,7 +301,7 @@ public class MetadataXMLCreatorTest {
         String sEventName = MetadataConstants.c_ET_issue_replyNewUpdate;
         String sEventId = "5748";
         Issue oObject = GetIssueExample();
-        Document result = MetadataXMLCreator.CreateXMLNewItemResponse(sEventName, sEventId, oObject);
+        Document result = MetadataXMLCreator.CreateXMLNewItemResponse(sEventName, sEventId, null, oObject);
         assertNotNull(result);
         NodeList nlIssue = result.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issue);
         assertNotNull(nlIssue);

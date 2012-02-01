@@ -40,18 +40,7 @@ public class MetadataCommunicator {
         MetadataXMLReader.ReadXML(dDoc);
         return m_sXML;
     }
-    
-    /**
-     * @summary Method for receiving XML local file 
-     * @startRealisation Ivan Obradovic  17.06.2011.
-     * @finalModification Sasa Stojanovic  23.06.2011.
-     */
-    public static void ReceiveXMLLocal()
-    {
-        Document dDoc = LoadXML("D:\\Sasa.Stojanovic\\Alert\\XML\\newIssueRequest.xml");
-        MetadataXMLReader.ReadXML(dDoc);
-    }
-    
+       
     /**
      * @summary Method for sending XML file
      * @startRealisation Ivan Obradovic  17.06.2011.
@@ -77,7 +66,7 @@ public class MetadataCommunicator {
             
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
-            SimpleTopicPublisher.publish("MetadataOut", m_sXML);
+            SimpleTopicPublisher.publish("MetadataOutTest", m_sXML);
           
             
             
@@ -96,7 +85,7 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Response.xml"));
+            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Response.xml"));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)

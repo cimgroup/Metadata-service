@@ -4,6 +4,8 @@
  */
 package MetadataCore;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ivano
@@ -220,7 +222,7 @@ public class MetadataConstants {
     public static String c_XMLE_moduleName = "moduleName";
     public static String c_XMLE_moduleStartLine = "moduleStartLine";
     public static String c_XMLE_moduleEndLine = "moduleEndLine";
-    public static String c_XMLE_fileMethods = "fileMethods";
+    public static String c_XMLE_moduleMethods = "moduleMethods";
     public static String c_XMLE_methodName = "methodName";
     public static String c_XMLE_methodStartLine = "methodStartLine";
     public static String c_XMLE_methodEndLine = "methodEndLine";
@@ -305,6 +307,17 @@ public class MetadataConstants {
     public static String c_OWLClass_Annotation = "Annotation";
     public static String c_OWLClass_AnnotationConcept = "AnnotationConcept";
     
+    public static String c_OWLClass_File = "File";
+    public static String c_OWLClass_Module = "Module";
+    
+    //action
+    public static String c_OWLClass_Add = "Add";
+    public static String c_OWLClass_Copy = "Copy";
+    public static String c_OWLClass_Delete = "Delete";
+    public static String c_OWLClass_Modify = "Modify";
+    public static String c_OWLClass_Rename = "Rename";
+    public static String c_OWLClass_Replace = "Replace";
+    
     //state
     public static String c_OWLClass_Assigned = "Assigned";
     public static String c_OWLClass_Open = "Open";
@@ -386,6 +399,10 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_ForumItemID = "forumItemId";
     public static String c_OWLDataProperty_PostTime = "postTime";
     
+    public static String c_OWLDataProperty_OnBranch = "onBranch";
+    public static String c_OWLDataProperty_StartLine = "startLine";
+    public static String c_OWLDataProperty_EndLine = "endLine";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">
@@ -424,6 +441,11 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasAnnotations = "hasAnnotations";
     public static String c_OWLObjectProperty_HasConcepts = "hasConcepts";
     
+    public static String c_OWLObjectProperty_HasFile = "hasFile";
+    public static String c_OWLObjectProperty_HasAction = "hasAction";
+    public static String c_OWLObjectProperty_HasModules = "hasModules";
+    public static String c_OWLObjectProperty_HasMethods = "hasMethods";
+    
     
     // </editor-fold>
             
@@ -439,6 +461,8 @@ public class MetadataConstants {
     public static String c_OWLAnnotationProperty_apKeyword = "apKeyword";
     
     // </editor-fold>
+    
+    public static ArrayList <String> c_Topics = new ArrayList<String>();
         
     // <editor-fold desc="NameSpace">
     

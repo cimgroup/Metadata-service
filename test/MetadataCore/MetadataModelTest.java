@@ -62,7 +62,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: SaveObjectNewIssue");
         String sEventId = "";
         Issue oIssue = null;
-        MetadataModel.SaveObjectNewIssue(sEventId, oIssue);
+        MetadataModel.SaveObjectNewIssue(sEventId, null, oIssue);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -76,7 +76,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: SaveObjectNewCommit");
         String sEventId = "";
         Commit oCommit = null;
-        MetadataModel.SaveObjectNewCommit(sEventId, oCommit);
+        MetadataModel.SaveObjectNewCommit(sEventId, null, oCommit);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -104,7 +104,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: SaveObjectNewForumPost");
         String sEventId = "";
         NewForumPost oForumPost = null;
-        MetadataModel.SaveObjectNewForumPost(sEventId, oForumPost);
+        MetadataModel.SaveObjectNewForumPost(sEventId, null, oForumPost);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

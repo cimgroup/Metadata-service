@@ -49,18 +49,6 @@ public class MetadataCommunicatorTest {
     }
 
     /**
-     * Test of ReceiveXMLLocal method, of class MetadataCommunicator.
-     */
-    @Ignore
-    @Test
-    public void testReceiveXMLLocal() {
-        System.out.println("* MetadataCommunicatorTest: ReceiveXMLLocal");
-        MetadataCommunicator.ReceiveXMLLocal();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of SendXML method, of class MetadataCommunicator.
      */
     @Ignore
