@@ -58,7 +58,7 @@ public class MetadataRDFConverter {
             
             oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
             Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
-            oIssue.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issue + "/s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+            oIssue.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
 
             //already done in GetObjectURI method
             //bug id

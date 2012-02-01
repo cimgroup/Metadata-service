@@ -64,6 +64,7 @@ public class MetadataConstants {
     public static String c_XMLE_eventType = "eventType";
     public static String c_XMLE_sentby = "sentby";
     
+    public static String c_XMLE_kesi = "kesi";
     public static String c_XMLE_keui = "keui";
     public static String c_XMLE_mdservice = "mdservice";
     public static String c_XMLE_rawTextualData = "rawTextualData";
