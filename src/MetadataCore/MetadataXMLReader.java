@@ -1715,7 +1715,7 @@ public class MetadataXMLReader {
                 oForumPost.m_sCategory = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_category);
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_keui);
             MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
             
             return oForumPost;
