@@ -1156,15 +1156,25 @@ public class MetadataXMLReader {
             String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+            
+            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+            if (nlMdservice != null && nlMdservice.getLength() > 0)
+            {
+                Element eMdservice = (Element) nlMdservice.item(0);
+                String sTag = "o:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                
+                //URI
+                oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
+            }
 
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag keui
 
             if (nlAnnotation != null && nlAnnotation.getLength() > 0)
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                //URI
-                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
+//                //URI
+//                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
                 //Annotations
                 NodeList nlSubjectAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_subjectAnnotated);
@@ -1259,8 +1269,18 @@ public class MetadataXMLReader {
             String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
-
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+            
+            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+            if (nlMdservice != null && nlMdservice.getLength() > 0)
+            {
+                Element eMdservice = (Element) nlMdservice.item(0);
+                String sTag = "o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+                
+                //URI
+                oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
+            }
+            
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag keui
 
             if (nlAnnotation != null && nlAnnotation.getLength() > 0)
             {
@@ -1337,7 +1357,17 @@ public class MetadataXMLReader {
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
 
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+            if (nlMdservice != null && nlMdservice.getLength() > 0)
+            {
+                Element eMdservice = (Element) nlMdservice.item(0);
+                String sTag = "o:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+                
+                //URI
+                oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
+            }
+            
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag keui
 
             if (nlAnnotation != null && nlAnnotation.getLength() > 0)
             {
@@ -1413,8 +1443,18 @@ public class MetadataXMLReader {
             String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
-
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+            
+            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+            if (nlMdservice != null && nlMdservice.getLength() > 0)
+            {
+                Element eMdservice = (Element) nlMdservice.item(0);
+                String sTag = "o:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+                
+                //URI
+                oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
+            }
+            
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag annotation
 
             if (nlAnnotation != null && nlAnnotation.getLength() > 0)
             {
@@ -1516,8 +1556,18 @@ public class MetadataXMLReader {
             String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
-
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_annotation);   //getting node for tag annotation
+            
+            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+            if (nlMdservice != null && nlMdservice.getLength() > 0)
+            {
+                Element eMdservice = (Element) nlMdservice.item(0);
+                String sTag = "o:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                
+                //URI
+                oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
+            }
+            
+            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag annotation
 
             if (nlAnnotation != null && nlAnnotation.getLength() > 0)
             {

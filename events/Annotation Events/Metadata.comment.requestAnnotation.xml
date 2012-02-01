@@ -25,7 +25,11 @@
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
 							<ns1:eventData>
-								<s1:annotation>
+                                                                <s:kesi>
+                                                                </s:kesi>
+                                                                <o:mdservice>
+                                                                </o:mdservice>
+								<s1:keui>
 									<!-- item Uri -->
 									<s1:itemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s1:itemUri>
 									<!-- comment annotations -->
@@ -37,7 +41,7 @@
 											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:commentConcepts>
-								</s1:annotation>
+								</s1:keui>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>

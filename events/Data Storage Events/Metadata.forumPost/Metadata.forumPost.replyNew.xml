@@ -24,11 +24,11 @@
                                 <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
-                                <s1:forum>
-                                    <s1:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</s1:forumPostUri>
-                                    <s1:threadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</s1:threadUri>
-                                    <s1:forumUri>http://www.alert-project.eu/ontologies/alert.owl#forum1</s1:forumUri>
-                                </s1:forum>
+                                <o:mdservice>
+                                    <o:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:forumPostUri>
+                                    <o:threadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:threadUri>
+                                    <o:forumUri>http://www.alert-project.eu/ontologies/alert.owl#forum1</o:forumUri>
+                                </o:mdservice>
                             </ns1:eventData>
                         </ns1:payload>
                     </ns1:event>
