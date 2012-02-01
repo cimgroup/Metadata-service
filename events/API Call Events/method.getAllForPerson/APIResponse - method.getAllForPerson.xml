@@ -30,18 +30,8 @@
 									<s3:apiCall>method.getAllForPerson</s3:apiCall>
 									<s3:responseData>
 										<!-- list (or any other structure) of results -->
-										<s3:method>
-											<s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</s3:methodUri>
-											<s3:methodName>Method1</s3:methodName>
-											<s3:methodPath></s3:methodPath>
-											<s3:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s3:productUri>
-										</s3:method>
-										<s3:method>
-											<s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</s3:methodUri>
-											<s3:methodName>Method2</s3:methodName>
-											<s3:methodPath></s3:methodPath>
-											<s3:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s3:productUri>
-										</s3:method>
+										<s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method1</s3:methodUri>
+										<s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method2</s3:methodUri>
 									</s3:responseData>
 								</ns1:apiResponse>
 							</ns1:eventData>
