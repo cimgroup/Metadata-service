@@ -4,6 +4,7 @@
  */
 package ActiveMQ;
 
+import MetadataCore.MetadataConstants;
 import javax.jms.*;
 import javax.naming.*;
 import java.io.*;
@@ -15,34 +16,41 @@ import java.util.Properties;
  */
 public class SimpleTopicSubscriber {
     public static void main() {
-        String topicName = null;
+        
+        
+        MetadataConstants.c_Topics.add("test1");
+        MetadataConstants.c_Topics.add("test2");
+        MetadataConstants.c_Topics.add("test3");
+        
         Context jndiContext = null;
         TopicConnectionFactory topicConnectionFactory = null;
         TopicConnection topicConnection = null;
         TopicSession topicSession = null;
-        Topic topic = null;
-        TopicSubscriber topicSubscriber = null;
+        Topic[] topics = new Topic[MetadataConstants.c_Topics.size()];
+        TopicSubscriber[] topicSubscribers = new TopicSubscriber[MetadataConstants.c_Topics.size()];
         TextListener topicListener = null;
         TextMessage message = null;
         InputStreamReader inputStreamReader = null;
         char answer = '\0';
         
+        
+        
+        
 //*  Read topic name from command line and display it.
         
-    /*    if (args.length != 1) {
-            System.out.println("Usage: java " + "SimpleTopicSubscriber <topic-name>");
-            System.exit(1);
-        }*/
-        topicName = "MetadataIn";
-        System.out.println("Topic name is " + topicName);
+
+//      System.out.println("Topic name is " + topicName);
         
 //*  Create a JNDI API InitialContext object if none exists yet.
         
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
-            env.setProperty("topic.MetadataIn", topicName);
+            env.setProperty(Context.PROVIDER_URL,"tcp://localhost:61616");
+            for(int i=0; i<MetadataConstants.c_Topics.size(); i++)
+            {
+                env.setProperty("topic." + MetadataConstants.c_Topics.get(i), MetadataConstants.c_Topics.get(i));
+            }
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());
@@ -55,7 +63,11 @@ public class SimpleTopicSubscriber {
         try {
             topicConnectionFactory = (TopicConnectionFactory)
             jndiContext.lookup("TopicConnectionFactory");
-            topic = (Topic) jndiContext.lookup(topicName);
+            
+            for(int i=0; i<MetadataConstants.c_Topics.size(); i++)
+            {
+                topics[i] = (Topic) jndiContext.lookup(MetadataConstants.c_Topics.get(i));
+            }
             } catch (NamingException e) {
                 System.out.println("JNDI API lookup failed: " + e.toString());
                 e.printStackTrace();
@@ -76,9 +88,15 @@ public class SimpleTopicSubscriber {
         try{
             topicConnection = topicConnectionFactory.createTopicConnection();
             topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            topicSubscriber = topicSession.createSubscriber(topic);
             topicListener = new TextListener();
-            topicSubscriber.setMessageListener(topicListener);
+            
+            for(int i=0; i<MetadataConstants.c_Topics.size(); i++)
+            {
+                topicSubscribers[i] = topicSession.createSubscriber(topics[i]);
+                topicSubscribers[i].setMessageListener(topicListener);
+            }
+            
+            
             topicConnection.start();
             System.out.println("To end program, enter Q or q, " + "then <return>");
             inputStreamReader = new InputStreamReader(System.in);
