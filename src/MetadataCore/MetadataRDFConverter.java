@@ -58,7 +58,7 @@ public class MetadataRDFConverter {
             
             oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
             Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
-            oIssue.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/s:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+            oIssue.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
 
             //already done in GetObjectURI method
             //bug id
@@ -129,7 +129,7 @@ public class MetadataRDFConverter {
                             oIssue.m_oBlocks[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oBlocks[i].m_sID);
                             Resource resBlocks = oModel.getResource(oIssue.m_oBlocks[i].m_sObjectURI);
                             resBug.addProperty(opBlocks, resBlocks.asResource());
-                            oIssue.m_oBlocks[i].m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oBlocks[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Uri;
                         }
                         else
                         {
@@ -154,7 +154,7 @@ public class MetadataRDFConverter {
                             oIssue.m_oDependsOn[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oDependsOn[i].m_sID);
                             Resource resDependsOn = oModel.getResource(oIssue.m_oDependsOn[i].m_sObjectURI);
                             resBug.addProperty(opDependsOn, resDependsOn.asResource());
-                            oIssue.m_oDependsOn[i].m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oDependsOn[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Uri;
                         }
                         else
                         {
@@ -174,7 +174,7 @@ public class MetadataRDFConverter {
                 Resource resHasReporter = oModel.getResource(oIssue.m_oHasReporter.m_sObjectURI);
                 resBug.removeAll(opHasReporter);
                 resBug.addProperty(opHasReporter, resHasReporter.asResource());
-                oIssue.m_oHasReporter.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueAuthor + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oHasReporter.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAuthor + MetadataConstants.c_XMLE_Uri;
             }
 
             //HasState
@@ -302,12 +302,12 @@ public class MetadataRDFConverter {
                     
                     resIsIssueOf.removeAll(opIsComponentOf);
                     resIsIssueOf.addProperty(opIsComponentOf, resIsComponentOf.asResource());
-                    oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
+                    oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
                 }
                 
                 resBug.removeAll(opIsIssueOf);
                 resBug.addProperty(opIsIssueOf, resIsIssueOf.asResource());
-                oIssue.m_oIsIssueOf.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issueProduct + "/s:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oIsIssueOf.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueProduct + "/o:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
             }
 
             //HasComputerSystem
@@ -330,7 +330,7 @@ public class MetadataRDFConverter {
                 }
                 resBug.removeAll(opHasComputerSystem);
                 resBug.addProperty(opHasComputerSystem, resComputerSystem.asResource());
-                oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueComputerSystem + "/s:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueComputerSystem + "/s:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
             }
             
             //HasPriority
@@ -417,7 +417,7 @@ public class MetadataRDFConverter {
                 Resource resHasAssignee = oModel.getResource(oIssue.m_oHasAssignee.m_sObjectURI);
                 resBug.removeAll(opHasAssignee);
                 resBug.addProperty(opHasAssignee, resHasAssignee.asResource());
-                oIssue.m_oHasAssignee.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueAssignedTo + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oHasAssignee.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAssignedTo + MetadataConstants.c_XMLE_Uri;
             }
             
             //HasCCPerson
@@ -433,7 +433,7 @@ public class MetadataRDFConverter {
                             SavePersonData(oIssue.m_oHasCCPerson[i], oModel);
                             Resource resHasCCPerson = oModel.getResource(oIssue.m_oHasCCPerson[i].m_sObjectURI);
                             resBug.addProperty(opHasCCPerson, resHasCCPerson.asResource());
-                            oIssue.m_oHasCCPerson[i].m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oHasCCPerson[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Uri;
                         }
                         else
                         {
@@ -453,7 +453,7 @@ public class MetadataRDFConverter {
                 Resource resIsDuplicateOf = oModel.getResource(oIssue.m_oIsDuplicateOf.m_sObjectURI);
                 resBug.removeAll(opIsDuplicateOf);
                 resBug.addProperty(opIsDuplicateOf, resIsDuplicateOf.asResource());
-                oIssue.m_oIsDuplicateOf.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oIsDuplicateOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Uri;
             }
             
             //IsMergedInto
@@ -464,7 +464,7 @@ public class MetadataRDFConverter {
                 Resource resIsMergedInto = oModel.getResource(oIssue.m_oIsMergedInto.m_sObjectURI);
                 resBug.removeAll(opIsMergedInto);
                 resBug.addProperty(opIsMergedInto, resIsMergedInto.asResource());
-                oIssue.m_oIsMergedInto.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueMergedInto + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oIsMergedInto.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMergedInto + MetadataConstants.c_XMLE_Uri;
             }
             
             //HasMilestone
@@ -481,7 +481,7 @@ public class MetadataRDFConverter {
                 }
                 resBug.removeAll(opHasMilestone);
                 resBug.addProperty(opHasMilestone, resMilestone.asResource());
-                oIssue.m_oHasMilestone.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_issueMilestone + "/s:" + MetadataConstants.c_XMLE_issueMilestone + MetadataConstants.c_XMLE_Uri;
+                oIssue.m_oHasMilestone.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMilestone + "/o:" + MetadataConstants.c_XMLE_issueMilestone + MetadataConstants.c_XMLE_Uri;
             }
             
             //HasComment
@@ -524,11 +524,11 @@ public class MetadataRDFConverter {
                             Resource resHasCommentor = oModel.getResource(oIssue.m_oHasComment[i].m_oHasCommentor.m_sObjectURI);
                             resComment.removeAll(opHasCommentor);
                             resComment.addProperty(opHasCommentor, resHasCommentor.asResource());
-                            oIssue.m_oHasComment[i].m_oHasCommentor.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commentPerson + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oHasComment[i].m_oHasCommentor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commentPerson + MetadataConstants.c_XMLE_Uri;
                         }
 
                         resBug.addProperty(opHasComment, resComment.asResource());
-                        oIssue.m_oHasComment[i].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issueComment + "/s:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+                        oIssue.m_oHasComment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueComment + "/o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
                     }
                 }
             }
@@ -567,11 +567,11 @@ public class MetadataRDFConverter {
                             Resource resHasCreator = oModel.getResource(oIssue.m_oHasAttachment[i].m_oHasCreator.m_sObjectURI);
                             resAttachment.removeAll(opHasCreator);
                             resAttachment.addProperty(opHasCreator, resHasCreator.asResource());
-                            oIssue.m_oHasAttachment[i].m_oHasCreator.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_attachmentCreator + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oHasAttachment[i].m_oHasCreator.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_attachmentCreator + MetadataConstants.c_XMLE_Uri;
                         }
 
                         resBug.addProperty(opHasAttachment, resAttachment.asResource());
-                        oIssue.m_oHasAttachment[i].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issueAttachment + "/s:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Uri;
+                        oIssue.m_oHasAttachment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueAttachment + "/o:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Uri;
                     }
                 }
             }
@@ -628,11 +628,11 @@ public class MetadataRDFConverter {
                             Resource resHasInvolvedPerson = oModel.getResource(oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sObjectURI);
                             resActivity.removeAll(opHasInvolvedPerson);
                             resActivity.addProperty(opHasInvolvedPerson, resHasInvolvedPerson.asResource());
-                            oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_activityWho + MetadataConstants.c_XMLE_Uri;
+                            oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_activityWho + MetadataConstants.c_XMLE_Uri;
                         }
 
                         resBug.addProperty(opHasActivity, resActivity.asResource());
-                        oIssue.m_oHasActivity[i].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_issueActivity + "/s:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Uri;
+                        oIssue.m_oHasActivity[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueActivity + "/o:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Uri;
                     }
                 }
             }
@@ -1081,6 +1081,13 @@ public class MetadataRDFConverter {
         return oAnnotation;
     }
     
+    /**
+     * @summary Get concept name for annotation.
+     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @param sAnnotationName - annotation name.
+     * @return - concept name for annotation.
+     */
     private static String GetConceptName(String sAnnotationName)
     {
         String sConceptName = "";
@@ -1166,7 +1173,7 @@ public class MetadataRDFConverter {
             
             oForumPost.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post, oForumPost.m_sID);
             Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
-            oForumPost.m_sReturnConfig = "YY#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+            oForumPost.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
             
             //ForumItemID
             if (!oForumPost.m_sForumItemID.isEmpty())
@@ -1208,7 +1215,7 @@ public class MetadataRDFConverter {
             //    Resource resHasAuthor = omModel.getResource(oForumPost.m_oHasAuthor.m_sObjectURI);
             //    resPost.removeAll(opHasAuthor);
             //    resPost.addProperty(opHasAuthor, resHasAuthor.asResource());
-            //    oForumPost.m_oHasAuthor.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_author + MetadataConstants.c_XMLE_Uri;
+            //    oForumPost.m_oHasAuthor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_author + MetadataConstants.c_XMLE_Uri;
             //}
             
             //Category
@@ -1227,7 +1234,7 @@ public class MetadataRDFConverter {
                 //Resource resThread = omModel.getResource(sThreadUri);
                 Resource resThread = omModel.getResource(oForumPost.m_oForumThread.m_sObjectURI);
                 //oForumPost.m_sForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
-                oForumPost.m_oForumThread.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
+                oForumPost.m_oForumThread.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_thread + MetadataConstants.c_XMLE_Uri;
                 ObjectProperty opHasPosts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasPosts);
                 resThread.addProperty(opHasPosts, resPost.asResource());
             
@@ -1239,7 +1246,7 @@ public class MetadataRDFConverter {
                     //Resource resForum = omModel.getResource(sForumUri);
                     Resource resForum = omModel.getResource(oForumPost.m_oForum.m_sObjectURI);
                     //oForumPost.m_sForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + "/s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
-                    oForumPost.m_oForum.m_sReturnConfig = "YN#s1:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
+                    oForumPost.m_oForum.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_forum + MetadataConstants.c_XMLE_Uri;
                     ObjectProperty opHasThreads = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasThreads);
                     resForum.addProperty(opHasThreads, resThread.asResource());
                 }
