@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.ArrayList;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -66,10 +67,10 @@ public class MetadataModel {
      * @param sEventId - event id
      * @param oIssue - issue object
      */
-    static void SaveObjectNewIssue(String sEventId, Issue oIssue) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
+    static void SaveObjectNewIssue(String sEventId, Element eOriginalData, Issue oIssue) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
     {
         oIssue = MetadataRDFConverter.SaveIssue(oIssue);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_issue_replyNewUpdate, sEventId, oIssue);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_issue_replyNewUpdate, sEventId, eOriginalData, oIssue);
     }
     
     /** 
@@ -79,10 +80,10 @@ public class MetadataModel {
      * @param sEventId - event id
      * @param oCommit - issue object
      */
-    static void SaveObjectNewCommit(String sEventId, Commit oCommit) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
+    static void SaveObjectNewCommit(String sEventId, Element eOriginalData, Commit oCommit)
     {
         oCommit = MetadataRDFConverter.SaveCommit(oCommit);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, oCommit);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, eOriginalData, oCommit);
     }
     
     /**
@@ -95,7 +96,7 @@ public class MetadataModel {
     static void SaveObjectNewPerson(String sEventId, foaf_Person oPerson)
     {
         oPerson = MetadataRDFConverter.SavePerson(oPerson);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, null, oPerson);
     }
  
     /**
@@ -105,10 +106,10 @@ public class MetadataModel {
      * @param sEventId - event id.
      * @param oForumPost - forum post object.
      */
-    static void SaveObjectNewForumPost(String sEventId, NewForumPost oForumPost)
+    static void SaveObjectNewForumPost(String sEventId, Element eOriginalData, NewForumPost oForumPost)
     {
         oForumPost = MetadataRDFConverter.SaveForumPost(oForumPost);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, oForumPost);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, eOriginalData, oForumPost);
     }
 
     /**

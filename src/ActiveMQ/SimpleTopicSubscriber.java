@@ -33,7 +33,7 @@ public class SimpleTopicSubscriber {
             System.out.println("Usage: java " + "SimpleTopicSubscriber <topic-name>");
             System.exit(1);
         }*/
-        topicName = "MetadataIn";
+        topicName = "MetadataInTest";
         System.out.println("Topic name is " + topicName);
         
 //*  Create a JNDI API InitialContext object if none exists yet.
@@ -41,8 +41,8 @@ public class SimpleTopicSubscriber {
         try {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-            env.setProperty(Context.PROVIDER_URL,"tcp://dr-03:61616");
-            env.setProperty("topic.MetadataIn", topicName);
+            env.setProperty(Context.PROVIDER_URL,"tcp://www.cimcollege.rs:61616");
+            env.setProperty("topic.MetadataInTest", topicName);
             jndiContext = new InitialContext(env);
             } catch (NamingException e) {
                 System.out.println("Could not create JNDI API " + "context: " + e.toString());

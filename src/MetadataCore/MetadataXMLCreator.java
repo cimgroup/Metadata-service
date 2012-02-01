@@ -627,7 +627,7 @@ public class MetadataXMLCreator {
      * @param iEventID - id of event
      * @param oObject - new item object
      */
-    public static Document CreateXMLNewItemResponse(String sEventName, String sEventId, Object oObject)
+    public static Document CreateXMLNewItemResponse(String sEventName, String sEventId, Element eOriginalData, Object oObject)
     {
         try
         {
@@ -717,6 +717,10 @@ public class MetadataXMLCreator {
                 //eventData element
                 Element eEventData = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventData);
                 ePayload.appendChild(eEventData);
+                    
+                    //original data
+                    Element eOriginalDataImported = (Element) dDoc.importNode(eOriginalData, true);
+                    eEventData.appendChild(eOriginalDataImported);
                     
                     CreateNewItemResponseStructure(dDoc, eEventData, oObject);
 

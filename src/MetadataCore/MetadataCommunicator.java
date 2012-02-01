@@ -66,7 +66,7 @@ public class MetadataCommunicator {
             
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
-            SimpleTopicPublisher.publish("MetadataOut", m_sXML);
+            SimpleTopicPublisher.publish("MetadataOutTest", m_sXML);
           
             
             
@@ -85,7 +85,7 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Response.xml"));
+            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Response.xml"));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)
