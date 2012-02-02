@@ -54,6 +54,9 @@ public class MetadataConstants {
     public static String c_ET_wikiPost_New = "Metadata.wikiPost.New";
     public static String c_ET_forumPost_requestNew = "Metadata.forumPost.requestNew";
     public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
+    public static String c_ET_competency_requestNew = "Metadata.competency.requestNew";
+    public static String c_ET_competency_requestUpdate = "Metadata.competency.requestUpdate";
+    public static String c_ET_competency_replyNewUpdate = "Metadata.competency.replyNewUpdate";
     
     // </editor-fold>
        
@@ -232,8 +235,16 @@ public class MetadataConstants {
     public static String c_XMLE_methodName = "methodName";
     public static String c_XMLE_methodStartLine = "methodStartLine";
     public static String c_XMLE_methodEndLine = "methodEndLine";
-    //public static String 
-
+    
+    public static String c_XMLE_competency = "competency";
+    public static String c_XMLE_uuid = "uuid";
+    public static String c_XMLE_area = "area";
+    public static String c_XMLE_index = "index";
+    public static String c_XMLE_fluency = "fluency";
+    public static String c_XMLE_contribution = "contribution";
+    public static String c_XMLE_effectiveness = "effectiveness";
+    public static String c_XMLE_recency = "recency";
+    
     // </editor-fold>
     
     // <editor-fold desc="XML values">

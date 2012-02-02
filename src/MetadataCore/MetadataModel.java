@@ -129,6 +129,20 @@ public class MetadataModel {
     }
     
     /**
+     * @summary Method for saving new annotation.
+     * @startRealisation  Dejan Milosavljevic 02.02.2012.
+     * @finalModification Dejan Milosavljevic 02.02.2012.
+     * @param sEventId - event id.
+     * @param eOriginalData - original data. 
+     * @param oForumPost - competence object.
+     */
+    static void SaveObjectNewCompetence(String sEventId, Element eOriginalData, Competence oCompetence)
+    {
+        //oCompetence = MetadataRDFConverter.SaveAnnotationData(oCompetence);
+        //MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, eOriginalData, oCompetence);
+    }
+    
+    /**
      * @summary API Call Method for executing custom SPARQL query
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.

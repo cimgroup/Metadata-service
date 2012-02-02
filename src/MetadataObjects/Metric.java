@@ -15,6 +15,7 @@ public class Metric extends MetadataObject {
     // <editor-fold desc="Members">
     
     public String m_sMetricName;
+    public String m_sMetricValue;
     public Issue m_oInIssue;
     
     // </editor-fold>
@@ -36,7 +37,14 @@ public class Metric extends MetadataObject {
     public void SetMetricName(String sMetricName) {
         m_sMetricName = sMetricName;
     }
+    
+    public String GetMetricValue() {
+        return m_sMetricValue;
+    }
 
+    public void SetMetricValue(String sMetricValue) {
+        m_sMetricValue = sMetricValue;
+    }
     // </editor-fold>
     
     // <editor-fold desc="Constructor">

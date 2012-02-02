@@ -114,6 +114,11 @@ public class MetadataXMLReader {
             {
                 NewForumPostData(dDoc);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_competency_requestNew) ||
+               sEventName.equals(MetadataConstants.c_ET_competency_requestUpdate))   //if event type is new competence event
+            {
+                NewUpdateCompetence(dDoc);
+            }
         }
         catch (Exception e)
         {
@@ -1742,6 +1747,143 @@ public class MetadataXMLReader {
         }
     }
 
+        /**
+     * @summary Method for reading new/update competence event from XML
+     * @startRealisation  Dejan Milosavljevic 02.02.2012.
+     * @finalModification Dejan Milosavljevic 02.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Competence object
+     */
+    public static Competence NewUpdateCompetence(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            Competence oCompetence = MetadataObjectFactory.CreateNewCompetence();
+            
+            NodeList nlCompetence = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_competency);   //getting node for tag competency
+
+            if (nlCompetence != null && nlCompetence.getLength() > 0)
+            {
+                Element eCompetence = (Element) nlCompetence.item(0);
+                eOriginalData = eCompetence;
+
+                // Identity ID
+                oCompetence.m_sID = GetValue(eCompetence, "sm:" + MetadataConstants.c_XMLE_uuid);
+                
+                //HasLevel (index)
+                oCompetence.m_sLevel = GetValue(eCompetence, "sm:" + MetadataConstants.c_XMLE_index);
+                
+                //Attributs
+                //ArrayList<Attribute> oAttributes = new ArrayList<Attribute>();
+                oCompetence.m_oHasAttribute = new Attribute[4];
+                //    Fluency
+                NodeList nlFluency = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_fluency);
+                if (nlFluency != null && nlFluency.getLength() > 0)
+                {
+                    Element eFluency = (Element) nlFluency.item(0);
+                    Attribute oFluency = new Attribute();
+                    oFluency.m_sName = MetadataConstants.c_XMLE_fluency;
+                    
+                    oFluency.m_oHasMetric = new Metric[3];
+                    oFluency.m_oHasMetric[0] = new Metric();
+                    oFluency.m_oHasMetric[0].m_sMetricName = "apiCount";
+                    oFluency.m_oHasMetric[0].m_sMetricValue = GetValue(eFluency, "sm:" + "apiCount");
+                    oFluency.m_oHasMetric[1] = new Metric();
+                    oFluency.m_oHasMetric[1].m_sMetricName = "apiIntroduced";
+                    oFluency.m_oHasMetric[1].m_sMetricValue = GetValue(eFluency, "sm:" + "apiIntroduced");
+                    oFluency.m_oHasMetric[2] = new Metric();
+                    oFluency.m_oHasMetric[2].m_sMetricName = "staticAnalysis";
+                    oFluency.m_oHasMetric[2].m_sMetricValue = GetValue(eFluency, "sm:" + "staticAnalysis");
+
+                    //oAttributes.add(oFluency);
+                    oCompetence.m_oHasAttribute[0] = oFluency;
+                }
+                
+                //    Contribution
+                NodeList nlContribution = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_contribution);
+                if (nlContribution != null && nlContribution.getLength() > 0)
+                {
+                    Element eContribution = (Element) nlContribution.item(0);
+                    Attribute oContribution = new Attribute();
+                    oContribution.m_sName = MetadataConstants.c_XMLE_contribution;
+                    
+                    oContribution.m_oHasMetric = new Metric[3];
+                    oContribution.m_oHasMetric[0] = new Metric();
+                    oContribution.m_oHasMetric[0].m_sMetricName = "mailingListActivity";
+                    oContribution.m_oHasMetric[0].m_sMetricValue = GetValue(eContribution, "sm:" + "mailingListActivity");
+                    oContribution.m_oHasMetric[1] = new Metric();
+                    oContribution.m_oHasMetric[1].m_sMetricName = "itsActivity";
+                    oContribution.m_oHasMetric[1].m_sMetricValue = GetValue(eContribution, "sm:" + "itsActivity");
+                    oContribution.m_oHasMetric[2] = new Metric();
+                    oContribution.m_oHasMetric[2].m_sMetricName = "sloc";
+                    oContribution.m_oHasMetric[2].m_sMetricValue = GetValue(eContribution, "sm:" + "sloc");
+                    
+                    //oAttributes.add(oContribution);
+                    oCompetence.m_oHasAttribute[1] = oContribution;
+                }
+                
+                //    Effectiveness
+                NodeList nlEffectiveness = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_effectiveness);
+                if (nlEffectiveness != null && nlEffectiveness.getLength() > 0)
+                {
+                    Element eEffectiveness = (Element) nlEffectiveness.item(0);
+                    Attribute oEffectiveness  = new Attribute();
+                    oEffectiveness .m_sName = MetadataConstants.c_XMLE_effectiveness;
+                    
+                    oEffectiveness.m_oHasMetric = new Metric[3];
+                    oEffectiveness.m_oHasMetric[0] = new Metric();
+                    oEffectiveness.m_oHasMetric[0].m_sMetricName = "noOfIssuesFixed";
+                    oEffectiveness.m_oHasMetric[0].m_sMetricValue = GetValue(eEffectiveness, "sm:" + "noOfIssuesFixed");
+                    oEffectiveness.m_oHasMetric[1] = new Metric();
+                    oEffectiveness.m_oHasMetric[1].m_sMetricName = "noOfCommitsCausedIssue";
+                    oEffectiveness.m_oHasMetric[1].m_sMetricValue = GetValue(eEffectiveness, "sm:" + "noOfCommitsCausedIssue");
+                    oEffectiveness.m_oHasMetric[2] = new Metric();
+                    oEffectiveness.m_oHasMetric[2].m_sMetricName = "noOfCommitFixedIssue";
+                    oEffectiveness.m_oHasMetric[2].m_sMetricValue = GetValue(eEffectiveness, "sm:" + "noOfCommitFixedIssue");
+                    
+                    //oAttributes.add(oEffectiveness );
+                    oCompetence.m_oHasAttribute[2] = oEffectiveness;
+                }
+                
+                //    Recency
+                NodeList nlRecency = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_recency);
+                if (nlRecency != null && nlRecency.getLength() > 0)
+                {
+                    Element eRecency = (Element) nlRecency.item(0);
+                    Attribute oRecency = new Attribute();
+                    oRecency.m_sName = MetadataConstants.c_XMLE_recency;
+                    
+                    oRecency.m_oHasMetric = new Metric[3];
+                    oRecency.m_oHasMetric[0] = new Metric();
+                    oRecency.m_oHasMetric[0].m_sMetricName = "timeSinceSCMaction";
+                    oRecency.m_oHasMetric[0].m_sMetricValue = GetValue(eRecency, "sm:" + "timeSinceSCMaction");
+                    oRecency.m_oHasMetric[1] = new Metric();
+                    oRecency.m_oHasMetric[1].m_sMetricName = "timeSinceITSaction";
+                    oRecency.m_oHasMetric[1].m_sMetricValue = GetValue(eRecency, "sm:" + "timeSinceITSaction");
+                    oRecency.m_oHasMetric[2] = new Metric();
+                    oRecency.m_oHasMetric[2].m_sMetricName = "timeSinceMLaction";
+                    oRecency.m_oHasMetric[2].m_sMetricValue = GetValue(eRecency, "sm:" + "timeSinceMLaction");
+                    
+                    //oAttributes.add(oRecency);
+                    oCompetence.m_oHasAttribute[3] = oRecency;
+                }
+            }
+            
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_keui);
+            MetadataModel.SaveObjectNewCompetence(sEventId, eOriginalData, oCompetence);
+            
+            return oCompetence;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     // </editor-fold>
 
     // <editor-fold desc="XML reading methods">

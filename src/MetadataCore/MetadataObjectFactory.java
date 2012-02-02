@@ -131,4 +131,24 @@ public class MetadataObjectFactory {
             return null;
         }
     }
+    
+    /** 
+     * @summary Method for creating new competence.
+     * @startRealisation  Dejan Milosavljevic 02.02.2012.
+     * @finalModification Dejan Milosavljevic 02.02.2012.
+     * @return Bug object
+     */
+    public static Competence CreateNewCompetence()
+    {
+        try
+        {
+            Competence oCompetence = new Competence();
+            return oCompetence;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

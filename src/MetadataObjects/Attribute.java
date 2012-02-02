@@ -14,17 +14,17 @@ public class Attribute extends MetadataObject {
     
     // <editor-fold desc="Members">
     
-    public Metric m_oHasMetric;
+    public Metric[] m_oHasMetric;
     
     // </editor-fold>
         
     // <editor-fold desc="Properties">
 
-    public Metric GetHasMetric() {
+    public Metric[] GetHasMetric() {
         return m_oHasMetric;
     }
 
-    public void SetHasMetric(Metric oHasMetric) {
+    public void SetHasMetric(Metric[] oHasMetric) {
         m_oHasMetric = oHasMetric;
     }
 

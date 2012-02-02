@@ -14,19 +14,29 @@ public class Competence extends MetadataObject {
     
     // <editor-fold desc="Members">
     
-    public Attribute m_oHasAttribute;
+    public Attribute[] m_oHasAttribute;
+    public String m_sLevel;
     
     // </editor-fold>
         
     // <editor-fold desc="Properties">
 
-    public Attribute GetHasAttribute() {
+    public Attribute[] GetHasAttributes() {
         return m_oHasAttribute;
     }
 
-    public void SetHasAttribute(Attribute oHasAttribute) {
+    public void SetHasAttributes(Attribute[] oHasAttribute) {
         m_oHasAttribute = oHasAttribute;
     }
+    
+    public String GetLevel() {
+        return m_sLevel;
+    }
+
+    public void SetLevel(String sLevel) {
+        m_sLevel = sLevel;
+    }
+    
     // </editor-fold>
     
     // <editor-fold desc="Constructor">
