@@ -1901,13 +1901,13 @@ public class MetadataRDFConverter {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
                      
             String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
                     + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
                     + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
                     + " UNION "
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
                     + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
                     + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
@@ -1947,16 +1947,22 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
                         
             String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_RelatedToSourceCode + "> ?methodUri . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri . "
+                    + "?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> . "
                     + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
                     + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
                     + " UNION "
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_RelatedToSourceCode + "> ?methodUri . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri . "
+                    + "?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> . "
                     + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
                     + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
