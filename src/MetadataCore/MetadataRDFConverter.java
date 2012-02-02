@@ -853,7 +853,7 @@ public class MetadataRDFConverter {
                                             }
 
                                             resModule.addProperty(opHasMethod, resMethod.asResource());
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
                                         }
                                     }
                                     
