@@ -54,7 +54,8 @@ public class MetadataConstants {
     public static String c_ET_wikiPost_New = "Metadata.wikiPost.New";
     public static String c_ET_forumPost_requestNew = "Metadata.forumPost.requestNew";
     public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
-    
+    public static String c_ET_mail_requestNew = "Metadata.mail.requestNew";
+    public static String c_ET_mail_replyNew = "Metadata.mail.replyNew";
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
@@ -75,6 +76,7 @@ public class MetadataConstants {
     public static String c_XMLE_kesi = "kesi";
     public static String c_XMLE_keui = "keui";
     public static String c_XMLE_mdservice = "mdservice";
+    public static String c_XMLE_mlsensor = "mlsensor";
     public static String c_XMLE_rawTextualData = "rawTextualData";
     public static String c_XMLE_relatedOntologyRef = "relatedOntologyRef";
     public static String c_XMLE_content = "content";
@@ -164,6 +166,13 @@ public class MetadataConstants {
     public static String c_XMLE_commitCommtter = "commitCommitter";
     public static String c_XMLE_commitDate = "commitDate";
     public static String c_XMLE_commitMessageLog = "commitMessageLog";
+    
+    public static String c_XMLE_message = "message";
+    public static String c_XMLE_from = "from";
+    public static String c_XMLE_date = "date";
+    public static String c_XMLE_inReplyTo = "inReplyTo";
+    public static String c_XMLE_references = "references";
+    public static String c_XMLE_attachments = "attachments";
     
     public static String c_XMLE_person = "person";
     public static String c_XMLE_personFirstName = "personFirstName";
@@ -409,6 +418,10 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_StartLine = "startLine";
     public static String c_OWLDataProperty_EndLine = "endLine";
     
+    public static String c_OWLDataProperty_MessageId = "message-id";
+    public static String c_OWLDataProperty_HasCreationDate = "origDate";
+    public static String c_OWLDataProperty_Attachment = "attachment";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">
@@ -452,6 +465,9 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasModules = "hasModules";
     public static String c_OWLObjectProperty_HasMethods = "hasMethods";
     
+    public static String c_OWLObjectProperty_From = "from";
+    public static String c_OWLObjectProperty_InReplyTo = "inReplyTo";
+    public static String c_OWLObjectProperty_References = "references";
     
     // </editor-fold>
             
@@ -478,6 +494,7 @@ public class MetadataConstants {
     public static String c_NS_Alert_Scm = "http://www.alert-project.eu/ontologies/alert_scm.owl#";
     public static String c_NS_foaf = "http://xmlns.com/foaf/0.1/";
     public static String c_NS_doap = "http://usefulinc.com/ns/doap#";
+    public static String c_NS_purl = "http://purl.org/dc/terms/";
     public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
 

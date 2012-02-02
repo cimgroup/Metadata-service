@@ -38,6 +38,7 @@ public class MetadataGlobal {
     
     public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static DateFormat m_dfFormatSS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static DateFormat m_dfFormatTZ = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 
     // </editor-fold>
     
@@ -287,13 +288,24 @@ public class MetadataGlobal {
                 oDate = null;
             }
         }
+        if (oDate == null)
+        {
+            try
+            {
+                oDate = m_dfFormatTZ.parse(sDateTime);
+            }
+            catch (Exception e)
+            {
+                oDate = null;
+            }
+        }
         return oDate;
     }
     
     /**
      * @summary Class for storing annotation data.
      * @startRealisation  Dejan Milosavljevic 20.01.2012.
-     * @finalModification Dejan Milosavljevic 20.01.2012.
+     * @finalModification Sasa Stojanovic 02.02.2012.
      */
     public static void ExpandOntology()
     {
@@ -310,6 +322,8 @@ public class MetadataGlobal {
             String sCategoryDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category;
             String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
             String sKeywordAnnotationProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
+            
+            String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
             
             OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
@@ -388,6 +402,13 @@ public class MetadataGlobal {
             if (apKeyword == null)
             {
                 apKeyword = omModel.createAnnotationProperty(sKeywordAnnotationProperty);
+            }
+            
+            //Creating attachment DataProperty
+            DatatypeProperty dtpAttachment = omModel.getDatatypeProperty(sAttachmentDataProperty);
+            if (dtpAttachment == null)
+            {
+                dtpAttachment = omModel.createDatatypeProperty(sAttachmentDataProperty);
             }
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);

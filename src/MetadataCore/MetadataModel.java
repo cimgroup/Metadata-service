@@ -79,7 +79,7 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 16.01.2012.
      * @finalModification Sasa Stojanovic 16.01.2012.
      * @param sEventId - event id
-     * @param oCommit - issue object
+     * @param oCommit - commit object
      */
     static void SaveObjectNewCommit(String sEventId, Element eOriginalData, Commit oCommit)
     {
@@ -87,6 +87,19 @@ public class MetadataModel {
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, eOriginalData, oCommit);
     }
     
+    /** 
+     * @summary Method for saving new mail
+     * @startRealisation Sasa Stojanovic 02.02.2012.
+     * @finalModification Sasa Stojanovic 02.02.2012.
+     * @param sEventId - event id
+     * @param oMail - mail object
+     */
+    static void SaveObjectNewMail(String sEventId, Element eOriginalData, Mail oMail)
+    {
+        oMail = MetadataRDFConverter.SaveMail(oMail);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, eOriginalData, oMail);
+    }
+            
     /**
      * @summary Method for saving new person
      * @startRealisation Sasa Stojanovic 05.09.2011.
