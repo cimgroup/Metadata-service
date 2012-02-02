@@ -19,11 +19,12 @@ public class Mail extends MetadataObject {
     public foaf_Person m_oFrom;
     public foaf_Person[] m_oTo;
     public foaf_Person[] m_oCc;
-    public Mail m_sInReplyTo;
+    public Mail m_oInReplyTo;
+    public Mail m_oReferences;
     public String m_sHasSubject;    
-    public String m_sIsAbout;
+    public MetadataObject m_oIsAbout;
     public SourceCode m_oRelatedToSourceCode;
-    public DateTime m_dtmHasOrigDate;
+    public DateTime m_dtmHasCreationDate;
     public String m_sContent;
         
     // </editor-fold>
