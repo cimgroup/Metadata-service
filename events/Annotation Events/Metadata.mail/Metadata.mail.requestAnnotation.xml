@@ -25,7 +25,85 @@
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
 							<ns1:eventData>
-								<s1:annotation>
+                                                                <r1:mlsensor>
+									<r1:from>sasa.stojanovic@cimcollege.rs</r1:from>
+									<r1:date>Sat, 05 Nov 2011 17:50:11 +0100</r1:date>
+									<r1:subject><![CDATA[[Kde-hardware-devel] Identifying iPod and iPhone-like devices using Solid (was: Amarok review request)]]></r1:subject>
+									<r1:inReplyTo><![CDATA[<CAMnMsSdoax0S14_fQe4woSLDhJYR0vc8wuZjKvsKqe7gVx1kxQ@mail.gmail.com>]]></r1:inReplyTo>
+									<r1:references><![CDATA[
+											<20111025132029.15876.89012@vidsolbach.de>
+											<9102909.qJX79ctmp1@edgy>
+											<CAMnMsSdoax0S14_fQe4woSLDhJYR0vc8wuZjKvsKqe7gVx1kxQ@mail.gmail.com>]]>
+									</r1:references>
+									<r1:messageId><![CDATA[<3674981.yjiqPb6iju@edgy>]]></r1:messageId>
+									<r1:attachments>
+										<r1:attachment>http://mail.kde.org/pipermail/kde-hardware-devel/attachments/20111109/564d5259/attachment.html</r1:attachment>
+									</r1:attachments>
+									<r1:content>
+										<![CDATA[
+												A non-text attachment was scrubbed...
+												Name: signature.asc
+												Type: application/pgp-signature
+												Size: 198 bytes
+												Desc: This is a digitally signed message part.
+												URL: <http://mail.kde.org/pipermail/kde-hardware-devel/attachments/20111123/e3053001/attachment.sig>
+
+												From neoclust.kde at free.fr  Sat Nov 26 23:08:11 2011
+												From: neoclust.kde at free.fr (=?utf-8?q?Nicolas_L=C3=A9cureuil?=)
+												Date: Sat, 26 Nov 2011 23:08:11 -0000
+												Subject: [Kde-hardware-devel] Review Request: Fix library creation
+												In-Reply-To: <20111123093948.32645.14682@vidsolbach.de>
+												References: <20111123093948.32645.14682@vidsolbach.de>
+												Message-ID: <20111126230811.14081.55443@vidsolbach.de>
+
+
+												-----------------------------------------------------------
+												This is an automatically generated e-mail. To reply, visit:
+												http://git.reviewboard.kde.org/r/103212/
+												-----------------------------------------------------------
+
+												(Updated Nov. 26, 2011, 11:08 p.m.)
+
+
+												Review request for Solid.
+
+
+												Description
+												-------
+
+												this patch create the library:
+												libpowerdevilui.so.4*
+
+												This allow to package kde-workspace.
+
+
+												Diffs
+												-----
+
+												  powerdevil/daemon/CMakeLists.txt b3b6263
+
+												Diff: http://git.reviewboard.kde.org/r/103212/diff/diff
+
+
+												Testing
+												-------
+
+												create a rpm without the patch :
+
+												kdebase4-workspace-devel-4.7.80-3-mdv2012.0.i586 (due to unsatisfied devel(libpowerdevilui))
+
+												and it works with the modification.
+
+
+												Thanks,
+
+												Nicolas L?cureuil
+										]]>
+									</r1:content>
+								</r1:mlsensor>
+                                                                <o:mdservice>
+                                                                </o:mdservice>
+								<s1:keui>
 									<!-- item Uri -->
 									<s1:itemUri></s1:itemUri>
 									<!-- subject annotations -->
@@ -46,7 +124,7 @@
 											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:bodyConcepts>
-								</s1:annotation>
+								</s1:keui>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>

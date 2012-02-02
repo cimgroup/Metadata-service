@@ -25,7 +25,7 @@
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
 							<ns1:eventData>
-								<s1:annotation>
+								<s1:kesi>
 									<!-- item Uri -->
 									<s1:itemUri></s1:itemUri>
 									<!-- title annotations -->
@@ -46,7 +46,7 @@
 											<s1:count>1</s1:count>
 										</s1:concept>
 									</s1:bodyConcepts>
-								</s1:annotation>
+								</s1:kesi>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>

@@ -1367,8 +1367,8 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                //URI
-                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
+//                //URI
+//                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
                 //Annotations
                 NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentAnnotated);
@@ -1454,8 +1454,8 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                //URI
-                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
+//                //URI
+//                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
                 //Annotations
                 NodeList nlCommitAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commitAnnotated);
@@ -1553,8 +1553,8 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                //URI
-                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
+//                //URI
+//                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
                 //Annotations
                 NodeList nlTitleAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_titleAnnotated);
@@ -1666,8 +1666,8 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                //URI
-                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
+//                //URI
+//                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
                 //Annotations
                 NodeList nlSubjectAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_subjectAnnotated);
