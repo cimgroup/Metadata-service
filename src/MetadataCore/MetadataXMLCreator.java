@@ -737,6 +737,55 @@ public class MetadataXMLCreator {
     }
     
     /** 
+     * @summary Method for creating XML for new annotation response.
+     * @startRealisation  Dejan Milosavljevic 01.02.2012.
+     * @finalModification Dejan Milosavljevic 01.02.2012.
+     * @param dDoc - original XML document.
+     * @param sEventName - name of event.
+     */
+    public static Document CreateXMLNewAnnotationResponse(Document dDoc, String sEventName)
+    {
+        try
+        {
+            //Find ns1:sender tag
+            NodeList nlSender = dDoc.getElementsByTagName("ns1:sender");
+            
+            //Find ns1:eventName tag
+            NodeList nlEventName = dDoc.getElementsByTagName("ns1:eventName");
+            
+            //Find ns1:eventType tag
+            NodeList nlEventType = dDoc.getElementsByTagName("ns1:eventType");
+            
+            if (nlSender != null && nlSender.getLength() > 0 &&
+                nlEventName != null && nlSender.getLength() > 0 &&
+                nlEventType != null && nlSender.getLength() > 0)
+            {
+                Element eSender = (Element) nlSender.item(0);
+                eSender.setTextContent("METADATASERVICE");
+                
+                Element eEventName = (Element) nlEventName.item(0);
+                eEventName.setTextContent(sEventName);
+                
+                Element eEventType = (Element) nlEventType.item(0);
+                eEventType.setTextContent("reply");
+                
+                //Send created XML document
+                MetadataCommunicator.SendXML(dDoc);                
+                return dDoc;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** 
      * @summary Method for creating XML structure
      * @startRealisation Sasa Stojanovic 01.11.2011.
      * @finalModification Sasa Stojanovic 01.11.2011.

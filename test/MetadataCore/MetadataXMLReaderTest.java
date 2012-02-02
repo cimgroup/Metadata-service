@@ -1556,21 +1556,21 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                                       "KEUI", "Metadata.forumPost.requestAnnotation",
                                       "5748", "00000");
-        AnnotationData resultNull = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData resultNull = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestAnnotation",
                              "5748", "22222");
-        AnnotationData resultEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData resultEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestAnnotation",
                              "5748", "11111");
-        AnnotationData result = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData result = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
         assertNotNull(result);
         
         //Wiki post
@@ -1578,21 +1578,21 @@ public class MetadataXMLReaderTest {
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.wikiPost.requestAnnotation",
                              "5748", "00000");
-        AnnotationData resultWNull = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData resultWNull = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
         assertNotNull(resultWNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.wikiPost.requestAnnotation",
                              "5748", "22222");
-        AnnotationData resultWEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData resultWEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
         assertNotNull(resultWEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.wikiPost.requestAnnotation",
                              "5748", "11111");
-        AnnotationData resultW = MetadataXMLReader.NewFWPostAnnotation(dDoc);
+        AnnotationData resultW = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
         assertNotNull(resultW);
         
         // TODO review the generated test code and remove the default call to fail.

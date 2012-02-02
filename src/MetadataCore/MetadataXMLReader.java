@@ -98,10 +98,13 @@ public class MetadataXMLReader {
             {
                 NewCommitAnnotation(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestAnnotation) ||
-               sEventName.equals(MetadataConstants.c_ET_wikiPost_requestAnnotation)) //if event type is new forum or wiki annotation
+            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestAnnotation)) //if event type is new forum post annotation
             {
-                NewFWPostAnnotation(dDoc);
+                NewFWPostAnnotation(dDoc, true);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_wikiPost_requestAnnotation)) //if event type is new wiki post annotation
+            {
+                NewFWPostAnnotation(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_mail_requestAnnotation)) //if event type is new mail annotation
             {
@@ -1153,7 +1156,7 @@ public class MetadataXMLReader {
     {
         try
         {
-            String sEventId = GetEventId(dDoc);
+            //String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
             
@@ -1244,7 +1247,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_issue_New, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1266,7 +1269,7 @@ public class MetadataXMLReader {
     {
         try
         {
-            String sEventId = GetEventId(dDoc);
+            //String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
             
@@ -1331,7 +1334,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_comment_New, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1353,7 +1356,7 @@ public class MetadataXMLReader {
     {
         try
         {
-            String sEventId = GetEventId(dDoc);
+            //String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
 
@@ -1418,7 +1421,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_commit_New, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1436,11 +1439,23 @@ public class MetadataXMLReader {
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
-    public static AnnotationData NewFWPostAnnotation(Document dDoc)
+    public static AnnotationData NewFWPostAnnotation(Document dDoc, boolean bIsForum)
     {
         try
         {
-            String sEventId = GetEventId(dDoc);
+            //String sEventId = GetEventId(dDoc);
+            String sMainTag = "";
+            String sEventName;
+            if (bIsForum)
+            {
+                sMainTag = MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+                sEventName = MetadataConstants.c_ET_forumPost_New;
+            }
+            else
+            {
+                //sMainTag = MetadataConstants.c_XMLE_wikiPost + MetadataConstants.c_XMLE_Uri;
+                sEventName = MetadataConstants.c_ET_wikiPost_New;
+            }
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
             
@@ -1448,7 +1463,7 @@ public class MetadataXMLReader {
             if (nlMdservice != null && nlMdservice.getLength() > 0)
             {
                 Element eMdservice = (Element) nlMdservice.item(0);
-                String sTag = "o:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+                String sTag = "o:" + sMainTag;
                 
                 //URI
                 oAnnotation.m_sObjectURI = GetValue(eMdservice, sTag);
@@ -1531,7 +1546,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(sEventName, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1553,7 +1568,7 @@ public class MetadataXMLReader {
     {
         try
         {
-            String sEventId = GetEventId(dDoc);
+            //String sEventId = GetEventId(dDoc);
 
             AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
             
@@ -1644,7 +1659,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_mail_New, dDoc, oAnnotation);
             
             return oAnnotation;
         }

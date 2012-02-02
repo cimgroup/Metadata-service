@@ -41,11 +41,17 @@ public class MetadataConstants {
     public static String c_ET_member_request = "Metadata.member.request";
     public static String c_ET_member_reply = "Metadata.member.reply";
     public static String c_ET_issue_requestAnnotation = "Metadata.issue.requestAnnotation";
+    public static String c_ET_issue_New = "Metadata.issue.New";
     public static String c_ET_comment_requestAnnotation = "Metadata.comment.requestAnnotation";
+    public static String c_ET_comment_New = "Metadata.comment.New";
     public static String c_ET_commit_requestAnnotation = "Metadata.commit.requestAnnotation";
+    public static String c_ET_commit_New = "Metadata.commit.New";
     public static String c_ET_forumPost_requestAnnotation = "Metadata.forumPost.requestAnnotation";
+    public static String c_ET_forumPost_New = "Metadata.forumPost.New";
     public static String c_ET_mail_requestAnnotation = "Metadata.mail.requestAnnotation";
+    public static String c_ET_mail_New = "Metadata.mail.New";
     public static String c_ET_wikiPost_requestAnnotation = "Metadata.wikiPost.requestAnnotation";
+    public static String c_ET_wikiPost_New = "Metadata.wikiPost.New";
     public static String c_ET_forumPost_requestNew = "Metadata.forumPost.requestNew";
     public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
     
