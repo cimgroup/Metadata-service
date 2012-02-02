@@ -662,7 +662,7 @@ public class MetadataRDFConverter {
             
             oCommit.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit, oCommit.m_sID);
             Resource resCommit = oModel.getResource(oCommit.m_sObjectURI);
-            oCommit.m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_mdservice + "/s:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+            oCommit.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
             
             //commitRepository
             if (oCommit.m_oIsCommitOfRepository != null && !oCommit.m_oIsCommitOfRepository.m_sObjectURI.isEmpty())
@@ -671,7 +671,7 @@ public class MetadataRDFConverter {
                 Resource resIsCommitOfRepository = oModel.getResource(oCommit.m_oIsCommitOfRepository.m_sObjectURI);
                 resCommit.removeAll(opIsCommitOfRepository);
                 resCommit.addProperty(opIsCommitOfRepository, resIsCommitOfRepository.asResource());
-                oCommit.m_oIsCommitOfRepository.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri;
+                oCommit.m_oIsCommitOfRepository.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri;
             }
             
             //revisionTag
@@ -690,7 +690,7 @@ public class MetadataRDFConverter {
                 Resource resHasAuthor = oModel.getResource(oCommit.m_oHasAuthor.m_sObjectURI);
                 resCommit.removeAll(opHasAuthor);
                 resCommit.addProperty(opHasAuthor, resHasAuthor.asResource());
-                oCommit.m_oHasAuthor.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitAuthor + MetadataConstants.c_XMLE_Uri;
+                oCommit.m_oHasAuthor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commitAuthor + MetadataConstants.c_XMLE_Uri;
             }
             
             //commitCommitter
@@ -701,7 +701,7 @@ public class MetadataRDFConverter {
                 Resource resHasCommitter = oModel.getResource(oCommit.m_oHasCommitter.m_sObjectURI);
                 resCommit.removeAll(opHasCommitter);
                 resCommit.addProperty(opHasCommitter, resHasCommitter.asResource());
-                oCommit.m_oHasCommitter.m_sReturnConfig = "YN#s:" + MetadataConstants.c_XMLE_commitCommtter + MetadataConstants.c_XMLE_Uri;
+                oCommit.m_oHasCommitter.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commitCommtter + MetadataConstants.c_XMLE_Uri;
             }
             
             //commitDate
@@ -853,18 +853,18 @@ public class MetadataRDFConverter {
                                             }
 
                                             resModule.addProperty(opHasMethod, resMethod.asResource());
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_moduleMethods + "/s:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
                                         }
                                     }
                                     
                                     resFile.addProperty(opHasModule, resModule.asResource());
-                                    oCommit.m_oHasFile[i].m_oHasModule[j].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_fileModules + "/s:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
+                                    oCommit.m_oHasFile[i].m_oHasModule[j].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_fileModules + "/o:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
                                 }
                             }
                         }
                             
                         resCommit.addProperty(opHasFile, resFile.asResource());
-                        oCommit.m_oHasFile[i].m_sReturnConfig = "YY#s:" + MetadataConstants.c_XMLE_commitFile + "/s:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
+                        oCommit.m_oHasFile[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_commitFile + "/o:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
                     }
                 }
             }
