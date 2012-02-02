@@ -902,7 +902,6 @@ public class MetadataRDFConverter {
             if (!oMail.m_sMessageId.isEmpty())
             {
                 DatatypeProperty dtpMessageId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MessageId);
-                resMail.removeAll(dtpMessageId);
                 resMail.addProperty(dtpMessageId, oMail.m_sMessageId);
             }
             
@@ -912,7 +911,6 @@ public class MetadataRDFConverter {
                 SavePersonData(oMail.m_oFrom, oModel);
                 ObjectProperty opFrom = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_From);
                 Resource resFrom = oModel.getResource(oMail.m_oFrom.m_sObjectURI);
-                resMail.removeAll(opFrom);
                 resMail.addProperty(opFrom, resFrom.asResource());
                 oMail.m_oFrom.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_from + MetadataConstants.c_XMLE_Uri;
             }
@@ -921,7 +919,6 @@ public class MetadataRDFConverter {
             if (oMail.m_dtmHasCreationDate != null)
             {
                 DatatypeProperty dtpHasCreationDate = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasCreationDate);
-                resMail.removeAll(dtpHasCreationDate);
                 resMail.addProperty(dtpHasCreationDate, oMail.m_dtmHasCreationDate.toString());
             }
             
@@ -929,7 +926,6 @@ public class MetadataRDFConverter {
             if (!oMail.m_sSubject.isEmpty())
             {
                 DatatypeProperty dtpSubject = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
-                resMail.removeAll(dtpSubject);
                 resMail.addProperty(dtpSubject, oMail.m_sSubject);
             }
             
@@ -939,7 +935,6 @@ public class MetadataRDFConverter {
                 oMail.m_oInReplyTo.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_oInReplyTo.m_sID);
                 ObjectProperty opInReplyTo = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_InReplyTo);
                 Resource resInReplyTo = oModel.getResource(oMail.m_oInReplyTo.m_sObjectURI);
-                resMail.removeAll(opInReplyTo);
                 resMail.addProperty(opInReplyTo, resInReplyTo.asResource());
                 oMail.m_oInReplyTo.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_inReplyTo + MetadataConstants.c_XMLE_Uri;
             }
@@ -977,7 +972,6 @@ public class MetadataRDFConverter {
             if (!oMail.m_sContent.isEmpty())
             {
                 DatatypeProperty dtpBody = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
-                resMail.removeAll(dtpBody);
                 resMail.addProperty(dtpBody, oMail.m_sContent);
             }
             
@@ -1037,21 +1031,21 @@ public class MetadataRDFConverter {
             oPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oPerson.m_sID);
             Resource resPerson = oModel.getResource(oPerson.m_sObjectURI);
             
-            if (!oPerson.m_sFirstName.isEmpty())
+            if (oPerson.m_sFirstName != null && !oPerson.m_sFirstName.isEmpty())
             {
                 DatatypeProperty dtpFirstName = oModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName);
                 resPerson.removeAll(dtpFirstName);
                 resPerson.addProperty(dtpFirstName, oPerson.m_sFirstName);
             }
 
-            if (!oPerson.m_sLastName.isEmpty())
+            if (oPerson.m_sLastName != null && !oPerson.m_sLastName.isEmpty())
             {
                 DatatypeProperty dtpLastName = oModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName);
                 resPerson.removeAll(dtpLastName);
                 resPerson.addProperty(dtpLastName, oPerson.m_sLastName);
             }
             
-            if (!oPerson.m_sEmail.isEmpty())
+            if (oPerson.m_sEmail != null && !oPerson.m_sEmail.isEmpty())
             {
                 DatatypeProperty dtpEmail = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email);
                 resPerson.removeAll(dtpEmail);

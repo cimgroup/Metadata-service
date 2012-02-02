@@ -439,7 +439,7 @@ public class MetadataXMLReader {
                 
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
             MetadataModel.SaveObjectNewIssue(sEventId, eOriginalData, oIssue);
             
             return oIssue;
@@ -559,7 +559,7 @@ public class MetadataXMLReader {
                 }
             }
             
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
             MetadataModel.SaveObjectNewCommit(sEventId, eOriginalData, oCommit);
             
             return oCommit;
@@ -613,18 +613,19 @@ public class MetadataXMLReader {
                 oMail.m_oReferences = new Mail[iReferencesCount];
                 for (int i = 0; i < iReferencesCount; i++)
                 {
-                    oMail.m_oReferences[i].m_sID = sReferences.substring(0, sReferences.indexOf(">"));
+                    oMail.m_oReferences[i] = new Mail();
+                    oMail.m_oReferences[i].m_sID = sReferences.substring(0, sReferences.indexOf(">") + 1);
                     sReferences = sReferences.substring(sReferences.indexOf(">") + 1);
                 }
                 
-                NodeList nlAttachments = eMail.getElementsByTagName("s:" + MetadataConstants.c_XMLE_attachments);
+                NodeList nlAttachments = eMail.getElementsByTagName("r1:" + MetadataConstants.c_XMLE_attachments);
                 if (nlAttachments != null && nlAttachments.getLength() > 0)
                 {
                     oMail.m_sAttachment = new String[nlAttachments.getLength()];
                     for (int i = 0; i < nlAttachments.getLength(); i++)
                     {
                         Element eAttachment = (Element)nlAttachments.item(i);
-                        oMail.m_sAttachment[i] = GetValue(eAttachment, "s:" + MetadataConstants.c_XMLE_attachment);
+                        oMail.m_sAttachment[i] = GetValue(eAttachment, "r1:" + MetadataConstants.c_XMLE_attachment);
                     }
                 }
                 
@@ -632,7 +633,7 @@ public class MetadataXMLReader {
                 
             }
             
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_mlsensor);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r1:" + MetadataConstants.c_XMLE_mlsensor);
             MetadataModel.SaveObjectNewMail(sEventId, eOriginalData, oMail);
             
             return oMail;
@@ -1807,7 +1808,7 @@ public class MetadataXMLReader {
                 oForumPost.m_sCategory = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_category);
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_keui);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s1:" + MetadataConstants.c_XMLE_keui);
             MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
             
             return oForumPost;

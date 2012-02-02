@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
@@ -38,7 +39,7 @@ public class MetadataGlobal {
     
     public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static DateFormat m_dfFormatSS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static DateFormat m_dfFormatTZ = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
+    public static DateFormat m_dfFormatTZ = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     // </editor-fold>
     
