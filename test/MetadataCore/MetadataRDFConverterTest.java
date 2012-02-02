@@ -500,21 +500,21 @@ public class MetadataRDFConverterTest {
     }
 
     /**
-     * Test of ac_issue_getDuplicates method, of class MetadataRDFConverter.
+     * Test of ac_issue_getExplicitDuplicates method, of class MetadataRDFConverter.
      */
     @Test
     public void testAc_issue_getDuplicates() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getDuplicates");
         String sIssueDuplicatesSPARQLNull = "";
         //APIResponseData expResult = null;
-        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQLNull);
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getExplicitDuplicates(sIssueDuplicatesSPARQLNull);
         //assertEquals(expResult, resultNull);
         assertNotNull(resultNull);
         assertNotNull(resultNull.oData);
         assertEquals(resultNull.oData.size(), 0);
         
         String sIssueDuplicatesSPARQL = " ?issueUri <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword . <http://www.alert-project.eu/ontologies/alert_its.owl#Bug1> <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#keyword> ?keyword ";
-        APIResponseData result = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);
+        APIResponseData result = MetadataRDFConverter.ac_issue_getExplicitDuplicates(sIssueDuplicatesSPARQL);
         assertNotNull(result);
         assertNotNull(result.oData);
         assertEquals(result.oData.size() > 0, true);

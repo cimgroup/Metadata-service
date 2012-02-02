@@ -198,7 +198,7 @@ public class MetadataModelTest {
     }
 
     /**
-     * Test of ac_issue_getDuplicates method, of class MetadataModel.
+     * Test of ac_issue_getExplicitDuplicates method, of class MetadataModel.
      */
     @Ignore
     @Test
@@ -206,7 +206,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: ac_issue_getDuplicates");
         String sEventId = "";
         String sIssueDuplicatesSPARQL = "";
-        MetadataModel.ac_issue_getDuplicates(sEventId, sIssueDuplicatesSPARQL);
+        MetadataModel.ac_issue_getExplicitDuplicates(sEventId, sIssueDuplicatesSPARQL);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

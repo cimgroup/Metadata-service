@@ -825,7 +825,7 @@ public class MetadataRDFConverter {
                                     {
                                         if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] != null)
                                         {
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
+                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
                                             Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
 
                                             //module name
@@ -1638,20 +1638,21 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getDuplicates
+     * @summary issue_getExplicitDuplicates
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
-     * @param sIssueDuplicatesSPARQL - SPARQL query
+     * @param sIssueUri - issue uri
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_issue_getDuplicates(String sIssueDuplicatesSPARQL)
+    public static MetadataGlobal.APIResponseData ac_issue_getExplicitDuplicates(String sIssueUri)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
                         
-            String sQuery = "SELECT ?issueUri WHERE {?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . " + sIssueDuplicatesSPARQL + "}";
+            String sQuery = "SELECT ?issueUri WHERE {?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLObjectProperty_IsDuplicateOf + "> <" + sIssueUri + "> }";
                             
             ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -1897,9 +1898,21 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
-                        
-            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+                     
+            String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
+                    + " UNION "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersonUri + "> }"
+                    + "}";
                             
             ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -1934,9 +1947,27 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWLWithModelSpec(MetadataConstants.sLocationLoadAlert, OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
                         
-            String sQuery = "SELECT ?methodUri WHERE {?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + ">}";
+            String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_RelatedToSourceCode + "> ?methodUri . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri . "
+                    + "?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> . "
+                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
+                    + " UNION "
+                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_RelatedToSourceCode + "> ?methodUri . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri . "
+                    + "?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> . "
+                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersonUri + "> }"
+                    + "}";
                             
             ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             

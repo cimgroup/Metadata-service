@@ -273,7 +273,7 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getAllForMethod = "issue.getAllForMethod";
     public static String c_XMLAC_issue_getAllForProduct = "issue.getAllForProduct";
     public static String c_XMLAC_issue_getAnnotationStatus = "issue.getAnnotationStatus";
-    public static String c_XMLAC_issue_getDuplicates = "issue.getDuplicates";
+    public static String c_XMLAC_issue_getExplicitDuplicates = "issue.getExplicitDuplicates";
     public static String c_XMLAC_issue_getInfo = "issue.getInfo";
     public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";

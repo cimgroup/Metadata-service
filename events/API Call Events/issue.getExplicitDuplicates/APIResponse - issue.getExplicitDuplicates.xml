@@ -27,7 +27,7 @@
 							<ns1:eventData>
 								<ns1:apiResponse>
 									<!-- name of method -->
-									<s3:apiCall>issue.getDuplicates</s3:apiCall>
+									<s3:apiCall>issue.getExplicitDuplicates</s3:apiCall>
 									<s3:responseData>
 										<!-- list (or any other structure) of results -->
 										<s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s3:issueUri>

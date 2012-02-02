@@ -212,12 +212,12 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 15.12.2011.
      * @finalModification Sasa Stojanovic 15.12.2011.
      * @param sEventId - event id
-     * @param sIssueDuplicatesSPARQL - SPARQL for issue duplicates
+     * @param sIssueUri - issue uri
      */
-    static void ac_issue_getDuplicates(String sEventId, String sIssueDuplicatesSPARQL)
+    static void ac_issue_getExplicitDuplicates(String sEventId, String sIssueUri)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getDuplicates(sIssueDuplicatesSPARQL);       
-        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getDuplicates, sEventId, oData);
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getExplicitDuplicates(sIssueUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getExplicitDuplicates, sEventId, oData);
     }
     
     /**
