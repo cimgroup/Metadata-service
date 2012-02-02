@@ -29,18 +29,12 @@
 									<r1:date>Sat, 05 Nov 2011 17:50:11 +0100</r1:date>
 									<r1:subject><![CDATA[[Kde-hardware-devel] Identifying iPod and iPhone-like devices using Solid (was: Amarok review request)]]></r1:subject>
 									<r1:inReplyTo><![CDATA[<CAMnMsSdoax0S14_fQe4woSLDhJYR0vc8wuZjKvsKqe7gVx1kxQ@mail.gmail.com>]]></r1:inReplyTo>
-									<r1:references><![CDATA[
-											<20111025132029.15876.89012@vidsolbach.de>
-											<9102909.qJX79ctmp1@edgy>
-											<CAMnMsSdoax0S14_fQe4woSLDhJYR0vc8wuZjKvsKqe7gVx1kxQ@mail.gmail.com>]]>
-									</r1:references>
+									<r1:references><![CDATA[<20111025132029.15876.89012@vidsolbach.de><9102909.qJX79ctmp1@edgy><CAMnMsSdoax0S14_fQe4woSLDhJYR0vc8wuZjKvsKqe7gVx1kxQ@mail.gmail.com>]]></r1:references>
 									<r1:messageId><![CDATA[<3674981.yjiqPb6iju@edgy>]]></r1:messageId>
 									<r1:attachments>
 										<r1:attachment>http://mail.kde.org/pipermail/kde-hardware-devel/attachments/20111109/564d5259/attachment.html</r1:attachment>
 									</r1:attachments>
-									<r1:content>
-										<![CDATA[
-												A non-text attachment was scrubbed...
+									<r1:content><![CDATA[   A non-text attachment was scrubbed...
 												Name: signature.asc
 												Type: application/pgp-signature
 												Size: 198 bytes
@@ -97,8 +91,7 @@
 												Thanks,
 
 												Nicolas L?cureuil
-										]]>
-									</r1:content>
+										]]></r1:content>
 								</r1:message>
 							</ns1:eventData>
 						</ns1:payload>

@@ -5,7 +5,7 @@
 package MetadataObjects;
 
 import MetadataCore.MetadataObject;
-import org.apache.derby.client.am.DateTime;
+import java.util.Date;
 
 /**
  *
@@ -15,15 +15,17 @@ public class Mail extends MetadataObject {
     
     // <editor-fold desc="Members">
 
-    public String m_sHasMessageId;
+    public String m_sMessageId;
     public foaf_Person m_oFrom;
     public foaf_Person[] m_oTo;
     public foaf_Person[] m_oCc;
-    public Mail m_sInReplyTo;
-    public String m_sHasSubject;    
-    public String m_sIsAbout;
+    public Mail m_oInReplyTo;
+    public Mail[] m_oReferences;
+    public String m_sSubject;    
+    public MetadataObject m_oIsAbout;
+    public String[] m_sAttachment;
     public SourceCode m_oRelatedToSourceCode;
-    public DateTime m_dtmHasOrigDate;
+    public Date m_dtmHasCreationDate;
     public String m_sContent;
         
     // </editor-fold>

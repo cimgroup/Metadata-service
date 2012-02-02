@@ -48,7 +48,8 @@ public class MetadataRDFConverter {
      * @summary Save issue data
      * @startRealisation Ivan Obradovic 31.08.2011.
      * @finalModification Sasa Stojanovic 16.01.2012.
-     * @param oIssue 
+     * @param oIssue - issue object with data
+     * @return issue object with uri-s
      */
     public static Issue SaveIssue(Issue oIssue)
     {
@@ -649,10 +650,11 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary Save issue data
+     * @summary Save commit data
      * @startRealisation Sasa Stojanovic 16.01.2012.
      * @finalModification Sasa Stojanovic 16.01.2012.
-     * @param oCommit 
+     * @param oCommit - commit object with data
+     * @return commit object with uri-s
      */
     public static Commit SaveCommit(Commit oCommit)
     {
@@ -880,6 +882,109 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary Save mail data
+     * @startRealisation Sasa Stojanovic 02.02.2012.
+     * @finalModification Sasa Stojanovic 02.02.2012.
+     * @param oMail - mail object with data
+     * @return mail object with uri-s
+     */
+    public static Mail SaveMail(Mail oMail)
+    {
+        try {
+            
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            oMail.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_sID);
+            Resource resMail = oModel.getResource(oMail.m_sObjectURI);
+            oMail.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+            
+            //messageId
+            if (!oMail.m_sMessageId.isEmpty())
+            {
+                DatatypeProperty dtpMessageId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MessageId);
+                resMail.addProperty(dtpMessageId, oMail.m_sMessageId);
+            }
+            
+            //from
+            if (oMail.m_oFrom != null && !oMail.m_oFrom.m_sID.isEmpty())
+            {
+                SavePersonData(oMail.m_oFrom, oModel);
+                ObjectProperty opFrom = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_From);
+                Resource resFrom = oModel.getResource(oMail.m_oFrom.m_sObjectURI);
+                resMail.addProperty(opFrom, resFrom.asResource());
+                oMail.m_oFrom.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_from + MetadataConstants.c_XMLE_Uri;
+            }
+            
+            //creation date
+            if (oMail.m_dtmHasCreationDate != null)
+            {
+                DatatypeProperty dtpHasCreationDate = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasCreationDate);
+                resMail.addProperty(dtpHasCreationDate, oMail.m_dtmHasCreationDate.toString());
+            }
+            
+            //subject
+            if (!oMail.m_sSubject.isEmpty())
+            {
+                DatatypeProperty dtpSubject = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
+                resMail.addProperty(dtpSubject, oMail.m_sSubject);
+            }
+            
+            //in reply to
+            if (oMail.m_oInReplyTo != null && !oMail.m_oInReplyTo.m_sID.isEmpty())
+            {
+                oMail.m_oInReplyTo.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_oInReplyTo.m_sID);
+                ObjectProperty opInReplyTo = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_InReplyTo);
+                Resource resInReplyTo = oModel.getResource(oMail.m_oInReplyTo.m_sObjectURI);
+                resMail.addProperty(opInReplyTo, resInReplyTo.asResource());
+                oMail.m_oInReplyTo.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_inReplyTo + MetadataConstants.c_XMLE_Uri;
+            }
+
+            //references
+            if (oMail.m_oReferences != null)
+            {
+                ObjectProperty opReferences = oModel.getObjectProperty(MetadataConstants.c_NS_purl + MetadataConstants.c_OWLObjectProperty_References);
+                for (int i = 0; i < oMail.m_oReferences.length; i++)
+                {
+                    if (oMail.m_oReferences[i] != null && !oMail.m_oReferences[i].m_sID.isEmpty())
+                    {
+                        oMail.m_oReferences[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_oReferences[i].m_sID);
+                        Resource resReferences = oModel.getResource(oMail.m_oReferences[i].m_sObjectURI);
+                        resMail.addProperty(opReferences, resReferences.asResource());
+                        oMail.m_oReferences[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_references + MetadataConstants.c_XMLE_Uri;
+                    }
+                }
+            }
+            
+            //attachments
+            if (oMail.m_sAttachment != null)
+            {
+                DatatypeProperty dtpAttachment = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment);
+                for (int i = 0; i < oMail.m_sAttachment.length; i++)
+                {
+                    if (oMail.m_sAttachment[i] != null && !oMail.m_sAttachment[i].isEmpty())
+                    {
+                        resMail.addProperty(dtpAttachment, oMail.m_sAttachment[i]);
+                    }
+                }
+            }
+            
+            //content
+            if (!oMail.m_sContent.isEmpty())
+            {
+                DatatypeProperty dtpBody = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
+                resMail.addProperty(dtpBody, oMail.m_sContent);
+            }
+            
+            //save data
+            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception ex)
+        {
+        }
+        return oMail;
+    }
+    
+    /**
      * @summary Save person data
      * @startRealisation Sasa Stojanovic 02.09.2011.
      * @finalModification Sasa Stojanovic 06.09.2011.
@@ -926,21 +1031,21 @@ public class MetadataRDFConverter {
             oPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oPerson.m_sID);
             Resource resPerson = oModel.getResource(oPerson.m_sObjectURI);
             
-            if (!oPerson.m_sFirstName.isEmpty())
+            if (oPerson.m_sFirstName != null && !oPerson.m_sFirstName.isEmpty())
             {
                 DatatypeProperty dtpFirstName = oModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName);
                 resPerson.removeAll(dtpFirstName);
                 resPerson.addProperty(dtpFirstName, oPerson.m_sFirstName);
             }
 
-            if (!oPerson.m_sLastName.isEmpty())
+            if (oPerson.m_sLastName != null && !oPerson.m_sLastName.isEmpty())
             {
                 DatatypeProperty dtpLastName = oModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName);
                 resPerson.removeAll(dtpLastName);
                 resPerson.addProperty(dtpLastName, oPerson.m_sLastName);
             }
             
-            if (!oPerson.m_sEmail.isEmpty())
+            if (oPerson.m_sEmail != null && !oPerson.m_sEmail.isEmpty())
             {
                 DatatypeProperty dtpEmail = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email);
                 resPerson.removeAll(dtpEmail);

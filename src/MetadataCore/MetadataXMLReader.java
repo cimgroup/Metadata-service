@@ -74,6 +74,10 @@ public class MetadataXMLReader {
             {
                 NewCommit(dDoc);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_mail_requestNew))
+            {
+                NewMail(dDoc);
+            }
             if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
             {
                 NewPerson(dDoc);
@@ -440,7 +444,7 @@ public class MetadataXMLReader {
                 
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
             MetadataModel.SaveObjectNewIssue(sEventId, eOriginalData, oIssue);
             
             return oIssue;
@@ -560,10 +564,84 @@ public class MetadataXMLReader {
                 }
             }
             
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_kesi);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
             MetadataModel.SaveObjectNewCommit(sEventId, eOriginalData, oCommit);
             
             return oCommit;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading new mail event from XML
+     * @startRealisation Sasa Stojanovic 02.02.2012.
+     * @finalModification Sasa Stojanovic 02.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Mail object
+     */
+    public static Mail NewMail(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            Mail oMail = MetadataObjectFactory.CreateNewMail();
+
+            NodeList nlMail = dDoc.getElementsByTagName("r1:" + MetadataConstants.c_XMLE_message);   //getting node for tag message
+
+            if (nlMail != null && nlMail.getLength() > 0)
+            {
+                Element eMail = (Element) nlMail.item(0);
+                eOriginalData = eMail;
+                
+                oMail.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_message + MetadataConstants.c_XMLE_Id);
+                oMail.m_sMessageId = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_message + MetadataConstants.c_XMLE_Id);
+
+                oMail.m_oFrom = new foaf_Person();
+                oMail.m_oFrom.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_from);
+                oMail.m_oFrom.m_sEmail = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_from);
+                
+                oMail.m_dtmHasCreationDate = MetadataGlobal.GetDateTime(GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_date));
+                
+                oMail.m_sSubject = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_subject);
+                
+                oMail.m_oInReplyTo = new Mail();
+                oMail.m_oInReplyTo.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_inReplyTo);
+                
+                String sReferences = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_references);
+                int iReferencesCount = sReferences.replaceAll("[^>]", "").length(); //get number of references
+                oMail.m_oReferences = new Mail[iReferencesCount];
+                for (int i = 0; i < iReferencesCount; i++)
+                {
+                    oMail.m_oReferences[i] = new Mail();
+                    oMail.m_oReferences[i].m_sID = sReferences.substring(0, sReferences.indexOf(">") + 1);
+                    sReferences = sReferences.substring(sReferences.indexOf(">") + 1);
+                }
+                
+                NodeList nlAttachments = eMail.getElementsByTagName("r1:" + MetadataConstants.c_XMLE_attachments);
+                if (nlAttachments != null && nlAttachments.getLength() > 0)
+                {
+                    oMail.m_sAttachment = new String[nlAttachments.getLength()];
+                    for (int i = 0; i < nlAttachments.getLength(); i++)
+                    {
+                        Element eAttachment = (Element)nlAttachments.item(i);
+                        oMail.m_sAttachment[i] = GetValue(eAttachment, "r1:" + MetadataConstants.c_XMLE_attachment);
+                    }
+                }
+                
+                oMail.m_sContent = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_content);
+                
+            }
+            
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r1:" + MetadataConstants.c_XMLE_mlsensor);
+            MetadataModel.SaveObjectNewMail(sEventId, eOriginalData, oMail);
+            
+            return oMail;
         }
         catch (Exception e)
         {
@@ -1735,7 +1813,7 @@ public class MetadataXMLReader {
                 oForumPost.m_sCategory = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_category);
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_keui);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s1:" + MetadataConstants.c_XMLE_keui);
             MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
             
             return oForumPost;

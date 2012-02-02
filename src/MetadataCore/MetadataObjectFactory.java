@@ -37,7 +37,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new commit
      * @startRealisation Sasa Stojanovic 16.01.2012.
      * @finalModification Sasa Stojanovic 16.01.2012.
-     * @return Bug object
+     * @return Commit object
      */
     public static Commit CreateNewCommit()
     {
@@ -54,10 +54,30 @@ public class MetadataObjectFactory {
     }
     
     /** 
+     * @summary Method for creating new mail
+     * @startRealisation Sasa Stojanovic 02.02.2012.
+     * @finalModification Sasa Stojanovic 02.02.2012.
+     * @return Mail object
+     */
+    public static Mail CreateNewMail()
+    {
+        try
+        {
+            Mail oMail = new Mail();
+            return oMail;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /** 
      * @summary Method for creating new person
      * @startRealisation Sasa Stojanovic 24.06.2011.
      * @finalModification Sasa Stojanovic 24.06.2011.
-     * @return MetadataPerson object
+     * @return foaf_Person object
      */
     public static foaf_Person CreateNewPerson()
     {
