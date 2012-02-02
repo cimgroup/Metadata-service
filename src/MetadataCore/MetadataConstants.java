@@ -56,6 +56,10 @@ public class MetadataConstants {
     public static String c_ET_forumPost_replyNew = "Metadata.forumPost.replyNew";
     public static String c_ET_mail_requestNew = "Metadata.mail.requestNew";
     public static String c_ET_mail_replyNew = "Metadata.mail.replyNew";
+    public static String c_ET_competency_requestNew = "Metadata.competency.requestNew";
+    public static String c_ET_competency_requestUpdate = "Metadata.competency.requestUpdate";
+    public static String c_ET_competency_replyNewUpdate = "Metadata.competency.replyNewUpdate";
+    
     // </editor-fold>
        
     // <editor-fold desc="XML elements">
