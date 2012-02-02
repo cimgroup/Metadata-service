@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.ArrayList;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -104,6 +105,7 @@ public class MetadataModel {
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Dejan Milosavljevic 18.01.2012.
      * @param sEventId - event id.
+     * @param eOriginalData - original data. 
      * @param oForumPost - forum post object.
      */
     static void SaveObjectNewForumPost(String sEventId, Element eOriginalData, NewForumPost oForumPost)
@@ -113,16 +115,17 @@ public class MetadataModel {
     }
 
     /**
-     * @summary Method for saving new issue annotation.
+     * @summary Method for saving new annotation.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.01.2012.
-     * @param sEventId - event id.
+     * @finalModification Dejan Milosavljevic 01.02.2012.
+     * @param sEventName - event name.
+     * @param dDoc - original XML document. 
      * @param oAnnotation - annotation data object.
      */
-    static void SaveObjectNewAnnotationData(String sEventId, AnnotationData oAnnotation)
+    static void SaveObjectNewAnnotationData(String sEventName, Document dDoc, AnnotationData oAnnotation)
     {
         oAnnotation = MetadataRDFConverter.SaveAnnotationData(oAnnotation);
-        //MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, oPerson);
+        MetadataXMLCreator.CreateXMLNewAnnotationResponse(dDoc, sEventName);
     }
     
     /**

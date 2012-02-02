@@ -116,9 +116,12 @@ public class MetadataModelTest {
     @Test
     public void testSaveObjectNewAnnotationData() {
         System.out.println("* MetadataModelTest: SaveObjectNewAnnotationData");
-        String sEventId = "";
+        //String sEventId = "";
+        String sEventName = "";
         AnnotationData oAnnotation = null;
-        MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+        //MetadataModel.SaveObjectNewAnnotationData(sEventId, oAnnotation);
+        MetadataModel.SaveObjectNewAnnotationData(sEventName, null, oAnnotation);
+
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
