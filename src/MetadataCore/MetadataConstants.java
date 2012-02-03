@@ -254,6 +254,7 @@ public class MetadataConstants {
     public static String c_XMLE_contribution = "contribution";
     public static String c_XMLE_effectiveness = "effectiveness";
     public static String c_XMLE_recency = "recency";
+    public static String c_XMLE_identity = "identity";
     
     // </editor-fold>
     
@@ -325,6 +326,20 @@ public class MetadataConstants {
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
     
+    //Competence
+    public static String c_OWLClass_Competence = "Competence";
+    public static String c_OWLClass_Identity = "Identity";
+    public static String c_OWLClass_Activity_Availability = "Activity_Availability";
+    public static String c_OWLClass_Contribution = "Contribution";
+    public static String c_OWLClass_Effectiveness = "Effectiveness";
+    public static String c_OWLClass_Fluency = "Fluency";
+    public static String c_OWLClass_TemporalMetric = "TemporalMetric";
+    public static String c_OWLClass_APIMetric = "APIMetric";
+    public static String c_OWLClass_ITSMetric = "ITSMetric";
+    public static String c_OWLClass_MailingListMetric = "MailingListMetric";
+    public static String c_OWLClass_SCMMetric = "SCMMetric";
+    public static String c_OWLClass_StaticAnalysisMetric = "StaticAnalysisMetric";
+
     public static String c_OWLClass_post = "post";
     public static String c_OWLClass_threads = "threads";
     public static String c_OWLClass_forum = "forum";
@@ -434,6 +449,11 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_HasCreationDate = "origDate";
     public static String c_OWLDataProperty_Attachment = "attachment";
     
+    public static String c_OWLDataProperty_HasLevel = "hasLevel";
+    public static String c_OWLDataProperty_MetricName = "metricName";
+    public static String c_OWLDataProperty_Time = "time";
+    public static String c_OWLDataProperty_Level = "level";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">
@@ -480,6 +500,10 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_From = "from";
     public static String c_OWLObjectProperty_InReplyTo = "inReplyTo";
     public static String c_OWLObjectProperty_References = "references";
+    
+    public static String c_OWLObjectProperty_HasAttribute = "hasAttribute";
+    public static String c_OWLObjectProperty_HasMetric = "hasMetric";
+    public static String c_OWLObjectProperty_HasCompetences = "hasCompetences";
     
     // </editor-fold>
             

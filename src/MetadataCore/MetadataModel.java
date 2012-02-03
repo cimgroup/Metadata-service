@@ -151,8 +151,8 @@ public class MetadataModel {
      */
     static void SaveObjectNewCompetence(String sEventId, Element eOriginalData, Competence oCompetence)
     {
-        //oCompetence = MetadataRDFConverter.SaveAnnotationData(oCompetence);
-        //MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, eOriginalData, oCompetence);
+        oCompetence = MetadataRDFConverter.SaveCompetence(oCompetence);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_competency_replyNewUpdate, sEventId, eOriginalData, oCompetence);
     }
     
     /**

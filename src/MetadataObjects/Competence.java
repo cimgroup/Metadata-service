@@ -16,6 +16,7 @@ public class Competence extends MetadataObject {
     
     public Attribute[] m_oHasAttribute;
     public String m_sLevel;
+    public Identity m_oIdentity;
     
     // </editor-fold>
         
@@ -35,6 +36,14 @@ public class Competence extends MetadataObject {
 
     public void SetLevel(String sLevel) {
         m_sLevel = sLevel;
+    }
+    
+    public Identity GetIdentity() {
+        return m_oIdentity;
+    }
+
+    public void SetIdentity(Identity oIdentity) {
+        m_oIdentity = oIdentity;
     }
     
     // </editor-fold>

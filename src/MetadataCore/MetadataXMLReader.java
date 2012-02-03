@@ -1848,8 +1848,9 @@ public class MetadataXMLReader {
                 Element eCompetence = (Element) nlCompetence.item(0);
                 eOriginalData = eCompetence;
 
-                // Identity ID
-                oCompetence.m_sID = GetValue(eCompetence, "sm:" + MetadataConstants.c_XMLE_uuid);
+                //Identity ID
+                oCompetence.m_oIdentity = new Identity();
+                oCompetence.m_oIdentity.m_sID = GetValue(eCompetence, "sm:" + MetadataConstants.c_XMLE_uuid);
                 
                 //HasLevel (index)
                 oCompetence.m_sLevel = GetValue(eCompetence, "sm:" + MetadataConstants.c_XMLE_index);

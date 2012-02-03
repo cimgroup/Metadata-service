@@ -1365,7 +1365,325 @@ public class MetadataRDFConverter {
         
         return oForumPost;
     }
+    
+    /**
+     * @summary Save competence data.
+     * @startRealisation  Dejan Milosavljevic 03.02.2012.
+     * @finalModification Dejan Milosavljevic 03.02.2012.
+     * @param oCompetence - Competence object
+     */
+    public static Competence SaveCompetence(Competence oCompetence)
+    {
+        try
+        {
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            oCompetence.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Competence, oCompetence.m_sID);
+            Resource resCompetence = omModel.getResource(oCompetence.m_sObjectURI);
+            oCompetence.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_competency + MetadataConstants.c_XMLE_Uri;
+//            
+            //Identity ID
+            if (oCompetence.m_oIdentity != null)
+            {
+                oCompetence.m_oIdentity.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity, oCompetence.m_oIdentity.m_sID);
+                ObjectProperty opIdentity = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasCompetences);
+                Resource resIdentity = omModel.getResource(oCompetence.m_oIdentity.m_sObjectURI);
+                oCompetence.m_oIdentity.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_identity + MetadataConstants.c_XMLE_Uri;
+                resIdentity.addProperty(opIdentity, resCompetence.asResource());
+            }
+            //HasLevel (index)
+            if (!oCompetence.m_sLevel.isEmpty())
+            {
+                DatatypeProperty dtpHasLevel = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasLevel);
+                resCompetence.removeAll(dtpHasLevel);
+                resCompetence.addProperty(dtpHasLevel, oCompetence.m_sLevel);
+            }
+            //Attributs
+            if (oCompetence.m_oHasAttribute != null && oCompetence.m_oHasAttribute.length > 0)
+            {
+                ObjectProperty opHasAttribute = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                resCompetence.removeAll(opHasAttribute);
+                for (Attribute oAttribute: oCompetence.m_oHasAttribute)
+                {
+                    if (oAttribute != null && oAttribute.m_sName != null)
+                    {
+                        //    Fluency
+                        if (oAttribute.m_sName.equals(MetadataConstants.c_XMLE_fluency))
+                        {
+                            oAttribute.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Fluency, oAttribute.m_sID);
+                            ObjectProperty opFluency = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                            Resource resFluency = omModel.getResource(oAttribute.m_sObjectURI);
+                            oAttribute.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_fluency + MetadataConstants.c_XMLE_Uri;
+                            if (oAttribute.m_oHasMetric != null && oAttribute.m_oHasMetric.length > 0)
+                            {
+                                for (Metric oMetric: oAttribute.m_oHasMetric)
+                                {
+                                    //    apiCount
+                                    if (oMetric.m_sMetricName.equals("apiCount") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_APIMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:apiCountUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "apiCount");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resFluency.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    apiIntroduced
+                                    if (oMetric.m_sMetricName.equals("apiIntroduced") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_APIMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:apiIntroducedUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "apiIntroduced");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resFluency.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    staticAnalysis
+                                    if (oMetric.m_sMetricName.equals("staticAnalysis") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_StaticAnalysisMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:staticAnalysisUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "staticAnalysis");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resFluency.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                }
+                            }
+                            resCompetence.addProperty(opFluency, resFluency.asResource());
+                        }
+                        //    Contribution
+                        if (oAttribute.m_sName.equals(MetadataConstants.c_XMLE_contribution))
+                        {
+                            oAttribute.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Contribution, oAttribute.m_sID);
+                            ObjectProperty opContribution = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                            Resource resContribution = omModel.getResource(oAttribute.m_sObjectURI);
+                            oAttribute.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_contribution + MetadataConstants.c_XMLE_Uri;
+                            resCompetence.addProperty(opContribution, resContribution.asResource());
+                            if (oAttribute.m_oHasMetric != null && oAttribute.m_oHasMetric.length > 0)
+                            {
+                                for (Metric oMetric: oAttribute.m_oHasMetric)
+                                {
+                                    //    mailingListActivity
+                                    if (oMetric.m_sMetricName.equals("mailingListActivity") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_MailingListMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:mailingListActivityUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "mailingListActivity");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resContribution.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    itsActivity
+                                    if (oMetric.m_sMetricName.equals("itsActivity") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_ITSMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:itsActivityUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "itsActivity");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resContribution.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    sloc
+                                    if (oMetric.m_sMetricName.equals("sloc") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_SCMMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:slocUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "sloc");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resContribution.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                }
+                            }
+                        }
+                        //    Effectiveness
+                        if (oAttribute.m_sName.equals(MetadataConstants.c_XMLE_effectiveness))
+                        {
+                            oAttribute.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Effectiveness, oAttribute.m_sID);
+                            ObjectProperty opEffectiveness = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                            Resource resEffectiveness = omModel.getResource(oAttribute.m_sObjectURI);
+                            oAttribute.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_effectiveness + MetadataConstants.c_XMLE_Uri;
+                            resCompetence.addProperty(opEffectiveness, resEffectiveness.asResource());
+                            if (oAttribute.m_oHasMetric != null && oAttribute.m_oHasMetric.length > 0)
+                            {
+                                for (Metric oMetric: oAttribute.m_oHasMetric)
+                                {
+                                    //    noOfIssuesFixed
+                                    if (oMetric.m_sMetricName.equals("noOfIssuesFixed") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_ITSMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:noOfIssuesFixedUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "noOfIssuesFixed");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    noOfCommitsCausedIssue
+                                    if (oMetric.m_sMetricName.equals("noOfCommitsCausedIssue") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_ITSMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:noOfCommitsCausedIssueUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "noOfCommitsCausedIssue");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    noOfCommitFixedIssue
+                                    if (oMetric.m_sMetricName.equals("noOfCommitFixedIssue") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_ITSMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:noOfCommitFixedIssueUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "noOfCommitFixedIssue");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, oMetric.m_sMetricValue);
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                }
+                            }
+                        }
+                        //    Recency
+                        if (oAttribute.m_sName.equals(MetadataConstants.c_XMLE_recency))
+                        {
+                            oAttribute.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Activity_Availability, oAttribute.m_sID);
+                            ObjectProperty opEffectiveness = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                            Resource resEffectiveness = omModel.getResource(oAttribute.m_sObjectURI);
+                            oAttribute.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_recency + MetadataConstants.c_XMLE_Uri;
+                            resCompetence.addProperty(opEffectiveness, resEffectiveness.asResource());
+                            if (oAttribute.m_oHasMetric != null && oAttribute.m_oHasMetric.length > 0)
+                            {
+                                for (Metric oMetric: oAttribute.m_oHasMetric)
+                                {
+                                    //    timeSinceSCMaction
+                                    if (oMetric.m_sMetricName.equals("timeSinceSCMaction") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_TemporalMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:timeSinceSCMactionUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "timeSinceSCMaction");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    timeSinceITSaction
+                                    if (oMetric.m_sMetricName.equals("timeSinceITSaction") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_TemporalMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:timeSinceITSactionUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "timeSinceITSaction");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                    //    timeSinceMLaction
+                                    if (oMetric.m_sMetricName.equals("timeSinceMLaction") && !oMetric.m_sMetricValue.isEmpty())
+                                    {
+                                        oMetric.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_TemporalMetric, oMetric.m_sID);
+                                        ObjectProperty opMetric = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric);
+                                        Resource resMetric = omModel.getResource(oMetric.m_sObjectURI);
+                                        oMetric.m_sReturnConfig = "YN#o:timeSinceMLactionUri";
+                                        
+                                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName);
+                                        resMetric.removeAll(dtpName);
+                                        resMetric.addProperty(dtpName, "timeSinceMLaction");
+                                        DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
+                                        resMetric.removeAll(dtpValue);
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        
+                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
+            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception e)
+        {
+        }
+        
+        return oCompetence;
+    }
+    
     // <editor-fold desc="API Calls">
     
     /**

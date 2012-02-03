@@ -748,26 +748,26 @@ public class MetadataXMLCreator {
         try
         {
             //Find ns1:sender tag
-            NodeList nlSender = dDoc.getElementsByTagName("ns1:sender");
+            NodeList nlSender = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_sender);
             
             //Find ns1:eventName tag
-            NodeList nlEventName = dDoc.getElementsByTagName("ns1:eventName");
+            NodeList nlEventName = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_eventName);
             
             //Find ns1:eventType tag
-            NodeList nlEventType = dDoc.getElementsByTagName("ns1:eventType");
+            NodeList nlEventType = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_eventType);
             
             if (nlSender != null && nlSender.getLength() > 0 &&
                 nlEventName != null && nlSender.getLength() > 0 &&
                 nlEventType != null && nlSender.getLength() > 0)
             {
                 Element eSender = (Element) nlSender.item(0);
-                eSender.setTextContent("METADATASERVICE");
+                eSender.setTextContent(MetadataConstants.c_XMLV_metadataservice);
                 
                 Element eEventName = (Element) nlEventName.item(0);
                 eEventName.setTextContent(sEventName);
                 
                 Element eEventType = (Element) nlEventType.item(0);
-                eEventType.setTextContent("reply");
+                eEventType.setTextContent(MetadataConstants.c_XMLV_reply);
                 
                 //Send created XML document
                 MetadataCommunicator.SendXML(dDoc);                
