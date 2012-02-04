@@ -171,4 +171,25 @@ public class MetadataObjectFactory {
             return null;
         }
     }
+    
+    
+    /** 
+     * @summary Method for creating new identity
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @return Bug object
+     */
+    public static Identity CreateNewIdentity()
+    {
+        try
+        {
+            Identity oIdentity = new Identity();
+            return oIdentity;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

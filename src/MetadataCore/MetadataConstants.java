@@ -59,6 +59,12 @@ public class MetadataConstants {
     public static String c_ET_competency_requestNew = "Metadata.competency.requestNew";
     public static String c_ET_competency_requestUpdate = "Metadata.competency.requestUpdate";
     public static String c_ET_competency_replyNewUpdate = "Metadata.competency.replyNewUpdate";
+    public static String c_ET_identity_requestNew = "Metadata.identity.requestNew";
+    public static String c_ET_identity_requestUpdate = "Metadata.identity.requestUpdate";
+    public static String c_ET_identity_requestRemove = "Metadata.identity.requestRemove";
+    public static String c_ET_identity_replyNew = "Metadata.identity.replyNew";
+    public static String c_ET_identity_replyUpdate = "Metadata.identity.replyUpdate";
+    public static String c_ET_identity_replyRemove = "Metadata.identity.replyRemove";
     
     // </editor-fold>
        
@@ -255,6 +261,15 @@ public class MetadataConstants {
     public static String c_XMLE_effectiveness = "effectiveness";
     public static String c_XMLE_recency = "recency";
     public static String c_XMLE_identity = "identity";
+    
+    public static String c_XMLE_identities = "identities";
+    public static String c_XMLE_is = "is";
+    public static String c_XMLE_isnt = "isnt";
+    public static String c_XMLE_add = "add";
+    public static String c_XMLE_remove = "remove";
+    public static String c_XMLE_allPerson = "allPerson";
+    public static String c_XMLE_isRemoved = "isRemoved";
+    public static String c_XMLE_isntRemoved = "isntRemoved";
     
     // </editor-fold>
     
@@ -504,6 +519,9 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasAttribute = "hasAttribute";
     public static String c_OWLObjectProperty_HasMetric = "hasMetric";
     public static String c_OWLObjectProperty_HasCompetences = "hasCompetences";
+    
+    public static String c_OWLObjectProperty_IsPerson = "isPerson";
+    public static String c_OWLObjectProperty_IsntPerson = "isntPerson";
     
     // </editor-fold>
             

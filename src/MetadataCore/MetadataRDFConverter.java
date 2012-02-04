@@ -1684,6 +1684,103 @@ public class MetadataRDFConverter {
         return oCompetence;
     }
     
+    /**
+     * @summary Save identiry data
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param oIdentities - identity objects with data
+     * @return identity objects with uri-s
+     */
+    public static Identity[] SaveIdentity(Identity[] oIdentities)
+    {
+        try {
+            
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            for (int i = 0; i < oIdentities.length; i++)
+            {
+                oIdentities[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity, oIdentities[i].m_sID);
+                Resource resIdentity = oModel.getResource(oIdentities[i].m_sObjectURI);
+                oIdentities[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identity + "/o:" + MetadataConstants.c_XMLE_identity + MetadataConstants.c_XMLE_Uri;
+
+                if (oIdentities[i].m_bIsRemoveAll)
+                {
+                    ObjectProperty opIsPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson);
+                    resIdentity.removeAll(opIsPerson);
+                }
+                
+                if (oIdentities[i].m_bIsntRemoveAll)
+                {
+                    ObjectProperty opIsntPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson);
+                    resIdentity.removeAll(opIsntPerson);
+                }
+                
+                //isPerson
+                if (oIdentities[i].m_oIs != null)
+                {
+                    ObjectProperty opIsPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson);
+                    for (int j = 0; j < oIdentities[i].m_oIs.length; j++)
+                    {
+                        if (oIdentities[i].m_oIs[j] != null && !oIdentities[i].m_oIs[j].m_sObjectURI.isEmpty())
+                        {
+                            if (!oIdentities[i].m_oIs[j].m_bRemoved)
+                            {
+                                Resource resIsPerson = oModel.getResource(oIdentities[i].m_oIs[j].m_sObjectURI);
+                                resIdentity.addProperty(opIsPerson, resIsPerson.asResource());
+                                //oIdentities[i].m_oIs[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_is + MetadataConstants.c_XMLE_Uri;
+                            }
+                            else
+                            {
+                                Resource resIsRemove = oModel.getResource(oIdentities[i].m_oIs[j].m_sObjectURI);
+                                oModel.removeAll(resIdentity, opIsPerson, resIsRemove);
+                                //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isRemoved + MetadataConstants.c_XMLE_Uri;
+                            }
+                        }
+                    }
+                }
+                
+                //isntPerson
+                if (oIdentities[i].m_oIsnt != null)
+                {
+                    ObjectProperty opIsntPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson);
+                    for (int j = 0; j < oIdentities[i].m_oIsnt.length; j++)
+                    {
+                        if (oIdentities[i].m_oIsnt[j] != null && !oIdentities[i].m_oIsnt[j].m_sObjectURI.isEmpty())
+                        {
+                            if (!oIdentities[i].m_oIsnt[j].m_bRemoved)
+                            {
+                                Resource resIsPerson = oModel.getResource(oIdentities[i].m_oIsnt[j].m_sObjectURI);
+                                resIdentity.addProperty(opIsntPerson, resIsPerson.asResource());
+                                //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isnt + MetadataConstants.c_XMLE_Uri;
+                            }
+                            else
+                            {
+                                Resource resIsRemove = oModel.getResource(oIdentities[i].m_oIsnt[j].m_sObjectURI);
+                                oModel.removeAll(resIdentity, opIsntPerson, resIsRemove);
+                                //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isntRemoved + MetadataConstants.c_XMLE_Uri;
+                            }
+                        }
+                    }
+                }
+                
+                //remove identity
+                if (oIdentities[i].m_bRemoved)
+                {
+                    resIdentity.removeProperties();
+                }
+            }
+
+            
+            //save data
+            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            
+        }
+        catch (Exception ex)
+        {
+        }
+        return oIdentities;
+    }
+    
     // <editor-fold desc="API Calls">
     
     /**

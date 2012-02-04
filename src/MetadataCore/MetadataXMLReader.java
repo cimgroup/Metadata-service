@@ -123,6 +123,18 @@ public class MetadataXMLReader {
             {
                 NewUpdateCompetence(dDoc);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_identity_requestNew))   //if event type is new identity event
+            {
+                NewIdentity(dDoc);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_identity_requestUpdate))   //if event type is update identity event
+            {
+                UpdateIdentity(dDoc);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_identity_requestRemove))   //if event type is remove identity event
+            {
+                RemoveIdentity(dDoc);
+            }
         }
         catch (Exception e)
         {
@@ -1955,6 +1967,338 @@ public class MetadataXMLReader {
             MetadataModel.SaveObjectNewCompetence(sEventId, eOriginalData, oCompetence);
             
             return oCompetence;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading new identity event from XML
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Identity objects
+     */
+    public static Identity[] NewIdentity(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            NodeList nlIdentities = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identities);   //getting node for tag identity
+
+            if (nlIdentities != null && nlIdentities.getLength() > 0)
+            {
+                Element eIdentities = (Element) nlIdentities.item(0);
+                eOriginalData = eIdentities;
+
+                NodeList nlIdentity = eIdentities.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identity);
+                if (nlIdentity != null && nlIdentity.getLength() > 0)
+                {
+                    Identity[] oIdentities = new Identity[nlIdentity.getLength()];
+                    for (int i = 0; i < nlIdentity.getLength(); i++)
+                    {
+                        Element eIdentity = (Element)nlIdentity.item(i);
+                        
+                        Identity oIdentity = MetadataObjectFactory.CreateNewIdentity();
+                        oIdentity.m_sID = GetValue(eIdentity, "sm:" + MetadataConstants.c_XMLE_uuid);
+                        
+                        NodeList nlIs = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                        if (nlIs != null && nlIs.getLength() > 0)
+                        {
+                            Element eIs = (Element)nlIs.item(0);
+                            NodeList nlPerson = eIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                            oIdentity.m_oIs = new foaf_Person[nlPerson.getLength()];
+                            for (int j = 0; j < nlPerson.getLength(); j++)
+                            {
+                                Element ePerson = (Element)nlPerson.item(j);
+                                oIdentity.m_oIs[j] = new foaf_Person();
+                                oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                            }
+                        }
+                        
+                        NodeList nlIsnt = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                        if (nlIsnt != null && nlIsnt.getLength() > 0)
+                        {
+                            Element eIsnt = (Element)nlIsnt.item(0);
+                            NodeList nlPerson = eIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                            oIdentity.m_oIsnt = new foaf_Person[nlPerson.getLength()];
+                            for (int j = 0; j < nlPerson.getLength(); j++)
+                            {
+                                Element ePerson = (Element)nlPerson.item(j);
+                                oIdentity.m_oIsnt[j] = new foaf_Person();
+                                oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                            }
+                        }
+                        
+                        oIdentities[i] = oIdentity;
+                    }
+                    
+                    //eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_stardom);
+                    MetadataModel.SaveObjectNewIdentity(sEventId, eOriginalData, oIdentities);
+                    
+                    return oIdentities;
+                }
+            }
+            return null;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading update identity event from XML
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Identity objects
+     */
+    public static Identity[] UpdateIdentity(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            NodeList nlIdentities = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identities);   //getting node for tag identity
+
+            if (nlIdentities != null && nlIdentities.getLength() > 0)
+            {
+                Element eIdentities = (Element) nlIdentities.item(0);
+                eOriginalData = eIdentities;
+
+                NodeList nlIdentity = eIdentities.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identity);
+                if (nlIdentity != null && nlIdentity.getLength() > 0)
+                {
+                    Identity[] oIdentities = new Identity[nlIdentity.getLength()];
+                    for (int i = 0; i < nlIdentity.getLength(); i++)
+                    {
+                        Element eIdentity = (Element)nlIdentity.item(i);
+                        
+                        Identity oIdentity = MetadataObjectFactory.CreateNewIdentity();
+                        oIdentity.m_sID = GetValue(eIdentity, "sm:" + MetadataConstants.c_XMLE_uuid);
+                        
+                        int iIsCount = 0;
+                        int iIsntCount = 0;
+                        NodeList nlAdd = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_add);
+                        NodeList nlRemove = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_remove);
+                        if (nlAdd != null && nlRemove != null)
+                        {
+                            //---------------- counting a number of is and isnt tags ----------------
+                            if (nlAdd.getLength() > 0)
+                            {
+                                Element eAdd = (Element)nlAdd.item(0);
+                                NodeList nlAddIs = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                                if (nlAddIs != null)
+                                {
+                                    Element eAddIs = (Element)nlAddIs.item(0);
+                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    if (nlPerson != null)
+                                    {
+                                        iIsCount += nlPerson.getLength();
+                                    }
+                                }
+                                NodeList nlAddIsnt = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                                if (nlAddIsnt != null)
+                                {
+                                    Element eAddIs = (Element)nlAddIsnt.item(0);
+                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    if (nlPerson != null)
+                                    {
+                                        iIsntCount += nlPerson.getLength();
+                                    }
+                                }
+                            }
+                            if (nlRemove.getLength() > 0)
+                            {
+                                Element eRemove = (Element)nlRemove.item(0);
+                                NodeList nlRemoveIs = eRemove.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                                if (nlRemoveIs != null && nlRemoveIs.getLength() > 0)
+                                {
+                                    Element eRemoveIs = (Element)nlRemoveIs.item(0);
+                                    NodeList nlAllPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                    if (nlAllPerson != null && nlAllPerson.getLength() > 0)
+                                    {
+                                        oIdentity.m_bIsRemoveAll = true;
+                                    }
+                                    else
+                                    {
+                                        NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        if (nlPerson != null)
+                                        {
+                                            iIsCount += nlPerson.getLength();
+                                        }
+                                    }
+                                }
+                                NodeList nlRemoveIsnt = eRemove.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                                if (nlRemoveIsnt != null)
+                                {
+                                    Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
+                                    NodeList nlAllPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                    if (nlAllPerson != null && nlAllPerson.getLength() > 0)
+                                    {
+                                        oIdentity.m_bIsntRemoveAll = true;
+                                    }
+                                    else
+                                    {
+                                        NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        if (nlPerson != null)
+                                        {
+                                            iIsntCount += nlPerson.getLength();
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            //---------------- creating is and isnt intances ----------------
+                            oIdentity.m_oIs = new foaf_Person[iIsCount];
+                            oIdentity.m_oIsnt = new foaf_Person[iIsntCount];
+                            
+                            //---------------- for adding ----------------
+                            int iAddIsCount = 0;
+                            int iAddIsntCount = 0;
+                            if (nlAdd.getLength() > 0)
+                            {
+                                Element eAdd = (Element)nlAdd.item(0);
+                                
+                                NodeList nlAddIs = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                                if (nlAddIs != null && nlAddIs.getLength() > 0)
+                                {
+                                    Element eAddIs = (Element)nlAddIs.item(0);
+                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    iAddIsCount = nlPerson.getLength();
+                                    for (int j = 0; j < nlPerson.getLength(); j++)
+                                    {
+                                        Element ePerson = (Element)nlPerson.item(j);
+                                        oIdentity.m_oIs[j] = new foaf_Person();
+                                        oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    }
+                                }
+
+                                NodeList nlAddIsnt = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                                if (nlAddIsnt != null && nlAddIsnt.getLength() > 0)
+                                {
+                                    Element eAddIsnt = (Element)nlAddIsnt.item(0);
+                                    NodeList nlPerson = eAddIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    iAddIsntCount = nlPerson.getLength();
+                                    for (int j = 0; j < nlPerson.getLength(); j++)
+                                    {
+                                        Element ePerson = (Element)nlPerson.item(j);
+                                        oIdentity.m_oIsnt[j] = new foaf_Person();
+                                        oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    }
+                                }
+                            }
+                            
+                            //---------------- for removing ----------------
+                            if (nlRemove.getLength() > 0)
+                            {
+                                Element eRemove = (Element)nlRemove.item(0);
+                                
+                                if (!oIdentity.m_bIsRemoveAll)
+                                {
+                                    NodeList nlRemoveIs = eRemove.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                                    if (nlRemoveIs != null && nlRemoveIs.getLength() > 0)
+                                    {
+                                        Element eRemoveIs = (Element)nlRemoveIs.item(0);
+                                        NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        for (int j = 0; j < nlPerson.getLength(); j++)
+                                        {
+                                            Element ePerson = (Element)nlPerson.item(j);
+                                            oIdentity.m_oIs[j + iAddIsCount] = new foaf_Person();
+                                            oIdentity.m_oIs[j + iAddIsCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            oIdentity.m_oIs[j + iAddIsCount].m_bRemoved = true;
+                                        }
+                                    }
+                                }
+                                
+                                if (!oIdentity.m_bIsntRemoveAll)
+                                {
+                                    NodeList nlRemoveIsnt = eRemove.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                                    if (nlRemoveIsnt != null && nlRemoveIsnt.getLength() > 0)
+                                    {
+                                        Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
+                                        NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        iAddIsntCount = nlPerson.getLength();
+                                        for (int j = 0; j < nlPerson.getLength(); j++)
+                                        {
+                                            Element ePerson = (Element)nlPerson.item(j);
+                                            oIdentity.m_oIsnt[j + iAddIsntCount] = new foaf_Person();
+                                            oIdentity.m_oIsnt[j + iAddIsntCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            oIdentity.m_oIsnt[j + iAddIsntCount].m_bRemoved = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        oIdentities[i] = oIdentity;
+                    }
+                    
+                    //eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_stardom);
+                    MetadataModel.UpdateObjectIdentity(sEventId, eOriginalData, oIdentities);
+                    
+                    return oIdentities;
+                }
+            }
+            return null;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading remove identity event from XML
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Identity objects
+     */
+    public static Identity[] RemoveIdentity(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            NodeList nlIdentities = dDoc.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identities);   //getting node for tag identity
+
+            if (nlIdentities != null && nlIdentities.getLength() > 0)
+            {
+                Element eIdentities = (Element) nlIdentities.item(0);
+                eOriginalData = eIdentities;
+
+                NodeList nlIdentity = eIdentities.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_identity);
+                if (nlIdentity != null && nlIdentity.getLength() > 0)
+                {
+                    Identity[] oIdentities = new Identity[nlIdentity.getLength()];
+                    for (int i = 0; i < nlIdentity.getLength(); i++)
+                    {
+                        Element eIdentity = (Element)nlIdentity.item(i);
+                        
+                        Identity oIdentity = MetadataObjectFactory.CreateNewIdentity();
+                        oIdentity.m_sID = GetValue(eIdentity, "sm:" + MetadataConstants.c_XMLE_uuid);
+                        oIdentity.m_bRemoved = true;
+                        
+                        oIdentities[i] = oIdentity;
+                    }
+                    
+                    //eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_stardom);
+                    MetadataModel.RemoveObjectIdentity(sEventId, eOriginalData, oIdentities);
+                    
+                    return oIdentities;
+                }
+            }
+            return null;
         }
         catch (Exception e)
         {

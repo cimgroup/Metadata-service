@@ -155,6 +155,63 @@ public class MetadataModel {
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_competency_replyNewUpdate, sEventId, eOriginalData, oCompetence);
     }
     
+    /** 
+     * @summary Method for saving new identity
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param sEventId - event id
+     * @param oIdentities - identity object
+     */
+    static void SaveObjectNewIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
+    {
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        
+        //transfering from list to object with a list
+        MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
+        oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
+        oIdentitiesExt.m_oObjects = oIdentities;
+        
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyNew, sEventId, eOriginalData, oIdentitiesExt);
+    }
+    
+    /** 
+     * @summary Method for updating identity
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param sEventId - event id
+     * @param oIdentities - identity object
+     */
+    static void UpdateObjectIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
+    {
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        
+        //transfering from list to object with a list
+        MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
+        oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
+        oIdentitiesExt.m_oObjects = oIdentities;
+        
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyUpdate, sEventId, eOriginalData, oIdentitiesExt);
+    }
+    
+    /** 
+     * @summary Method for removing identity
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     * @param sEventId - event id
+     * @param oIdentities - identity object
+     */
+    static void RemoveObjectIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
+    {
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        
+        //transfering from list to object with a list
+        MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
+        oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
+        oIdentitiesExt.m_oObjects = oIdentities;
+        
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyRemove, sEventId, eOriginalData, oIdentitiesExt);
+    }
+    
     /**
      * @summary API Call Method for executing custom SPARQL query
      * @startRealisation Sasa Stojanovic 15.12.2011.
