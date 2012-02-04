@@ -2274,6 +2274,57 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary competency_getForPerson
+     * @startRealisation  Dejan Milosavljevic 04.02.2012.
+     * @finalModification Dejan Milosavljevic 04.02.2012.
+     * @param sPersonUri - person URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_competency_getForPerson(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+//            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+//                        
+//            String sQuery = "SELECT ?competencyUri WHERE "
+//                    + "{?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasCompetences + ">  ?competencyUri ."
+//                    + " ?identityUri  <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_ + "> <" + sPersonUri + "> . }";
+//
+//            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+//            
+//            while (rsIssue.hasNext())
+//            {
+//                QuerySolution qsIssue = rsIssue.nextSolution();
+//                
+//                MetadataGlobal.APIResponseData oIssue = new MetadataGlobal.APIResponseData();
+//                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+//                MetadataGlobal.APIResponseData oIssueId = new MetadataGlobal.APIResponseData();
+//                MetadataGlobal.APIResponseData oIssueDescription = new MetadataGlobal.APIResponseData();
+//                
+//                oIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+//                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+//                oIssueId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
+//                oIssueDescription.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+//                
+//                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+//                oIssueId.sData = qsIssue.get("?issueId").toString();
+//                oIssueDescription.sData = qsIssue.get("?issueDescription").toString();
+//                
+//                oIssue.oData.add(oIssueUri);
+//                oIssue.oData.add(oIssueId);
+//                oIssue.oData.add(oIssueDescription);   
+//                oData.oData.add(oIssue);
+//            }
+
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
      * @summary competency_getPersonForIssue
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.

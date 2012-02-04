@@ -72,6 +72,7 @@ public class SimpleTopicPublisher {
             for (int i = 0; i < NUM_MSGS; i++) {
                 message.setText(xml);
                 System.out.println("Publishing message: " + message.getText());
+                //System.out.println(System.nanoTime() + " Publishing message");
                 topicPublisher.publish(message);
             }
         } catch (JMSException e){

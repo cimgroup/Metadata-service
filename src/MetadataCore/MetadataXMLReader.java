@@ -685,8 +685,8 @@ public class MetadataXMLReader {
 
     /**
      * @summary Method for reading new api request event from XML
-     * @startRealisation Sasa Stojanovic 06.09.2011.
-     * @finalModification Sasa Stojanovic 16.12.2011.
+     * @startRealisation  Sasa Stojanovic     06.09.2011.
+     * @finalModification Dejan Milosavljevic 04.02.2012.
      * @param dDoc - input XML document to read
      */
     private static void APICallRequest(Document dDoc) {
@@ -908,6 +908,27 @@ public class MetadataXMLReader {
                     }
                     
                     MetadataModel.ac_identity_getForPerson(sEventId, sFirstName, sLastName, sEmail);
+                }
+                
+                ///////////////////////////////// competency_getForPerson /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_competency_getForPerson))
+                {
+                    String sPersonUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_personUri))
+                                sPersonUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_competency_getForPerson(sEventId, sPersonUri);
                 }
                 
                 ///////////////////////////////// competency_getPersonForIssue /////////////////////////////////

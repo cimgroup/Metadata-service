@@ -288,6 +288,18 @@ public class MetadataModel {
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_identity_getForPerson, sEventId, oData);
     }
     
+    /**
+     * @summary API Call Method for getting competency for person
+     * @startRealisation  Dejan Milosavljevic 04.02.2012.
+     * @finalModification Dejan Milosavljevic 04.02.2012.
+     * @param sEventId - event id
+     * @param sPersonUri - person uri
+     */
+    static void ac_competency_getForPerson(String sEventId, String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_competency_getForPerson(sPersonUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_competency_getForPerson, sEventId, oData);
+    }
     
     /**
      * @summary API Call Method for getting person for issue

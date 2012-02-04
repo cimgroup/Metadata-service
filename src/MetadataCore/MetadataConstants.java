@@ -290,6 +290,7 @@ public class MetadataConstants {
     public static String c_XMLAC_sparql = "sparql";
     public static String c_XMLAC_commit_getRelatedToIssue = "commit.getRelatedToIssue";
     public static String c_XMLAC_commit_getRelatedToKeyword = "commit.getRelatedToKeyword";
+    public static String c_XMLAC_competency_getForPerson = "competency.getForPerson";
     public static String c_XMLAC_competency_getPersonForIssue = "competency.getPersonForIssue";
     public static String c_XMLAC_identity_getForPerson = "identity.getForPerson";
     public static String c_XMLAC_issue_getAllForMethod = "issue.getAllForMethod";
