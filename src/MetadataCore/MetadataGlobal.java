@@ -306,7 +306,7 @@ public class MetadataGlobal {
     /**
      * @summary Class for storing annotation data.
      * @startRealisation  Dejan Milosavljevic 20.01.2012.
-     * @finalModification Sasa Stojanovic 02.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
      */
     public static void ExpandOntology()
     {
@@ -324,7 +324,10 @@ public class MetadataGlobal {
             String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
             String sKeywordAnnotationProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
             
+            //Sasa Stojanovic
             String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
+            String sIsPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson;
+            String sIsntPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson;
             
             OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
@@ -410,6 +413,28 @@ public class MetadataGlobal {
             if (dtpAttachment == null)
             {
                 dtpAttachment = omModel.createDatatypeProperty(sAttachmentDataProperty);
+            }
+            
+            //Creating isPerson ObjectProperty
+            ObjectProperty opIsPerson = omModel.getObjectProperty(sIsPerson);
+            if (opIsPerson == null)
+            {
+                opIsPerson = omModel.createObjectProperty(sIsPerson);
+                OntClass ocIdentity = omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
+                opIsPerson.addDomain(ocIdentity);
+                OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
+                opIsPerson.addRange(ocPerson);
+            }
+            
+            //Creating isntPerson ObjectProperty
+            ObjectProperty opIsntPerson = omModel.getObjectProperty(sIsntPerson);
+            if (opIsntPerson == null)
+            {
+                opIsntPerson = omModel.createObjectProperty(sIsntPerson);
+                OntClass ocIdentity = omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
+                opIsntPerson.addDomain(ocIdentity);
+                OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
+                opIsntPerson.addRange(ocPerson);
             }
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
@@ -544,6 +569,16 @@ public class MetadataGlobal {
         //m_sObjectURI - from MetadataObject
         String sUri;
         String sCount;
+    }
+    
+    /**
+     * @summary Class for expanding MetadataObject class with list
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     */
+    public static class MetadataObjectExt extends MetadataObject
+    {
+        public Object[] m_oObjects;
     }
     // </editor-fold>
 }

@@ -648,6 +648,7 @@ public class MetadataXMLCreator {
             eEvent.setAttribute("xmlns:r2", "http://www.alert-project.eu/rawevents-wiki");
             eEvent.setAttribute("xmlns:s", "http://www.alert-project.eu/strevents-kesi");
             eEvent.setAttribute("xmlns:s1", "http://www.alert-project.eu/strevents-keui");
+            eEvent.setAttribute("xmlns:sm", "http://www.alert-project.eu/stardom");
             eEvent.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             eEvent.setAttribute("xsi:schemaLocation", "http://www.alert-project.eu/alert-root.xsd");
             eWSTN.appendChild(eEvent);
@@ -817,11 +818,14 @@ public class MetadataXMLCreator {
                         sLocation = sLocation.substring(sLocation.indexOf("/") + 1);
                     }
 
-                    String sObjectURI = (String) oObject.getClass().getField("m_sObjectURI").get(oObject);  //get object ontology URI value
-                    Element eValueElement = dDoc.createElement(sLocation);      //create a element for URI
-                    eElement.appendChild(eValueElement);                    //add it to current element
-                    Text tValue = dDoc.createTextNode(sObjectURI);      //create text with value
-                    eValueElement.appendChild(tValue);              //add text to element
+                    if (!sLocation.isEmpty())
+                    {
+                        String sObjectURI = (String) oObject.getClass().getField("m_sObjectURI").get(oObject);  //get object ontology URI value
+                        Element eValueElement = dDoc.createElement(sLocation);      //create a element for URI
+                        eElement.appendChild(eValueElement);                    //add it to current element
+                        Text tValue = dDoc.createTextNode(sObjectURI);      //create text with value
+                        eValueElement.appendChild(tValue);              //add text to element
+                    }
                 }
 
                 if (bContinue)      //create structure for object members
