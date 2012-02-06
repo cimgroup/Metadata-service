@@ -30,8 +30,39 @@
 									<s3:apiCall>competency.getForPerson</s3:apiCall>
 									<s3:responseData>
 										<!-- list (or any other structure) of results -->
-										<s3:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity1</s3:identityUri>
-										<s3:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity2</s3:identityUri>
+										<s3:areas>
+                                                                                    <s3:area>
+                                                                                        <s3:annotations>
+                                                                                            <s3:annotation>#owl</s3:annotation>
+                                                                                            <s3:annotation>#owl</s3:annotation>
+                                                                                            <s3:annotation>#owl</s3:annotation>
+                                                                                            <s3:annotation>#owl</s3:annotation>
+                                                                                        </s3:annotations>
+                                                                                        <s3:index>0.321</s3:index>
+                                                                                        <s3:attributes>
+                                                                                            <s3:fluency>
+                                                                                                <s3:apiCount>0.32</s3:apiCount>
+                                                                                                <s3:apiIntroduced>0.12</s3:apiIntroduced>
+                                                                                                <s3:staticAnalysis>0.12</s3:staticAnalysis>
+                                                                                            </s3:fluency>
+                                                                                            <s3:contribution>
+                                                                                                <s3:mailingListActivity>0.32</s3:mailingListActivity>
+                                                                                                <s3:itsActivity>0.12</s3:itsActivity>
+                                                                                                <s3:sloc>0.25</s3:sloc>
+                                                                                            </s3:contribution>
+                                                                                            <s3:effectiveness>
+                                                                                                <s3:noOfIssuesFixed>0.001</s3:noOfIssuesFixed>
+                                                                                                <s3:noOfCommitsCausedIssue>0.021</s3:noOfCommitsCausedIssue>
+                                                                                                <s3:noOfCommitFixedIssue>0.001</s3:noOfCommitFixedIssue>
+                                                                                            </s3:effectiveness>
+                                                                                            <s3:recency>
+                                                                                                <s3:timeSinceSCMaction>Sat, 05 Nov 2011 17:50:11 +0100</s3:timeSinceSCMaction>
+                                                                                                <s3:timeSinceITSaction>Sat, 01 Nov 2011 20:50:11 +0100</s3:timeSinceITSaction>
+                                                                                                <s3:timeSinceMLaction>Sat, 01 Nov 2011 10:50:11 +0100</s3:timeSinceMLaction>
+                                                                                            </s3:recency>
+                                                                                        </s3:attributes>
+                                                                                    </s3:area>
+                                                                                </s3:areas>
 									</s3:responseData>
 								</ns1:apiResponse>
 							</ns1:eventData>

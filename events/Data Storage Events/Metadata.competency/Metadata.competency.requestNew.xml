@@ -26,43 +26,41 @@
 			    </ns1:meta>
 			    <ns1:eventData>
 			        <sm:competency>
-                                    <sm:competency>
-                                        <sm:uuid>ecb4b1d5cd2a8926a8cb7d7c40050362448b9955fd546bb2706a4a1ece75085c</sm:uuid>
-                                        <sm:areas>
-                                            <sm:area>
-                                                <sm:annotations>
-                                                    <sm:annotation>#owl</sm:annotation>
-                                                    <sm:annotation>#owl</sm:annotation>
-                                                    <sm:annotation>#owl</sm:annotation>
-                                                    <sm:annotation>#owl</sm:annotation>
-                                                </sm:annotations>
-                                                <sm:index>0.321</sm:index>
+                                    <sm:uuid>ecb4b1d5cd2a8926a8cb7d7c40050362448b9955fd546bb2706a4a1ece75085c</sm:uuid>
+                                    <sm:areas>
+                                        <sm:area>
+                                            <sm:annotations>
+                                                <sm:annotation>#owl</sm:annotation>
+                                                <sm:annotation>#owl</sm:annotation>
+                                                <sm:annotation>#owl</sm:annotation>
+                                                <sm:annotation>#owl</sm:annotation>
+                                            </sm:annotations>
+                                            <sm:index>0.321</sm:index>
                                                 <sm:attributes>
-                                                    <sm:fluency>
-                                                        <sm:apiCount>0.32</sm:apiCount>
-                                                        <sm:apiIntroduced>0.12</sm:apiIntroduced>
-                                                        <sm:staticAnalysis>0.12</sm:staticAnalysis>
-                                                    </sm:fluency>
-                                                    <sm:contribution>
-                                                        <sm:mailingListActivity>0.32</sm:mailingListActivity>
-                                                        <sm:itsActivity>0.12</sm:itsActivity>
-                                                        <sm:sloc>0.25</sm:sloc>
-                                                    </sm:contribution>
-                                                    <sm:effectiveness>
-                                                        <sm:noOfIssuesFixed>0.001</sm:noOfIssuesFixed>
-                                                        <sm:noOfCommitsCausedIssue>0.021</sm:noOfCommitsCausedIssue>
-                                                        <sm:noOfCommitFixedIssue>0.001</sm:noOfCommitFixedIssue>
-                                                    </sm:effectiveness>
-                                                    <sm:recency>
-                                                        <!-- Please not the message format contains timezone informatin -->
-                                                        <sm:timeSinceSCMaction>Sat, 05 Nov 2011 17:50:11 +0100</sm:timeSinceSCMaction>
-                                                        <sm:timeSinceITSaction>Sat, 01 Nov 2011 20:50:11 +0100</sm:timeSinceITSaction>
-                                                        <sm:timeSinceMLaction>Sat, 01 Nov 2011 10:50:11 +0100</sm:timeSinceMLaction>
-                                                    </sm:recency>
-                                                </sm:attributes>
-                                            </sm:area>
-                                        </sm:areas>
-                                    </sm:competency>
+                                                <sm:fluency>
+                                                    <sm:apiCount>0.32</sm:apiCount>
+                                                    <sm:apiIntroduced>0.12</sm:apiIntroduced>
+                                                    <sm:staticAnalysis>0.12</sm:staticAnalysis>
+                                                </sm:fluency>
+                                                <sm:contribution>
+                                                    <sm:mailingListActivity>0.32</sm:mailingListActivity>
+                                                    <sm:itsActivity>0.12</sm:itsActivity>
+                                                    <sm:sloc>0.25</sm:sloc>
+                                                </sm:contribution>
+                                                <sm:effectiveness>
+                                                    <sm:noOfIssuesFixed>0.001</sm:noOfIssuesFixed>
+                                                    <sm:noOfCommitsCausedIssue>0.021</sm:noOfCommitsCausedIssue>
+                                                    <sm:noOfCommitFixedIssue>0.001</sm:noOfCommitFixedIssue>
+                                                </sm:effectiveness>
+                                                <sm:recency>
+                                                    <!-- Please not the message format contains timezone informatin -->
+                                                    <sm:timeSinceSCMaction>Sat, 05 Nov 2011 17:50:11 +0100</sm:timeSinceSCMaction>
+                                                    <sm:timeSinceITSaction>Sat, 01 Nov 2011 20:50:11 +0100</sm:timeSinceITSaction>
+                                                    <sm:timeSinceMLaction>Sat, 01 Nov 2011 10:50:11 +0100</sm:timeSinceMLaction>
+                                                </sm:recency>
+                                            </sm:attributes>
+                                        </sm:area>
+                                    </sm:areas>
                                 </sm:competency>
 			    </ns1:eventData>
 			</ns1:payload>

@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.lang.Class;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 
 
@@ -1402,7 +1403,7 @@ public class MetadataRDFConverter {
             if (oCompetence.m_oHasAttribute != null && oCompetence.m_oHasAttribute.length > 0)
             {
                 ObjectProperty opHasAttribute = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
-                resCompetence.removeAll(opHasAttribute);
+                //resCompetence.removeAll(opHasAttribute);
                 for (Attribute oAttribute: oCompetence.m_oHasAttribute)
                 {
                     if (oAttribute != null && oAttribute.m_sName != null)
@@ -2382,38 +2383,120 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-//            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-//                        
-//            String sQuery = "SELECT ?competencyUri WHERE "
-//                    + "{?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasCompetences + ">  ?competencyUri ."
-//                    + " ?identityUri  <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_ + "> <" + sPersonUri + "> . }";
-//
-//            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
-//            
-//            while (rsIssue.hasNext())
-//            {
-//                QuerySolution qsIssue = rsIssue.nextSolution();
-//                
-//                MetadataGlobal.APIResponseData oIssue = new MetadataGlobal.APIResponseData();
-//                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
-//                MetadataGlobal.APIResponseData oIssueId = new MetadataGlobal.APIResponseData();
-//                MetadataGlobal.APIResponseData oIssueDescription = new MetadataGlobal.APIResponseData();
-//                
-//                oIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
-//                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
-//                oIssueId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
-//                oIssueDescription.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
-//                
-//                oIssueUri.sData = qsIssue.get("?issueUri").toString();
-//                oIssueId.sData = qsIssue.get("?issueId").toString();
-//                oIssueDescription.sData = qsIssue.get("?issueDescription").toString();
-//                
-//                oIssue.oData.add(oIssueUri);
-//                oIssue.oData.add(oIssueId);
-//                oIssue.oData.add(oIssueDescription);   
-//                oData.oData.add(oIssue);
-//            }
+            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+                        
+            String sQuery = "SELECT ?competencyUri WHERE "
+                    + "{?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasCompetences + ">  ?competencyUri ."
+                    + " ?identityUri  <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson + "> <" + sPersonUri + "> . }";
 
+            ResultSet rsCompetence = QueryExecutionFactory.create(sQuery, omModel).execSelect();
+            
+            while (rsCompetence.hasNext())
+            {
+                QuerySolution qsCompetence = rsCompetence.nextSolution();
+                String sCUri = qsCompetence.get("?competencyUri").toString();
+                OntResource resCompetance = omModel.getOntResource(sCUri);
+                
+                MetadataGlobal.APIResponseData oAreas = new MetadataGlobal.APIResponseData();
+                oAreas.sReturnConfig = "s3:areas/";
+                MetadataGlobal.APIResponseData oArea = new MetadataGlobal.APIResponseData();
+                oArea.sReturnConfig = "s3:area/";
+                
+                //Annotations
+                MetadataGlobal.APIResponseData oAnnotations = new MetadataGlobal.APIResponseData();
+                oAnnotations.sReturnConfig = "s3:annotations/";
+                oArea.oData.add(oAnnotations);
+                
+                MetadataGlobal.APIResponseData oAttributes = new MetadataGlobal.APIResponseData();
+                oAttributes.sReturnConfig = "s3:attributs/";
+                
+                StmtIterator siProperties = resCompetance.listProperties();
+                while (siProperties.hasNext())
+                {
+                    Statement sStatement = siProperties.next();
+                    String sProperty = sStatement.getPredicate().getURI();
+                    boolean bIsLevel = true;
+                    //MetadataGlobal.APIResponseData oCompetenceData = new MetadataGlobal.APIResponseData();
+                    
+                    if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasLevel))
+                    {
+                        MetadataGlobal.APIResponseData oIndex = new MetadataGlobal.APIResponseData();
+                        oIndex.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_index + "/";
+                        oIndex.sData = sStatement.getObject().toString();
+                        oArea.oData.add(oIndex);
+                    }
+                    if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute))
+                    {
+                        MetadataGlobal.APIResponseData oAttribute = new MetadataGlobal.APIResponseData();
+                        String sAttributUri = sStatement.getObject().toString();
+
+                        Individual inAttribut = omModel.getIndividual(sAttributUri);
+                        OntClass oClass = inAttribut.getOntClass(true);
+
+                        if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Fluency))
+                        {
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                        }
+                        if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Contribution))
+                        {
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                        }
+                        if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Effectiveness))
+                        {
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                        }
+                        if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Activity_Availability))
+                        {
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                            bIsLevel = false;
+                        }
+                        
+                        if (!oAttribute.sReturnConfig.isEmpty())
+                        {
+                            if (bIsLevel)
+                            {
+                                String sQueryMet = "SELECT ?metricUri ?metricName ?level WHERE "
+                                    + "{<" + sAttributUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric + "> ?metricUri . "
+                                    + " ?metricUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName + "> ?metricName . "
+                                    + " ?metricUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Level + "> ?level}";
+                                ResultSet rsMetric = QueryExecutionFactory.create(sQueryMet, omModel).execSelect();
+
+                                while (rsMetric.hasNext())
+                                {
+                                    QuerySolution qsMetric = rsMetric.nextSolution();
+                                    MetadataGlobal.APIResponseData oMetric = new MetadataGlobal.APIResponseData();
+                                    oMetric.sReturnConfig = "s3:" + qsMetric.get("?metricName").toString() + "/";
+                                    oMetric.sData = qsMetric.get("?level").toString();
+                                    
+                                    oAttribute.oData.add(oMetric);
+                                }
+                            }
+                            else
+                            {
+                                String sQueryMet = "SELECT ?metricUri ?metricName ?time WHERE "
+                                    + "{<" + sAttributUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasMetric + "> ?metricUri . "
+                                    + " ?metricUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MetricName + "> ?metricName . "
+                                    + " ?metricUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time + "> ?time}";
+                                ResultSet rsMetric = QueryExecutionFactory.create(sQueryMet, omModel).execSelect();
+
+                                while (rsMetric.hasNext())
+                                {
+                                    QuerySolution qsMetric = rsMetric.nextSolution();
+                                    MetadataGlobal.APIResponseData oMetric = new MetadataGlobal.APIResponseData();
+                                    oMetric.sReturnConfig = "s3:" + qsMetric.get("?metricName").toString() + "/";
+                                    oMetric.sData = qsMetric.get("?time").toString();
+                                    
+                                    oAttribute.oData.add(oMetric);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (oAttributes.sData != null) oArea.oData.add(oAttributes);
+                oAreas.oData.add(oArea);
+                oData.oData.add(oAreas);
+            }
         }
         catch (Exception e)
         {
