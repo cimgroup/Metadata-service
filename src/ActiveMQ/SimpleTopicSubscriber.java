@@ -18,7 +18,8 @@ public class SimpleTopicSubscriber {
     public static void main() {
         
         
-        MetadataConstants.c_Topics.add("MetadataInTest");
+        MetadataConstants.c_Topics.add("MetadataIn");
+        //MetadataConstants.c_Topics.add("Metadata.issue.requestNew");
 
         
         Context jndiContext = null;

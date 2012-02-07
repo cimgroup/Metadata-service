@@ -66,7 +66,7 @@ public class MetadataCommunicator {
             
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
-            SimpleTopicPublisher.publish("MetadataOutTest", m_sXML);
+            SimpleTopicPublisher.publish("MetadataOut", m_sXML);
           
             
             

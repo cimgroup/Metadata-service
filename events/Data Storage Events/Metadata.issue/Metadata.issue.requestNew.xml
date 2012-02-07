@@ -81,13 +81,13 @@
 									<s:issueBlocksId>20002</s:issueBlocksId>
 									<s:issueDuplicateOfId>235223</s:issueDuplicateOfId>
 									<s:issueMergedIntoId>231511</s:issueMergedIntoId>
-									<!-- date time in format yyyy-MM-dd HH:mm -->
-									<s:issueDateOpened>2009-02-17 16:31</s:issueDateOpened>
-									<s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
+									<!-- date time in format EEE, d MMM yyyy HH:mm:ss Z -->
+									<s:issueDateOpened>Sat, 05 Nov 2011 17:50:11 +0100</s:issueDateOpened>
+									<s:issueLastModified>Sat, 05 Nov 2011 17:50:11 +0100</s:issueLastModified>
 									<s:issueMilestone>
 										<!-- id of milestone -->
 										<s:milestoneId>12355</s:milestoneId>
-										<s:milestoneTarget>2009-02-17 16:31</s:milestoneTarget>
+										<s:milestoneTarget>Sat, 05 Nov 2011 17:50:11 +0100</s:milestoneTarget>
 									</s:issueMilestone>
 									<!-- issue comments -->
 									<s:issueComment>
@@ -99,7 +99,7 @@
 											<s:id>cumulus0007@gmail.com</s:id>
 											<s:email>cumulus0007@gmail.com</s:email>
 										</s:commentPerson>
-										<s:commentDate>2009-02-17 16:31:37</s:commentDate>
+										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
 									</s:issueComment>
 									<s:issueComment>
 										<s:commentId></s:commentId>
@@ -110,7 +110,7 @@
 											<s:id>angel_blue_co2004@yahoo.com</s:id>
 											<s:email>angel_blue_co2004@yahoo.com</s:email>
 										</s:commentPerson>
-										<s:commentDate>2009-03-04 18:11:19</s:commentDate>
+										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
 									</s:issueComment>
 									<!-- issue attachments -->
 									<s:issueAttachment>
@@ -127,7 +127,7 @@
 									<s:issueActivity>
 										<s:activityId>4125</s:activityId>
 										<s:activityWho>angel_blue_co2004@yahoo.com</s:activityWho>
-										<s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
+										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
 										<s:activityWRA>
 											<s:activityWhat>Priority</s:activityWhat>
 											<s:activityRemoved>3</s:activityRemoved>
@@ -147,7 +147,7 @@
 									<s:issueActivity>
 										<s:activityId>3631</s:activityId>
 										<s:activityWho>ervin@kde.org</s:activityWho>
-										<s:activityWhen>2011-04-15 10:55:57</s:activityWhen>
+										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
 										<s:activityWRA>
 											<s:activityWhat>AssignedTo</s:activityWhat>
 											<s:activityRemoved>ervin@kde.org</s:activityRemoved>

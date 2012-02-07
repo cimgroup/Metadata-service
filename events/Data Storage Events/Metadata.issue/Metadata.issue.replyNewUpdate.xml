@@ -27,139 +27,139 @@
 							<ns1:eventData>
                                                                 <s:kesi>
                                                                         <!-- issue id -->
-                                                                        <s:issueId>184671</s:issueId>
-                                                                        <!-- id of issue author person -->
-                                                                        <s:issueAuthor>
-                                                                                <s:name>Sander Pientka</s:name>
-                                                                                <s:id>cumulus0007@gmail.com</s:id>
-                                                                                <s:email>cumulus0007@gmail.com</s:email>
-                                                                        </s:issueAuthor>
-                                                                        <!-- issue status (Assigned, Open, Verified, Resolved, Closed) -->
-                                                                        <s:issueStatus>Resolved</s:issueStatus>
-                                                                        <!-- issue resolution (Duplicate, Fixed, Invalid, ThirdParty, WontFix, WorksForMe, Later, Remind) -->
-                                                                        <s:issueResolution>Fixed</s:issueResolution>
-                                                                        <s:issueDescription>Notify user on hardware changes 2</s:issueDescription>
-                                                                        <s:issueKeyword>keyword</s:issueKeyword>
-                                                                        <s:issueProduct>
-                                                                                <!-- id of issue project -->
-                                                                                <s:productId>solid</s:productId>
-                                                                                <!-- id of project component -->
-                                                                                <s:productComponentId>general</s:productComponentId>
-                                                                                <!-- project version -->
-                                                                                <s:productVersion>unspecified</s:productVersion>
-                                                                        </s:issueProduct>
-                                                                        <s:issueComputerSystem>
-                                                                                <!-- id of computer system -->
-                                                                                <s:computerSystemId></s:computerSystemId>
-                                                                                <!-- computer system platform -->
-                                                                                <s:computerSystemPlatform>Ubuntu Packages</s:computerSystemPlatform>
-                                                                                <!-- computer system OS -->
-                                                                                <s:computerSystemOS>Linux</s:computerSystemOS>
-                                                                        </s:issueComputerSystem>
-                                                                        <!-- issue priority (1 - 5) -->
-                                                                        <s:issuePriority>4</s:issuePriority>
-                                                                        <!-- issue severity (Blocker, Critical, Major, Minor, Trivial, Feature) -->
-                                                                        <s:issueSeverity>Blocker</s:issueSeverity>
-                                                                        <!-- id of issue assigned person -->
-                                                                        <s:issueAssignedTo>
-                                                                                <s:name>Alex Fiestas</s:name>
-                                                                                <s:id>afiestas@kde.org</s:id>
-                                                                                <s:email>afiestas@kde.org</s:email>
-                                                                        </s:issueAssignedTo>
-                                                                        <!-- ids of issue CC persons -->
-                                                                        <s:issueCCPerson>
-                                                                                <s:name>Angel Blue</s:name>
-                                                                                <s:id>angel_blue_co2004@yahoo.com</s:id>
-                                                                                <s:email>angel_blue_co2004@yahoo.com</s:email>
-                                                                        </s:issueCCPerson>
-                                                                        <!-- issue URL from bugzilla -->
-                                                                        <s:issueUrl>https://bugs.kde.org/show_bug.cgi?id=184671</s:issueUrl>
-                                                                        <!-- ids of related issues -->
-                                                                        <s:issueDependsOnId>10001</s:issueDependsOnId>
-                                                                        <s:issueDependsOnId>10002</s:issueDependsOnId>
-                                                                        <s:issueBlocksId>20001</s:issueBlocksId>
-                                                                        <s:issueBlocksId>20002</s:issueBlocksId>
-                                                                        <s:issueDuplicateOfId>235223</s:issueDuplicateOfId>
-                                                                        <s:issueMergedIntoId>231511</s:issueMergedIntoId>
-                                                                        <!-- date time in format yyyy-MM-dd HH:mm -->
-                                                                        <s:issueDateOpened>2009-02-17 16:31</s:issueDateOpened>
-                                                                        <s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
-                                                                        <s:issueMilestone>
-                                                                                <!-- id of milestone -->
-                                                                                <s:milestoneId>12355</s:milestoneId>
-                                                                                <s:milestoneTarget>2009-02-17 16:31</s:milestoneTarget>
-                                                                        </s:issueMilestone>
-                                                                        <!-- issue comments -->
-                                                                        <s:issueComment>
-                                                                                <s:commentId></s:commentId>
-                                                                                <s:commentNumber>0</s:commentNumber>
-                                                                                <s:commentText>Version: (using KDE 4.2.0) OS: Linux Installed from: Ubuntu Packages It would be awesome if KDE notifies te user of newly installed hardware, missing drivers, programs to use the connected device, etc.</s:commentText>
-                                                                                <s:commentPerson>
-                                                                                        <s:name>Sander Pientka</s:name>
-                                                                                        <s:id>cumulus0007@gmail.com</s:id>
-                                                                                        <s:email>cumulus0007@gmail.com</s:email>
-                                                                                </s:commentPerson>
-                                                                                <s:commentDate>2009-02-17 16:31:37</s:commentDate>
-                                                                        </s:issueComment>
-                                                                        <s:issueComment>
-                                                                                <s:commentId></s:commentId>
-                                                                                <s:commentNumber>1</s:commentNumber>
-                                                                                <s:commentText>If a driver is missing, clicking on the notification should open the package manager (by default) so the user can find a driver</s:commentText>
-                                                                                <s:commentPerson>
-                                                                                        <s:name>Angel Blue</s:name>
-                                                                                        <s:id>angel_blue_co2004@yahoo.com</s:id>
-                                                                                        <s:email>angel_blue_co2004@yahoo.com</s:email>
-                                                                                </s:commentPerson>
-                                                                                <s:commentDate>2009-03-04 18:11:19</s:commentDate>
-                                                                        </s:issueComment>
-                                                                        <!-- issue attachments -->
-                                                                        <s:issueAttachment>
-                                                                                <s:attachmentId>3532</s:attachmentId>
-                                                                                <s:attachmentFilename>name</s:attachmentFilename>
-                                                                                <s:attachmentType>doc</s:attachmentType>
-                                                                                <s:attachmentCreator>
-                                                                                        <s:name>Angel Blue</s:name>
-                                                                                        <s:id>angel_blue_co2004@yahoo.com</s:id>
-                                                                                        <s:email>angel_blue_co2004@yahoo.com</s:email>
-                                                                                </s:attachmentCreator>
-                                                                        </s:issueAttachment>
-                                                                        <!-- issue activities -->
-                                                                        <s:issueActivity>
-                                                                                <s:activityId>4125</s:activityId>
-                                                                                <s:activityWho>angel_blue_co2004@yahoo.com</s:activityWho>
-                                                                                <s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>Priority</s:activityWhat>
-                                                                                        <s:activityRemoved>3</s:activityRemoved>
-                                                                                        <s:activityAdded>4</s:activityAdded>
-                                                                                </s:activityWRA>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>CC</s:activityWhat>
-                                                                                        <s:activityRemoved>lcanas@libresoft.es</s:activityRemoved>
-                                                                                        <s:activityAdded></s:activityAdded>
-                                                                                </s:activityWRA>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>Severity</s:activityWhat>
-                                                                                        <s:activityRemoved>normal</s:activityRemoved>
-                                                                                        <s:activityAdded>blocker</s:activityAdded>
-                                                                                </s:activityWRA>
-                                                                        </s:issueActivity>
-                                                                        <s:issueActivity>
-                                                                                <s:activityId>3631</s:activityId>
-                                                                                <s:activityWho>ervin@kde.org</s:activityWho>
-                                                                                <s:activityWhen>2011-04-15 10:55:57</s:activityWhen>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>AssignedTo</s:activityWhat>
-                                                                                        <s:activityRemoved>ervin@kde.org</s:activityRemoved>
-                                                                                        <s:activityAdded>afiestas@kde.org</s:activityAdded>
-                                                                                </s:activityWRA>
-                                                                        </s:issueActivity>
-                                                                        <!-- issue issue tracker -->
-                                                                        <s:issueTracker>
-                                                                                <s:issueTrackerId>241</s:issueTrackerId>
-                                                                                <s:issueTrackerType>bugzilla</s:issueTrackerType>
-                                                                                <s:issueTrackerURL>https://bugs.kde.org/</s:issueTrackerURL>
-                                                                        </s:issueTracker>
+									<s:issueId>184671</s:issueId>
+									<!-- id of issue author person -->
+									<s:issueAuthor>
+										<s:name>Sander Pientka</s:name>
+										<s:id>cumulus0007@gmail.com</s:id>
+										<s:email>cumulus0007@gmail.com</s:email>
+									</s:issueAuthor>
+									<!-- issue status (Assigned, Open, Verified, Resolved, Closed) -->
+									<s:issueStatus>Resolved</s:issueStatus>
+									<!-- issue resolution (Duplicate, Fixed, Invalid, ThirdParty, WontFix, WorksForMe, Later, Remind) -->
+									<s:issueResolution>Fixed</s:issueResolution>
+									<s:issueDescription>Notify user on hardware changes 2</s:issueDescription>
+									<s:issueKeyword>keyword</s:issueKeyword>
+									<s:issueProduct>
+										<!-- id of issue project -->
+										<s:productId>solid</s:productId>
+										<!-- id of project component -->
+										<s:productComponentId>general</s:productComponentId>
+										<!-- project version -->
+										<s:productVersion>unspecified</s:productVersion>
+									</s:issueProduct>
+									<s:issueComputerSystem>
+										<!-- id of computer system -->
+										<s:computerSystemId></s:computerSystemId>
+										<!-- computer system platform -->
+										<s:computerSystemPlatform>Ubuntu Packages</s:computerSystemPlatform>
+										<!-- computer system OS -->
+										<s:computerSystemOS>Linux</s:computerSystemOS>
+									</s:issueComputerSystem>
+									<!-- issue priority (1 - 5) -->
+									<s:issuePriority>4</s:issuePriority>
+									<!-- issue severity (Blocker, Critical, Major, Minor, Trivial, Feature) -->
+									<s:issueSeverity>Blocker</s:issueSeverity>
+									<!-- id of issue assigned person -->
+									<s:issueAssignedTo>
+										<s:name>Alex Fiestas</s:name>
+										<s:id>afiestas@kde.org</s:id>
+										<s:email>afiestas@kde.org</s:email>
+									</s:issueAssignedTo>
+									<!-- ids of issue CC persons -->
+									<s:issueCCPerson>
+										<s:name>Angel Blue</s:name>
+										<s:id>angel_blue_co2004@yahoo.com</s:id>
+										<s:email>angel_blue_co2004@yahoo.com</s:email>
+									</s:issueCCPerson>
+									<!-- issue URL from bugzilla -->
+									<s:issueUrl>https://bugs.kde.org/show_bug.cgi?id=184671</s:issueUrl>
+									<!-- ids of related issues -->
+									<s:issueDependsOnId>10001</s:issueDependsOnId>
+									<s:issueDependsOnId>10002</s:issueDependsOnId>
+									<s:issueBlocksId>20001</s:issueBlocksId>
+									<s:issueBlocksId>20002</s:issueBlocksId>
+									<s:issueDuplicateOfId>235223</s:issueDuplicateOfId>
+									<s:issueMergedIntoId>231511</s:issueMergedIntoId>
+									<!-- date time in format EEE, d MMM yyyy HH:mm:ss Z -->
+									<s:issueDateOpened>Sat, 05 Nov 2011 17:50:11 +0100</s:issueDateOpened>
+									<s:issueLastModified>Sat, 05 Nov 2011 17:50:11 +0100</s:issueLastModified>
+									<s:issueMilestone>
+										<!-- id of milestone -->
+										<s:milestoneId>12355</s:milestoneId>
+										<s:milestoneTarget>Sat, 05 Nov 2011 17:50:11 +0100</s:milestoneTarget>
+									</s:issueMilestone>
+									<!-- issue comments -->
+									<s:issueComment>
+										<s:commentId></s:commentId>
+										<s:commentNumber>0</s:commentNumber>
+										<s:commentText>Version: (using KDE 4.2.0) OS: Linux Installed from: Ubuntu Packages It would be awesome if KDE notifies te user of newly installed hardware, missing drivers, programs to use the connected device, etc.</s:commentText>
+										<s:commentPerson>
+											<s:name>Sander Pientka</s:name>
+											<s:id>cumulus0007@gmail.com</s:id>
+											<s:email>cumulus0007@gmail.com</s:email>
+										</s:commentPerson>
+										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+									</s:issueComment>
+									<s:issueComment>
+										<s:commentId></s:commentId>
+										<s:commentNumber>1</s:commentNumber>
+										<s:commentText>If a driver is missing, clicking on the notification should open the package manager (by default) so the user can find a driver</s:commentText>
+										<s:commentPerson>
+											<s:name>Angel Blue</s:name>
+											<s:id>angel_blue_co2004@yahoo.com</s:id>
+											<s:email>angel_blue_co2004@yahoo.com</s:email>
+										</s:commentPerson>
+										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+									</s:issueComment>
+									<!-- issue attachments -->
+									<s:issueAttachment>
+										<s:attachmentId>3532</s:attachmentId>
+										<s:attachmentFilename>name</s:attachmentFilename>
+										<s:attachmentType>doc</s:attachmentType>
+										<s:attachmentCreator>
+											<s:name>Angel Blue</s:name>
+											<s:id>angel_blue_co2004@yahoo.com</s:id>
+											<s:email>angel_blue_co2004@yahoo.com</s:email>
+										</s:attachmentCreator>
+									</s:issueAttachment>
+									<!-- issue activities -->
+									<s:issueActivity>
+										<s:activityId>4125</s:activityId>
+										<s:activityWho>angel_blue_co2004@yahoo.com</s:activityWho>
+										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
+										<s:activityWRA>
+											<s:activityWhat>Priority</s:activityWhat>
+											<s:activityRemoved>3</s:activityRemoved>
+											<s:activityAdded>4</s:activityAdded>
+										</s:activityWRA>
+										<s:activityWRA>
+											<s:activityWhat>CC</s:activityWhat>
+											<s:activityRemoved>lcanas@libresoft.es</s:activityRemoved>
+											<s:activityAdded></s:activityAdded>
+										</s:activityWRA>
+										<s:activityWRA>
+											<s:activityWhat>Severity</s:activityWhat>
+											<s:activityRemoved>normal</s:activityRemoved>
+											<s:activityAdded>blocker</s:activityAdded>
+										</s:activityWRA>
+									</s:issueActivity>
+									<s:issueActivity>
+										<s:activityId>3631</s:activityId>
+										<s:activityWho>ervin@kde.org</s:activityWho>
+										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
+										<s:activityWRA>
+											<s:activityWhat>AssignedTo</s:activityWhat>
+											<s:activityRemoved>ervin@kde.org</s:activityRemoved>
+											<s:activityAdded>afiestas@kde.org</s:activityAdded>
+										</s:activityWRA>
+									</s:issueActivity>
+									<!-- issue issue tracker -->
+									<s:issueTracker>
+										<s:issueTrackerId>241</s:issueTrackerId>
+										<s:issueTrackerType>bugzilla</s:issueTrackerType>
+										<s:issueTrackerURL>https://bugs.kde.org/</s:issueTrackerURL>
+									</s:issueTracker>
                                                                 </s:kesi>
 								<o:mdservice>
 									<!-- issue uri -->
