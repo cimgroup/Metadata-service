@@ -20,35 +20,28 @@
 								<ns1:startTime>10010</ns1:startTime>
 								<ns1:endTime>10010</ns1:endTime>
 								<!-- name of event -->
-								<ns1:eventName>Metadata.forumPost.requestNew</ns1:eventName>
+								<ns1:eventName>ALERT.KEUI.CommentNew.Annotated</ns1:eventName>
 								<ns1:eventId>5748</ns1:eventId>
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
 							<ns1:eventData>
-								<s1:forum>
-									<!-- forum item ID -->
-									<s1:forumItemId>1423</s1:forumItemId>
-									<!-- forum ID -->
-									<s1:forumId>3558</s1:forumId>
-									<!-- thread ID -->
-									<s1:threadId>3559</s1:threadId>
-									<!-- post ID -->
-									<s1:postId>3560</s1:postId>
-									<!-- time -->
-									<s1:time>2011-04-15 10:55:57</s1:time>
-									<!-- subject -->
-									<s1:subject>This is a test subject for post</s1:subject>
-									<!-- body -->
-									<s1:body>This is a test body for post</s1:body>
-									<!-- author -->
-									<s1:author>
-										<s1:name>Angel Blue</s1:name>
-										<s1:id>angel_blue_co2004@yahoo.com</s1:id>
-										<s1:email>angel_blue_co2004@yahoo.com</s1:email>
-									</s1:author>
-									<!-- category -->
-									<s1:category>xxxxxx</s1:category>
-								</s1:forum>
+                                                                <s:kesi>
+                                                                </s:kesi>
+                                                                <o:mdservice>
+                                                                </o:mdservice>
+								<s1:keui>
+									<!-- item Uri -->
+									<s1:itemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</s1:itemUri>
+									<!-- comment annotations -->
+									<s1:commentAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for comment]]></s1:commentAnnotated>
+									<!-- comment concepts -->
+									<s1:commentConcepts>
+										<s1:concept>
+											<s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
+											<s1:count>1</s1:count>
+										</s1:concept>
+									</s1:commentConcepts>
+								</s1:keui>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>

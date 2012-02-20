@@ -19,7 +19,7 @@
                             <ns1:meta>
                                 <ns1:startTime>10010</ns1:startTime>
                                 <ns1:endTime>10020</ns1:endTime>
-                                <ns1:eventName>Metadata.identity.replyRemove</ns1:eventName>
+                                <ns1:eventName>ALERT.Metadata.IdentityRemove.Stored</ns1:eventName>
                                 <ns1:eventId>5748</ns1:eventId>
                                 <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
