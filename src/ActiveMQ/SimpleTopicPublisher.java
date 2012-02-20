@@ -9,6 +9,7 @@ import javax.jms.*;
 import javax.naming.*;
 import java.util.*;
 import org.apache.activemq.jndi.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -35,7 +36,7 @@ public class SimpleTopicPublisher {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
             env.setProperty(Context.PROVIDER_URL,"tcp://www.cimcollege.rs:61616");
-            env.setProperty("topic.MetadataOutTest", topicName);
+            env.setProperty("topic.MetadataOut", topicName);
             
                     
             jndiContext = new InitialContext(env);
@@ -71,8 +72,9 @@ public class SimpleTopicPublisher {
             message = topicSession.createTextMessage();
             for (int i = 0; i < NUM_MSGS; i++) {
                 message.setText(xml);
-                System.out.println("Publishing message: " + message.getText());
-                //System.out.println(System.nanoTime() + " Publishing message");
+                //System.out.println("Publishing message: " + message.getText());
+                java.util.Date date= new java.util.Date();
+                System.out.println("Publishing message at: " + new Timestamp(date.getTime()));
                 topicPublisher.publish(message);
             }
         } catch (JMSException e){
