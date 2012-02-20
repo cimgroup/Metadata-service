@@ -338,7 +338,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return null;
         }
     }
@@ -385,7 +384,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
     
@@ -517,7 +515,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
     
@@ -732,7 +729,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return null;
         }
     }
@@ -781,7 +777,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return null;
         }
     }
@@ -859,7 +854,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
     
@@ -920,7 +914,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             return null;
         }
     }
@@ -1034,7 +1027,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
     
@@ -1073,7 +1065,6 @@ public class MetadataXMLCreator {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 }
