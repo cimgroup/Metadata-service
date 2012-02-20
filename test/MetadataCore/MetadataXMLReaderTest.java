@@ -98,68 +98,68 @@ public class MetadataXMLReaderTest {
             Element eEventData = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventData);
             ePayload.appendChild(eEventData);
             
-            if(sEventName.equals(MetadataConstants.c_ET_issue_requestNew) ||
-               sEventName.equals(MetadataConstants.c_ET_issue_requestUpdate))   //if event type is new issue event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueNew) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueUpdate))   //if event type is new issue event
             {
                 //            issue element
                 Element eIssue = CreateIssueStructure(dDoc, sOptions);
                 eEventData.appendChild(eIssue);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_commit_requestNew))
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_CommitNew))
             {
                 //            commit element
                 Element eCommit = CreateCommitStructure(dDoc, sOptions);
                 eEventData.appendChild(eCommit);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
-            {
-                //NewPerson(dDoc);
-            }
-            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
-            {
-                //APICallRequest(dDoc);
-            }
+//            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
+//            {
+//                //NewPerson(dDoc);
+//            }
+//            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
+//            {
+//                //APICallRequest(dDoc);
+//            }
             if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
             {
                 //InstanceRequest(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_issue_requestAnnotation)) //if event type is new issue annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated)) //if event type is new issue annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 0, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_comment_requestAnnotation)) //if event type is new comment annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommentNew_Annotated)) //if event type is new comment annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 1, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_commit_requestAnnotation)) //if event type is new commit annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 2, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestAnnotation)) //if event type is new forum annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated)) //if event type is new forum annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 3, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_wikiPost_requestAnnotation)) //if event type is new wiki annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated)) //if event type is new wiki annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 4, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_mail_requestAnnotation)) //if event type is new mail annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated)) //if event type is new mail annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 5, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestNew)) //if event type is new forum post
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew)) //if event type is new forum post
             {
                 //            forum element
                 Element eForumPost = CreateForumPostStructure(dDoc, sOptions);
@@ -1362,21 +1362,21 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
                                       "KESI", "Metadata.issue.requestNew",
                                       "5748", "000000000000000000000000");
-        Issue resultNull = MetadataXMLReader.NewUpdateIssue(dDoc);
+        Issue resultNull = MetadataXMLReader.NewUpdateIssue(dDoc, false);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
                              "KESI", "Metadata.issue.requestNew",
                              "5748", "222222222222222222222222");
-        Issue resultEmpty = MetadataXMLReader.NewUpdateIssue(dDoc);
+        Issue resultEmpty = MetadataXMLReader.NewUpdateIssue(dDoc, false);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/kesi",
                              "KESI", "Metadata.issue.requestNew",
                              "5748", "111111111111111111111111");
-        Issue result = MetadataXMLReader.NewUpdateIssue(dDoc);
+        Issue result = MetadataXMLReader.NewUpdateIssue(dDoc, false);
         assertNotNull(result);
         
         // TODO review the generated test code and remove the default call to fail.

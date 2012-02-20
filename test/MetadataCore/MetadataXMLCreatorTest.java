@@ -289,7 +289,7 @@ public class MetadataXMLCreatorTest {
         assertNotNull(resultNull);
         
         //Issue
-        String sEventNameEmpty = MetadataConstants.c_ET_issue_replyNewUpdate;
+        String sEventNameEmpty = MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Stored;
         String sEventIdEmpty = "5748";
         Issue oObjectEmpty = new Issue();
         Document resultEmpty = MetadataXMLCreator.CreateXMLNewItemResponse(sEventNameEmpty, sEventIdEmpty, null, oObjectEmpty);
@@ -298,7 +298,7 @@ public class MetadataXMLCreatorTest {
         assertNotNull(nlIssueNull);
         assertEquals(nlIssueNull.getLength(), 0);
         
-        String sEventName = MetadataConstants.c_ET_issue_replyNewUpdate;
+        String sEventName = MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Stored;
         String sEventId = "5748";
         Issue oObject = GetIssueExample();
         Document result = MetadataXMLCreator.CreateXMLNewItemResponse(sEventName, sEventId, null, oObject);

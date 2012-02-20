@@ -62,7 +62,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: SaveObjectNewIssue");
         String sEventId = "";
         Issue oIssue = null;
-        MetadataModel.SaveObjectNewIssue(sEventId, null, oIssue);
+        MetadataModel.SaveObjectNewIssue(sEventId, null, oIssue, false);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -81,19 +81,19 @@ public class MetadataModelTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of SaveObjectNewPerson method, of class MetadataModel.
-     */
-    @Ignore
-    @Test
-    public void testSaveObjectNewPerson() {
-        System.out.println("* MetadataModelTest: SaveObjectNewPerson");
-        String sEventId = "";
-        foaf_Person oPerson = null;
-        MetadataModel.SaveObjectNewPerson(sEventId, oPerson);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of SaveObjectNewPerson method, of class MetadataModel.
+//     */
+//    @Ignore
+//    @Test
+//    public void testSaveObjectNewPerson() {
+//        System.out.println("* MetadataModelTest: SaveObjectNewPerson");
+//        String sEventId = "";
+//        foaf_Person oPerson = null;
+//        MetadataModel.SaveObjectNewPerson(sEventId, oPerson);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of SaveObjectNewForumPost method, of class MetadataModel.
