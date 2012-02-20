@@ -20,7 +20,7 @@
 								<ns1:startTime>10010</ns1:startTime>
 								<ns1:endTime>10020</ns1:endTime>
 								<!-- name of event -->
-								<ns1:eventName>Metadata.APICall.reply</ns1:eventName>
+								<ns1:eventName>ALERT.Metadata.APICallResponse</ns1:eventName>
 								<ns1:eventId>9856</ns1:eventId>
 								<ns1:eventType>reply</ns1:eventType>
 							</ns1:meta>
