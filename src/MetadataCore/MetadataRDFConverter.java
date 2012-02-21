@@ -47,12 +47,12 @@ public class MetadataRDFConverter {
 
     /**
      * @summary Save issue data
-     * @startRealisation Ivan Obradovic 31.08.2011.
-     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @startRealisation  Ivan Obradovic      31.08.2011.
+     * @finalModification Dejan Milosavljevic 21.02.2012.
      * @param oIssue - issue object with data
      * @return issue object with uri-s
      */
-    public static Issue SaveIssue(Issue oIssue)
+    public static Issue SaveIssue(Issue oIssue, boolean bIsUpdate)
     {
         try {
             
@@ -640,9 +640,22 @@ public class MetadataRDFConverter {
             }
             //end has attachment 
             
+            //AlertEvent
+            String sEventUri;
+            if (bIsUpdate)
+            {
+                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
+            }
+            else
+            {
+                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
+            }
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
+            resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
+
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
-            
         }
         catch (Exception ex)
         {
@@ -872,9 +885,14 @@ public class MetadataRDFConverter {
                 }
             }
             
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_CommitEvent, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToCommit);
+            resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
+            
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
-            
         }
         catch (Exception ex)
         {
@@ -975,6 +993,12 @@ public class MetadataRDFConverter {
                 DatatypeProperty dtpBody = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
                 resMail.addProperty(dtpBody, oMail.m_sContent);
             }
+            
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_MailEvent, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToMail);
+            resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
             
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -1359,6 +1383,12 @@ public class MetadataRDFConverter {
                     }
                 }
             }
+            
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_PostEvent, "");
+            Resource resEvent = omModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
+            resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }

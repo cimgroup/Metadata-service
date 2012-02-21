@@ -71,7 +71,7 @@ public class MetadataModel {
      */
     static void SaveObjectNewIssue(String sEventId, Element eOriginalData, Issue oIssue, boolean bIsUpdate) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
     {
-        oIssue = MetadataRDFConverter.SaveIssue(oIssue);
+        oIssue = MetadataRDFConverter.SaveIssue(oIssue, bIsUpdate);
         if (bIsUpdate)
         {
             MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Stored, sEventId, eOriginalData, oIssue);

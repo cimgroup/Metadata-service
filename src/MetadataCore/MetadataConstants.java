@@ -414,6 +414,13 @@ public class MetadataConstants {
     public static String c_OWLClass_Major = "Major";
     public static String c_OWLClass_Minor = "Minor";
     public static String c_OWLClass_Trivial = "Trivial";
+    
+    public static String c_OWLClass_CommitEvent = "CommitEvent";
+    public static String c_OWLClass_ModifiedBug = "ModifiedBug";
+    public static String c_OWLClass_NewBug = "NewBug";
+    public static String c_OWLClass_MailEvent = "MailEvent";
+    public static String c_OWLClass_PostEvent = "PostEvent";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology Resource">
@@ -536,6 +543,11 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsPerson = "isPerson";
     public static String c_OWLObjectProperty_IsntPerson = "isntPerson";
     
+    public static String c_OWLObjectProperty_IsRelatedToCommit = "isRelatedToCommit";
+    public static String c_OWLObjectProperty_IsRelatedToBug = "isRelatedToBug";
+    public static String c_OWLObjectProperty_IsRelatedToMail = "isRelatedToMail";
+    public static String c_OWLObjectProperty_IsRelatedToPost = "isRelatedToPost";
+
     // </editor-fold>
             
     // <editor-fold desc="Ontology AnnotationProperty">
@@ -564,6 +576,7 @@ public class MetadataConstants {
     public static String c_NS_purl = "http://purl.org/dc/terms/";
     public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
+    public static String c_NS_icep = "http://icep.fzi.de/icepEvents#";
 
     // </editor-fold>
     

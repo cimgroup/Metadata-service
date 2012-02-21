@@ -168,11 +168,11 @@ public class MetadataRDFConverterTest {
         System.out.println("* MetadataRDFConverterTest: SaveIssue");
         Issue oIssueNull = null;
         Issue expResult = null;
-        Issue resultNull = MetadataRDFConverter.SaveIssue(oIssueNull);
+        Issue resultNull = MetadataRDFConverter.SaveIssue(oIssueNull, true);
         assertEquals(expResult, resultNull);
         
         Issue oIssue = GetIssueExample();
-        Issue result = MetadataRDFConverter.SaveIssue(oIssue);
+        Issue result = MetadataRDFConverter.SaveIssue(oIssue, true);
         assertNotNull(result);
         assertEquals(result.m_sObjectURI.isEmpty(), false);
         assertEquals(result.m_oHasReporter.m_sObjectURI.isEmpty(), false);
