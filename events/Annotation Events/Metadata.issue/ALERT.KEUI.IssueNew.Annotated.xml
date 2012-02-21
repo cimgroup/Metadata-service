@@ -22,7 +22,7 @@
                                 <!-- name of event -->
                                 <ns1:eventName>ALERT.KEUI.IssueNew.Annotated</ns1:eventName>
                                 <ns1:eventId>5748</ns1:eventId>
-                                <ns1:eventType>response</ns1:eventType>
+                                <ns1:eventType>request</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
                                 <s:kesi>
