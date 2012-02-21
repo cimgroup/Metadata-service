@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2">
+    <s:Header/>
+    <s:Body>
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic/>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+                </wsnt:ProducerReference>
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                        <ns1:head>
+                            <ns1:sender>METADATASERVICE</ns1:sender>
+                            <ns1:timestamp>10003</ns1:timestamp>
+                            <ns1:sequencenumber>1</ns1:sequencenumber>
+                        </ns1:head>
+                        <ns1:payload>
+                            <ns1:meta>
+                                <ns1:startTime>10010</ns1:startTime>
+                                <ns1:endTime>10020</ns1:endTime>
+                                <ns1:eventName>ALERT.Metadata.CompetencyUpdate.Stored</ns1:eventName>
+                                <ns1:eventId>5748</ns1:eventId>
+                                <ns1:eventType>reply</ns1:eventType>
+                            </ns1:meta>
+                            <ns1:eventData>
+                                <keui>
+                                    <sm:competency>
+                                        <sm:uuid>ecb4b1d5cd2a8926a8cb7d7c40050362448b9955fd546bb2706a4a1ece75085c</sm:uuid>
+                                        <sm:areas>
+                                            <sm:area>
+                                                <sm:annotations>
+                                                    <sm:annotation>#owl</sm:annotation>
+                                                    <sm:annotation>#owl</sm:annotation>
+                                                    <sm:annotation>#owl</sm:annotation>
+                                                    <sm:annotation>#owl</sm:annotation>
+                                                </sm:annotations>
+                                                <sm:index>0.321</sm:index>
+                                                <sm:attributes>
+                                                    <sm:fluency>
+                                                        <sm:apiCount>0.32</sm:apiCount>
+                                                        <sm:apiIntroduced>0.12</sm:apiIntroduced>
+                                                        <sm:staticAnalysis>0.12</sm:staticAnalysis>
+                                                    </sm:fluency>
+                                                    <sm:contribution>
+                                                        <sm:mailingListActivity>0.32</sm:mailingListActivity>
+                                                        <sm:itsActivity>0.12</sm:itsActivity>
+                                                        <sm:sloc>0.25</sm:sloc>
+                                                    </sm:contribution>
+                                                    <sm:effectiveness>
+                                                        <sm:noOfIssuesFixed>0.001</sm:noOfIssuesFixed>
+                                                        <sm:noOfCommitsCausedIssue>0.021</sm:noOfCommitsCausedIssue>
+                                                        <sm:noOfCommitFixedIssue>0.001</sm:noOfCommitFixedIssue>
+                                                    </sm:effectiveness>
+                                                    <sm:recency>
+                                                        <!-- Please not the message format contains timezone informatin -->
+                                                        <sm:timeSinceSCMaction>Sat, 05 Nov 2011 17:50:11 +0100</sm:timeSinceSCMaction>
+                                                        <sm:timeSinceITSaction>Sat, 01 Nov 2011 20:50:11 +0100</sm:timeSinceITSaction>
+                                                        <sm:timeSinceMLaction>Sat, 01 Nov 2011 10:50:11 +0100</sm:timeSinceMLaction>
+                                                    </sm:recency>
+                                                </sm:attributes>
+                                            </sm:area>
+                                        </sm:areas>
+                                    </sm:competency>
+                                </keui>
+                                <o:mdservice>
+                                    <o:competencyUri>http://www.alert-project.eu/ontologies/alert.owl#Competence1</o:competencyUri>
+                                    <o:fluencyUri>http://www.alert-project.eu/ontologies/alert.owl#Fluency1</o:fluencyUri>
+                                    <o:apiCountUri>http://www.alert-project.eu/ontologies/alert.owl#APIMetric1</o:apiCountUri>
+                                    <o:apiIntroducedUri>http://www.alert-project.eu/ontologies/alert.owl#APIMetric2</o:apiIntroducedUri>
+                                    <o:staticAnalysisUri>http://www.alert-project.eu/ontologies/alert.owl#StaticAnalysisMetric1</o:staticAnalysisUri>
+                                    <o:contributionUri>http://www.alert-project.eu/ontologies/alert.owl#Contribution1</o:contributionUri>
+                                    <o:mailingListActivityUri>http://www.alert-project.eu/ontologies/alert.owl#MailingListMetric1</o:mailingListActivityUri>
+                                    <o:itsActivityUri>http://www.alert-project.eu/ontologies/alert.owl#ITSMetric1</o:itsActivityUri>
+                                    <o:slocUri>http://www.alert-project.eu/ontologies/alert.owl#SCMMetric1</o:slocUri>
+                                    <o:effectivenessUri>http://www.alert-project.eu/ontologies/alert.owl#Effectiveness1</o:effectivenessUri>
+                                    <o:noOfIssuesFixedUri>http://www.alert-project.eu/ontologies/alert.owl#ITSMetric2</o:noOfIssuesFixedUri>
+                                    <o:noOfCommitsCausedIssueUri>http://www.alert-project.eu/ontologies/alert.owl#ITSMetric3</o:noOfCommitsCausedIssueUri>
+                                    <o:noOfCommitFixedIssueUri>http://www.alert-project.eu/ontologies/alert.owl#ITSMetric4</o:noOfCommitFixedIssueUri>
+                                    <o:recencyUri>http://www.alert-project.eu/ontologies/alert.owl#Activity_Availability1</o:recencyUri>
+                                    <o:timeSinceSCMactionUri>http://www.alert-project.eu/ontologies/alert.owl#TemporalMetric1</o:timeSinceSCMactionUri>
+                                    <o:timeSinceITSactionUri>http://www.alert-project.eu/ontologies/alert.owl#TemporalMetric2</o:timeSinceITSactionUri>
+                                    <o:timeSinceMLactionUri>http://www.alert-project.eu/ontologies/alert.owl#TemporalMetric3</o:timeSinceMLactionUri>
+                                    <o:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity1</o:identityUri>
+                                </o:mdservice>
+                            </ns1:eventData>
+                        </ns1:payload>
+                    </ns1:event>
+                </wsnt:Message>
+            </wsnt:NotificationMessage>
+        </wsnt:Notify>
+    </s:Body>
+</s:Envelope>

@@ -6,27 +6,27 @@
 			<wsnt:NotificationMessage>
 				<wsnt:Topic></wsnt:Topic>
 				<wsnt:ProducerReference>
-					<wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+					<wsa:Address>http://www.alert-project.eu/kesi</wsa:Address>
 				</wsnt:ProducerReference>
 				<wsnt:Message>
-					<ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+					<ns1:event xmlns:ns1="http://www.alert-project.eu/"	xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki"	xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
 						<ns1:head>
-							<ns1:sender>METADATASERVICE</ns1:sender>
-							<ns1:timestamp>10003</ns1:timestamp>
+							<ns1:sender>KESI</ns1:sender>
+							<ns1:timestamp>10000</ns1:timestamp>
 							<ns1:sequencenumber>1</ns1:sequencenumber>
 						</ns1:head>
 						<ns1:payload>
 							<ns1:meta>
 								<ns1:startTime>10010</ns1:startTime>
-								<ns1:endTime>10020</ns1:endTime>
+								<ns1:endTime>10010</ns1:endTime>
 								<!-- name of event -->
-								<ns1:eventName>Metadata.issue.replyNewUpdate</ns1:eventName>
+								<ns1:eventName>ALERT.KESI.IssueNew</ns1:eventName>
 								<ns1:eventId>5748</ns1:eventId>
-								<ns1:eventType>reply</ns1:eventType>
+								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
 							<ns1:eventData>
-                                                                <s:kesi>
-                                                                        <!-- issue id -->
+								<s:issue>
+									<!-- issue id -->
 									<s:issueId>184671</s:issueId>
 									<!-- id of issue author person -->
 									<s:issueAuthor>
@@ -81,13 +81,13 @@
 									<s:issueBlocksId>20002</s:issueBlocksId>
 									<s:issueDuplicateOfId>235223</s:issueDuplicateOfId>
 									<s:issueMergedIntoId>231511</s:issueMergedIntoId>
-									<!-- date time in format EEE, d MMM yyyy HH:mm:ss Z -->
-									<s:issueDateOpened>Sat, 05 Nov 2011 17:50:11 +0100</s:issueDateOpened>
-									<s:issueLastModified>Sat, 05 Nov 2011 17:50:11 +0100</s:issueLastModified>
+									<!-- date time in format yyyy-MM-dd HH:mm -->
+									<s:issueDateOpened>2009-02-17 16:31</s:issueDateOpened>
+									<s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
 									<s:issueMilestone>
 										<!-- id of milestone -->
 										<s:milestoneId>12355</s:milestoneId>
-										<s:milestoneTarget>Sat, 05 Nov 2011 17:50:11 +0100</s:milestoneTarget>
+										<s:milestoneTarget>2009-02-17 16:31</s:milestoneTarget>
 									</s:issueMilestone>
 									<!-- issue comments -->
 									<s:issueComment>
@@ -99,7 +99,7 @@
 											<s:id>cumulus0007@gmail.com</s:id>
 											<s:email>cumulus0007@gmail.com</s:email>
 										</s:commentPerson>
-										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+										<s:commentDate>2009-02-17 16:31:37</s:commentDate>
 									</s:issueComment>
 									<s:issueComment>
 										<s:commentId></s:commentId>
@@ -110,7 +110,7 @@
 											<s:id>angel_blue_co2004@yahoo.com</s:id>
 											<s:email>angel_blue_co2004@yahoo.com</s:email>
 										</s:commentPerson>
-										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+										<s:commentDate>2009-03-04 18:11:19</s:commentDate>
 									</s:issueComment>
 									<!-- issue attachments -->
 									<s:issueAttachment>
@@ -127,7 +127,7 @@
 									<s:issueActivity>
 										<s:activityId>4125</s:activityId>
 										<s:activityWho>angel_blue_co2004@yahoo.com</s:activityWho>
-										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
+										<s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
 										<s:activityWRA>
 											<s:activityWhat>Priority</s:activityWhat>
 											<s:activityRemoved>3</s:activityRemoved>
@@ -147,7 +147,7 @@
 									<s:issueActivity>
 										<s:activityId>3631</s:activityId>
 										<s:activityWho>ervin@kde.org</s:activityWho>
-										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
+										<s:activityWhen>2011-04-15 10:55:57</s:activityWhen>
 										<s:activityWRA>
 											<s:activityWhat>AssignedTo</s:activityWhat>
 											<s:activityRemoved>ervin@kde.org</s:activityRemoved>
@@ -160,58 +160,7 @@
 										<s:issueTrackerType>bugzilla</s:issueTrackerType>
 										<s:issueTrackerURL>https://bugs.kde.org/</s:issueTrackerURL>
 									</s:issueTracker>
-                                                                </s:kesi>
-								<o:mdservice>
-									<!-- issue uri -->
-									<o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
-									<!-- uri of issue author person -->
-									<o:issueAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:issueAuthorUri>
-									<o:issueProduct>
-										<!-- uri of issue project -->
-										<o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
-										<!-- uri of project component -->
-										<o:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</o:productComponentUri>
-									</o:issueProduct>
-									<o:issueComputerSystem>
-										<!-- uri of computer system -->
-										<o:computerSystemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1</o:computerSystemUri>
-									</o:issueComputerSystem>
-									<!-- uri of issue assigned person -->
-									<o:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:issueAssignedToUri>
-									<!-- uris of issue CC persons -->
-									<o:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:issueCCPersonUri>
-									<o:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person4</o:issueCCPersonUri>
-									<!-- uris of related issues -->
-									<o:issueDependsOnUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</o:issueDependsOnUri>
-									<o:issueBlocksUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3</o:issueBlocksUri>
-									<o:issueDuplicateOfUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug4</o:issueDuplicateOfUri>
-									<o:issueMergedIntoUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug5</o:issueMergedIntoUri>
-									<o:issueMilestone>
-										<o:milestoneUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Milestone1</o:milestoneUri>
-									</o:issueMilestone>
-									<!-- issue comments -->
-									<o:issueComment>
-										<o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</o:commentUri>
-										<o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:commentPersonUri>
-									</o:issueComment>
-									<!-- issue attachments -->
-									<o:issueAttachment>
-										<o:attachmentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Attachment1</o:attachmentUri>
-									</o:issueAttachment>
-									<!-- issue activities -->
-									<o:issueActivity>
-										<o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1</o:activityUri>
-										<o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:activityWhoUri>
-									</o:issueActivity>
-									<o:issueActivity>
-										<o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity2</o:activityUri>
-										<o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:activityWhoUri>
-									</o:issueActivity>
-									<!-- issue issue tracker -->
-									<o:issueTracker>
-										<o:issueTrackerUri>http://www.alert-project.eu/ontologies/alert_its.owl#IssueTracker1</o:issueTrackerUri>
-									</o:issueTracker>
-								</o:mdservice>
+								</s:issue>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>

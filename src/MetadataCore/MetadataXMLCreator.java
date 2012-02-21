@@ -294,7 +294,7 @@ public class MetadataXMLCreator {
                     //eventName
                     Element eEventName = dDoc.createElement("ns1:" + MetadataConstants.c_XMLE_eventName);
                     eMeta.appendChild(eEventName);
-                    tText = dDoc.createTextNode(MetadataConstants.c_ET_APICall_reply);
+                    tText = dDoc.createTextNode(MetadataConstants.c_ET_ALERT_Metadata_APICallResponse);
                     eEventName.appendChild(tText);
                     
                     //eventId

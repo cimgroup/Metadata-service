@@ -56,8 +56,8 @@ public class MetadataXMLReader {
 
     /**
      * @summary Method for calling appropriate method based on event type
-     * @startRealisation Sasa Stojanovic 23.06.2011.
-     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @startRealisation  Sasa Stojanovic     23.06.2011.
+     * @finalModification Dejan Milosavljevic 20.02.2012.
      * @param sEventName  - event type
      * @param dDoc - input XML document to read
      */
@@ -65,73 +65,83 @@ public class MetadataXMLReader {
     {
         try
         {
-            if(sEventName.equals(MetadataConstants.c_ET_issue_requestNew) ||
-               sEventName.equals(MetadataConstants.c_ET_issue_requestUpdate))   //if event type is new issue event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueNew))   //if event type is new issue event
             {
-                NewUpdateIssue(dDoc);
+                NewUpdateIssue(dDoc, false);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_commit_requestNew))
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueUpdate))   //if event type is update issue event
+            {
+                NewUpdateIssue(dDoc, true);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_CommitNew))
             {
                 NewCommit(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_mail_requestNew))
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_MLSensor_MailNew))
             {
                 NewMail(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
-            {
-                NewPerson(dDoc);
-            }
-            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
+//            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
+//            {
+//                NewPerson(dDoc);
+//            }
+//            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_APICallRequest) ||   //if event type is API Call request
+               sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_APICallRequest) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_APICallRequest) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest))
             {
                 APICallRequest(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
-            {
-                InstanceRequest(dDoc);
-            }
-            if(sEventName.equals(MetadataConstants.c_ET_issue_requestAnnotation)) //if event type is new issue annotation
+//            if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
+//            {
+//                InstanceRequest(dDoc);
+//            }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated)) //if event type is new issue annotation
             {
                 NewIssueAnnotation(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_comment_requestAnnotation)) //if event type is new comment annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommentNew_Annotated)) //if event type is new comment annotation
             {
                 NewCommentAnnotation(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_commit_requestAnnotation)) //if event type is new commit annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
                 NewCommitAnnotation(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestAnnotation)) //if event type is new forum post annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated)) //if event type is new forum post annotation
             {
                 NewFWPostAnnotation(dDoc, true);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_wikiPost_requestAnnotation)) //if event type is new wiki post annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated)) //if event type is new wiki post annotation
             {
                 NewFWPostAnnotation(dDoc, false);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_mail_requestAnnotation)) //if event type is new mail annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated)) //if event type is new mail annotation
             {
                 NewMailAnnotation(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_forumPost_requestNew)) //if event type is new forum post
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew)) //if event type is new forum post
             {
                 NewForumPostData(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_competency_requestNew) ||
-               sEventName.equals(MetadataConstants.c_ET_competency_requestUpdate))   //if event type is new competence event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_CompetencyNew))   //if event type is new competence event
             {
-                NewUpdateCompetence(dDoc);
+                NewUpdateCompetence(dDoc, false);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_identity_requestNew))   //if event type is new identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_CompetencyUpdate))   //if event type is update competence event
+            {
+                NewUpdateCompetence(dDoc, true);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityNew))   //if event type is new identity event
             {
                 NewIdentity(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_identity_requestUpdate))   //if event type is update identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityUpdate))   //if event type is update identity event
             {
                 UpdateIdentity(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_identity_requestRemove))   //if event type is remove identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityRemove))   //if event type is remove identity event
             {
                 RemoveIdentity(dDoc);
             }
@@ -147,12 +157,13 @@ public class MetadataXMLReader {
 
     /**
      * @summary Method for reading new/update issue event from XML
-     * @startRealisation Sasa Stojanovic 01.09.2011.
-     * @finalModification Sasa Stojanovic 01.09.2011.
+     * @startRealisation  Sasa Stojanovic     01.09.2011.
+     * @finalModification Dejan Milosavljevic 20.02.2012.
      * @param dDoc - input XML document to read
+     * @param bIsUpdate - marks if this is an update
      * @return - returns Issue object
      */
-    public static Issue NewUpdateIssue(Document dDoc)
+    public static Issue NewUpdateIssue(Document dDoc, boolean bIsUpdate)
     {
         try
         {
@@ -457,7 +468,7 @@ public class MetadataXMLReader {
             }
 
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
-            MetadataModel.SaveObjectNewIssue(sEventId, eOriginalData, oIssue);
+            MetadataModel.SaveObjectNewIssue(sEventId, eOriginalData, oIssue, bIsUpdate);
             
             return oIssue;
         }
@@ -662,38 +673,38 @@ public class MetadataXMLReader {
         }
     }
 
-    /**
-     * @summary Method for reading new person event from XML
-     * @startRealisation Sasa Stojanovic 05.09.2011.
-     * @finalModification Sasa Stojanovic 05.09.2011.
-     * @param dDoc - input XML document to read
-     */
-    private static void NewPerson(Document dDoc)
-    {
-        try
-        {
-            String sEventId = GetEventId(dDoc);
-
-            foaf_Person oPerson = MetadataObjectFactory.CreateNewPerson();
-
-            NodeList nlPerson = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_person);   //getting node for tag person
-
-            if (nlPerson != null && nlPerson.getLength() > 0)
-            {
-                Element ePerson = (Element) nlPerson.item(0);
-
-                oPerson.m_sFirstName = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personFirstName);
-                oPerson.m_sLastName = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personLastName);
-                oPerson.m_sGender = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personGender);
-            }
-
-            MetadataModel.SaveObjectNewPerson(sEventId, oPerson);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * @summary Method for reading new person event from XML
+//     * @startRealisation Sasa Stojanovic 05.09.2011.
+//     * @finalModification Sasa Stojanovic 05.09.2011.
+//     * @param dDoc - input XML document to read
+//     */
+//    private static void NewPerson(Document dDoc)
+//    {
+//        try
+//        {
+//            String sEventId = GetEventId(dDoc);
+//
+//            foaf_Person oPerson = MetadataObjectFactory.CreateNewPerson();
+//
+//            NodeList nlPerson = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_person);   //getting node for tag person
+//
+//            if (nlPerson != null && nlPerson.getLength() > 0)
+//            {
+//                Element ePerson = (Element) nlPerson.item(0);
+//
+//                oPerson.m_sFirstName = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personFirstName);
+//                oPerson.m_sLastName = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personLastName);
+//                oPerson.m_sGender = GetValue(ePerson, "ns1:" + MetadataConstants.c_XMLE_personGender);
+//            }
+//
+//            MetadataModel.SaveObjectNewPerson(sEventId, oPerson);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * @summary Method for reading new api request event from XML
@@ -1363,7 +1374,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_issue_New, dDoc, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Updated, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1450,7 +1461,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_comment_New, dDoc, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_CommentNew_Updated, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1537,7 +1548,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_commit_New, dDoc, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_CommitNew_Updated, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1565,7 +1576,7 @@ public class MetadataXMLReader {
             if (bIsForum)
             {
                 sMainTag = MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
-                sEventName = MetadataConstants.c_ET_forumPost_New;
+                sEventName = MetadataConstants.c_ET_ALERT_Metadata_ForumPostNew_Updated;
             }
             else
             {
@@ -1775,7 +1786,7 @@ public class MetadataXMLReader {
                 }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_mail_New, dDoc, oAnnotation);
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_MailNew_Updated, dDoc, oAnnotation);
             
             return oAnnotation;
         }
@@ -1861,11 +1872,12 @@ public class MetadataXMLReader {
         /**
      * @summary Method for reading new/update competence event from XML
      * @startRealisation  Dejan Milosavljevic 02.02.2012.
-     * @finalModification Dejan Milosavljevic 02.02.2012.
+     * @finalModification Dejan Milosavljevic 20.02.2012.
      * @param dDoc - input XML document to read
+     * @param bIsUpdate - marks if this is an update
      * @return - returns Competence object
      */
-    public static Competence NewUpdateCompetence(Document dDoc)
+    public static Competence NewUpdateCompetence(Document dDoc, boolean bIsUpdate)
     {
         try
         {
@@ -1985,7 +1997,7 @@ public class MetadataXMLReader {
             }
             
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, MetadataConstants.c_XMLE_keui);
-            MetadataModel.SaveObjectNewCompetence(sEventId, eOriginalData, oCompetence);
+            MetadataModel.SaveObjectNewCompetence(sEventId, eOriginalData, oCompetence, bIsUpdate);
             
             return oCompetence;
         }

@@ -20,7 +20,7 @@
 								<ns1:startTime>10010</ns1:startTime>
 								<ns1:endTime>10010</ns1:endTime>
 								<!-- name of event -->
-								<ns1:eventName>Metadata.issue.requestUpdate</ns1:eventName>
+								<ns1:eventName>ALERT.KESI.IssueUpdate</ns1:eventName>
 								<ns1:eventId>5748</ns1:eventId>
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
@@ -100,15 +100,15 @@
 									<s:issueDependsOnRemovedId>10002</s:issueDependsOnRemovedId>
 									<!-- removes blocks on with id -->
 									<s:issueBlocksRemovedId>20002</s:issueBlocksRemovedId>
-									<!-- date time in format EEE, d MMM yyyy HH:mm:ss Z -->
-									<s:issueDateOpened>Sat, 05 Nov 2011 17:50:11 +0100</s:issueDateOpened>
-									<s:issueLastModified>Sat, 05 Nov 2011 17:50:11 +0100</s:issueLastModified>
+									<!-- date time in format yyyy-MM-dd HH:mm -->
+									<s:issueDateOpened>2011-11-08 14:04</s:issueDateOpened>
+									<s:issueLastModified>2011-11-15 15:00</s:issueLastModified>
 									<!-- new milestone data -->
 									<s:issueMilestone>
 										<!-- id of milestone -->
 										<s:milestoneId></s:milestoneId>
 										<!-- milestone date time -->
-										<s:milestoneTarget>Sat, 05 Nov 2011 17:50:11 +0100</s:milestoneTarget>
+										<s:milestoneTarget>2011-11-25 14:04</s:milestoneTarget>
 									</s:issueMilestone>
 									<!-- new/modified comments (should we support option for modifying comments?) -->
 									<s:issueComment>
@@ -121,7 +121,7 @@
 											<s:id>sasa.stojanovic@cimcollege.rs</s:id>
 											<s:email>sasa.stojanovic@cimcollege.rs</s:email>
 										</s:commentPerson>
-										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+										<s:commentDate>2011-11-08 14:04</s:commentDate>
 									</s:issueComment>
 									<s:issueComment>
 										<s:commentId></s:commentId>
@@ -132,7 +132,7 @@
 											<s:id>sasa.stojanovic@cimcollege.rs</s:id>
 											<s:email>sasa.stojanovic@cimcollege.rs</s:email>
 										</s:commentPerson>
-										<s:commentDate>Sat, 05 Nov 2011 17:50:11 +0100</s:commentDate>
+										<s:commentDate>2011-11-15 14:55</s:commentDate>
 									</s:issueComment>
 									<!-- new issue attachments -->
 									<s:issueAttachment>
@@ -149,7 +149,7 @@
 									<s:issueActivity>
 										<s:activityId></s:activityId>
 										<s:activityWho>lcanas@libresoft.es</s:activityWho>
-										<s:activityWhen>Sat, 05 Nov 2011 17:50:11 +0100</s:activityWhen>
+										<s:activityWhen>2011-11-10 15:58:19</s:activityWhen>
 										<s:activityWRA>
 											<s:activityWhat>Priority</s:activityWhat>
 											<s:activityRemoved>medium</s:activityRemoved>

@@ -63,15 +63,23 @@ public class MetadataModel {
     
     /** 
      * @summary Method for saving new issue
-     * @startRealisation Sasa Stojanovic 31.08.2011.
-     * @finalModification Sasa Stojanovic 31.08.2011.
-     * @param sEventId - event id
-     * @param oIssue - issue object
+     * @startRealisation  Sasa Stojanovic     31.08.2011.
+     * @finalModification Dejan Milosavljevic 20.02.2012.
+     * @param sEventId - event id.
+     * @param oIssue - issue object.
+     * @param bIsUpdate - marks if this is an update.
      */
-    static void SaveObjectNewIssue(String sEventId, Element eOriginalData, Issue oIssue) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
+    static void SaveObjectNewIssue(String sEventId, Element eOriginalData, Issue oIssue, boolean bIsUpdate) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException
     {
         oIssue = MetadataRDFConverter.SaveIssue(oIssue);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_issue_replyNewUpdate, sEventId, eOriginalData, oIssue);
+        if (bIsUpdate)
+        {
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Stored, sEventId, eOriginalData, oIssue);
+        }
+        else
+        {
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Stored, sEventId, eOriginalData, oIssue);
+        }
     }
     
     /** 
@@ -84,7 +92,7 @@ public class MetadataModel {
     static void SaveObjectNewCommit(String sEventId, Element eOriginalData, Commit oCommit)
     {
         oCommit = MetadataRDFConverter.SaveCommit(oCommit);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, eOriginalData, oCommit);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_CommitNew_Stored, sEventId, eOriginalData, oCommit);
     }
     
     /** 
@@ -97,21 +105,21 @@ public class MetadataModel {
     static void SaveObjectNewMail(String sEventId, Element eOriginalData, Mail oMail)
     {
         oMail = MetadataRDFConverter.SaveMail(oMail);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_commit_replyNew, sEventId, eOriginalData, oMail);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_CommitNew_Stored, sEventId, eOriginalData, oMail);
     }
             
-    /**
-     * @summary Method for saving new person
-     * @startRealisation Sasa Stojanovic 05.09.2011.
-     * @finalModification Sasa Stojanovic 05.09.2011.
-     * @param sEventId - event id
-     * @param oPerson - person object
-     */
-    static void SaveObjectNewPerson(String sEventId, foaf_Person oPerson)
-    {
-        oPerson = MetadataRDFConverter.SavePerson(oPerson);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, null, oPerson);
-    }
+//    /**
+//     * @summary Method for saving new person
+//     * @startRealisation Sasa Stojanovic 05.09.2011.
+//     * @finalModification Sasa Stojanovic 05.09.2011.
+//     * @param sEventId - event id
+//     * @param oPerson - person object
+//     */
+//    static void SaveObjectNewPerson(String sEventId, foaf_Person oPerson)
+//    {
+//        oPerson = MetadataRDFConverter.SavePerson(oPerson);
+//        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_person_replyNewUpdate, sEventId, null, oPerson);
+//    }
  
     /**
      * @summary Method for saving new forum post.
@@ -124,7 +132,7 @@ public class MetadataModel {
     static void SaveObjectNewForumPost(String sEventId, Element eOriginalData, NewForumPost oForumPost)
     {
         oForumPost = MetadataRDFConverter.SaveForumPost(oForumPost);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_forumPost_replyNew, sEventId, eOriginalData, oForumPost);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ForumPostNew_Stored, sEventId, eOriginalData, oForumPost);
     }
 
     /**
@@ -142,17 +150,25 @@ public class MetadataModel {
     }
     
     /**
-     * @summary Method for saving new annotation.
+     * @summary Method for saving new competence.
      * @startRealisation  Dejan Milosavljevic 02.02.2012.
-     * @finalModification Dejan Milosavljevic 02.02.2012.
+     * @finalModification Dejan Milosavljevic 20.02.2012.
      * @param sEventId - event id.
      * @param eOriginalData - original data. 
-     * @param oForumPost - competence object.
+     * @param oCompetence - competence object.
+     * @param bIsUpdate - marks if this is an update.
      */
-    static void SaveObjectNewCompetence(String sEventId, Element eOriginalData, Competence oCompetence)
+    static void SaveObjectNewCompetence(String sEventId, Element eOriginalData, Competence oCompetence, boolean bIsUpdate)
     {
         oCompetence = MetadataRDFConverter.SaveCompetence(oCompetence);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_competency_replyNewUpdate, sEventId, eOriginalData, oCompetence);
+        if (bIsUpdate)
+        {
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_CompetencyUpdate_Stored, sEventId, eOriginalData, oCompetence);
+        }
+        else
+        {
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_CompetencyNew_Stored, sEventId, eOriginalData, oCompetence);
+        }
     }
     
     /** 
@@ -171,7 +187,7 @@ public class MetadataModel {
         oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
         oIdentitiesExt.m_oObjects = oIdentities;
         
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyNew, sEventId, eOriginalData, oIdentitiesExt);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IdentityNew_Stored, sEventId, eOriginalData, oIdentitiesExt);
     }
     
     /** 
@@ -190,7 +206,7 @@ public class MetadataModel {
         oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
         oIdentitiesExt.m_oObjects = oIdentities;
         
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyUpdate, sEventId, eOriginalData, oIdentitiesExt);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IdentityUpdate_Stored, sEventId, eOriginalData, oIdentitiesExt);
     }
     
     /** 
@@ -209,7 +225,7 @@ public class MetadataModel {
         oIdentitiesExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_identities + "/";
         oIdentitiesExt.m_oObjects = oIdentities;
         
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_identity_replyRemove, sEventId, eOriginalData, oIdentitiesExt);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IdentityRemove_Stored, sEventId, eOriginalData, oIdentitiesExt);
     }
     
     /**

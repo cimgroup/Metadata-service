@@ -11,7 +11,7 @@
 				<wsnt:Message>
 					<ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:s2="http://www.alert-project.eu/APIcall-request" xmlns:s3="http://www.alert-project.eu/APIcall-response" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
 						<ns1:head>
-							<ns1:sender>KESI</ns1:sender>
+							<ns1:sender>Stardom</ns1:sender>
 							<ns1:timestamp>10000</ns1:timestamp>
 							<ns1:sequencenumber>1</ns1:sequencenumber>
 						</ns1:head>
@@ -20,7 +20,7 @@
 								<ns1:startTime>10010</ns1:startTime>
 								<ns1:endTime>10010</ns1:endTime>
 								<!-- name of event -->
-								<ns1:eventName>Metadata.APICall.request</ns1:eventName>
+								<ns1:eventName>ALERT.Stardom.APICallRequest</ns1:eventName>
 								<ns1:eventId>9856</ns1:eventId>
 								<ns1:eventType>request</ns1:eventType>
 							</ns1:meta>
