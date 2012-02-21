@@ -546,6 +546,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting all for concept (issue, person...).
+     * @startRealisation  Dejan Milosavljevic 21.02.2012.
+     * @finalModification Dejan Milosavljevic 21.02.2012.
+     * @param sEventId - event id.
+     * @param sConceptUri - concept uri.
+     */
+    static void ac_instance_getAllForConcept(String sEventId, String sConceptUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_instance_getAllForConcept(sConceptUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_instance_getAllForConcept, sEventId, oData);
+    }
+    
+    /**
      * @summary Method for getting instance
      * @startRealisation Sasa Stojanovic 06.09.2011.
      * @finalModification Sasa Stojanovic 06.09.2011.

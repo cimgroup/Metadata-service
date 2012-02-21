@@ -304,7 +304,8 @@ public class MetadataConstants {
     public static String c_XMLV_email = "email";
     
     public static String c_XMLV_personUri = "personUri";
-    
+    public static String c_XMLV_conceptUri = "conceptUri";
+
     // </editor-fold>
     
     // <editor-fold desc="API Call">
@@ -332,6 +333,7 @@ public class MetadataConstants {
     public static String c_XMLAC_post_getRelatedToKeyword = "post.getRelatedToKeyword";
     public static String c_XMLAC_wiki_getRelatedToIssue = "wiki.getRelatedToIssue";
     public static String c_XMLAC_wiki_getRelatedToKeyword = "wiki.getRelatedToKeyword";
+    public static String c_XMLAC_instance_getAllForConcept = "instance.getAllForConcept";
     
     // </editor-fold>
     
