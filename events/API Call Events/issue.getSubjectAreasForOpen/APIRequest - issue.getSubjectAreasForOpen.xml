@@ -27,14 +27,14 @@
 							<ns1:eventData>
 								<ns1:apiRequest>
 									<!-- name of method -->
-									<s2:apiCall>competency.getForPerson</s2:apiCall>
+									<s2:apiCall>issue.getSubjectAreasForOpen</s2:apiCall>
 									<s2:requestData>
 										<!-- input parameters -->
 										<s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>personUri</s2:name>
+											<s2:name>productUri</s2:name>
 											<!-- value of parameter -->
-											<s2:value>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s2:value>
+											<s2:value>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>
