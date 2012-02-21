@@ -232,11 +232,13 @@ public class MetadataConstants {
     public static String c_XMLE_concept = "concept";
     public static String c_XMLE_count = "count";
 
+    public static String c_XMLE_forumSensor = "forumSensor";
     public static String c_XMLE_forum = "forum";
     public static String c_XMLE_forumPost = "forumPost";
     public static String c_XMLE_thread = "thread";
     public static String c_XMLE_threadId = "threadId";
     public static String c_XMLE_forumId = "forumId";
+    public static String c_XMLE_forumName = "forumName";
     public static String c_XMLE_forumItemId = "forumItemId";
     public static String c_XMLE_postId = "postId";
     public static String c_XMLE_time = "time";
@@ -514,6 +516,7 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasThreads = "hasThreads";
     public static String c_OWLObjectProperty_HasAnnotations = "hasAnnotations";
     public static String c_OWLObjectProperty_HasConcepts = "hasConcepts";
+    public static String c_OWLObjectProperty_Author = "Author";
     
     public static String c_OWLObjectProperty_HasFile = "hasFile";
     public static String c_OWLObjectProperty_HasAction = "hasAction";

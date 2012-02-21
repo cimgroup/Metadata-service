@@ -5,10 +5,7 @@
 package MetadataCore;
 
 import MetadataCore.MetadataGlobal.AnnotationData;
-import MetadataObjects.Commit;
-import MetadataObjects.Issue;
-import MetadataObjects.NewForumPost;
-import MetadataObjects.foaf_Person;
+import MetadataObjects.*;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -103,7 +100,7 @@ public class MetadataModelTest {
     public void testSaveObjectNewForumPost() {
         System.out.println("* MetadataModelTest: SaveObjectNewForumPost");
         String sEventId = "";
-        NewForumPost oForumPost = null;
+        ForumPost oForumPost = null;
         MetadataModel.SaveObjectNewForumPost(sEventId, null, oForumPost);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

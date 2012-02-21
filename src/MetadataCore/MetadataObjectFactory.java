@@ -135,14 +135,14 @@ public class MetadataObjectFactory {
     /** 
      * @summary Method for creating new forum post.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @finalModification Sasa Stojanovic 21.02.2012
      * @return Bug object
      */
-    public static NewForumPost CreateNewForumPost()
+    public static ForumPost CreateNewForumPost()
     {
         try
         {
-            NewForumPost oForumPost = new NewForumPost();
+            ForumPost oForumPost = new ForumPost();
             return oForumPost;
         }
         catch(Exception e)

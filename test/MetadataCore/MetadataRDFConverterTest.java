@@ -348,32 +348,32 @@ public class MetadataRDFConverterTest {
     @Test
     public void testSaveForumPost() {
         System.out.println("* MetadataRDFConverterTest: SaveForumPost");
-        NewForumPost oForumPostNull = null;
-        NewForumPost expResult = null;
-        NewForumPost resultNull = MetadataRDFConverter.SaveForumPost(oForumPostNull);
+        ForumPost oForumPostNull = null;
+        ForumPost expResult = null;
+        ForumPost resultNull = MetadataRDFConverter.SaveForumPost(oForumPostNull);
         assertEquals(expResult, resultNull);
         
-        NewForumPost oForumPost = new NewForumPost();
+        ForumPost oForumPost = new ForumPost();
         oForumPost.m_sForumItemID = "3557";
-        oForumPost.m_oForum = new ForumEvent();
-        oForumPost.m_oForum.m_sID = "3558";
-        oForumPost.m_oForumThread = new NewForumThread();
-        oForumPost.m_oForumThread.m_sID = "3559";
+        oForumPost.m_oInForumThread = new ForumThread();
+        oForumPost.m_oInForumThread.m_sID = "3559";
+        oForumPost.m_oInForumThread.m_oInForum = new Forum();
+        oForumPost.m_oInForumThread.m_oInForum.m_sID = "3558";
         oForumPost.m_sID = "3560";
         oForumPost.m_dtmTime = new Date(112, 0, 16, 16, 31);
         oForumPost.m_sSubject = "This is a test subject for post";
         oForumPost.m_sBody = "This is a test body for post";
-        oForumPost.m_oHasAuthor = new foaf_Person();
-        oForumPost.m_oHasAuthor.m_sFirstName = "Angel";
-        oForumPost.m_oHasAuthor.m_sLastName = "Blue";
-        oForumPost.m_oHasAuthor.m_sID = "angel_blue_co2004@yahoo.com";
-        oForumPost.m_oHasAuthor.m_sEmail = "angel_blue_co2004@yahoo.com";
+        oForumPost.m_oAuthor = new foaf_Person();
+        oForumPost.m_oAuthor.m_sFirstName = "Angel";
+        oForumPost.m_oAuthor.m_sLastName = "Blue";
+        oForumPost.m_oAuthor.m_sID = "angel_blue_co2004@yahoo.com";
+        oForumPost.m_oAuthor.m_sEmail = "angel_blue_co2004@yahoo.com";
         oForumPost.m_sCategory = "xxxxxx";
-        NewForumPost result = MetadataRDFConverter.SaveForumPost(oForumPost);
+        ForumPost result = MetadataRDFConverter.SaveForumPost(oForumPost);
         assertNotNull(result);
         assertEquals(result.m_sObjectURI.isEmpty(), false);
-        assertEquals(result.m_oForum.m_sObjectURI.isEmpty(), false);
-        assertEquals(result.m_oForumThread.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oInForumThread.m_oInForum.m_sObjectURI.isEmpty(), false);
+        assertEquals(result.m_oInForumThread.m_sObjectURI.isEmpty(), false);
         //assertEquals(result.m_oHasAuthor.m_sObjectURI.isEmpty(), false);
         //assertEquals(expResult, result);
         

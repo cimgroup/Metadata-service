@@ -9,7 +9,7 @@
                     <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
                 </wsnt:ProducerReference>
                 <wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
                         <ns1:head>
                             <ns1:sender>METADATASERVICE</ns1:sender>
                             <ns1:timestamp>10003</ns1:timestamp>
@@ -24,34 +24,39 @@
                                 <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
-                                <keui>
+                                <r:forumSensor>
+                                    <!-- forum account id, specified by forum sensor -->
+                                    <r:forumSensorAccountId>0</r:forumSensorAccountId>
                                     <!-- forum item ID -->
-                                    <s1:forumItemId>1423</s1:forumItemId>
+                                    <r:forumItemId>1423</r:forumItemId>
                                     <!-- forum ID -->
-                                    <s1:forumId>3558</s1:forumId>
+                                    <r:forumId>3558</r:forumId>
+                                    <!-- forum name -->
+                                    <r:forumName>KDE Forums</r:forumName>
                                     <!-- thread ID -->
-                                    <s1:threadId>3559</s1:threadId>
+                                    <r:threadId>3559</r:threadId>
                                     <!-- post ID -->
-                                    <s1:postId>3560</s1:postId>
+                                    <r:postId>3560</r:postId>
                                     <!-- time -->
-                                    <s1:time>2011-04-15 10:55:57</s1:time>
+                                    <r:time>2011-04-15 10:55:57</r:time>
                                     <!-- subject -->
-                                    <s1:subject>This is a test subject for post</s1:subject>
+                                    <r:subject><![CDATA[Development :: Re:amaroK and Qt4]]></r:subject>
                                     <!-- body -->
-                                    <s1:body>This is a test body for post</s1:body>
+                                    <r:body><![CDATA[good. Now, where is a good place to start? Maybe to load up the amaroK source code in kdevelop, and start experimenting by touching it here and there?]]></r:body>
                                     <!-- author -->
-                                    <s1:author>
-					<s1:name>Angel Blue</s1:name>
-					<s1:id>angel_blue_co2004@yahoo.com</s1:id>
-                                        <s1:email>angel_blue_co2004@yahoo.com</s1:email>
-                                    </s1:author>
+                                    <r:author>
+                                        <r:name>Angel Blue</r:name>
+                                        <r:id>angel_blue_co2004@yahoo.com</r:id>
+                                        <r:email>angel_blue_co2004@yahoo.com</r:email>
+                                    </r:author>
                                     <!-- category -->
-                                    <s1:category>xxxxxx</s1:category>
-				</keui>
+                                    <r:category>Development</r:category>
+                                </r:forumSensor>
                                 <o:mdservice>
-                                    <o:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:forumPostUri>
+                                    <o:postUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:postUri>
                                     <o:threadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:threadUri>
                                     <o:forumUri>http://www.alert-project.eu/ontologies/alert.owl#forum1</o:forumUri>
+                                    <o:authorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:authorUri>
                                 </o:mdservice>
                             </ns1:eventData>
                         </ns1:payload>
