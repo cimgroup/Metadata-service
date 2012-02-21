@@ -117,7 +117,7 @@ public class MetadataObjectFactoryTest {
         System.out.println("* MetadataObjectFactoryTest: CreateNewForumPost");
         //NewForumPost expResult = null;
         //NewForumPost expResult = new NewForumPost();
-        NewForumPost result = MetadataObjectFactory.CreateNewForumPost();
+        ForumPost result = MetadataObjectFactory.CreateNewForumPost();
         assertNotNull(result);
         //assertEquals(expResult, result);
         // TO-DO review the generated test code and remove the default call to fail.

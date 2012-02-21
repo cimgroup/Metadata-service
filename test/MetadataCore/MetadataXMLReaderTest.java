@@ -23,6 +23,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 import MetadataObjects.Commit;
+import MetadataObjects.ForumPost;
 import MetadataObjects.NewForumPost;
 import MetadataObjects.Issue;
 
@@ -1426,21 +1427,21 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                                       "KEUI", "Metadata.forumPost.requestNew",
                                       "5748", "000000000");
-        NewForumPost resultNull = MetadataXMLReader.NewForumPostData(dDoc);
+        ForumPost resultNull = MetadataXMLReader.NewForumPostData(dDoc);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestNew",
                              "5748", "222222222");
-        NewForumPost resultEmpty = MetadataXMLReader.NewForumPostData(dDoc);
+        ForumPost resultEmpty = MetadataXMLReader.NewForumPostData(dDoc);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestNew",
                              "5748", "111111111");
-        NewForumPost result = MetadataXMLReader.NewForumPostData(dDoc);
+        ForumPost result = MetadataXMLReader.NewForumPostData(dDoc);
         assertNotNull(result);
         
         // TODO review the generated test code and remove the default call to fail.

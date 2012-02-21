@@ -129,7 +129,7 @@ public class MetadataModel {
      * @param eOriginalData - original data. 
      * @param oForumPost - forum post object.
      */
-    static void SaveObjectNewForumPost(String sEventId, Element eOriginalData, NewForumPost oForumPost)
+    static void SaveObjectNewForumPost(String sEventId, Element eOriginalData, ForumPost oForumPost)
     {
         oForumPost = MetadataRDFConverter.SaveForumPost(oForumPost);
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ForumPostNew_Stored, sEventId, eOriginalData, oForumPost);

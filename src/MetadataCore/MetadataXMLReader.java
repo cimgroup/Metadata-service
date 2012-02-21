@@ -1821,20 +1821,20 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new forum post event from XML.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.01.2012.
+     * @finalModification Sasa Stojanovic 21.02.2012.
      * @param dDoc - input XML document to read
-     * @return - returns NewForumPost object
+     * @return - returns ForumPost object
      */
-    public static NewForumPost NewForumPostData(Document dDoc)
+    public static ForumPost NewForumPostData(Document dDoc)
     {
         try
         {
             String sEventId = GetEventId(dDoc);
             Element eOriginalData = null;  //element for original data
+            
+            ForumPost oForumPost = MetadataObjectFactory.CreateNewForumPost();
 
-            NewForumPost oForumPost = MetadataObjectFactory.CreateNewForumPost();
-
-            NodeList nlForum = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_forum);   //getting node for tag forum
+            NodeList nlForum = dDoc.getElementsByTagName("r:" + MetadataConstants.c_XMLE_forumSensor);   //getting node for tag forum
 
             if (nlForum != null && nlForum.getLength() > 0)
             {
@@ -1842,43 +1842,44 @@ public class MetadataXMLReader {
                 eOriginalData = eForum;
                 
                 //forumItemID
-                oForumPost.m_sForumItemID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumItemId);
+                oForumPost.m_sForumItemID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumItemId);
                 
                 //forumID
-                oForumPost.m_oForum = new ForumEvent();
-                oForumPost.m_oForum.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumId);
-                //oForumPost.m_sForumID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_forumId);
+                oForumPost.m_oInForumThread = new ForumThread();
+                oForumPost.m_oInForumThread.m_oInForum = new Forum();
+                oForumPost.m_oInForumThread.m_oInForum.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumId);
+                
+                //forumName
+                oForumPost.m_oInForumThread.m_oInForum.m_sName = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumName);
 
                 //threadID
-                oForumPost.m_oForumThread = new NewForumThread();
-                oForumPost.m_oForumThread.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_threadId);
-                //oForumPost.m_sThreadID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_threadId);
+                oForumPost.m_oInForumThread.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_threadId);
 
                 //postID
-                oForumPost.m_sID = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_postId);
+                oForumPost.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_postId);
 
                 //time
-                oForumPost.m_dtmTime = MetadataGlobal.GetDateTime(GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_time));
+                oForumPost.m_dtmTime = MetadataGlobal.GetDateTime(GetValue(eForum, "r:" + MetadataConstants.c_XMLE_time));
 
                 //subject
-                oForumPost.m_sSubject = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_subject);
+                oForumPost.m_sSubject = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_subject);
 
                 //body
-                oForumPost.m_sBody = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_body);
+                oForumPost.m_sBody = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_body);
 
                 //author
-                NodeList nlAuthor = eForum.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_author);
+                NodeList nlAuthor = eForum.getElementsByTagName("r:" + MetadataConstants.c_XMLE_author);
                 if (nlAuthor != null && nlAuthor.getLength() > 0)
                 {
                     Element eAuthor = (Element) nlAuthor.item(0);
-                    oForumPost.m_oHasAuthor = GetPersonObject("s1:", eAuthor);
+                    oForumPost.m_oAuthor = GetPersonObject("r:", eAuthor);
                 }
                 
                 //category
-                oForumPost.m_sCategory = GetValue(eForum, "s1:" + MetadataConstants.c_XMLE_category);
+                oForumPost.m_sCategory = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_category);
             }
 
-            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s1:" + MetadataConstants.c_XMLE_keui);
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r:" + MetadataConstants.c_XMLE_forumSensor);
             MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
             
             return oForumPost;
