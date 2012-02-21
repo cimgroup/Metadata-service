@@ -831,7 +831,7 @@ public class MetadataRDFConverter {
                                             oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
                                             Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
 
-                                            //module name
+                                            //method name
                                             if (!oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName.isEmpty())
                                             {
                                                 DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
@@ -839,7 +839,7 @@ public class MetadataRDFConverter {
                                                 resMethod.addProperty(dtpName, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName);
                                             }
 
-                                            //module start line
+                                            //method start line
                                             if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine != -1)
                                             {
                                                 DatatypeProperty dtpStartLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine);
@@ -847,7 +847,7 @@ public class MetadataRDFConverter {
                                                 resMethod.addProperty(dtpStartLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine));
                                             }
 
-                                            //module end line
+                                            //method end line
                                             if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine != -1)
                                             {
                                                 DatatypeProperty dtpEndLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine);
