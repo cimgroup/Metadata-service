@@ -321,6 +321,32 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting subject for issue.
+     * @startRealisation  Dejan Milosavljevic 22.02.2012.
+     * @finalModification Dejan Milosavljevic 22.02.2012.
+     * @param sEventId - event id
+     * @param sIssueUri - issue uri
+     */
+    static void ac_issue_getSubjectAreas(String sEventId, String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getSubjectAreas(sIssueUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getSubjectAreas, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting subjects for all open issues for product.
+     * @startRealisation  Dejan Milosavljevic 22.02.2012.
+     * @finalModification Dejan Milosavljevic 22.02.2012.
+     * @param sEventId - event id
+     * @param sProductUri - product uri
+     */
+    static void ac_issue_getSubjectAreasForOpen(String sEventId, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getSubjectAreasForOpen(sProductUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getSubjectAreasForOpen, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting person info
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.

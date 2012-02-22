@@ -336,6 +336,8 @@ public class MetadataConstants {
     public static String c_XMLAC_wiki_getRelatedToIssue = "wiki.getRelatedToIssue";
     public static String c_XMLAC_wiki_getRelatedToKeyword = "wiki.getRelatedToKeyword";
     public static String c_XMLAC_instance_getAllForConcept = "instance.getAllForConcept";
+    public static String c_XMLAC_issue_getSubjectAreas = "issue.getSubjectAreas";
+    public static String c_XMLAC_issue_getSubjectAreasForOpen = "issue.getSubjectAreasForOpen";
     
     // </editor-fold>
     

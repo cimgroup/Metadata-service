@@ -864,6 +864,48 @@ public class MetadataXMLReader {
                     MetadataModel.ac_issue_getExplicitDuplicates(sEventId, sIssueUri);
                 }
                 
+                ///////////////////////////////// issue_getSubjectAreas /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getSubjectAreas))
+                {
+                    String sIssueUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
+                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getSubjectAreas(sEventId, sIssueUri);
+                }
+                
+                ///////////////////////////////// issue_getSubjectAreasForOpen /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getSubjectAreasForOpen))
+                {
+                    String sProductUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_productUri))
+                                sProductUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getSubjectAreasForOpen(sEventId, sProductUri);
+                }
+                
                 ///////////////////////////////// person_getInfo /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_person_getInfo))
                 {

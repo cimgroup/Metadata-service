@@ -640,19 +640,19 @@ public class MetadataRDFConverter {
             }
             //end has attachment 
             
-            //AlertEvent
-            String sEventUri;
-            if (bIsUpdate)
-            {
-                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
-            }
-            else
-            {
-                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
-            }
-            Resource resEvent = oModel.getResource(sEventUri);
-            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
-            resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
+//            //AlertEvent
+//            String sEventUri;
+//            if (bIsUpdate)
+//            {
+//                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
+//            }
+//            else
+//            {
+//                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
+//            }
+//            Resource resEvent = oModel.getResource(sEventUri);
+//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
+//            resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
 
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -885,11 +885,11 @@ public class MetadataRDFConverter {
                 }
             }
             
-            //AlertEvent
-            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_CommitEvent, "");
-            Resource resEvent = oModel.getResource(sEventUri);
-            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToCommit);
-            resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
+//            //AlertEvent
+//            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_CommitEvent, "");
+//            Resource resEvent = oModel.getResource(sEventUri);
+//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToCommit);
+//            resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
             
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -994,11 +994,11 @@ public class MetadataRDFConverter {
                 resMail.addProperty(dtpBody, oMail.m_sContent);
             }
             
-            //AlertEvent
-            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_MailEvent, "");
-            Resource resEvent = oModel.getResource(sEventUri);
-            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToMail);
-            resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
+//            //AlertEvent
+//            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_MailEvent, "");
+//            Resource resEvent = oModel.getResource(sEventUri);
+//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToMail);
+//            resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
             
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -1384,11 +1384,11 @@ public class MetadataRDFConverter {
                 }
             }
             
-            //AlertEvent
-            String sEventUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_PostEvent, "");
-            Resource resEvent = omModel.getResource(sEventUri);
-            ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
-            resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
+//            //AlertEvent
+//            String sEventUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_PostEvent, "");
+//            Resource resEvent = omModel.getResource(sEventUri);
+//            ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
+//            resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
@@ -2218,6 +2218,118 @@ public class MetadataRDFConverter {
                 oIssueUri.sData = qsIssue.get("?issueUri").toString();
 
                 oData.oData.add(oIssueUri);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getSubjectAreas
+     * @startRealisation  Dejan Milosavljevic 22.02.2012.
+     * @finalModification Dejan Milosavljevic 22.02.2012.
+     * @param sIssueUri - issue uri
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getSubjectAreas(String sIssueUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resBug = oModel.getOntResource(sIssueUri);
+            StmtIterator siProperties = resBug.listProperties();
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oIssueData = new MetadataGlobal.APIResponseData();
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL))
+                {
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueUrl;
+                    oIssueData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_id;
+                    oIssueData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description))
+                {
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                    oIssueData.sData = sStatement.getObject().toString();
+                }
+                
+                if (oIssueData.sReturnConfig != null)
+                    oData.oData.add(oIssueData);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getSubjectAreasForOpen
+     * @startRealisation  Dejan Milosavljevic 22.02.2012.
+     * @finalModification Dejan Milosavljevic 22.02.2012.
+     * @param sProductUri - product URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getSubjectAreasForOpen(String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
+            //String sStateOpenUri = MetadataConstants.c_OWLClass_Open;
+                    
+            String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
+                    + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
+                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState + "> <" + sStateOpenUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL + "> ?issueUrl ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription . }";
+            
+//            String sQuery = "SELECT ?issueUri WHERE "
+//                    + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
+//                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
+//                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState + "> <" + sStateOpenUri + "> . }";
+            
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssue = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUrl = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueId = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueDescription = new MetadataGlobal.APIResponseData();
+                
+                oIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUrl.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueUrl;
+                oIssueId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
+                oIssueDescription.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                oIssueUrl.sData = qsIssue.get("?issueUrl").toString();
+                oIssueId.sData = qsIssue.get("?issueId").toString();
+                oIssueDescription.sData = qsIssue.get("?issueDescription").toString();
+                
+                oIssue.oData.add(oIssueUri);
+                oIssue.oData.add(oIssueUrl);
+                oIssue.oData.add(oIssueId);
+                oIssue.oData.add(oIssueDescription);   
+                oData.oData.add(oIssue);
             }
         }
         catch (Exception e)
