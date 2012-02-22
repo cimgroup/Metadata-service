@@ -2287,7 +2287,6 @@ public class MetadataRDFConverter {
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
-            //String sStateOpenUri = MetadataConstants.c_OWLClass_Open;
                     
             String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
@@ -2296,12 +2295,7 @@ public class MetadataRDFConverter {
                     + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
                     + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL + "> ?issueUrl ."
                     + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription . }";
-            
-//            String sQuery = "SELECT ?issueUri WHERE "
-//                    + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
-//                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
-//                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState + "> <" + sStateOpenUri + "> . }";
-            
+                        
             ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
             while (rsIssue.hasNext())
