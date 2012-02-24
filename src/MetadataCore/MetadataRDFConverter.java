@@ -2871,6 +2871,141 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary file_getAll
+     * @startRealisation  Dejan Milosavljevic 23.02.2012.
+     * @finalModification Dejan Milosavljevic 23.02.2012.
+     * @param sKeyword - keyword to search for
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_file_getAll(String sOffset, String sCount)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            //if files exist in ontology
+            String sQuery = "SELECT ?fileUri WHERE "
+                    + "{?fileUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_File + ">} "
+                    + "ORDER BY ?fileUri "
+                    + "LIMIT " + sCount + " OFFSET " + sOffset;
+                            
+            ResultSet rsFile = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            MetadataGlobal.APIResponseData oFiles = new MetadataGlobal.APIResponseData();
+            oFiles.sReturnConfig = "s3:files/";
+            
+            while (rsFile.hasNext())
+            {
+                QuerySolution qsFile = rsFile.nextSolution();
+                String sFileUri = qsFile.get("?fileUri").toString();
+                OntResource resFile = oModel.getOntResource(sFileUri);
+                
+                MetadataGlobal.APIResponseData oFile = new MetadataGlobal.APIResponseData();
+                oFile.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + "/";
+                
+                MetadataGlobal.APIResponseData oFileUri = new MetadataGlobal.APIResponseData();
+                oFileUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
+                oFileUri.sData = sFileUri;
+                oFile.oData.add(oFileUri);
+                
+                //MetadataGlobal.APIResponseData oModules = new MetadataGlobal.APIResponseData();
+                //oModules.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
+                
+                StmtIterator siProperties = resFile.listProperties();
+                while (siProperties.hasNext())
+                {
+                    Statement sStatement = siProperties.next();
+                    String sProperty = sStatement.getPredicate().getURI();
+                    
+                    //File name
+                    if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                    {
+                        MetadataGlobal.APIResponseData oFileName = new MetadataGlobal.APIResponseData();
+                        oFileName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_name;
+                        oFileName.sData = sStatement.getObject().toString();
+                        oFile.oData.add(oFileName);
+                    }
+                    
+                    //Modules
+                    if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules))
+                    {
+                        MetadataGlobal.APIResponseData oModule = new MetadataGlobal.APIResponseData();
+                        oModule.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
+                        
+                        //Load module data
+                        String sModuleUri = sStatement.getObject().toString();
+                        OntResource resModule = oModel.getOntResource(sModuleUri);
+                        
+                        MetadataGlobal.APIResponseData oMUri = new MetadataGlobal.APIResponseData();
+                        oMUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
+                        oMUri.sData = sModuleUri;
+                        oModule.oData.add(oMUri);
+                                
+                        StmtIterator siModuleProps = resModule.listProperties();
+                        while (siModuleProps.hasNext())
+                        {
+                            Statement sMStatement = siModuleProps.next();
+                            String sMProperty = sMStatement.getPredicate().getURI();
+   
+                            if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                            {
+                                MetadataGlobal.APIResponseData oMName = new MetadataGlobal.APIResponseData();
+                                oMName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
+                                oMName.sData = sMStatement.getObject().toString();
+                                oModule.oData.add(oMName);
+                            }
+                            
+                            //Methods
+                            if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods))
+                            {
+                                MetadataGlobal.APIResponseData oMethods = new MetadataGlobal.APIResponseData();
+                                oMethods.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleMethods + "/";
+                                
+                                //Load method data
+                                String sMethodUri = sMStatement.getObject().toString();
+                                
+                                OntResource resMethod = oModel.getOntResource(sMethodUri);
+                                MetadataGlobal.APIResponseData oMetUri = new MetadataGlobal.APIResponseData();
+                                oMetUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                oMetUri.sData = sMethodUri;
+                                oMethods.oData.add(oMetUri);
+                        
+                                StmtIterator siMethodProps = resMethod.listProperties();
+                                while (siMethodProps.hasNext())
+                                {
+                                    Statement sMetStatement = siMethodProps.next();
+                                    String sMetProperty = sMetStatement.getPredicate().getURI();
+                                    if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                                    {
+                                        MetadataGlobal.APIResponseData oMetName = new MetadataGlobal.APIResponseData();
+                                        oMetName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
+                                        oMetName.sData = sMetStatement.getObject().toString();
+                                        oMethods.oData.add(oMetName);
+                                    }
+                                }
+                                
+                                oModule.oData.add(oMethods);
+                            }
+                        }
+                        
+                        oFile.oData.add(oModule);
+                    }
+                }
+                
+                oFiles.oData.add(oFile);
+            }
+            
+            oData.oData.add(oFiles);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
      * @summary mail_getRelatedToKeyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.

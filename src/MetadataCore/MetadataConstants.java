@@ -307,6 +307,9 @@ public class MetadataConstants {
     
     public static String c_XMLV_personUri = "personUri";
     public static String c_XMLV_conceptUri = "conceptUri";
+    
+    public static String c_XMLV_offset = "offset";
+    public static String c_XMLV_count = "count";
 
     // </editor-fold>
     
@@ -325,6 +328,8 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getInfo = "issue.getInfo";
     public static String c_XMLAC_issue_getRelatedToIssue = "issue.getRelatedToIssue";
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
+    public static String c_XMLAC_issue_getSubjectAreas = "issue.getSubjectAreas";
+    public static String c_XMLAC_issue_getSubjectAreasForOpen = "issue.getSubjectAreasForOpen";
     public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
     public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
     public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
@@ -336,8 +341,7 @@ public class MetadataConstants {
     public static String c_XMLAC_wiki_getRelatedToIssue = "wiki.getRelatedToIssue";
     public static String c_XMLAC_wiki_getRelatedToKeyword = "wiki.getRelatedToKeyword";
     public static String c_XMLAC_instance_getAllForConcept = "instance.getAllForConcept";
-    public static String c_XMLAC_issue_getSubjectAreas = "issue.getSubjectAreas";
-    public static String c_XMLAC_issue_getSubjectAreasForOpen = "issue.getSubjectAreasForOpen";
+    public static String c_XMLAC_file_getAll = "file.getAll";
     
     // </editor-fold>
     

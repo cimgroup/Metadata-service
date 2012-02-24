@@ -468,6 +468,20 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting all file data
+     * @startRealisation  Dejan Milosavljevic 23.02.2012.
+     * @finalModification Dejan Milosavljevic 23.02.2012.
+     * @param sEventId - event id
+     * @param sOffset - offset for the file list
+     * @param sCount - number of files from ofset position
+     */
+    static void ac_file_getAll(String sEventId, String sOffset, String sCount)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_file_getAll(sOffset, sCount);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_file_getAll, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting emails related to keyword
      * @startRealisation Sasa Stojanovic 17.01.2012.
      * @finalModification Sasa Stojanovic 17.01.2012.

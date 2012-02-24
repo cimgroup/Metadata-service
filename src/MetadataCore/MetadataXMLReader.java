@@ -1104,6 +1104,30 @@ public class MetadataXMLReader {
                     MetadataModel.ac_commit_getRelatedToKeyword(sEventId, sKeyword);
                 }
                 
+                ///////////////////////////////// file_getAll /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_file_getAll))
+                {
+                    String sOffset = "";
+                    String sCount = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_offset))
+                                sOffset = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_count))
+                                sCount = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_file_getAll(sEventId, sOffset, sCount);
+                }
+                
                 ///////////////////////////////// email_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_email_getRelatedToKeyword))
                 {
