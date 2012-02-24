@@ -33,10 +33,16 @@
 						<s3:name></s3:name>
                                                 <s3:fileModules>
                                                     <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module3</s3:moduleUri>
+                                                    <s3:moduleId>2111</s3:moduleId>
                                                     <s3:moduleName>Mod2111</s3:moduleName>
+                                                    <s3:moduleStartLine>300</s3:moduleStartLine>
+                                                    <s3:moduleEndLine>399</s3:moduleEndLine>
                                                     <s3:moduleMethods>
-                                                        <s3:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method4</s3:methodUri>
+                                                        <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method4</s3:methodUri>
+                                                        <s3:methodId>211</s3:methodId>
                                                         <s3:methodName>Meth211</s3:methodName>
+                                                        <s3:methodStartLine>300</s3:methodStartLine>
+                                                        <s3:methodEndLine>399</s3:methodEndLine>
                                                     </s3:moduleMethods>
                                                 </s3:fileModules>
                                             </s3:file>

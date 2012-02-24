@@ -2947,13 +2947,41 @@ public class MetadataRDFConverter {
                         {
                             Statement sMStatement = siModuleProps.next();
                             String sMProperty = sMStatement.getPredicate().getURI();
-   
+                            
+                            //ID
+                            if (sMProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                            {
+                                MetadataGlobal.APIResponseData oMID = new MetadataGlobal.APIResponseData();
+                                oMID.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id;
+                                oMID.sData = sMStatement.getObject().toString();
+                                oModule.oData.add(oMID);
+                            }
+                            
+                            //Name
                             if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
                             {
                                 MetadataGlobal.APIResponseData oMName = new MetadataGlobal.APIResponseData();
                                 oMName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
                                 oMName.sData = sMStatement.getObject().toString();
                                 oModule.oData.add(oMName);
+                            }
+                            
+                            //Start line
+                            if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                            {
+                                MetadataGlobal.APIResponseData oMStartLine = new MetadataGlobal.APIResponseData();
+                                oMStartLine.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleStartLine;
+                                oMStartLine.sData = sMStatement.getObject().toString();
+                                oModule.oData.add(oMStartLine);
+                            }
+                            
+                            //End line
+                            if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                            {
+                                MetadataGlobal.APIResponseData oMEndtLine = new MetadataGlobal.APIResponseData();
+                                oMEndtLine.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleEndLine;
+                                oMEndtLine.sData = sMStatement.getObject().toString();
+                                oModule.oData.add(oMEndtLine);
                             }
                             
                             //Methods
@@ -2976,12 +3004,41 @@ public class MetadataRDFConverter {
                                 {
                                     Statement sMetStatement = siMethodProps.next();
                                     String sMetProperty = sMetStatement.getPredicate().getURI();
+                                    
+                                    //ID
+                                    if (sMetProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                    {
+                                        MetadataGlobal.APIResponseData oMetID = new MetadataGlobal.APIResponseData();
+                                        oMetID.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id;
+                                        oMetID.sData = sMetStatement.getObject().toString();
+                                        oMethods.oData.add(oMetID);
+                                    }
+                                    
+                                    //Name
                                     if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
                                     {
                                         MetadataGlobal.APIResponseData oMetName = new MetadataGlobal.APIResponseData();
                                         oMetName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
                                         oMetName.sData = sMetStatement.getObject().toString();
                                         oMethods.oData.add(oMetName);
+                                    }
+                                    
+                                    //Start line
+                                    if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                                    {
+                                        MetadataGlobal.APIResponseData oMetStartLine = new MetadataGlobal.APIResponseData();
+                                        oMetStartLine.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodStartLine;
+                                        oMetStartLine.sData = sMetStatement.getObject().toString();
+                                        oMethods.oData.add(oMetStartLine);
+                                    }
+
+                                    //End line
+                                    if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                                    {
+                                        MetadataGlobal.APIResponseData oMetEndtLine = new MetadataGlobal.APIResponseData();
+                                        oMetEndtLine.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodEndLine;
+                                        oMetEndtLine.sData = sMetStatement.getObject().toString();
+                                        oMethods.oData.add(oMetEndtLine);
                                     }
                                 }
                                 
