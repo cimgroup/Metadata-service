@@ -587,6 +587,12 @@ public class MetadataConstants {
     // </editor-fold>
     
     // <editor-fold desc="Constants">
+    
+    /** 
+     * @summary Enum for person role
+     * @startRealisation Sasa Stojanovic 04.02.2012.
+     * @finalModification Sasa Stojanovic 04.02.2012.
+     */
     public static enum PersonRole {
         CommunityManagerFacilitator,
         Designer,
