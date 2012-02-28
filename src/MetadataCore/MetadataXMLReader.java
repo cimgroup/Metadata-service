@@ -191,36 +191,36 @@ public class MetadataXMLReader {
                 }           
                 
                 String sIssueState = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueStatus);
-                if (sIssueState.equals("Assigned"))
+                if (sIssueState.equalsIgnoreCase("Assigned"))
                     oIssue.m_oHasState = new Assigned();
-                if (sIssueState.equals("Open"))
+                if (sIssueState.equalsIgnoreCase("Open"))
                     oIssue.m_oHasState = new Open();
-                if (sIssueState.equals("Verified"))
+                if (sIssueState.equalsIgnoreCase("Verified"))
                     oIssue.m_oHasState = new Verified();
-                if (sIssueState.equals("Resolved"))
+                if (sIssueState.equalsIgnoreCase("Resolved"))
                     oIssue.m_oHasState = new Resolved();
-                if (sIssueState.equals("Closed"))
+                if (sIssueState.equalsIgnoreCase("Closed"))
                     oIssue.m_oHasState = new Closed();
 
                 //if (oIssue.m_oHasState != null)
                 //    oIssue.m_oHasState.m_oIsStateOf = oIssue;
 
                 String sIssueResolution = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueResolution);
-                if (sIssueResolution.equals("Duplicate"))
+                if (sIssueResolution.equalsIgnoreCase("Duplicate"))
                     oIssue.m_oHasResolution = new Duplicate();
-                if (sIssueResolution.equals("Fixed"))
+                if (sIssueResolution.equalsIgnoreCase("Fixed"))
                     oIssue.m_oHasResolution = new Fixed();
-                if (sIssueResolution.equals("Invalid"))
+                if (sIssueResolution.equalsIgnoreCase("Invalid"))
                     oIssue.m_oHasResolution = new Invalid();
-                if (sIssueResolution.equals("ThirdParty"))
+                if (sIssueResolution.equalsIgnoreCase("ThirdParty"))
                     oIssue.m_oHasResolution = new ThirdParty();
-                if (sIssueResolution.equals("WontFix"))
+                if (sIssueResolution.equalsIgnoreCase("WontFix"))
                     oIssue.m_oHasResolution = new WontFix();
-                if (sIssueResolution.equals("WorksForMe"))
+                if (sIssueResolution.equalsIgnoreCase("WorksForMe"))
                     oIssue.m_oHasResolution = new WorksForMe();
-                if (sIssueResolution.equals("Later"))
+                if (sIssueResolution.equalsIgnoreCase("Later"))
                     oIssue.m_oHasResolution = new Later();
-                if (sIssueResolution.equals("Remind"))
+                if (sIssueResolution.equalsIgnoreCase("Remind"))
                     oIssue.m_oHasResolution = new Remind();
 
                 oIssue.m_sDescription = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueDescription);
@@ -258,15 +258,15 @@ public class MetadataXMLReader {
 
 
                 String sIssueSeverity = GetValue(eIssue, "s:" + MetadataConstants.c_XMLE_issueSeverity);
-                if (sIssueSeverity.equals("Blocker"))
+                if (sIssueSeverity.equalsIgnoreCase("Blocker"))
                     oIssue.m_oHasSeverity = new Blocker();
-                if (sIssueSeverity.equals("Critical"))
+                if (sIssueSeverity.equalsIgnoreCase("Critical"))
                     oIssue.m_oHasSeverity = new Critical();
-                if (sIssueSeverity.equals("Major"))
+                if (sIssueSeverity.equalsIgnoreCase("Major"))
                     oIssue.m_oHasSeverity = new Major();
-                if (sIssueSeverity.equals("Minor"))
+                if (sIssueSeverity.equalsIgnoreCase("Minor"))
                     oIssue.m_oHasSeverity = new Minor();
-                if (sIssueSeverity.equals("Trivial"))
+                if (sIssueSeverity.equalsIgnoreCase("Trivial"))
                     oIssue.m_oHasSeverity = new Trivial();
 
                 NodeList nlAssignee = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueAssignedTo);   //getting node for tag issueAssignedTo
@@ -537,17 +537,17 @@ public class MetadataXMLReader {
                         oCommit.m_oHasFile[i].m_sID = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Id);
                         
                         String sFileAction = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileAction);
-                        if (sFileAction.equals("Add"))
+                        if (sFileAction.equalsIgnoreCase("Add"))
                             oCommit.m_oHasFile[i].m_oHasAction = new AddFile();
-                        if (sFileAction.equals("Copy"))
+                        if (sFileAction.equalsIgnoreCase("Copy"))
                             oCommit.m_oHasFile[i].m_oHasAction = new CopyFile();
-                        if (sFileAction.equals("Delete"))
+                        if (sFileAction.equalsIgnoreCase("Delete"))
                             oCommit.m_oHasFile[i].m_oHasAction = new DeleteFile();
-                        if (sFileAction.equals("Modify"))
+                        if (sFileAction.equalsIgnoreCase("Modify"))
                             oCommit.m_oHasFile[i].m_oHasAction = new ModifyFile();
-                        if (sFileAction.equals("Rename"))
+                        if (sFileAction.equalsIgnoreCase("Rename"))
                             oCommit.m_oHasFile[i].m_oHasAction = new RenameFile();
-                        if (sFileAction.equals("Replace"))
+                        if (sFileAction.equalsIgnoreCase("Replace"))
                             oCommit.m_oHasFile[i].m_oHasAction = new ReplaceFile();
                         
                         oCommit.m_oHasFile[i].m_sBranch = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileBranch);

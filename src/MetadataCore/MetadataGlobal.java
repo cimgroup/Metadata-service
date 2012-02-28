@@ -260,6 +260,47 @@ public class MetadataGlobal {
         }
     }
     
+    /**
+     * @summary Get next id for saving
+     * @startRealisation Sasa Stojanovic 31.10.2011.
+     * @finalModification Sasa Stojanovic 31.10.2011.
+     * @param omModel - ontology model
+     * @param ocClass - ontology class
+     * @param sID - id of member
+     * @return object URI
+     */
+    public static boolean IsItNew(OntModel omModel, String sClassURI, String sID)
+    {
+        try
+        {
+            boolean bNew = false;
+            
+            if (sID != null && !sID.isEmpty())
+            {
+                String sQuery = "SELECT ?uri WHERE "
+                        + "{?uri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sID + "\" . "
+                        + "?uri a <" + sClassURI + ">}";
+
+                QueryExecution qeURI = QueryExecutionFactory.create(sQuery, omModel);
+                ResultSet rsURI = qeURI.execSelect();
+                              
+                if (!rsURI.hasNext())
+                {
+                    bNew = true;
+                }
+                
+                qeURI.close();
+            }
+            else
+                bNew = true;
+            
+            return bNew;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
 
     /**
      * @summary Get Date from String

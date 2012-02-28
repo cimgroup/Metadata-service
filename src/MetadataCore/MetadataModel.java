@@ -240,15 +240,15 @@ public class MetadataModel {
     {
         OntModelSpec oOntModelSpec = OntModelSpec.OWL_MEM;
         
-        if (sOntModelSpec.equals("OWL_MEM_MICRO_RULE_INF"))
+        if (sOntModelSpec.equalsIgnoreCase("OWL_MEM_MICRO_RULE_INF"))
             oOntModelSpec = OntModelSpec.OWL_MEM_MICRO_RULE_INF;
-        if (sOntModelSpec.equals("OWL_MEM_MINI_RULE_INF"))
+        if (sOntModelSpec.equalsIgnoreCase("OWL_MEM_MINI_RULE_INF"))
             oOntModelSpec = OntModelSpec.OWL_MEM_MINI_RULE_INF;
-        if (sOntModelSpec.equals("OWL_MEM_RDFS_INF"))
+        if (sOntModelSpec.equalsIgnoreCase("OWL_MEM_RDFS_INF"))
             oOntModelSpec = OntModelSpec.OWL_MEM_RDFS_INF;
-        if (sOntModelSpec.equals("OWL_MEM_RULE_INF"))
+        if (sOntModelSpec.equalsIgnoreCase("OWL_MEM_RULE_INF"))
             oOntModelSpec = OntModelSpec.OWL_MEM_RULE_INF;
-        if (sOntModelSpec.equals("OWL_MEM_TRANS_INF"))
+        if (sOntModelSpec.equalsIgnoreCase("OWL_MEM_TRANS_INF"))
             oOntModelSpec = OntModelSpec.OWL_MEM_TRANS_INF;
                 
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_sparql(sSPARQL, oOntModelSpec);       
