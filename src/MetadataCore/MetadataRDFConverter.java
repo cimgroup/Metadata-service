@@ -54,7 +54,8 @@ public class MetadataRDFConverter {
      */
     public static Issue SaveIssue(Issue oIssue, boolean bIsUpdate)
     {
-        try {
+        try 
+        {
             
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
