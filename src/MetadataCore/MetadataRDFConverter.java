@@ -47,615 +47,622 @@ public class MetadataRDFConverter {
 
     /**
      * @summary Save issue data
-     * @startRealisation  Ivan Obradovic      31.08.2011.
-     * @finalModification Dejan Milosavljevic 21.02.2012.
+     * @startRealisation  Ivan Obradovic  31.08.2011.
+     * @finalModification Sasa Stojanovic 28.02.2012.
      * @param oIssue - issue object with data
      * @return issue object with uri-s
      */
     public static Issue SaveIssue(Issue oIssue, boolean bIsUpdate)
     {
-        try {
-            
+        try 
+        {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
-            oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
-            Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
-            oIssue.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+            //chech if issue with given id alredy exists
+            boolean bNew = MetadataGlobal.IsItNew(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
+            
+            //if it's new issue event and issue with that id already exists, do nothing
+            if (bNew || bIsUpdate)
+            {
+                oIssue.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
+                Resource resBug = oModel.getResource(oIssue.m_sObjectURI);
+                oIssue.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
 
-            //already done in GetObjectURI method
-            //bug id
-            //if (!oIssue.m_sID.isEmpty())
-            //{
-            //    DatatypeProperty dtpBugId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
-            //    resBug.addProperty(dtpBugId, oIssue.m_sID);
-            //}
-            
-            //bug url
-            if (!oIssue.m_sBugURL.isEmpty())
-            {
-                DatatypeProperty dtpBugUrl = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL);
-                resBug.removeAll(dtpBugUrl);
-                resBug.addProperty(dtpBugUrl, oIssue.m_sBugURL);
-            }
-            
-            //date opened
-            if (oIssue.m_dtmDateOpened != null)
-            {
-                DatatypeProperty dtpBugOpend = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened);
-                resBug.removeAll(dtpBugOpend);
-                resBug.addProperty(dtpBugOpend, oIssue.m_dtmDateOpened.toString());
-            }
-            
-            //Description
-            if (!oIssue.m_sDescription.isEmpty())
-            {
-                DatatypeProperty dtpBugDescription = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description);
-                resBug.removeAll(dtpBugDescription);
-                resBug.addProperty(dtpBugDescription, oIssue.m_sDescription);
-            }
-            
-            //Keyword
-            if (!oIssue.m_sKeyword.isEmpty())
-            {
-                DatatypeProperty dtpBugKeyword = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Keyword);
-                resBug.removeAll(dtpBugKeyword);
-                resBug.addProperty(dtpBugKeyword, oIssue.m_sKeyword);
-            }
-            
-            //Last Modified
-            if (oIssue.m_dtmLastModified != null)
-            {
-                DatatypeProperty dtpBugLastModified = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified);
-                resBug.removeAll(dtpBugLastModified);
-                resBug.addProperty(dtpBugLastModified, oIssue.m_dtmLastModified.toString());
-            }
-            
-            //Number
-            if (oIssue.m_iNumber != null)
-            {
-                DatatypeProperty dtpBugNumber = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number);
-                resBug.removeAll(dtpBugNumber);
-                resBug.addProperty(dtpBugNumber, oIssue.m_iNumber.toString());
-            }
-            
-            //Blocks
-            if (oIssue.m_oBlocks != null)
-            {
-                ObjectProperty opBlocks = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_Blocks);
-                for (int i = 0; i < oIssue.m_oBlocks.length; i++)
+                //already done in GetObjectURI method
+                //bug id
+                //if (!oIssue.m_sID.isEmpty())
+                //{
+                //    DatatypeProperty dtpBugId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
+                //    resBug.addProperty(dtpBugId, oIssue.m_sID);
+                //}
+
+                //bug url
+                if (!oIssue.m_sBugURL.isEmpty())
                 {
-                    if (oIssue.m_oBlocks[i] != null && !oIssue.m_oBlocks[i].m_sID.isEmpty())
+                    DatatypeProperty dtpBugUrl = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL);
+                    resBug.removeAll(dtpBugUrl);
+                    resBug.addProperty(dtpBugUrl, oIssue.m_sBugURL);
+                }
+
+                //date opened
+                if (oIssue.m_dtmDateOpened != null)
+                {
+                    DatatypeProperty dtpBugOpend = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened);
+                    resBug.removeAll(dtpBugOpend);
+                    resBug.addProperty(dtpBugOpend, oIssue.m_dtmDateOpened.toString());
+                }
+
+                //Description
+                if (!oIssue.m_sDescription.isEmpty())
+                {
+                    DatatypeProperty dtpBugDescription = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description);
+                    resBug.removeAll(dtpBugDescription);
+                    resBug.addProperty(dtpBugDescription, oIssue.m_sDescription);
+                }
+
+                //Keyword
+                if (!oIssue.m_sKeyword.isEmpty())
+                {
+                    DatatypeProperty dtpBugKeyword = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Keyword);
+                    resBug.removeAll(dtpBugKeyword);
+                    resBug.addProperty(dtpBugKeyword, oIssue.m_sKeyword);
+                }
+
+                //Last Modified
+                if (oIssue.m_dtmLastModified != null)
+                {
+                    DatatypeProperty dtpBugLastModified = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified);
+                    resBug.removeAll(dtpBugLastModified);
+                    resBug.addProperty(dtpBugLastModified, oIssue.m_dtmLastModified.toString());
+                }
+
+                //Number
+                if (oIssue.m_iNumber != null)
+                {
+                    DatatypeProperty dtpBugNumber = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number);
+                    resBug.removeAll(dtpBugNumber);
+                    resBug.addProperty(dtpBugNumber, oIssue.m_iNumber.toString());
+                }
+
+                //Blocks
+                if (oIssue.m_oBlocks != null)
+                {
+                    ObjectProperty opBlocks = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_Blocks);
+                    for (int i = 0; i < oIssue.m_oBlocks.length; i++)
                     {
-                        if (!oIssue.m_oBlocks[i].m_bRemoved)
+                        if (oIssue.m_oBlocks[i] != null && !oIssue.m_oBlocks[i].m_sID.isEmpty())
                         {
-                            oIssue.m_oBlocks[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oBlocks[i].m_sID);
-                            Resource resBlocks = oModel.getResource(oIssue.m_oBlocks[i].m_sObjectURI);
-                            resBug.addProperty(opBlocks, resBlocks.asResource());
-                            oIssue.m_oBlocks[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Uri;
-                        }
-                        else
-                        {
-                            String sBlocksRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oBlocks[i].m_sID);
-                            Resource resBlocksRemove = oModel.getResource(sBlocksRemoveURI);
-                            oModel.removeAll(resBug, opBlocks, resBlocksRemove);
+                            if (!oIssue.m_oBlocks[i].m_bRemoved)
+                            {
+                                oIssue.m_oBlocks[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oBlocks[i].m_sID);
+                                Resource resBlocks = oModel.getResource(oIssue.m_oBlocks[i].m_sObjectURI);
+                                resBug.addProperty(opBlocks, resBlocks.asResource());
+                                oIssue.m_oBlocks[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Uri;
+                            }
+                            else
+                            {
+                                String sBlocksRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oBlocks[i].m_sID);
+                                Resource resBlocksRemove = oModel.getResource(sBlocksRemoveURI);
+                                oModel.removeAll(resBug, opBlocks, resBlocksRemove);
+                            }
                         }
                     }
                 }
-            }
 
-            //DependsOn
-            if (oIssue.m_oDependsOn != null)
-            {
-                ObjectProperty opDependsOn = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_DependsOn);
-                for (int i = 0; i < oIssue.m_oDependsOn.length; i++)
+                //DependsOn
+                if (oIssue.m_oDependsOn != null)
                 {
-                    if (oIssue.m_oDependsOn[i] != null && !oIssue.m_oDependsOn[i].m_sID.isEmpty())
+                    ObjectProperty opDependsOn = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_DependsOn);
+                    for (int i = 0; i < oIssue.m_oDependsOn.length; i++)
                     {
-                        if (!oIssue.m_oDependsOn[i].m_bRemoved)
+                        if (oIssue.m_oDependsOn[i] != null && !oIssue.m_oDependsOn[i].m_sID.isEmpty())
                         {
-                            oIssue.m_oDependsOn[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oDependsOn[i].m_sID);
-                            Resource resDependsOn = oModel.getResource(oIssue.m_oDependsOn[i].m_sObjectURI);
-                            resBug.addProperty(opDependsOn, resDependsOn.asResource());
-                            oIssue.m_oDependsOn[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Uri;
-                        }
-                        else
-                        {
-                            String sDependsOnRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oDependsOn[i].m_sID);
-                            Resource resDependsOnRemove = oModel.getResource(sDependsOnRemoveURI);
-                            oModel.removeAll(resBug, opDependsOn, resDependsOnRemove);
+                            if (!oIssue.m_oDependsOn[i].m_bRemoved)
+                            {
+                                oIssue.m_oDependsOn[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oDependsOn[i].m_sID);
+                                Resource resDependsOn = oModel.getResource(oIssue.m_oDependsOn[i].m_sObjectURI);
+                                resBug.addProperty(opDependsOn, resDependsOn.asResource());
+                                oIssue.m_oDependsOn[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Uri;
+                            }
+                            else
+                            {
+                                String sDependsOnRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oDependsOn[i].m_sID);
+                                Resource resDependsOnRemove = oModel.getResource(sDependsOnRemoveURI);
+                                oModel.removeAll(resBug, opDependsOn, resDependsOnRemove);
+                            }
                         }
                     }
                 }
-            }
-            
-            //HasReporter
-            if (oIssue.m_oHasReporter != null && !oIssue.m_oHasReporter.m_sID.isEmpty())
-            {
-                SavePersonData(oIssue.m_oHasReporter, oModel);
-                ObjectProperty opHasReporter = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasReporter);
-                Resource resHasReporter = oModel.getResource(oIssue.m_oHasReporter.m_sObjectURI);
-                resBug.removeAll(opHasReporter);
-                resBug.addProperty(opHasReporter, resHasReporter.asResource());
-                oIssue.m_oHasReporter.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAuthor + MetadataConstants.c_XMLE_Uri;
-            }
 
-            //HasState
-            if (oIssue.m_oHasState != null)
-            {
-                ObjectProperty opHasState = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState);
-                resBug.removeAll(opHasState);
-                
-                Class clsHasState = oIssue.m_oHasState.getClass();
+                //HasReporter
+                if (oIssue.m_oHasReporter != null && !oIssue.m_oHasReporter.m_sID.isEmpty())
+                {
+                    SavePersonData(oIssue.m_oHasReporter, oModel);
+                    ObjectProperty opHasReporter = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasReporter);
+                    Resource resHasReporter = oModel.getResource(oIssue.m_oHasReporter.m_sObjectURI);
+                    resBug.removeAll(opHasReporter);
+                    resBug.addProperty(opHasReporter, resHasReporter.asResource());
+                    oIssue.m_oHasReporter.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAuthor + MetadataConstants.c_XMLE_Uri;
+                }
 
-                Class clsAssigned = Assigned.class;
-                Class clsOpen= Open.class;
-                Class clsVerified = Verified.class;
-                Class clsResolved = Resolved.class;
-                Class clsClosed = Closed.class;
+                //HasState
+                if (oIssue.m_oHasState != null)
+                {
+                    ObjectProperty opHasState = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState);
+                    resBug.removeAll(opHasState);
 
-                if (clsHasState.equals(clsAssigned))
-                {
-                    OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Assigned);
-                    resBug.addProperty(opHasState, ocHasState.asResource());
-                }
-                if (clsHasState.equals(clsOpen))
-                {
-                    OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open);
-                    resBug.addProperty(opHasState, ocHasState.asResource());
-                }
-                if (clsHasState.equals(clsVerified))
-                {
-                    OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Verified);
-                    resBug.addProperty(opHasState, ocHasState.asResource());
-                }
-                if (clsHasState.equals(clsResolved))
-                {
-                    OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Resolved);
-                    resBug.addProperty(opHasState, ocHasState.asResource());
-                }
-                if (clsHasState.equals(clsClosed))
-                {
-                    OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Closed);
-                    resBug.addProperty(opHasState, ocHasState.asResource());
-                }
-            }
-            //end has state
-            
-            
-            //HasResolution
-            if (oIssue.m_oHasResolution != null)
-            {
-                ObjectProperty opHasResolution = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasResolution);
-                resBug.removeAll(opHasResolution);
-                
-                Class clsHasResolution = oIssue.m_oHasResolution.getClass();
+                    Class clsHasState = oIssue.m_oHasState.getClass();
 
-                Class clsDuplicate = Duplicate.class;
-                Class clsFixed= Fixed.class;
-                Class clsInvalid = Invalid.class;
-                Class clsThirdParty = ThirdParty.class;
-                Class clsWontFix = WontFix.class;
-                Class clsWorksForMe = WorksForMe.class;
-                Class clsLater = Later.class;
-                Class clsRemind = Remind.class;
+                    Class clsAssigned = Assigned.class;
+                    Class clsOpen= Open.class;
+                    Class clsVerified = Verified.class;
+                    Class clsResolved = Resolved.class;
+                    Class clsClosed = Closed.class;
 
-                if (clsHasResolution.equals(clsDuplicate))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Duplicate);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsFixed))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Fixed);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsInvalid))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Invalid);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsThirdParty))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_ThirdParty);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsWontFix))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_WontFix);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsWorksForMe))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_WorksForMe);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsLater))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Later);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-                if (clsHasResolution.equals(clsRemind))
-                {
-                    OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Remind);
-                    resBug.addProperty(opHasResolution, ocHasResolution.asResource());
-                }
-            }
-            //end has resolution
-            
-            //Issue product
-            if (oIssue.m_oIsIssueOf != null)
-            {
-                oIssue.m_oIsIssueOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component, oIssue.m_oIsIssueOf.m_sID);
-                ObjectProperty opIsIssueOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf);
-                Resource resIsIssueOf = oModel.getResource(oIssue.m_oIsIssueOf.m_sObjectURI);
-                
-                if (oIssue.m_oIsIssueOf.m_oIsComponentOf != null)
-                {
-                    oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sID);
-                    ObjectProperty opIsComponentOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf);
-                    Resource resIsComponentOf = oModel.getResource(oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sObjectURI);
-                     
-                    if (!oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sVersion.isEmpty())
+                    if (clsHasState.equals(clsAssigned))
                     {
-                        DatatypeProperty dtpVersion = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Version);
-                        resIsComponentOf.removeAll(dtpVersion);
-                        resIsComponentOf.addProperty(dtpVersion, oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sVersion.toString());
+                        OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Assigned);
+                        resBug.addProperty(opHasState, ocHasState.asResource());
                     }
-                    
-                    resIsIssueOf.removeAll(opIsComponentOf);
-                    resIsIssueOf.addProperty(opIsComponentOf, resIsComponentOf.asResource());
-                    oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
-                }
-                
-                resBug.removeAll(opIsIssueOf);
-                resBug.addProperty(opIsIssueOf, resIsIssueOf.asResource());
-                oIssue.m_oIsIssueOf.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueProduct + "/o:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
-            }
-
-            //HasComputerSystem
-            if (oIssue.m_oHasComputerSystem != null && (!oIssue.m_oHasComputerSystem.m_sID.isEmpty() || !oIssue.m_oHasComputerSystem.m_sPlatform.isEmpty() || !oIssue.m_oHasComputerSystem.m_sOs.isEmpty()))
-            {
-                oIssue.m_oHasComputerSystem.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_ComputerSystem, oIssue.m_oHasComputerSystem.m_sID);
-                ObjectProperty opHasComputerSystem = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComputerSystem);
-                Resource resComputerSystem = oModel.getResource(oIssue.m_oHasComputerSystem.m_sObjectURI);
-                if (!oIssue.m_oHasComputerSystem.m_sPlatform.isEmpty())
-                {
-                    DatatypeProperty dtpPlatform = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Platform);
-                    resComputerSystem.removeAll(dtpPlatform);
-                    resComputerSystem.addProperty(dtpPlatform, oIssue.m_oHasComputerSystem.m_sPlatform);
-                }
-                if (!oIssue.m_oHasComputerSystem.m_sOs.isEmpty())
-                {
-                    DatatypeProperty dtpOs = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Os);
-                    resComputerSystem.removeAll(dtpOs);
-                    resComputerSystem.addProperty(dtpOs, oIssue.m_oHasComputerSystem.m_sOs);
-                }
-                resBug.removeAll(opHasComputerSystem);
-                resBug.addProperty(opHasComputerSystem, resComputerSystem.asResource());
-                oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueComputerSystem + "/s:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
-            }
-            
-            //HasPriority
-            if (oIssue.m_oHasPriority.m_iPriority != 0)
-            {
-                ObjectProperty opHasPriority = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasPriority);
-                resBug.removeAll(opHasPriority);
-                
-                if(oIssue.m_oHasPriority.m_iPriority == 1)
-                {
-                    OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P1);
-                    resBug.addProperty(opHasPriority, ocHasPriority.asResource());
-                }
-                if(oIssue.m_oHasPriority.m_iPriority == 2)
-                {
-                    OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P2);
-                    resBug.addProperty(opHasPriority, ocHasPriority.asResource());
-                }
-                if(oIssue.m_oHasPriority.m_iPriority == 3)
-                {
-                    OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P3);
-                    resBug.addProperty(opHasPriority, ocHasPriority.asResource());
-                }
-                if(oIssue.m_oHasPriority.m_iPriority == 4)
-                {
-                    OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P4);
-                    resBug.addProperty(opHasPriority, ocHasPriority.asResource());
-                }
-                if(oIssue.m_oHasPriority.m_iPriority == 5)
-                {
-                    OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P5);
-                    resBug.addProperty(opHasPriority, ocHasPriority.asResource());
-                }
-            }
-            //end has priority
-            
-            //HasSeverity
-            if (oIssue.m_oHasSeverity != null)
-            {
-                ObjectProperty opHasSeverity = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasSeverity);
-                resBug.removeAll(opHasSeverity);
-                
-                Class clsHasSeverity = oIssue.m_oHasSeverity.getClass();
-
-                Class clsBlocker = Blocker.class;
-                Class clsCritical= Critical.class;
-                Class clsMajor = Major.class;
-                Class clsMinor = Minor.class;
-                Class clsTrivial = Trivial.class;
-
-                if (clsHasSeverity.equals(clsBlocker))
-                {
-                    OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Blocker);
-                    resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
-                }
-                if (clsHasSeverity.equals(clsCritical))
-                {
-                    OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Critical);
-                    resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
-                }
-                if (clsHasSeverity.equals(clsMajor))
-                {
-                    OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Major);
-                    resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
-                }
-                if (clsHasSeverity.equals(clsMinor))
-                {
-                    OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Minor);
-                    resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
-                }
-                if (clsHasSeverity.equals(clsTrivial))
-                {
-                    OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Trivial);
-                    resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
-                }
-            }
-            //end has severity
-                                  
-            //HasAssignee
-            if (oIssue.m_oHasAssignee != null && !oIssue.m_oHasAssignee.m_sID.isEmpty())
-            {
-                SavePersonData(oIssue.m_oHasAssignee, oModel);
-                ObjectProperty opHasAssignee = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAssignee);
-                Resource resHasAssignee = oModel.getResource(oIssue.m_oHasAssignee.m_sObjectURI);
-                resBug.removeAll(opHasAssignee);
-                resBug.addProperty(opHasAssignee, resHasAssignee.asResource());
-                oIssue.m_oHasAssignee.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAssignedTo + MetadataConstants.c_XMLE_Uri;
-            }
-            
-            //HasCCPerson
-            if (oIssue.m_oHasCCPerson != null)
-            {
-                ObjectProperty opHasCCPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCCPerson);
-                for (int i = 0; i < oIssue.m_oHasCCPerson.length; i++)
-                {
-                    if (oIssue.m_oHasCCPerson[i] != null && !oIssue.m_oHasCCPerson[i].m_sID.isEmpty())
+                    if (clsHasState.equals(clsOpen))
                     {
-                        if (!oIssue.m_oHasCCPerson[i].m_bRemoved)
-                        {
-                            SavePersonData(oIssue.m_oHasCCPerson[i], oModel);
-                            Resource resHasCCPerson = oModel.getResource(oIssue.m_oHasCCPerson[i].m_sObjectURI);
-                            resBug.addProperty(opHasCCPerson, resHasCCPerson.asResource());
-                            oIssue.m_oHasCCPerson[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Uri;
-                        }
-                        else
-                        {
-                            String sCCPersonRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasCCPerson[i].m_sID);
-                            Resource resCCPersonRemove = oModel.getResource(sCCPersonRemoveURI);
-                            oModel.removeAll(resBug, opHasCCPerson, resCCPersonRemove);
-                        }
+                        OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open);
+                        resBug.addProperty(opHasState, ocHasState.asResource());
+                    }
+                    if (clsHasState.equals(clsVerified))
+                    {
+                        OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Verified);
+                        resBug.addProperty(opHasState, ocHasState.asResource());
+                    }
+                    if (clsHasState.equals(clsResolved))
+                    {
+                        OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Resolved);
+                        resBug.addProperty(opHasState, ocHasState.asResource());
+                    }
+                    if (clsHasState.equals(clsClosed))
+                    {
+                        OntClass ocHasState = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Closed);
+                        resBug.addProperty(opHasState, ocHasState.asResource());
                     }
                 }
-            }
-                       
-            //IsDuplicateOf
-            if (!oIssue.m_oIsDuplicateOf.m_sID.isEmpty())
-            {
-                oIssue.m_oIsDuplicateOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oIsDuplicateOf.m_sID);
-                ObjectProperty opIsDuplicateOf = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLObjectProperty_IsDuplicateOf);
-                Resource resIsDuplicateOf = oModel.getResource(oIssue.m_oIsDuplicateOf.m_sObjectURI);
-                resBug.removeAll(opIsDuplicateOf);
-                resBug.addProperty(opIsDuplicateOf, resIsDuplicateOf.asResource());
-                oIssue.m_oIsDuplicateOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Uri;
-            }
-            
-            //IsMergedInto
-            if (!oIssue.m_oIsMergedInto.m_sID.isEmpty())
-            {
-                oIssue.m_oIsMergedInto.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oIsMergedInto.m_sID);
-                ObjectProperty opIsMergedInto = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLObjectProperty_IsMergedInto);
-                Resource resIsMergedInto = oModel.getResource(oIssue.m_oIsMergedInto.m_sObjectURI);
-                resBug.removeAll(opIsMergedInto);
-                resBug.addProperty(opIsMergedInto, resIsMergedInto.asResource());
-                oIssue.m_oIsMergedInto.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMergedInto + MetadataConstants.c_XMLE_Uri;
-            }
-            
-            //HasMilestone
-            if (oIssue.m_oHasMilestone != null && (!oIssue.m_oHasMilestone.m_sID.isEmpty() || oIssue.m_oHasMilestone.m_dtmTarget != null))
-            {
-                oIssue.m_oHasMilestone.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Milestone, oIssue.m_oHasMilestone.m_sID);
-                ObjectProperty opHasMilestone = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasMilestone);
-                Resource resMilestone = oModel.getResource(oIssue.m_oHasMilestone.m_sObjectURI);
-                if (oIssue.m_oHasMilestone.m_dtmTarget != null)
+                //end has state
+
+
+                //HasResolution
+                if (oIssue.m_oHasResolution != null)
                 {
-                    DatatypeProperty dtpMilestone= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Target);
-                    resMilestone.removeAll(dtpMilestone);
-                    resMilestone.addProperty(dtpMilestone, oIssue.m_oHasMilestone.m_dtmTarget.toString());
-                }
-                resBug.removeAll(opHasMilestone);
-                resBug.addProperty(opHasMilestone, resMilestone.asResource());
-                oIssue.m_oHasMilestone.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMilestone + "/o:" + MetadataConstants.c_XMLE_issueMilestone + MetadataConstants.c_XMLE_Uri;
-            }
-            
-            //HasComment
-            if (oIssue.m_oHasComment != null)
-            {
-                ObjectProperty opHasComment = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComment);
-                for (int i = 0; i < oIssue.m_oHasComment.length; i++)
-                {
-                    if (oIssue.m_oHasComment[i] != null && (!oIssue.m_oHasComment[i].m_sID.isEmpty() || !oIssue.m_oHasComment[i].m_sText.isEmpty()))
+                    ObjectProperty opHasResolution = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasResolution);
+                    resBug.removeAll(opHasResolution);
+
+                    Class clsHasResolution = oIssue.m_oHasResolution.getClass();
+
+                    Class clsDuplicate = Duplicate.class;
+                    Class clsFixed= Fixed.class;
+                    Class clsInvalid = Invalid.class;
+                    Class clsThirdParty = ThirdParty.class;
+                    Class clsWontFix = WontFix.class;
+                    Class clsWorksForMe = WorksForMe.class;
+                    Class clsLater = Later.class;
+                    Class clsRemind = Remind.class;
+
+                    if (clsHasResolution.equals(clsDuplicate))
                     {
-                        oIssue.m_oHasComment[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Comment, oIssue.m_oHasComment[i].m_sID);
-                        Resource resComment = oModel.getResource(oIssue.m_oHasComment[i].m_sObjectURI);
-
-                        if (oIssue.m_oHasComment[i].m_iNumber != null)
-                        {
-                            DatatypeProperty dtpCommentNumber= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number);
-                            resComment.removeAll(dtpCommentNumber);
-                            resComment.addProperty(dtpCommentNumber, oIssue.m_oHasComment[i].m_iNumber.toString());
-                        }
-
-                        if (oIssue.m_oHasComment[i].m_dtmDate != null)
-                        {
-                            DatatypeProperty dtpCommentDate= oModel.getDatatypeProperty( MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date );
-                            resComment.removeAll(dtpCommentDate);
-                            resComment.addProperty(dtpCommentDate, oIssue.m_oHasComment[i].m_dtmDate.toString());
-                        }
-
-                        if (!oIssue.m_oHasComment[i].m_sText.isEmpty())
-                        {
-                            DatatypeProperty dtpCommentText= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Text);
-                            resComment.removeAll(dtpCommentText);
-                            resComment.addProperty(dtpCommentText, oIssue.m_oHasComment[i].m_sText);
-                        }
-
-                        if (oIssue.m_oHasComment[i].m_oHasCommentor != null && oIssue.m_oHasComment[i].m_oHasCommentor.m_sID != null && !oIssue.m_oHasComment[i].m_oHasCommentor.m_sID.isEmpty())
-                        {
-                            //oIssue.m_oHasComment[i].m_oHasCommentor.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasComment[i].m_oHasCommentor.m_sID);
-                            SavePersonData(oIssue.m_oHasComment[i].m_oHasCommentor, oModel);
-                            ObjectProperty opHasCommentor = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCommentor);
-                            Resource resHasCommentor = oModel.getResource(oIssue.m_oHasComment[i].m_oHasCommentor.m_sObjectURI);
-                            resComment.removeAll(opHasCommentor);
-                            resComment.addProperty(opHasCommentor, resHasCommentor.asResource());
-                            oIssue.m_oHasComment[i].m_oHasCommentor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commentPerson + MetadataConstants.c_XMLE_Uri;
-                        }
-
-                        resBug.addProperty(opHasComment, resComment.asResource());
-                        oIssue.m_oHasComment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueComment + "/o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Duplicate);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsFixed))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Fixed);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsInvalid))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Invalid);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsThirdParty))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_ThirdParty);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsWontFix))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_WontFix);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsWorksForMe))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_WorksForMe);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsLater))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Later);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
+                    }
+                    if (clsHasResolution.equals(clsRemind))
+                    {
+                        OntClass ocHasResolution = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Remind);
+                        resBug.addProperty(opHasResolution, ocHasResolution.asResource());
                     }
                 }
-            }
-            //end has comment 
-            
-            //HasAttachment
-            if (oIssue.m_oHasAttachment != null)
-            {
-                ObjectProperty opHasAttachment = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAttachment);
-                for (int i = 0; i < oIssue.m_oHasAttachment.length; i++)
+                //end has resolution
+
+                //Issue product
+                if (oIssue.m_oIsIssueOf != null)
                 {
-                    if (oIssue.m_oHasAttachment[i] != null && (!oIssue.m_oHasAttachment[i].m_sID.isEmpty() || !oIssue.m_oHasAttachment[i].m_sFilename.isEmpty()))
+                    oIssue.m_oIsIssueOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component, oIssue.m_oIsIssueOf.m_sID);
+                    ObjectProperty opIsIssueOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf);
+                    Resource resIsIssueOf = oModel.getResource(oIssue.m_oIsIssueOf.m_sObjectURI);
+
+                    if (oIssue.m_oIsIssueOf.m_oIsComponentOf != null)
                     {
-                        oIssue.m_oHasAttachment[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Attachment, oIssue.m_oHasAttachment[i].m_sID);
-                        Resource resAttachment = oModel.getResource(oIssue.m_oHasAttachment[i].m_sObjectURI);
+                        oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sID);
+                        ObjectProperty opIsComponentOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf);
+                        Resource resIsComponentOf = oModel.getResource(oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sObjectURI);
 
-                        if (!oIssue.m_oHasAttachment[i].m_sFilename.isEmpty())
+                        if (!oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sVersion.isEmpty())
                         {
-                            DatatypeProperty dtpAttachmentFileName= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_FileName);
-                            resAttachment.removeAll(dtpAttachmentFileName);
-                            resAttachment.addProperty(dtpAttachmentFileName, oIssue.m_oHasAttachment[i].m_sFilename);
+                            DatatypeProperty dtpVersion = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Version);
+                            resIsComponentOf.removeAll(dtpVersion);
+                            resIsComponentOf.addProperty(dtpVersion, oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sVersion.toString());
                         }
 
-                        if (!oIssue.m_oHasAttachment[i].m_sType.isEmpty())
-                        {
-                            DatatypeProperty dtpAttachmentType= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Type);
-                            resAttachment.removeAll(dtpAttachmentType);
-                            resAttachment.addProperty(dtpAttachmentType, oIssue.m_oHasAttachment[i].m_sType);
-                        }
+                        resIsIssueOf.removeAll(opIsComponentOf);
+                        resIsIssueOf.addProperty(opIsComponentOf, resIsComponentOf.asResource());
+                        oIssue.m_oIsIssueOf.m_oIsComponentOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
+                    }
 
-                        if (oIssue.m_oHasAttachment[i].m_oHasCreator != null && oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID != null && !oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID.isEmpty())
-                        {
-                            //oIssue.m_oHasAttachment[i].m_oHasCreator.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID);
-                            SavePersonData(oIssue.m_oHasAttachment[i].m_oHasCreator, oModel);
-                            ObjectProperty opHasCreator = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCreator);
-                            Resource resHasCreator = oModel.getResource(oIssue.m_oHasAttachment[i].m_oHasCreator.m_sObjectURI);
-                            resAttachment.removeAll(opHasCreator);
-                            resAttachment.addProperty(opHasCreator, resHasCreator.asResource());
-                            oIssue.m_oHasAttachment[i].m_oHasCreator.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_attachmentCreator + MetadataConstants.c_XMLE_Uri;
-                        }
+                    resBug.removeAll(opIsIssueOf);
+                    resBug.addProperty(opIsIssueOf, resIsIssueOf.asResource());
+                    oIssue.m_oIsIssueOf.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueProduct + "/o:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
+                }
 
-                        resBug.addProperty(opHasAttachment, resAttachment.asResource());
-                        oIssue.m_oHasAttachment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueAttachment + "/o:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Uri;
+                //HasComputerSystem
+                if (oIssue.m_oHasComputerSystem != null && (!oIssue.m_oHasComputerSystem.m_sID.isEmpty() || !oIssue.m_oHasComputerSystem.m_sPlatform.isEmpty() || !oIssue.m_oHasComputerSystem.m_sOs.isEmpty()))
+                {
+                    oIssue.m_oHasComputerSystem.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_ComputerSystem, oIssue.m_oHasComputerSystem.m_sID);
+                    ObjectProperty opHasComputerSystem = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComputerSystem);
+                    Resource resComputerSystem = oModel.getResource(oIssue.m_oHasComputerSystem.m_sObjectURI);
+                    if (!oIssue.m_oHasComputerSystem.m_sPlatform.isEmpty())
+                    {
+                        DatatypeProperty dtpPlatform = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Platform);
+                        resComputerSystem.removeAll(dtpPlatform);
+                        resComputerSystem.addProperty(dtpPlatform, oIssue.m_oHasComputerSystem.m_sPlatform);
+                    }
+                    if (!oIssue.m_oHasComputerSystem.m_sOs.isEmpty())
+                    {
+                        DatatypeProperty dtpOs = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Os);
+                        resComputerSystem.removeAll(dtpOs);
+                        resComputerSystem.addProperty(dtpOs, oIssue.m_oHasComputerSystem.m_sOs);
+                    }
+                    resBug.removeAll(opHasComputerSystem);
+                    resBug.addProperty(opHasComputerSystem, resComputerSystem.asResource());
+                    oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueComputerSystem + "/s:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
+                }
+
+                //HasPriority
+                if (oIssue.m_oHasPriority.m_iPriority != 0)
+                {
+                    ObjectProperty opHasPriority = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasPriority);
+                    resBug.removeAll(opHasPriority);
+
+                    if(oIssue.m_oHasPriority.m_iPriority == 1)
+                    {
+                        OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P1);
+                        resBug.addProperty(opHasPriority, ocHasPriority.asResource());
+                    }
+                    if(oIssue.m_oHasPriority.m_iPriority == 2)
+                    {
+                        OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P2);
+                        resBug.addProperty(opHasPriority, ocHasPriority.asResource());
+                    }
+                    if(oIssue.m_oHasPriority.m_iPriority == 3)
+                    {
+                        OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P3);
+                        resBug.addProperty(opHasPriority, ocHasPriority.asResource());
+                    }
+                    if(oIssue.m_oHasPriority.m_iPriority == 4)
+                    {
+                        OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P4);
+                        resBug.addProperty(opHasPriority, ocHasPriority.asResource());
+                    }
+                    if(oIssue.m_oHasPriority.m_iPriority == 5)
+                    {
+                        OntClass ocHasPriority = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_P5);
+                        resBug.addProperty(opHasPriority, ocHasPriority.asResource());
                     }
                 }
-            }
-            //end has attachment 
-            
-            //HasActivity
-            if (oIssue.m_oHasActivity != null)
-            {
-                ObjectProperty opHasActivity = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasActivity);
-                for (int i = 0; i < oIssue.m_oHasActivity.length; i++)
+                //end has priority
+
+                //HasSeverity
+                if (oIssue.m_oHasSeverity != null)
                 {
-                    if (oIssue.m_oHasActivity[i] != null && (!oIssue.m_oHasActivity[i].m_sID.isEmpty() || oIssue.m_oHasActivity[i].m_oHasInvolvedPerson != null))
+                    ObjectProperty opHasSeverity = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasSeverity);
+                    resBug.removeAll(opHasSeverity);
+
+                    Class clsHasSeverity = oIssue.m_oHasSeverity.getClass();
+
+                    Class clsBlocker = Blocker.class;
+                    Class clsCritical= Critical.class;
+                    Class clsMajor = Major.class;
+                    Class clsMinor = Minor.class;
+                    Class clsTrivial = Trivial.class;
+
+                    if (clsHasSeverity.equals(clsBlocker))
                     {
-                        oIssue.m_oHasActivity[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Activity, "");
-                        Resource resActivity = oModel.getResource(oIssue.m_oHasActivity[i].m_sObjectURI);
-
-                        //adding ID to activitiy (it wasn't added with GetObjectURI method because two or more activities can have the same id)
-                        DatatypeProperty dtpId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
-                        resActivity.removeAll(dtpId);
-                        resActivity.addProperty(dtpId, oIssue.m_oHasActivity[i].m_sID);
-
-                        if (!oIssue.m_oHasActivity[i].m_sWhat.isEmpty())
-                        {
-                            DatatypeProperty dtpActivityWhat = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_What);
-                            resActivity.removeAll(dtpActivityWhat);
-                            resActivity.addProperty(dtpActivityWhat, oIssue.m_oHasActivity[i].m_sWhat);
-                        }
-                        
-                        if (!oIssue.m_oHasActivity[i].m_sRemoved.isEmpty())
-                        {
-                            DatatypeProperty dtpActivityRemoved = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Removed);
-                            resActivity.removeAll(dtpActivityRemoved);
-                            resActivity.addProperty(dtpActivityRemoved, oIssue.m_oHasActivity[i].m_sRemoved);
-                        }
-                        
-                        if (!oIssue.m_oHasActivity[i].m_sAdded.isEmpty())
-                        {
-                            DatatypeProperty dtpActivityAdded = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Added);
-                            resActivity.removeAll(dtpActivityAdded);
-                            resActivity.addProperty(dtpActivityAdded, oIssue.m_oHasActivity[i].m_sAdded);
-                        }
-                        
-                        if (oIssue.m_oHasActivity[i].m_dtmWhen != null)
-                        {
-                            DatatypeProperty dtpActivityPerformed = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed);
-                            resActivity.removeAll(dtpActivityPerformed);
-                            resActivity.addProperty(dtpActivityPerformed, oIssue.m_oHasActivity[i].m_dtmWhen.toString());
-                        }
-                        
-                        if (oIssue.m_oHasActivity[i].m_oHasInvolvedPerson != null && oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID != null && !oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID.isEmpty())
-                        {
-                            oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID);
-                            ObjectProperty opHasInvolvedPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasInvolvedPerson);
-                            Resource resHasInvolvedPerson = oModel.getResource(oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sObjectURI);
-                            resActivity.removeAll(opHasInvolvedPerson);
-                            resActivity.addProperty(opHasInvolvedPerson, resHasInvolvedPerson.asResource());
-                            oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_activityWho + MetadataConstants.c_XMLE_Uri;
-                        }
-
-                        resBug.addProperty(opHasActivity, resActivity.asResource());
-                        oIssue.m_oHasActivity[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueActivity + "/o:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Uri;
+                        OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Blocker);
+                        resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
+                    }
+                    if (clsHasSeverity.equals(clsCritical))
+                    {
+                        OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Critical);
+                        resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
+                    }
+                    if (clsHasSeverity.equals(clsMajor))
+                    {
+                        OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Major);
+                        resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
+                    }
+                    if (clsHasSeverity.equals(clsMinor))
+                    {
+                        OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Minor);
+                        resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
+                    }
+                    if (clsHasSeverity.equals(clsTrivial))
+                    {
+                        OntClass ocHasSeverity = oModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Trivial);
+                        resBug.addProperty(opHasSeverity, ocHasSeverity.asResource());
                     }
                 }
-            }
-            //end has attachment 
-            
-//            //AlertEvent
-//            String sEventUri;
-//            if (bIsUpdate)
-//            {
-//                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
-//            }
-//            else
-//            {
-//                sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
-//            }
-//            Resource resEvent = oModel.getResource(sEventUri);
-//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
-//            resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
+                //end has severity
 
-            //save data
-            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+                //HasAssignee
+                if (oIssue.m_oHasAssignee != null && !oIssue.m_oHasAssignee.m_sID.isEmpty())
+                {
+                    SavePersonData(oIssue.m_oHasAssignee, oModel);
+                    ObjectProperty opHasAssignee = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAssignee);
+                    Resource resHasAssignee = oModel.getResource(oIssue.m_oHasAssignee.m_sObjectURI);
+                    resBug.removeAll(opHasAssignee);
+                    resBug.addProperty(opHasAssignee, resHasAssignee.asResource());
+                    oIssue.m_oHasAssignee.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueAssignedTo + MetadataConstants.c_XMLE_Uri;
+                }
+
+                //HasCCPerson
+                if (oIssue.m_oHasCCPerson != null)
+                {
+                    ObjectProperty opHasCCPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCCPerson);
+                    for (int i = 0; i < oIssue.m_oHasCCPerson.length; i++)
+                    {
+                        if (oIssue.m_oHasCCPerson[i] != null && !oIssue.m_oHasCCPerson[i].m_sID.isEmpty())
+                        {
+                            if (!oIssue.m_oHasCCPerson[i].m_bRemoved)
+                            {
+                                SavePersonData(oIssue.m_oHasCCPerson[i], oModel);
+                                Resource resHasCCPerson = oModel.getResource(oIssue.m_oHasCCPerson[i].m_sObjectURI);
+                                resBug.addProperty(opHasCCPerson, resHasCCPerson.asResource());
+                                oIssue.m_oHasCCPerson[i].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Uri;
+                            }
+                            else
+                            {
+                                String sCCPersonRemoveURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasCCPerson[i].m_sID);
+                                Resource resCCPersonRemove = oModel.getResource(sCCPersonRemoveURI);
+                                oModel.removeAll(resBug, opHasCCPerson, resCCPersonRemove);
+                            }
+                        }
+                    }
+                }
+
+                //IsDuplicateOf
+                if (!oIssue.m_oIsDuplicateOf.m_sID.isEmpty())
+                {
+                    oIssue.m_oIsDuplicateOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oIsDuplicateOf.m_sID);
+                    ObjectProperty opIsDuplicateOf = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLObjectProperty_IsDuplicateOf);
+                    Resource resIsDuplicateOf = oModel.getResource(oIssue.m_oIsDuplicateOf.m_sObjectURI);
+                    resBug.removeAll(opIsDuplicateOf);
+                    resBug.addProperty(opIsDuplicateOf, resIsDuplicateOf.asResource());
+                    oIssue.m_oIsDuplicateOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Uri;
+                }
+
+                //IsMergedInto
+                if (!oIssue.m_oIsMergedInto.m_sID.isEmpty())
+                {
+                    oIssue.m_oIsMergedInto.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_oIsMergedInto.m_sID);
+                    ObjectProperty opIsMergedInto = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLObjectProperty_IsMergedInto);
+                    Resource resIsMergedInto = oModel.getResource(oIssue.m_oIsMergedInto.m_sObjectURI);
+                    resBug.removeAll(opIsMergedInto);
+                    resBug.addProperty(opIsMergedInto, resIsMergedInto.asResource());
+                    oIssue.m_oIsMergedInto.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMergedInto + MetadataConstants.c_XMLE_Uri;
+                }
+
+                //HasMilestone
+                if (oIssue.m_oHasMilestone != null && (!oIssue.m_oHasMilestone.m_sID.isEmpty() || oIssue.m_oHasMilestone.m_dtmTarget != null))
+                {
+                    oIssue.m_oHasMilestone.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Milestone, oIssue.m_oHasMilestone.m_sID);
+                    ObjectProperty opHasMilestone = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasMilestone);
+                    Resource resMilestone = oModel.getResource(oIssue.m_oHasMilestone.m_sObjectURI);
+                    if (oIssue.m_oHasMilestone.m_dtmTarget != null)
+                    {
+                        DatatypeProperty dtpMilestone= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Target);
+                        resMilestone.removeAll(dtpMilestone);
+                        resMilestone.addProperty(dtpMilestone, oIssue.m_oHasMilestone.m_dtmTarget.toString());
+                    }
+                    resBug.removeAll(opHasMilestone);
+                    resBug.addProperty(opHasMilestone, resMilestone.asResource());
+                    oIssue.m_oHasMilestone.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueMilestone + "/o:" + MetadataConstants.c_XMLE_issueMilestone + MetadataConstants.c_XMLE_Uri;
+                }
+
+                //HasComment
+                if (oIssue.m_oHasComment != null)
+                {
+                    ObjectProperty opHasComment = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComment);
+                    for (int i = 0; i < oIssue.m_oHasComment.length; i++)
+                    {
+                        if (oIssue.m_oHasComment[i] != null && (!oIssue.m_oHasComment[i].m_sID.isEmpty() || !oIssue.m_oHasComment[i].m_sText.isEmpty()))
+                        {
+                            oIssue.m_oHasComment[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Comment, oIssue.m_oHasComment[i].m_sID);
+                            Resource resComment = oModel.getResource(oIssue.m_oHasComment[i].m_sObjectURI);
+
+                            if (oIssue.m_oHasComment[i].m_iNumber != null)
+                            {
+                                DatatypeProperty dtpCommentNumber= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number);
+                                resComment.removeAll(dtpCommentNumber);
+                                resComment.addProperty(dtpCommentNumber, oIssue.m_oHasComment[i].m_iNumber.toString());
+                            }
+
+                            if (oIssue.m_oHasComment[i].m_dtmDate != null)
+                            {
+                                DatatypeProperty dtpCommentDate= oModel.getDatatypeProperty( MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date );
+                                resComment.removeAll(dtpCommentDate);
+                                resComment.addProperty(dtpCommentDate, oIssue.m_oHasComment[i].m_dtmDate.toString());
+                            }
+
+                            if (!oIssue.m_oHasComment[i].m_sText.isEmpty())
+                            {
+                                DatatypeProperty dtpCommentText= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Text);
+                                resComment.removeAll(dtpCommentText);
+                                resComment.addProperty(dtpCommentText, oIssue.m_oHasComment[i].m_sText);
+                            }
+
+                            if (oIssue.m_oHasComment[i].m_oHasCommentor != null && oIssue.m_oHasComment[i].m_oHasCommentor.m_sID != null && !oIssue.m_oHasComment[i].m_oHasCommentor.m_sID.isEmpty())
+                            {
+                                //oIssue.m_oHasComment[i].m_oHasCommentor.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasComment[i].m_oHasCommentor.m_sID);
+                                SavePersonData(oIssue.m_oHasComment[i].m_oHasCommentor, oModel);
+                                ObjectProperty opHasCommentor = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCommentor);
+                                Resource resHasCommentor = oModel.getResource(oIssue.m_oHasComment[i].m_oHasCommentor.m_sObjectURI);
+                                resComment.removeAll(opHasCommentor);
+                                resComment.addProperty(opHasCommentor, resHasCommentor.asResource());
+                                oIssue.m_oHasComment[i].m_oHasCommentor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_commentPerson + MetadataConstants.c_XMLE_Uri;
+                            }
+
+                            resBug.addProperty(opHasComment, resComment.asResource());
+                            oIssue.m_oHasComment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueComment + "/o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+                        }
+                    }
+                }
+                //end has comment 
+
+                //HasAttachment
+                if (oIssue.m_oHasAttachment != null)
+                {
+                    ObjectProperty opHasAttachment = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAttachment);
+                    for (int i = 0; i < oIssue.m_oHasAttachment.length; i++)
+                    {
+                        if (oIssue.m_oHasAttachment[i] != null && (!oIssue.m_oHasAttachment[i].m_sID.isEmpty() || !oIssue.m_oHasAttachment[i].m_sFilename.isEmpty()))
+                        {
+                            oIssue.m_oHasAttachment[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Attachment, oIssue.m_oHasAttachment[i].m_sID);
+                            Resource resAttachment = oModel.getResource(oIssue.m_oHasAttachment[i].m_sObjectURI);
+
+                            if (!oIssue.m_oHasAttachment[i].m_sFilename.isEmpty())
+                            {
+                                DatatypeProperty dtpAttachmentFileName= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_FileName);
+                                resAttachment.removeAll(dtpAttachmentFileName);
+                                resAttachment.addProperty(dtpAttachmentFileName, oIssue.m_oHasAttachment[i].m_sFilename);
+                            }
+
+                            if (!oIssue.m_oHasAttachment[i].m_sType.isEmpty())
+                            {
+                                DatatypeProperty dtpAttachmentType= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Type);
+                                resAttachment.removeAll(dtpAttachmentType);
+                                resAttachment.addProperty(dtpAttachmentType, oIssue.m_oHasAttachment[i].m_sType);
+                            }
+
+                            if (oIssue.m_oHasAttachment[i].m_oHasCreator != null && oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID != null && !oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID.isEmpty())
+                            {
+                                //oIssue.m_oHasAttachment[i].m_oHasCreator.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasAttachment[i].m_oHasCreator.m_sID);
+                                SavePersonData(oIssue.m_oHasAttachment[i].m_oHasCreator, oModel);
+                                ObjectProperty opHasCreator = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCreator);
+                                Resource resHasCreator = oModel.getResource(oIssue.m_oHasAttachment[i].m_oHasCreator.m_sObjectURI);
+                                resAttachment.removeAll(opHasCreator);
+                                resAttachment.addProperty(opHasCreator, resHasCreator.asResource());
+                                oIssue.m_oHasAttachment[i].m_oHasCreator.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_attachmentCreator + MetadataConstants.c_XMLE_Uri;
+                            }
+
+                            resBug.addProperty(opHasAttachment, resAttachment.asResource());
+                            oIssue.m_oHasAttachment[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueAttachment + "/o:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Uri;
+                        }
+                    }
+                }
+                //end has attachment 
+
+                //HasActivity
+                if (oIssue.m_oHasActivity != null)
+                {
+                    ObjectProperty opHasActivity = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasActivity);
+                    for (int i = 0; i < oIssue.m_oHasActivity.length; i++)
+                    {
+                        if (oIssue.m_oHasActivity[i] != null && (!oIssue.m_oHasActivity[i].m_sID.isEmpty() || oIssue.m_oHasActivity[i].m_oHasInvolvedPerson != null))
+                        {
+                            oIssue.m_oHasActivity[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Activity, "");
+                            Resource resActivity = oModel.getResource(oIssue.m_oHasActivity[i].m_sObjectURI);
+
+                            //adding ID to activitiy (it wasn't added with GetObjectURI method because two or more activities can have the same id)
+                            DatatypeProperty dtpId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
+                            resActivity.removeAll(dtpId);
+                            resActivity.addProperty(dtpId, oIssue.m_oHasActivity[i].m_sID);
+
+                            if (!oIssue.m_oHasActivity[i].m_sWhat.isEmpty())
+                            {
+                                DatatypeProperty dtpActivityWhat = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_What);
+                                resActivity.removeAll(dtpActivityWhat);
+                                resActivity.addProperty(dtpActivityWhat, oIssue.m_oHasActivity[i].m_sWhat);
+                            }
+
+                            if (!oIssue.m_oHasActivity[i].m_sRemoved.isEmpty())
+                            {
+                                DatatypeProperty dtpActivityRemoved = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Removed);
+                                resActivity.removeAll(dtpActivityRemoved);
+                                resActivity.addProperty(dtpActivityRemoved, oIssue.m_oHasActivity[i].m_sRemoved);
+                            }
+
+                            if (!oIssue.m_oHasActivity[i].m_sAdded.isEmpty())
+                            {
+                                DatatypeProperty dtpActivityAdded = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Added);
+                                resActivity.removeAll(dtpActivityAdded);
+                                resActivity.addProperty(dtpActivityAdded, oIssue.m_oHasActivity[i].m_sAdded);
+                            }
+
+                            if (oIssue.m_oHasActivity[i].m_dtmWhen != null)
+                            {
+                                DatatypeProperty dtpActivityPerformed = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed);
+                                resActivity.removeAll(dtpActivityPerformed);
+                                resActivity.addProperty(dtpActivityPerformed, oIssue.m_oHasActivity[i].m_dtmWhen.toString());
+                            }
+
+                            if (oIssue.m_oHasActivity[i].m_oHasInvolvedPerson != null && oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID != null && !oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID.isEmpty())
+                            {
+                                oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID);
+                                ObjectProperty opHasInvolvedPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasInvolvedPerson);
+                                Resource resHasInvolvedPerson = oModel.getResource(oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sObjectURI);
+                                resActivity.removeAll(opHasInvolvedPerson);
+                                resActivity.addProperty(opHasInvolvedPerson, resHasInvolvedPerson.asResource());
+                                oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_activityWho + MetadataConstants.c_XMLE_Uri;
+                            }
+
+                            resBug.addProperty(opHasActivity, resActivity.asResource());
+                            oIssue.m_oHasActivity[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_issueActivity + "/o:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Uri;
+                        }
+                    }
+                }
+                //end has attachment 
+
+//                //AlertEvent
+//                String sEventUri;
+//                if (bIsUpdate)
+//                {
+//                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
+//                }
+//                else
+//                {
+//                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
+//                }
+//                Resource resEvent = oModel.getResource(sEventUri);
+//                ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
+//                resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
+
+                //save data
+                MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            }
         }
         catch (Exception ex)
         {
