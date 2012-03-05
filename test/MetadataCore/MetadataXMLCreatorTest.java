@@ -322,7 +322,7 @@ public class MetadataXMLCreatorTest {
         System.out.println("* MetadataXMLCreatorTest: CreateXMLInstanceResponse");
         String sEventId = "";
         OntoProperty oProperty = null;
-        MetadataXMLCreator.CreateXMLInstanceResponse(sEventId, oProperty);
+        //MetadataXMLCreator.CreateXMLInstanceResponse(sEventId, oProperty);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

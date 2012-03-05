@@ -56,7 +56,7 @@ public class MetadataCommunicatorTest {
     public void testSendXML() {
         System.out.println("* MetadataCommunicatorTest: SendXML");
         Document dDoc = null;
-        MetadataCommunicator.SendXML(dDoc);
+        MetadataCommunicator.SendXML(dDoc, "");
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

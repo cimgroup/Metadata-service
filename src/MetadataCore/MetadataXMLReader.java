@@ -1324,40 +1324,40 @@ public class MetadataXMLReader {
         }
     }
     
-    /**
-     * @summary Method for reading new instance request event from XML
-     * @startRealisation Sasa Stojanovic 06.09.2011.
-     * @finalModification Sasa Stojanovic 06.09.2011.
-     * @param dDoc - input XML document to read
-     */
-    private static void InstanceRequest(Document dDoc) {
-        try
-        {
-            String sEventId = GetEventId(dDoc);
-            sEventId = sEventId.replaceFirst("Request", "");    //deleting Request string from id
-            
-            String sMemberURL = "";
-            
-            NodeList nlInputParameter = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for inputParameter
-
-            if (nlInputParameter != null && nlInputParameter.getLength() > 0)
-            {
-                for (int i = 0; i < nlInputParameter.getLength(); i++)
-                {
-                    Element eInputParameter = (Element) nlInputParameter.item(i);
-                    String sParamName = GetValue(eInputParameter, "o:" + MetadataConstants.c_XMLE_name);
-                    if (sParamName.equals(MetadataConstants.c_XMLV_MemberURL))
-                        sMemberURL = GetValue(eInputParameter, "o:" + MetadataConstants.c_XMLE_value);
-                }
-            }
-
-            MetadataModel.GetInstance(sEventId, sMemberURL);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * @summary Method for reading new instance request event from XML
+//     * @startRealisation Sasa Stojanovic 06.09.2011.
+//     * @finalModification Sasa Stojanovic 06.09.2011.
+//     * @param dDoc - input XML document to read
+//     */
+//    private static void InstanceRequest(Document dDoc) {
+//        try
+//        {
+//            String sEventId = GetEventId(dDoc);
+//            sEventId = sEventId.replaceFirst("Request", "");    //deleting Request string from id
+//            
+//            String sMemberURL = "";
+//            
+//            NodeList nlInputParameter = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for inputParameter
+//
+//            if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+//            {
+//                for (int i = 0; i < nlInputParameter.getLength(); i++)
+//                {
+//                    Element eInputParameter = (Element) nlInputParameter.item(i);
+//                    String sParamName = GetValue(eInputParameter, "o:" + MetadataConstants.c_XMLE_name);
+//                    if (sParamName.equals(MetadataConstants.c_XMLV_MemberURL))
+//                        sMemberURL = GetValue(eInputParameter, "o:" + MetadataConstants.c_XMLE_value);
+//                }
+//            }
+//
+//            MetadataModel.GetInstance(sEventId, sMemberURL);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * @summary Method for reading new issue annotation event from XML.
@@ -1446,7 +1446,7 @@ public class MetadataXMLReader {
                             Element eSConcept = (Element)nlSubjectConcepts.item(i);
                             oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_subjectConcepts;
-                            oAnnotation.oConcepts[i].sUri = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_id);//nlCID.item(0).getNodeValue();
+                            oAnnotation.oConcepts[i].sUri = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
                             oAnnotation.oConcepts[i].sCount = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_count);//nlCCount.item(0).getNodeValue();
                         }
                         for (int i = 0; i < iDescLength; i++)
@@ -1454,7 +1454,7 @@ public class MetadataXMLReader {
                             Element eDConcept = (Element)nlDescConcepts.item(i);
                             oAnnotation.oConcepts[i + iSubjectLength] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i + iSubjectLength].sName = MetadataConstants.c_XMLE_descriptionConcepts;
-                            oAnnotation.oConcepts[i + iSubjectLength].sUri = GetValue(eDConcept, "s1:" + MetadataConstants.c_XMLE_id);//nlCID.item(0).getNodeValue();
+                            oAnnotation.oConcepts[i + iSubjectLength].sUri = GetValue(eDConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
                             oAnnotation.oConcepts[i + iSubjectLength].sCount = GetValue(eDConcept, "s1:" + MetadataConstants.c_XMLE_count);//nlCCount.item(0).getNodeValue();
                         }
                     }
@@ -1541,7 +1541,7 @@ public class MetadataXMLReader {
                             Element eCConcept = (Element)nlCommConcepts.item(i);
                             oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_commentConcepts;
-                            oAnnotation.oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i].sCount = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                     }
@@ -1628,7 +1628,7 @@ public class MetadataXMLReader {
                             Element eCConcept = (Element)nlCommConcepts.item(i);
                             oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_commitConcepts;
-                            oAnnotation.oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i].sCount = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                     }
@@ -1745,7 +1745,7 @@ public class MetadataXMLReader {
                             Element eTConcept = (Element)nlTitleConcepts.item(i);
                             oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_titleConcepts;
-                            oAnnotation.oConcepts[i].sUri = GetValue(eTConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i].sUri = GetValue(eTConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i].sCount = GetValue(eTConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                         for (int i = 0; i < iBodyLength; i++)
@@ -1753,7 +1753,7 @@ public class MetadataXMLReader {
                             Element eBConcept = (Element)nlBodyConcepts.item(i);
                             oAnnotation.oConcepts[i + iTitleLength] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i + iTitleLength].sName = MetadataConstants.c_XMLE_bodyConcepts;
-                            oAnnotation.oConcepts[i + iTitleLength].sUri = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i + iTitleLength].sUri = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i + iTitleLength].sCount = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                     }
@@ -1858,7 +1858,7 @@ public class MetadataXMLReader {
                             Element eSConcept = (Element)nlSubjectConcepts.item(i);
                             oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_subjectConcepts;
-                            oAnnotation.oConcepts[i].sUri = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i].sUri = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i].sCount = GetValue(eSConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                         for (int i = 0; i < iBodyLength; i++)
@@ -1866,7 +1866,7 @@ public class MetadataXMLReader {
                             Element eBConcept = (Element)nlBodyConcepts.item(i);
                             oAnnotation.oConcepts[i + iSubjectLength] = new MetadataGlobal.ConceptProp();
                             oAnnotation.oConcepts[i + iSubjectLength].sName = MetadataConstants.c_XMLE_bodyConcepts;
-                            oAnnotation.oConcepts[i + iSubjectLength].sUri = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_id);
+                            oAnnotation.oConcepts[i + iSubjectLength].sUri = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_uri);
                             oAnnotation.oConcepts[i + iSubjectLength].sCount = GetValue(eBConcept, "s1:" + MetadataConstants.c_XMLE_count);
                         }
                     }

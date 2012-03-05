@@ -444,7 +444,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: GetInstance");
         String sEventId = "";
         String sInstanceURL = "";
-        MetadataModel.GetInstance(sEventId, sInstanceURL);
+        //MetadataModel.GetInstance(sEventId, sInstanceURL);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

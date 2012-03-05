@@ -31,22 +31,50 @@ public class MetadataCommunicator {
     
     /**
      * @summary Method for receiving XML file from web service
-     * @startRealisation Sasa Stojanovic  07.09.2011.
-     * @finalModification Sasa Stojanovic  07.09.2011.
+     * @startRealisation  Sasa Stojanovic      07.09.2011.
+     * @finalModification Dejan Milosavljevic  05.03.2012.
      */
     public static String ReceiveXML(String sDoc)
     {
         Document dDoc = LoadXMLFromString(sDoc);
+        
+        //For testing purposes only
+        try
+        {
+            //Create transformer
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            tFactory.setAttribute("indent-number", 2);
+            Transformer tTransformer = tFactory.newTransformer();
+            tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
+            tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            //tTransformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+            tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            //Write the document to a file
+            Source srcDocument = new DOMSource(dDoc);
+            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Request.xml"));
+            tTransformer.transform(srcDocument, rsLocation);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         MetadataXMLReader.ReadXML(dDoc);
+        
         return m_sXML;
     }
        
     /**
      * @summary Method for sending XML file
-     * @startRealisation Ivan Obradovic  17.06.2011.
-     * @finalModification Sasa Stojanovic  23.06.2011.
+     * @startRealisation  Ivan Obradovic       17.06.2011.
+     * @finalModification Dejan Milosavljevic  05.03.2012.
+     * @param dDoc - XML document (response)
+     * @param sTopicName - topic name on which response will be sent
      */
-    public static void SendXML(Document dDoc)
+    public static void SendXML(Document dDoc, String sTopicName)
     {
         try
         {
@@ -66,10 +94,11 @@ public class MetadataCommunicator {
             
             transformer.transform(source, result);
             m_sXML = stringWriter.getBuffer().toString();
-            SimpleTopicPublisher.publish("MetadataOut", m_sXML);
-          
+            //SimpleTopicPublisher.publish("MetadataOut", m_sXML);
+            SimpleTopicPublisher.publish(sTopicName, m_sXML);
+ 
             
-            
+            //For testing purposes only
             //Create transformer
             //Transformer tTransformer = TransformerFactory.newInstance().newTransformer();
             TransformerFactory tFactory = TransformerFactory.newInstance();
@@ -122,7 +151,7 @@ public class MetadataCommunicator {
     
     public static Document LoadXMLFromString(String sDoc)
     {
-        Document dDoc;
+        //Document dDoc;
         try
         {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

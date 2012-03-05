@@ -18,8 +18,24 @@ public class SimpleTopicSubscriber {
     public static void main() {
         
         
-        MetadataConstants.c_Topics.add("MetadataIn");
+        //MetadataConstants.c_Topics.add("MetadataIn");
         //MetadataConstants.c_Topics.add("Metadata.issue.requestNew");
+        MetadataConstants.c_Topics.add("ALERT.*.APICallRequest");
+        MetadataConstants.c_Topics.add("ALERT.*.CommitNew");
+        MetadataConstants.c_Topics.add("ALERT.*.CommitNew.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.CommentNew.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.CompetencyNew");
+        MetadataConstants.c_Topics.add("ALERT.*.CompetencyUpdate");
+        MetadataConstants.c_Topics.add("ALERT.*.ForumPostNew");
+        MetadataConstants.c_Topics.add("ALERT.*.ForumPostNew.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.IdentityNew");
+        MetadataConstants.c_Topics.add("ALERT.*.IdentityUpdate");
+        MetadataConstants.c_Topics.add("ALERT.*.IdentityRemove");
+        MetadataConstants.c_Topics.add("ALERT.*.IssueNew");
+        MetadataConstants.c_Topics.add("ALERT.*.IssueNew.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.IssueUpdate");
+        MetadataConstants.c_Topics.add("ALERT.*.MailNew");
+        MetadataConstants.c_Topics.add("ALERT.*.MailNew.Annotated");
 
         
         Context jndiContext = null;

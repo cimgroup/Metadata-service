@@ -36,8 +36,9 @@ public class SimpleTopicPublisher {
             Properties env = new Properties( );
             env.setProperty(Context.INITIAL_CONTEXT_FACTORY,"org.apache.activemq.jndi.ActiveMQInitialContextFactory");
             env.setProperty(Context.PROVIDER_URL,"tcp://www.cimcollege.rs:61616");
-            env.setProperty("topic.MetadataOut", topicName);
-            
+            //env.setProperty("topic.MetadataOut", topicName);
+            env.setProperty("topic." + topicName, topicName);
+         
                     
             jndiContext = new InitialContext(env);
             }catch (NamingException e){

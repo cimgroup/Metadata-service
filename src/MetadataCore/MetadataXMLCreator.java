@@ -211,8 +211,8 @@ public class MetadataXMLCreator {
     
     /** 
      * @summary Method for creating XML for API response
-     * @startRealisation Sasa Stojanovic 31.08.2011.
-     * @finalModification Sasa Stojanovic 31.08.2011.
+     * @startRealisation  Sasa Stojanovic     31.08.2011.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
      * @param sEventName - name of event
      * @param iEventID - id of event
      * @param arResult - list of objects
@@ -331,7 +331,7 @@ public class MetadataXMLCreator {
                         CreateAPIResponseStructure(dDoc, eResponseData, oData);
 
             //Send created XML document
-            MetadataCommunicator.SendXML(dDoc);
+            MetadataCommunicator.SendXML(dDoc, MetadataConstants.c_ET_ALERT_Metadata_APICallResponse);
             
             return dDoc;
             
@@ -344,8 +344,8 @@ public class MetadataXMLCreator {
     
     /** 
      * @summary Method for creating API Response structure
-     * @startRealisation Sasa Stojanovic 01.11.2011.
-     * @finalModification Sasa Stojanovic 01.11.2011.
+     * @startRealisation  Sasa Stojanovic     01.11.2011.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
      * @param dDoc - XML document
      * @param eElement - current XML element
      * @param oData - object with data
@@ -372,8 +372,16 @@ public class MetadataXMLCreator {
                 {
                     Element eValueElement = dDoc.createElement(oData.sReturnConfig);      //create a element for URI
                     eElement.appendChild(eValueElement);                                //add it to current element
-                    Text tValue = dDoc.createTextNode(oData.sData.toString());        //create text with value
-                    eValueElement.appendChild(tValue);                              //add text to element
+                    if (oData.sData.startsWith("<![CDATA[", 0)) //Dejan Milosavljevic 05.03.2012.
+                    {
+                        CDATASection cdValue = dDoc.createCDATASection(oData.sData.substring(9, oData.sData.length() - 3));
+                        eValueElement.appendChild(cdValue);
+                    }
+                    else
+                    {
+                        Text tValue = dDoc.createTextNode(oData.sData.toString());        //create text with value
+                        eValueElement.appendChild(tValue);                              //add text to element
+                    }
                 }
             }
             
@@ -389,8 +397,8 @@ public class MetadataXMLCreator {
     
     /** 
      * @summary Method for creating XML for API response
-     * @startRealisation Sasa Stojanovic 31.08.2011.
-     * @finalModification Sasa Stojanovic 31.08.2011.
+     * @startRealisation  Sasa Stojanovic     31.08.2011.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
      * @param sEventName - name of event
      * @param iEventID - id of event
      * @param arResult - list of objects
@@ -510,7 +518,7 @@ public class MetadataXMLCreator {
                             
 
             //Send created XML document
-            MetadataCommunicator.SendXML(dDoc);
+            MetadataCommunicator.SendXML(dDoc, sEventName);
             
         }
         catch (Exception e)
@@ -618,8 +626,8 @@ public class MetadataXMLCreator {
     
     /** 
      * @summary Method for creating XML for new item response
-     * @startRealisation Sasa Stojanovic 01.11.2011.
-     * @finalModification Sasa Stojanovic 01.11.2011.
+     * @startRealisation  Sasa Stojanovic     01.11.2011.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
      * @param sEventName - name of event
      * @param iEventID - id of event
      * @param oObject - new item object
@@ -723,7 +731,7 @@ public class MetadataXMLCreator {
                     CreateNewItemResponseStructure(dDoc, eEventData, oObject);
 
             //Send created XML document
-            MetadataCommunicator.SendXML(dDoc);
+            MetadataCommunicator.SendXML(dDoc, sEventName);
             
             return dDoc;
         }
@@ -736,7 +744,7 @@ public class MetadataXMLCreator {
     /** 
      * @summary Method for creating XML for new annotation response.
      * @startRealisation  Dejan Milosavljevic 01.02.2012.
-     * @finalModification Dejan Milosavljevic 01.02.2012.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
      * @param dDoc - original XML document.
      * @param sEventName - name of event.
      */
@@ -767,7 +775,7 @@ public class MetadataXMLCreator {
                 eEventType.setTextContent(MetadataConstants.c_XMLV_reply);
                 
                 //Send created XML document
-                MetadataCommunicator.SendXML(dDoc);                
+                MetadataCommunicator.SendXML(dDoc, sEventName);                
                 return dDoc;
             }
             else
@@ -920,13 +928,13 @@ public class MetadataXMLCreator {
     
     /** 
      * @summary Method for creating XML for API response
-     * @startRealisation Sasa Stojanovic 31.08.2011.
-     * @finalModification Sasa Stojanovic 31.08.2011.
+     * @startRealisation  Sasa Stojanovic     31.08.2011.
+     * @finalModification Dejan Milosavljevic 05.03.2012.
+     * @param sEventId - id of event
      * @param sEventName - name of event
-     * @param iEventID - id of event
-     * @param arResult - list of objects
+     * @param oProperty - ontology property
      */
-    public static void CreateXMLInstanceResponse(String sEventId, MetadataGlobal.OntoProperty oProperty)
+    public static void CreateXMLInstanceResponse(String sEventId, String sEventName, MetadataGlobal.OntoProperty oProperty)
     {
         try
         {
@@ -1022,7 +1030,7 @@ public class MetadataXMLCreator {
                         CreatePropertyStructure(oProperty, dDoc, eEventType);
 
             //Send created XML document
-            MetadataCommunicator.SendXML(dDoc);
+            MetadataCommunicator.SendXML(dDoc, sEventName);
             
         }
         catch (Exception e)

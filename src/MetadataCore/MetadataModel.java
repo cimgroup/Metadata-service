@@ -603,11 +603,12 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 06.09.2011.
      * @finalModification Sasa Stojanovic 06.09.2011.
      * @param sEventId - event id
+     * @param sEventName - name of event
      * @param sOntClass - class url
      */
-    static void GetInstance(String sEventId, String sInstanceURL)
+    static void GetInstance(String sEventId, String sEventName, String sInstanceURL)
     {
         MetadataGlobal.OntoProperty oProjeprty = MetadataRDFConverter.GetMember(sInstanceURL);
-        MetadataXMLCreator.CreateXMLInstanceResponse(sEventId, oProjeprty);
+        MetadataXMLCreator.CreateXMLInstanceResponse(sEventId, sEventName, oProjeprty);
     }
 }

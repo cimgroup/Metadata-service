@@ -216,6 +216,7 @@ public class MetadataConstants {
     public static String c_XMLE_method = "method";
     
     public static String c_XMLE_annotation = "annotation";
+    public static String c_XMLE_annotations = "annotations";
     public static String c_XMLE_itemUri = "itemUri";
     public static String c_XMLE_subjectAnnotated = "subjectAnnotated";
     public static String c_XMLE_descriptionAnnotated = "descriptionAnnotated";
@@ -231,6 +232,7 @@ public class MetadataConstants {
     public static String c_XMLE_bodyConcepts = "bodyConcepts";
     public static String c_XMLE_concept = "concept";
     public static String c_XMLE_count = "count";
+    public static String c_XMLE_uri = "uri";
 
     public static String c_XMLE_forumSensor = "forumSensor";
     public static String c_XMLE_forum = "forum";
@@ -532,7 +534,8 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_HasAnnotations = "hasAnnotations";
     public static String c_OWLObjectProperty_HasConcepts = "hasConcepts";
     public static String c_OWLObjectProperty_Author = "Author";
-    
+    public static String c_OWLObjectProperty_HasObject = "hasObject";
+            
     public static String c_OWLObjectProperty_HasFile = "hasFile";
     public static String c_OWLObjectProperty_HasAction = "hasAction";
     public static String c_OWLObjectProperty_HasModules = "hasModules";

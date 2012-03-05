@@ -323,6 +323,7 @@ public class MetadataGlobal {
             String sCategoryDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category;
             String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
             String sKeywordAnnotationProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
+            String sHasObjectObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject;
             
             //Sasa Stojanovic
             String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
@@ -399,6 +400,13 @@ public class MetadataGlobal {
             if (opHasConcepts == null)
             {
                 opHasConcepts = omModel.createObjectProperty(sHasConceptObjectProperty);
+            }
+            
+            //Creating hasObject ObjectProperty
+            ObjectProperty opHasObject = omModel.getObjectProperty(sHasObjectObjectProperty);
+            if (opHasObject == null)
+            {
+                opHasObject = omModel.createObjectProperty(sHasObjectObjectProperty);
             }
             
             //Creating apKeyword AnnotationProperty
@@ -484,6 +492,7 @@ public class MetadataGlobal {
         AnnotationProp[] oAnnotated;
         ConceptProp[] oConcepts;
         String[] oKeywords;
+        String sHasObjectUri;
         
         /**
          * @summary Method for creating keywords from annotatons.

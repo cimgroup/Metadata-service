@@ -1173,6 +1173,10 @@ public class MetadataRDFConverter {
                         }
                     }
                     
+                    //HasObject
+                    ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
+                    resAnnotation.addProperty(opHasObject, resObject.asResource());
+                    
                     ////Old code
                     //String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
                     //if (!sOWLDataProperty.isEmpty())
@@ -2183,6 +2187,78 @@ public class MetadataRDFConverter {
                 if (oIssueData.sReturnConfig != null)
                     oData.oData.add(oIssueData);
             }
+            
+            //Annotations
+            String sAQuery = "SELECT ?annotationUri ?annotationName ?annotationText WHERE "
+                + "{?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject + "> <" + sIssueUri + "> ."
+                + " ?annotationUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name + "> ?annotationName ."
+                + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text + "> ?annotationText}";
+//            String sAQuery = "SELECT ?annotationUri ?annotationName ?annotationText WHERE "
+//                + "{?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject + "> <" + sIssueUri + ">}";
+//            
+//            String sAQuery = "SELECT ?annotationUri ?annotationName ?annotationText WHERE "
+//                + "{<"+ sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject + "> ?annotationUri ."
+//                + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Name + "> ?annotationName ."
+//                + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text + "> ?annotationText}";
+            ResultSet rsAnnotations = QueryExecutionFactory.create(sAQuery, oModel).execSelect();
+
+            MetadataGlobal.APIResponseData oAnnotations = new MetadataGlobal.APIResponseData();
+            oAnnotations.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_annotations + "/";
+
+            while (rsAnnotations.hasNext())
+            {
+                QuerySolution qsAnnotation = rsAnnotations.nextSolution();
+
+                String sAnnotationUri = qsAnnotation.get("?annotationUri").toString();
+                String sAnnotationName = qsAnnotation.get("?annotationName").toString();
+                String sAnnotationText = qsAnnotation.get("?annotationText").toString();
+                String sConceptName = GetConceptName(sAnnotationName);
+
+                MetadataGlobal.APIResponseData oAnnotationText = new MetadataGlobal.APIResponseData();
+                oAnnotationText.sReturnConfig = "s3:" + sAnnotationName;
+                oAnnotationText.sData = String.format("<![CDATA[%s]]>", sAnnotationText);
+                oAnnotations.oData.add(oAnnotationText);
+
+                //Concepts
+                String sCQuery = "SELECT ?conceptUri ?conceptDataUri ?conceptDataCount WHERE "
+                + "{<" + sAnnotationUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts + "> ?conceptUri ."
+                + " ?conceptUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri + "> ?conceptDataUri ."
+                + " ?conceptUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count + "> ?conceptDataCount}";
+//                String sCQuery = "SELECT ?conceptUri ?conceptDataUri ?conceptDataCount WHERE "
+//                + "{<" + sAnnotationUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts + "> ?conceptUri}";
+                ResultSet rsConcepts = QueryExecutionFactory.create(sCQuery, oModel).execSelect();
+
+                MetadataGlobal.APIResponseData oConcept = new MetadataGlobal.APIResponseData();
+                oConcept.sReturnConfig = "s3:" + sConceptName + "/";
+                oAnnotations.oData.add(oConcept);
+
+                while (rsConcepts.hasNext())
+                {
+                    QuerySolution qsConcept = rsConcepts.nextSolution();
+
+                    //String sConceptUri = qsConcept.get("?conceptUri").toString();
+                    String sConceptDataUri = qsConcept.get("?conceptDataUri").toString();
+                    String sConceptDataCount = qsConcept.get("?conceptDataCount").toString();
+
+                    MetadataGlobal.APIResponseData oConceptXml = new MetadataGlobal.APIResponseData();
+                    oConceptXml.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_concept + "/";
+
+                    MetadataGlobal.APIResponseData oConceptDataUri = new MetadataGlobal.APIResponseData();
+                    oConceptDataUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_uri;
+                    oConceptDataUri.sData = sConceptDataUri;
+                    oConceptXml.oData.add(oConceptDataUri);
+
+                    MetadataGlobal.APIResponseData oConceptDataCount = new MetadataGlobal.APIResponseData();
+                    oConceptDataCount.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_count;
+                    oConceptDataCount.sData = sConceptDataCount;
+                    oConceptXml.oData.add(oConceptDataCount);
+
+                    oConcept.oData.add(oConceptXml);
+                }
+            }
+            //oIssueData.oData.add(oAnnotations);
+            if (oAnnotations.sReturnConfig != null)
+                oData.oData.add(oAnnotations);
         }
         catch (Exception e)
         {
