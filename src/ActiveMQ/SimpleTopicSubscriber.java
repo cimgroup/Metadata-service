@@ -19,6 +19,7 @@ public class SimpleTopicSubscriber {
         
         
         MetadataConstants.c_Topics.add("MetadataIn");
+        MetadataConstants.c_Topics.add("ALERT.*.APICallRequest");
         //MetadataConstants.c_Topics.add("Metadata.issue.requestNew");
 
         
