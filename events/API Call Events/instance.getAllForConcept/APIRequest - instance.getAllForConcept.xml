@@ -35,6 +35,8 @@
 											<s2:name>conceptUri</s2:name>
 											<!-- value of parameter -->
 											<s2:value>http://www.alert-project.eu/ontologies/alert_its.owl#Bug</s2:value>
+                                                                                        <s2:value>http://www.alert-project.eu/ontologies/alert_scm.owl#Person</s2:value>
+                                                                                        <s2:value>http://www.alert-project.eu/ontologies/alert.owl#Method</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>
