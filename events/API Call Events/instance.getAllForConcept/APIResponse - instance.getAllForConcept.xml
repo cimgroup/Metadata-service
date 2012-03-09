@@ -38,7 +38,7 @@
                                                                                         <s3:instance>
                                                                                             <s3:name>Bug1</s3:name>
                                                                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s3:uri>
-                                                                                                                      </s3:instance>
+                                                                                        </s3:instance>
                                                                                         <s3:instance>
                                                                                             <s3:name>Bug2</s3:name>
                                                                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s3:uri>
