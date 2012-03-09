@@ -38,39 +38,36 @@
                                                                                         <s3:instance>
                                                                                             <s3:name>Bug1</s3:name>
                                                                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s3:uri>
-                                                                                            <s3:properties>
-                                                                                                <s3:property>
-                                                                                                    <s3:name>hasReporter</s3:name>
-                                                                                                    <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasReporter</s3:uri>
-                                                                                                    <s3:value>http://www.alert-project.eu/ontologies/alert_scm.owl#Person9</s3:value>
-                                                                                                </s3:property>
-                                                                                                <s3:property>
-                                                                                                    <s3:name>hasComment</s3:name>
-                                                                                                    <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasComment</s3:uri>
-                                                                                                    <s3:value>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment4</s3:value>
-                                                                                                </s3:property>
-                                                                                                <s3:property>
-                                                                                                    <s3:name>hasMilestone</s3:name>
-                                                                                                    <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasMilestone</s3:uri>
-                                                                                                    <s3:value>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Milestone1</s3:value>
-                                                                                                </s3:property>
-                                                                                                <s3:property>
-                                                                                                    <s3:name>description</s3:name>
-                                                                                                    <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#description</s3:uri>
-                                                                                                    <s3:value>Notify user on hardware changes</s3:value>
-                                                                                                </s3:property>
-                                                                                                ...
-                                                                                            </s3:properties>
-                                                                                        </s3:instance>
+                                                                                                                      </s3:instance>
                                                                                         <s3:instance>
                                                                                             <s3:name>Bug2</s3:name>
                                                                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s3:uri>
-                                                                                            <s3:properties>
-                                                                                                ...
-                                                                                            </s3:properties>
                                                                                         </s3:instance>
                                                                                         ...
                                                                                     </s3:instances>
+                                                                                    <s3:properties>
+                                                                                        <s3:property>
+                                                                                            <s3:name>hasReporter</s3:name>
+                                                                                            <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasReporter</s3:uri>
+                                                                                            <s3:range>http://www.alert-project.eu/ontologies/alert_scm.owl#Person</s3:range>
+                                                                                        </s3:property>
+                                                                                        <s3:property>
+                                                                                            <s3:name>hasComment</s3:name>
+                                                                                            <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasComment</s3:uri>
+                                                                                            <s3:range>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment</s3:range>
+                                                                                        </s3:property>
+                                                                                        <s3:property>
+                                                                                            <s3:name>hasMilestone</s3:name>
+                                                                                            <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasMilestone</s3:uri>
+                                                                                            <s3:range>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Milestone</s3:range>
+                                                                                        </s3:property>
+                                                                                        <s3:property>
+                                                                                            <s3:name>description</s3:name>
+                                                                                            <s3:uri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#description</s3:uri>
+                                                                                            <s3:range>xsd:String</s3:range>
+                                                                                        </s3:property>
+                                                                                        ...
+                                                                                    </s3:properties>
                                                                                 </s3:concept>
                                                                                 <s3:concept>
                                                                                     <s3:name>Person</s3:name>
@@ -78,6 +75,10 @@
                                                                                     <s3:superConcept>http://xmlns.com/foaf/0.1/Person</s3:superConcept>
                                                                                     <s3:instances>
                                                                                         ...
+                                                                                    </s3:instances>
+                                                                                    <s3:properties>
+                                                                                        ...
+                                                                                    </s3:properties>
                                                                                 </s3:concept>
                                                                                 <s3:concept>
                                                                                     ...
