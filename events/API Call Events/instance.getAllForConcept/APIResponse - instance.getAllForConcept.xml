@@ -72,6 +72,16 @@
                                                                                         ...
                                                                                     </s3:instances>
                                                                                 </s3:concept>
+                                                                                <s3:concept>
+                                                                                    <s3:name>Person</s3:name>
+                                                                                    <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person</s3:uri>
+                                                                                    <s3:superConcept>http://xmlns.com/foaf/0.1/Person</s3:superConcept>
+                                                                                    <s3:instances>
+                                                                                        ...
+                                                                                </s3:concept>
+                                                                                <s3:concept>
+                                                                                    ...
+                                                                                </s3:concept>
 									</s3:responseData>
 								</ns1:apiResponse>
 							</ns1:eventData>
