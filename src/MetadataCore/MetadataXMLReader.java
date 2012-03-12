@@ -906,6 +906,27 @@ public class MetadataXMLReader {
                     MetadataModel.ac_issue_getSubjectAreasForOpen(sEventId, sProductUri);
                 }
                 
+                ///////////////////////////////// issue_getOpen /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getOpen))
+                {
+                    String sProductUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_productUri))
+                                sProductUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getOpen(sEventId, sProductUri);
+                }
+                
                 ///////////////////////////////// person_getInfo /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_person_getInfo))
                 {
@@ -1299,18 +1320,28 @@ public class MetadataXMLReader {
                 ///////////////////////////////// instance_getAllForConcept /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_instance_getAllForConcept))
                 {
-                    String sConceptUri = "";
+                    ArrayList <String> sConceptUri = new ArrayList();
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
                     if (nlInputParameter != null && nlInputParameter.getLength() > 0)
                     {
                         for (int i = 0; i < nlInputParameter.getLength(); i++)
-                        {
+                        {                          
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
                             if (sParamName.equals(MetadataConstants.c_XMLV_conceptUri))
-                                sConceptUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            {
+                                NodeList nlValue = eInputParameter.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_value);
+                                if (nlValue != null && nlValue.getLength() > 0)
+                                {
+                                    for (int j = 0; j < nlValue.getLength(); j++)
+                                    {
+                                        Element eValue = (Element)nlValue.item(j);
+                                        sConceptUri.add(eValue.getFirstChild().getNodeValue());
+                                    }
+                                }
+                            }
                         }
                     }
                     

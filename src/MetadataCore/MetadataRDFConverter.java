@@ -2416,6 +2416,65 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary issue_getOpen
+     * @startRealisation  Sasa Stojanovic 12.03.2012.
+     * @finalModification Sasa Stojanovic 12.03.2012.
+     * @param sProductUri - product URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getOpen(String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
+                    
+            String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
+                    + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
+                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState + "> <" + sStateOpenUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL + "> ?issueUrl ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription . }";
+                        
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssue = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUrl = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueId = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueDescription = new MetadataGlobal.APIResponseData();
+                
+                oIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUrl.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueUrl;
+                oIssueId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
+                oIssueDescription.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                oIssueUrl.sData = qsIssue.get("?issueUrl").toString();
+                oIssueId.sData = qsIssue.get("?issueId").toString();
+                oIssueDescription.sData = qsIssue.get("?issueDescription").toString();
+                
+                oIssue.oData.add(oIssueUri);
+                oIssue.oData.add(oIssueUrl);
+                oIssue.oData.add(oIssueId);
+                oIssue.oData.add(oIssueDescription);   
+                oData.oData.add(oIssue);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
      * @summary person_getInfo
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.
@@ -3513,106 +3572,111 @@ public class MetadataRDFConverter {
     /**
      * @summary instance_getAllForConcept
      * @startRealisation  Dejan Milosavljevic 21.02.2012.
-     * @finalModification Dejan Milosavljevic 21.02.2012.
-     * @param sConceptUri - concept URI
+     * @finalModification Sasa Stojanovic 12.03.2012.
+     * @param sConceptUri - concept URIs
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_instance_getAllForConcept(String sConceptUri)
+    public static MetadataGlobal.APIResponseData ac_instance_getAllForConcept(ArrayList <String> sConceptUri)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-            
-            //It can be anything (issue, person...)
-            OntResource resConcept = omModel.getOntResource(sConceptUri);
-            MetadataGlobal.APIResponseData oMembers = new MetadataGlobal.APIResponseData();
-            OntClass ocMember = omModel.getOntClass(sConceptUri);
-            
-            //Get individuals
-            ExtendedIterator iIterator = ocMember.listInstances();
-            while(iIterator.hasNext())
-            {               
-                MetadataGlobal.APIResponseData oSubData = new MetadataGlobal.APIResponseData();
-                oSubData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_item;
-                oSubData.sData = iIterator.next().toString();
-                oMembers.oData.add(oSubData);
-            }
-            
-            OntClass ocConcept = omModel.getOntClass(sConceptUri);
-            OntClass ocSuperConcept = ocConcept.getSuperClass();
-              
-            MetadataGlobal.APIResponseData oConcept = new MetadataGlobal.APIResponseData();
-            oConcept.sReturnConfig = "s3:concept/";
-            MetadataGlobal.APIResponseData oCName = new MetadataGlobal.APIResponseData();
-            oCName.sReturnConfig = "s3:name";
-            oCName.sData = resConcept.getLocalName();
-            MetadataGlobal.APIResponseData oCUri = new MetadataGlobal.APIResponseData();
-            oCUri.sReturnConfig = "s3:uri";
-            oCUri.sData = sConceptUri;
-            MetadataGlobal.APIResponseData oSuperConcept = new MetadataGlobal.APIResponseData();
-            oSuperConcept.sReturnConfig = "s3:superConcept";
-            if (ocSuperConcept != null)
-                oSuperConcept.sData = ocSuperConcept.getURI();
-            else
-                oSuperConcept.sData = "";
-            
-            //Instances
-            MetadataGlobal.APIResponseData oInstances = new MetadataGlobal.APIResponseData();
-            oInstances.sReturnConfig = "s3:instances/";
-                
-            if (oMembers != null && oMembers.oData != null && oMembers.oData.size() > 0)
+                        
+            for (int i = 0; i < sConceptUri.size(); i++)
             {
-                for (MetadataGlobal.APIResponseData oMember : oMembers.oData)
-                {
-                    OntResource resInstance = omModel.getOntResource(oMember.sData);
-                    
-                    MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
-                    oInstance.sReturnConfig = "s3:instance/";
-                    MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
-                    oIName.sReturnConfig = "s3:name";
-                    oIName.sData = resInstance.getLocalName();
-                    MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
-                    oIUri.sReturnConfig = "s3:uri";
-                    oIUri.sData = oMember.sData;
-                    
-                    //Properties
-                    MetadataGlobal.APIResponseData oProperties = new MetadataGlobal.APIResponseData();
-                    oProperties.sReturnConfig = "s3:properties/";
-
-                    OntoProperty oProps = GetMember(oMember.sData);
-                    
-                    for (OntoProperty opProperty : oProps.oProperties)
-                    {
-                        MetadataGlobal.APIResponseData oProperty = new MetadataGlobal.APIResponseData();
-                        oProperty.sReturnConfig = "s3:property/";
-
-                        MetadataGlobal.APIResponseData oPName = new MetadataGlobal.APIResponseData();
-                        oPName.sReturnConfig = "s3:name";
-                        oPName.sData = opProperty.sName;
-                        MetadataGlobal.APIResponseData oPUri = new MetadataGlobal.APIResponseData();
-                        oPUri.sReturnConfig = "s3:uri";
-                        oPUri.sData = opProperty.sTypeOf;
-                        MetadataGlobal.APIResponseData oPValue = new MetadataGlobal.APIResponseData();
-                        oPValue.sReturnConfig = "s3:value";
-                        oPValue.sData = opProperty.sValue;
-
-                        oProperty.oData.add(oPName);
-                        oProperty.oData.add(oPUri);
-                        oProperty.oData.add(oPValue);
-                        oProperties.oData.add(oProperty);
-                    }
-                                        
-                    oInstance.oData.add(oIName);
-                    oInstance.oData.add(oIUri);
-                    oInstance.oData.add(oProperties);
-                    oInstances.oData.add(oInstance);
+                //It can be anything (issue, person...)
+                OntResource resConcept = omModel.getOntResource(sConceptUri.get(i));
+                MetadataGlobal.APIResponseData oMembers = new MetadataGlobal.APIResponseData();
+                OntClass ocMember = omModel.getOntClass(sConceptUri.get(i));
+                
+                //Get individuals
+                ExtendedIterator iIterator = ocMember.listInstances();
+                while(iIterator.hasNext())
+                {               
+                    MetadataGlobal.APIResponseData oSubData = new MetadataGlobal.APIResponseData();
+                    oSubData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_item;
+                    oSubData.sData = iIterator.next().toString();
+                    oMembers.oData.add(oSubData);
                 }
 
+                OntClass ocConcept = omModel.getOntClass(sConceptUri.get(i));
+                OntClass ocSuperConcept = ocConcept.getSuperClass();
+
+                MetadataGlobal.APIResponseData oConcept = new MetadataGlobal.APIResponseData();
+                oConcept.sReturnConfig = "s3:concept/";
+                MetadataGlobal.APIResponseData oCName = new MetadataGlobal.APIResponseData();
+                oCName.sReturnConfig = "s3:name";
+                oCName.sData = resConcept.getLocalName();
+                MetadataGlobal.APIResponseData oCUri = new MetadataGlobal.APIResponseData();
+                oCUri.sReturnConfig = "s3:uri";
+                oCUri.sData = sConceptUri.get(i);
+                MetadataGlobal.APIResponseData oSuperConcept = new MetadataGlobal.APIResponseData();
+                oSuperConcept.sReturnConfig = "s3:superConcept";
+                if (ocSuperConcept != null)
+                    oSuperConcept.sData = ocSuperConcept.getURI();
+                else
+                    oSuperConcept.sData = "";
+
+                //Instances
+                MetadataGlobal.APIResponseData oInstances = new MetadataGlobal.APIResponseData();
+                oInstances.sReturnConfig = "s3:instances/";
+
+                if (oMembers != null && oMembers.oData != null && oMembers.oData.size() > 0)
+                {
+                    for (MetadataGlobal.APIResponseData oMember : oMembers.oData)
+                    {
+                        OntResource resInstance = omModel.getOntResource(oMember.sData);
+
+                        MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
+                        oInstance.sReturnConfig = "s3:instance/";
+                        MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
+                        oIName.sReturnConfig = "s3:name";
+                        oIName.sData = resInstance.getLocalName();
+                        MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
+                        oIUri.sReturnConfig = "s3:uri";
+                        oIUri.sData = oMember.sData;
+
+                        oInstance.oData.add(oIName);
+                        oInstance.oData.add(oIUri);
+                        //oInstance.oData.add(oProperties);
+                        oInstances.oData.add(oInstance);
+                    }
+                }
+                
+                //Properties
+                MetadataGlobal.APIResponseData oProperties = new MetadataGlobal.APIResponseData();
+                oProperties.sReturnConfig = "s3:properties/";
+
+                OntoProperty oProps = GetMember(sConceptUri.get(i));
+                //ocConcept.get
+
+                for (OntoProperty opProperty : oProps.oProperties)
+                {
+                    MetadataGlobal.APIResponseData oProperty = new MetadataGlobal.APIResponseData();
+                    oProperty.sReturnConfig = "s3:property/";
+
+                    MetadataGlobal.APIResponseData oPName = new MetadataGlobal.APIResponseData();
+                    oPName.sReturnConfig = "s3:name";
+                    oPName.sData = opProperty.sName;
+                    MetadataGlobal.APIResponseData oPUri = new MetadataGlobal.APIResponseData();
+                    oPUri.sReturnConfig = "s3:uri";
+                    oPUri.sData = opProperty.sTypeOf;
+                    MetadataGlobal.APIResponseData oPValue = new MetadataGlobal.APIResponseData();
+                    oPValue.sReturnConfig = "s3:range";
+                    oPValue.sData = opProperty.sValue;
+
+                    oProperty.oData.add(oPName);
+                    oProperty.oData.add(oPUri);
+                    oProperty.oData.add(oPValue);
+                    oProperties.oData.add(oProperty);
+                }
+                
                 oConcept.oData.add(oCName);
                 oConcept.oData.add(oCUri);
                 oConcept.oData.add(oSuperConcept);
                 oConcept.oData.add(oInstances);
+                oConcept.oData.add(oProperties);
                 oData.oData.add(oConcept);
             }
         }

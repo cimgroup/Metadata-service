@@ -347,6 +347,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting subjects for all open issues for product.
+     * @startRealisation  Sasa Stojanovic 12.03.2012.
+     * @finalModification Sasa Stojanovic 12.03.2012.
+     * @param sEventId - event id
+     * @param sProductUri - product uri
+     */
+    static void ac_issue_getOpen(String sEventId, String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getOpen(sProductUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getOpen, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting person info
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.
@@ -592,7 +605,7 @@ public class MetadataModel {
      * @param sEventId - event id.
      * @param sConceptUri - concept uri.
      */
-    static void ac_instance_getAllForConcept(String sEventId, String sConceptUri)
+    static void ac_instance_getAllForConcept(String sEventId, ArrayList <String> sConceptUri)
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_instance_getAllForConcept(sConceptUri);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_instance_getAllForConcept, sEventId, oData);

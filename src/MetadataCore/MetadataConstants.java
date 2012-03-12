@@ -332,6 +332,7 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getRelatedToKeyword = "issue.getRelatedToKeyword";
     public static String c_XMLAC_issue_getSubjectAreas = "issue.getSubjectAreas";
     public static String c_XMLAC_issue_getSubjectAreasForOpen = "issue.getSubjectAreasForOpen";
+    public static String c_XMLAC_issue_getOpen = "issue.getOpen";
     public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
     public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
     public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
