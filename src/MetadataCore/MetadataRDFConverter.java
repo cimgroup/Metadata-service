@@ -3648,27 +3648,31 @@ public class MetadataRDFConverter {
                 MetadataGlobal.APIResponseData oProperties = new MetadataGlobal.APIResponseData();
                 oProperties.sReturnConfig = "s3:properties/";
 
-                OntoProperty oProps = GetMember(sConceptUri.get(i));
-                //ocConcept.get
-
-                for (OntoProperty opProperty : oProps.oProperties)
+                //we take only direct associations (true)
+                ExtendedIterator iProperties = ocConcept.listDeclaredProperties(true);
+                while(iProperties.hasNext())
                 {
+                    OntProperty pProperty = (OntProperty)iProperties.next();               
+                    
                     MetadataGlobal.APIResponseData oProperty = new MetadataGlobal.APIResponseData();
                     oProperty.sReturnConfig = "s3:property/";
 
                     MetadataGlobal.APIResponseData oPName = new MetadataGlobal.APIResponseData();
                     oPName.sReturnConfig = "s3:name";
-                    oPName.sData = opProperty.sName;
+                    oPName.sData = pProperty.getLocalName();
                     MetadataGlobal.APIResponseData oPUri = new MetadataGlobal.APIResponseData();
                     oPUri.sReturnConfig = "s3:uri";
-                    oPUri.sData = opProperty.sTypeOf;
-                    MetadataGlobal.APIResponseData oPValue = new MetadataGlobal.APIResponseData();
-                    oPValue.sReturnConfig = "s3:range";
-                    oPValue.sData = opProperty.sValue;
+                    oPUri.sData = pProperty.getURI();
+                    MetadataGlobal.APIResponseData oPRange = new MetadataGlobal.APIResponseData();
+                    oPRange.sReturnConfig = "s3:range";
+                    if (pProperty.getRange() != null)
+                        oPRange.sData = pProperty.getRange().toString();
+                    else
+                        oPRange.sData = "";
 
                     oProperty.oData.add(oPName);
                     oProperty.oData.add(oPUri);
-                    oProperty.oData.add(oPValue);
+                    oProperty.oData.add(oPRange);
                     oProperties.oData.add(oProperty);
                 }
                 
@@ -3682,6 +3686,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return oData;
     }
