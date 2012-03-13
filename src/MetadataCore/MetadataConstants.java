@@ -192,6 +192,7 @@ public class MetadataConstants {
     public static String c_XMLE_attachments = "attachments";
     
     public static String c_XMLE_person = "person";
+    public static String c_XMLE_persons = "persons";
     public static String c_XMLE_personFirstName = "personFirstName";
     public static String c_XMLE_personLastName = "personLastName";
     public static String c_XMLE_personName = "personName";

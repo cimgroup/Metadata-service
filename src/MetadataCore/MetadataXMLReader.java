@@ -2159,31 +2159,37 @@ public class MetadataXMLReader {
                         Identity oIdentity = MetadataObjectFactory.CreateNewIdentity();
                         oIdentity.m_sID = GetValue(eIdentity, "sm:" + MetadataConstants.c_XMLE_uuid);
                         
-                        NodeList nlIs = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
-                        if (nlIs != null && nlIs.getLength() > 0)
+                        NodeList nlPersons = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_persons);
+                        if (nlPersons != null && nlPersons.getLength() > 0)
                         {
-                            Element eIs = (Element)nlIs.item(0);
-                            NodeList nlPerson = eIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                            oIdentity.m_oIs = new foaf_Person[nlPerson.getLength()];
-                            for (int j = 0; j < nlPerson.getLength(); j++)
+                            Element ePersons = (Element)nlPersons.item(0);
+                            
+                            NodeList nlIs = ePersons.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                            if (nlIs != null && nlIs.getLength() > 0)
                             {
-                                Element ePerson = (Element)nlPerson.item(j);
-                                oIdentity.m_oIs[j] = new foaf_Person();
-                                oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                Element eIs = (Element)nlIs.item(0);
+                                NodeList nlPerson = eIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                oIdentity.m_oIs = new foaf_Person[nlPerson.getLength()];
+                                for (int j = 0; j < nlPerson.getLength(); j++)
+                                {
+                                    Element ePerson = (Element)nlPerson.item(j);
+                                    oIdentity.m_oIs[j] = new foaf_Person();
+                                    oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                }
                             }
-                        }
-                        
-                        NodeList nlIsnt = eIdentity.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
-                        if (nlIsnt != null && nlIsnt.getLength() > 0)
-                        {
-                            Element eIsnt = (Element)nlIsnt.item(0);
-                            NodeList nlPerson = eIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                            oIdentity.m_oIsnt = new foaf_Person[nlPerson.getLength()];
-                            for (int j = 0; j < nlPerson.getLength(); j++)
+
+                            NodeList nlIsnt = ePersons.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                            if (nlIsnt != null && nlIsnt.getLength() > 0)
                             {
-                                Element ePerson = (Element)nlPerson.item(j);
-                                oIdentity.m_oIsnt[j] = new foaf_Person();
-                                oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                Element eIsnt = (Element)nlIsnt.item(0);
+                                NodeList nlPerson = eIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                oIdentity.m_oIsnt = new foaf_Person[nlPerson.getLength()];
+                                for (int j = 0; j < nlPerson.getLength(); j++)
+                                {
+                                    Element ePerson = (Element)nlPerson.item(j);
+                                    oIdentity.m_oIsnt[j] = new foaf_Person();
+                                    oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                }
                             }
                         }
                         
