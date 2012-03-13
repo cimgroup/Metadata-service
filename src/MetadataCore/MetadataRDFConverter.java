@@ -843,40 +843,43 @@ public class MetadataRDFConverter {
                                         resModule.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_iEndLine));
                                     }
                                     
-                                    ObjectProperty opHasMethod = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods);
-                                    for (int k = 0; k < oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod.length; k++)
+                                    if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod != null)
                                     {
-                                        if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] != null)
+                                        ObjectProperty opHasMethod = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods);
+                                        for (int k = 0; k < oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod.length; k++)
                                         {
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
-                                            Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
-
-                                            //method name
-                                            if (!oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName.isEmpty())
+                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] != null)
                                             {
-                                                DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
-                                                resMethod.removeAll(dtpName);
-                                                resMethod.addProperty(dtpName, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName);
-                                            }
+                                                oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
+                                                Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
 
-                                            //method start line
-                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine != -1)
-                                            {
-                                                DatatypeProperty dtpStartLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine);
-                                                resMethod.removeAll(dtpStartLine);
-                                                resMethod.addProperty(dtpStartLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine));
-                                            }
+                                                //method name
+                                                if (!oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName.isEmpty())
+                                                {
+                                                    DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                                                    resMethod.removeAll(dtpName);
+                                                    resMethod.addProperty(dtpName, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName);
+                                                }
 
-                                            //method end line
-                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine != -1)
-                                            {
-                                                DatatypeProperty dtpEndLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine);
-                                                resMethod.removeAll(dtpEndLine);
-                                                resMethod.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine));
-                                            }
+                                                //method start line
+                                                if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine != -1)
+                                                {
+                                                    DatatypeProperty dtpStartLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine);
+                                                    resMethod.removeAll(dtpStartLine);
+                                                    resMethod.addProperty(dtpStartLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine));
+                                                }
 
-                                            resModule.addProperty(opHasMethod, resMethod.asResource());
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                                //method end line
+                                                if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine != -1)
+                                                {
+                                                    DatatypeProperty dtpEndLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine);
+                                                    resMethod.removeAll(dtpEndLine);
+                                                    resMethod.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine));
+                                                }
+
+                                                resModule.addProperty(opHasMethod, resMethod.asResource());
+                                                oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                            }
                                         }
                                     }
                                     
@@ -903,6 +906,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception ex)
         {
+            ex.printStackTrace();
         }
         return oCommit;
     }
@@ -4122,7 +4126,6 @@ public class MetadataRDFConverter {
         {
         }
         return oActivity;
-        
     }
     
     /**
