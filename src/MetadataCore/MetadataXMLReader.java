@@ -2253,24 +2253,33 @@ public class MetadataXMLReader {
                             if (nlAdd.getLength() > 0)
                             {
                                 Element eAdd = (Element)nlAdd.item(0);
-                                NodeList nlAddIs = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
-                                if (nlAddIs != null)
+                                if (eAdd != null)
                                 {
-                                    Element eAddIs = (Element)nlAddIs.item(0);
-                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                                    if (nlPerson != null)
+                                    NodeList nlAddIs = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_is);
+                                    if (nlAddIs != null)
                                     {
-                                        iIsCount += nlPerson.getLength();
+                                        Element eAddIs = (Element)nlAddIs.item(0);
+                                        if (eAddIs != null)
+                                        {
+                                            NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            if (nlPerson != null)
+                                            {
+                                                iIsCount += nlPerson.getLength();
+                                            }
+                                        }
                                     }
-                                }
-                                NodeList nlAddIsnt = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
-                                if (nlAddIsnt != null)
-                                {
-                                    Element eAddIs = (Element)nlAddIsnt.item(0);
-                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                                    if (nlPerson != null)
+                                    NodeList nlAddIsnt = eAdd.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_isnt);
+                                    if (nlAddIsnt != null)
                                     {
-                                        iIsntCount += nlPerson.getLength();
+                                        Element eAddIsnt = (Element)nlAddIsnt.item(0);
+                                        if (eAddIsnt != null)
+                                        {
+                                            NodeList nlPerson = eAddIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            if (nlPerson != null)
+                                            {
+                                                iIsntCount += nlPerson.getLength();
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2281,17 +2290,20 @@ public class MetadataXMLReader {
                                 if (nlRemoveIs != null && nlRemoveIs.getLength() > 0)
                                 {
                                     Element eRemoveIs = (Element)nlRemoveIs.item(0);
-                                    NodeList nlAllPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
-                                    if (nlAllPerson != null && nlAllPerson.getLength() > 0)
+                                    if (eRemoveIs != null)
                                     {
-                                        oIdentity.m_bIsRemoveAll = true;
-                                    }
-                                    else
-                                    {
-                                        NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                                        if (nlPerson != null)
+                                        NodeList nlAllPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                        if (nlAllPerson != null && nlAllPerson.getLength() > 0)
                                         {
-                                            iIsCount += nlPerson.getLength();
+                                            oIdentity.m_bIsRemoveAll = true;
+                                        }
+                                        else
+                                        {
+                                            NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            if (nlPerson != null)
+                                            {
+                                                iIsCount += nlPerson.getLength();
+                                            }
                                         }
                                     }
                                 }
@@ -2299,17 +2311,20 @@ public class MetadataXMLReader {
                                 if (nlRemoveIsnt != null)
                                 {
                                     Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
-                                    NodeList nlAllPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
-                                    if (nlAllPerson != null && nlAllPerson.getLength() > 0)
+                                    if (eRemoveIsnt != null)
                                     {
-                                        oIdentity.m_bIsntRemoveAll = true;
-                                    }
-                                    else
-                                    {
-                                        NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
-                                        if (nlPerson != null)
+                                        NodeList nlAllPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                        if (nlAllPerson != null && nlAllPerson.getLength() > 0)
                                         {
-                                            iIsntCount += nlPerson.getLength();
+                                            oIdentity.m_bIsntRemoveAll = true;
+                                        }
+                                        else
+                                        {
+                                            NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            if (nlPerson != null)
+                                            {
+                                                iIsntCount += nlPerson.getLength();
+                                            }
                                         }
                                     }
                                 }
