@@ -28,25 +28,31 @@
                                 <sm:identities>
                                     <sm:identity>
                                         <sm:uuid>51d8ecec1d6ea40106c6c71ffed13547010870b0ab57fe396f5fbb124967e0eb</sm:uuid>
-                                        <sm:is>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:person>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:person>
-                                        </sm:is>
-                                        <sm:isnt>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </sm:isnt>
+                                        <sm:persons>
+                                            <sm:is>
+                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:person>
+                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:person>
+                                            </sm:is>
+                                            <sm:isnt>
+                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
+                                            </sm:isnt>
+                                        </sm:persons>
                                     </sm:identity>
                                     <sm:identity>
                                         <sm:uuid>e0b2d72cdd7cc4c80a0a57f7462aece5341b228b139d6ccbfa093853b6a16b6b</sm:uuid>
-                                        <sm:isnt>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </sm:isnt>
+                                        <sm:persons>
+                                            <sm:isnt>
+                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
+                                            </sm:isnt>
+                                        </sm:persons>
                                     </sm:identity>
                                     <sm:identity>
                                         <sm:uuid>779c5c45ae3932a3fc92d36a3d33f106c99eeaba9e953689a47effdb683247eb</sm:uuid>
-                                        <sm:is>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </sm:is>
+                                        <sm:persons>
+                                            <sm:is>
+                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
+                                            </sm:is>
+                                        </sm:persons>
                                     </sm:identity>
                                 </sm:identities>
                             </ns1:eventData>

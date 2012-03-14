@@ -512,7 +512,7 @@ public class MetadataRDFConverter {
 
                             if (oIssue.m_oHasComment[i].m_dtmDate != null)
                             {
-                                DatatypeProperty dtpCommentDate= oModel.getDatatypeProperty( MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date );
+                                DatatypeProperty dtpCommentDate= oModel.getDatatypeProperty( MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date);
                                 resComment.removeAll(dtpCommentDate);
                                 resComment.addProperty(dtpCommentDate, oIssue.m_oHasComment[i].m_dtmDate.toString());
                             }
@@ -843,40 +843,43 @@ public class MetadataRDFConverter {
                                         resModule.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_iEndLine));
                                     }
                                     
-                                    ObjectProperty opHasMethod = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods);
-                                    for (int k = 0; k < oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod.length; k++)
+                                    if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod != null)
                                     {
-                                        if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] != null)
+                                        ObjectProperty opHasMethod = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods);
+                                        for (int k = 0; k < oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod.length; k++)
                                         {
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
-                                            Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
-
-                                            //method name
-                                            if (!oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName.isEmpty())
+                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] != null)
                                             {
-                                                DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
-                                                resMethod.removeAll(dtpName);
-                                                resMethod.addProperty(dtpName, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName);
-                                            }
+                                                oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID);
+                                                Resource resMethod = oModel.getResource(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sObjectURI);
 
-                                            //method start line
-                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine != -1)
-                                            {
-                                                DatatypeProperty dtpStartLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine);
-                                                resMethod.removeAll(dtpStartLine);
-                                                resMethod.addProperty(dtpStartLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine));
-                                            }
+                                                //method name
+                                                if (!oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName.isEmpty())
+                                                {
+                                                    DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                                                    resMethod.removeAll(dtpName);
+                                                    resMethod.addProperty(dtpName, oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName);
+                                                }
 
-                                            //method end line
-                                            if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine != -1)
-                                            {
-                                                DatatypeProperty dtpEndLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine);
-                                                resMethod.removeAll(dtpEndLine);
-                                                resMethod.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine));
-                                            }
+                                                //method start line
+                                                if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine != -1)
+                                                {
+                                                    DatatypeProperty dtpStartLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine);
+                                                    resMethod.removeAll(dtpStartLine);
+                                                    resMethod.addProperty(dtpStartLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine));
+                                                }
 
-                                            resModule.addProperty(opHasMethod, resMethod.asResource());
-                                            oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                                //method end line
+                                                if (oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine != -1)
+                                                {
+                                                    DatatypeProperty dtpEndLine = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine);
+                                                    resMethod.removeAll(dtpEndLine);
+                                                    resMethod.addProperty(dtpEndLine, String.valueOf(oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine));
+                                                }
+
+                                                resModule.addProperty(opHasMethod, resMethod.asResource());
+                                                oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                            }
                                         }
                                     }
                                     
@@ -903,6 +906,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception ex)
         {
+            ex.printStackTrace();
         }
         return oCommit;
     }
@@ -2030,16 +2034,18 @@ public class MetadataRDFConverter {
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueBlocks + MetadataConstants.c_XMLE_Uri;
                     oIssueData.sData = sStatement.getObject().toString();
+                    oData.oData.add(GetIdAPIResponse(oIssueData.sData, MetadataConstants.c_XMLE_issueBlocks));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_DependsOn))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDependsOn + MetadataConstants.c_XMLE_Uri;
                     oIssueData.sData = sStatement.getObject().toString();
+                    oData.oData.add(GetIdAPIResponse(oIssueData.sData, MetadataConstants.c_XMLE_issueDependsOn));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasReporter))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAuthor + MetadataConstants.c_XMLE_Uri;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAuthor + "/";
+                    oIssueData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState))
                 {
@@ -2089,6 +2095,7 @@ public class MetadataRDFConverter {
                     
                     oComponentUri.sData = sStatement.getObject().toString();
                     oIssueData.oData.add(oComponentUri);
+                    oIssueData.oData.add(GetIdAPIResponse(oComponentUri.sData, MetadataConstants.c_XMLE_productComponent));
                     
                     String sQuery = "SELECT ?productUri ?productVersion WHERE "
                     + "{<" + oComponentUri.sData + ">  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> ?productUri ."
@@ -2104,6 +2111,7 @@ public class MetadataRDFConverter {
                         oProductVersion.sData = qsIssue.get("?productVersion").toString();
 
                         oIssueData.oData.add(oProductUri);
+                        oIssueData.oData.add(GetIdAPIResponse(oProductUri.sData, MetadataConstants.c_XMLE_product));
                         oIssueData.oData.add(oProductVersion);
                     }
                 }
@@ -2121,6 +2129,7 @@ public class MetadataRDFConverter {
                     
                     oComputerSystemUri.sData = sStatement.getObject().toString();
                     oIssueData.oData.add(oComputerSystemUri);
+                    oIssueData.oData.add(GetIdAPIResponse(oComputerSystemUri.sData, MetadataConstants.c_XMLE_computerSystem));
                     
                     String sQuery = "SELECT ?computerSystemPlatform ?computerSystemOS WHERE "
                     + "{<" + oComputerSystemUri.sData + "> <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Platform + "> ?computerSystemPlatform ."
@@ -2141,23 +2150,25 @@ public class MetadataRDFConverter {
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAssignee))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAssignedTo + MetadataConstants.c_XMLE_Uri;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAssignedTo + "/";
+                    oIssueData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCCPerson))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueCCPerson + MetadataConstants.c_XMLE_Uri;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueCCPerson + "/";
+                    oIssueData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsDuplicateOf))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDuplicateOf + MetadataConstants.c_XMLE_Uri;
                     oIssueData.sData = sStatement.getObject().toString();
+                    oData.oData.add(GetIdAPIResponse(oIssueData.sData, MetadataConstants.c_XMLE_issueDuplicateOf));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsMergedInto))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueMergedInto + MetadataConstants.c_XMLE_Uri;
                     oIssueData.sData = sStatement.getObject().toString();
+                    oData.oData.add(GetIdAPIResponse(oIssueData.sData, MetadataConstants.c_XMLE_issueMergedInto));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasMilestone))
                 {
@@ -2171,6 +2182,7 @@ public class MetadataRDFConverter {
                     
                     oMilestoneUri.sData = sStatement.getObject().toString();
                     oIssueData.oData.add(oMilestoneUri);
+                    oIssueData.oData.add(GetIdAPIResponse(oMilestoneUri.sData, MetadataConstants.c_XMLE_milestone));
                     
                     String sQuery = "SELECT ?milestoneTarget WHERE "
                     + "{<" + oMilestoneUri.sData + "> <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Target + "> ?milestoneTarget}";
@@ -2187,13 +2199,19 @@ public class MetadataRDFConverter {
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComment))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueComment + MetadataConstants.c_XMLE_Uri;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueComment + "/";
+                    oIssueData.oData.add(GetCommentAPIResponse(sStatement.getObject().toString()));
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAttachment))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAttachment + MetadataConstants.c_XMLE_Uri;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAttachment + "/";
+                    oIssueData.oData.add(GetAttachmentAPIResponse(sStatement.getObject().toString()));
+                }
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasActivity))
+                {
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueActivity + "/";
+                    oIssueData.oData.add(GetActivityAPIResponse(sStatement.getObject().toString()));
                 }
                 
                 if (oIssueData.sReturnConfig != null)
@@ -2421,6 +2439,65 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary issue_getOpen
+     * @startRealisation  Sasa Stojanovic 12.03.2012.
+     * @finalModification Sasa Stojanovic 12.03.2012.
+     * @param sProductUri - product URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_issue_getOpen(String sProductUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
+                    
+            String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
+                    + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
+                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasState + "> <" + sStateOpenUri + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL + "> ?issueUrl ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription . }";
+                        
+            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsIssue.hasNext())
+            {
+                QuerySolution qsIssue = rsIssue.nextSolution();
+                
+                MetadataGlobal.APIResponseData oIssue = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueUrl = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueId = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oIssueDescription = new MetadataGlobal.APIResponseData();
+                
+                oIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oIssueUrl.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueUrl;
+                oIssueId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
+                oIssueDescription.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                
+                oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                oIssueUrl.sData = qsIssue.get("?issueUrl").toString();
+                oIssueId.sData = qsIssue.get("?issueId").toString();
+                oIssueDescription.sData = qsIssue.get("?issueDescription").toString();
+                
+                oIssue.oData.add(oIssueUri);
+                oIssue.oData.add(oIssueUrl);
+                oIssue.oData.add(oIssueId);
+                oIssue.oData.add(oIssueDescription);   
+                oData.oData.add(oIssue);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
      * @summary person_getInfo
      * @startRealisation Sasa Stojanovic 18.01.2012.
      * @finalModification Sasa Stojanovic 18.01.2012.
@@ -2435,6 +2512,8 @@ public class MetadataRDFConverter {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             OntResource resPerson = oModel.getOntResource(sPersonUri);
             StmtIterator siProperties = resPerson.listProperties();
+            String sFirstName = "";
+            String sLastName = "";
             while (siProperties.hasNext())
             {
                 Statement sStatement = siProperties.next();
@@ -2454,13 +2533,11 @@ public class MetadataRDFConverter {
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName))
                 {
-                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personFirstName;
-                    oPersonData.sData = sStatement.getObject().toString();
+                    sFirstName = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName))
                 {
-                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personLastName;
-                    oPersonData.sData = sStatement.getObject().toString();
+                    sLastName = sStatement.getObject().toString();
                 }
                 
                 if (oPersonData.sReturnConfig != null)
@@ -2468,21 +2545,9 @@ public class MetadataRDFConverter {
             }
             
             //spajanje imena i prezimena u jedan objekat
-            String sName = "";
-            for (int i = 0; i < oData.oData.size(); i++)
-            {
-                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personFirstName))
-                {
-                    sName = oData.oData.get(i).sData + sName;
-                    oData.oData.remove(i);
-                }
-                if (oData.oData.get(i).sReturnConfig.equals("s3:" + MetadataConstants.c_XMLE_personLastName))
-                {
-                    sName = sName + " " + oData.oData.get(i).sData;
-                    oData.oData.remove(i);
-                }
-            }
-            if (!sName.isEmpty())
+            String sName = sFirstName + " " + sLastName;
+
+            if (!sName.equalsIgnoreCase(" "))
             {
                 MetadataGlobal.APIResponseData oName = new MetadataGlobal.APIResponseData();
                 oName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_personName;
@@ -3518,111 +3583,121 @@ public class MetadataRDFConverter {
     /**
      * @summary instance_getAllForConcept
      * @startRealisation  Dejan Milosavljevic 21.02.2012.
-     * @finalModification Dejan Milosavljevic 21.02.2012.
-     * @param sConceptUri - concept URI
+     * @finalModification Sasa Stojanovic 12.03.2012.
+     * @param sConceptUri - concept URIs
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_instance_getAllForConcept(String sConceptUri)
+    public static MetadataGlobal.APIResponseData ac_instance_getAllForConcept(ArrayList <String> sConceptUri)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-            
-            //It can be anything (issue, person...)
-            OntResource resConcept = omModel.getOntResource(sConceptUri);
-            MetadataGlobal.APIResponseData oMembers = new MetadataGlobal.APIResponseData();
-            OntClass ocMember = omModel.getOntClass(sConceptUri);
-            
-            //Get individuals
-            ExtendedIterator iIterator = ocMember.listInstances();
-            while(iIterator.hasNext())
-            {               
-                MetadataGlobal.APIResponseData oSubData = new MetadataGlobal.APIResponseData();
-                oSubData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_item;
-                oSubData.sData = iIterator.next().toString();
-                oMembers.oData.add(oSubData);
-            }
-            
-            OntClass ocConcept = omModel.getOntClass(sConceptUri);
-            OntClass ocSuperConcept = ocConcept.getSuperClass();
-              
-            MetadataGlobal.APIResponseData oConcept = new MetadataGlobal.APIResponseData();
-            oConcept.sReturnConfig = "s3:concept/";
-            MetadataGlobal.APIResponseData oCName = new MetadataGlobal.APIResponseData();
-            oCName.sReturnConfig = "s3:name";
-            oCName.sData = resConcept.getLocalName();
-            MetadataGlobal.APIResponseData oCUri = new MetadataGlobal.APIResponseData();
-            oCUri.sReturnConfig = "s3:uri";
-            oCUri.sData = sConceptUri;
-            MetadataGlobal.APIResponseData oSuperConcept = new MetadataGlobal.APIResponseData();
-            oSuperConcept.sReturnConfig = "s3:superConcept";
-            if (ocSuperConcept != null)
-                oSuperConcept.sData = ocSuperConcept.getURI();
-            else
-                oSuperConcept.sData = "";
-            
-            //Instances
-            MetadataGlobal.APIResponseData oInstances = new MetadataGlobal.APIResponseData();
-            oInstances.sReturnConfig = "s3:instances/";
-                
-            if (oMembers != null && oMembers.oData != null && oMembers.oData.size() > 0)
+                        
+            for (int i = 0; i < sConceptUri.size(); i++)
             {
-                for (MetadataGlobal.APIResponseData oMember : oMembers.oData)
-                {
-                    OntResource resInstance = omModel.getOntResource(oMember.sData);
-                    
-                    MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
-                    oInstance.sReturnConfig = "s3:instance/";
-                    MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
-                    oIName.sReturnConfig = "s3:name";
-                    oIName.sData = resInstance.getLocalName();
-                    MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
-                    oIUri.sReturnConfig = "s3:uri";
-                    oIUri.sData = oMember.sData;
-                    
-                    //Properties
-                    MetadataGlobal.APIResponseData oProperties = new MetadataGlobal.APIResponseData();
-                    oProperties.sReturnConfig = "s3:properties/";
-
-                    OntoProperty oProps = GetMember(oMember.sData);
-                    
-                    for (OntoProperty opProperty : oProps.oProperties)
-                    {
-                        MetadataGlobal.APIResponseData oProperty = new MetadataGlobal.APIResponseData();
-                        oProperty.sReturnConfig = "s3:property/";
-
-                        MetadataGlobal.APIResponseData oPName = new MetadataGlobal.APIResponseData();
-                        oPName.sReturnConfig = "s3:name";
-                        oPName.sData = opProperty.sName;
-                        MetadataGlobal.APIResponseData oPUri = new MetadataGlobal.APIResponseData();
-                        oPUri.sReturnConfig = "s3:uri";
-                        oPUri.sData = opProperty.sTypeOf;
-                        MetadataGlobal.APIResponseData oPValue = new MetadataGlobal.APIResponseData();
-                        oPValue.sReturnConfig = "s3:value";
-                        oPValue.sData = opProperty.sValue;
-
-                        oProperty.oData.add(oPName);
-                        oProperty.oData.add(oPUri);
-                        oProperty.oData.add(oPValue);
-                        oProperties.oData.add(oProperty);
-                    }
-                                        
-                    oInstance.oData.add(oIName);
-                    oInstance.oData.add(oIUri);
-                    oInstance.oData.add(oProperties);
-                    oInstances.oData.add(oInstance);
+                //It can be anything (issue, person...)
+                OntResource resConcept = omModel.getOntResource(sConceptUri.get(i));
+                MetadataGlobal.APIResponseData oMembers = new MetadataGlobal.APIResponseData();
+                OntClass ocMember = omModel.getOntClass(sConceptUri.get(i));
+                
+                //Get individuals
+                ExtendedIterator iIterator = ocMember.listInstances();
+                while(iIterator.hasNext())
+                {               
+                    MetadataGlobal.APIResponseData oSubData = new MetadataGlobal.APIResponseData();
+                    oSubData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_item;
+                    oSubData.sData = iIterator.next().toString();
+                    oMembers.oData.add(oSubData);
                 }
 
+                OntClass ocConcept = omModel.getOntClass(sConceptUri.get(i));
+                OntClass ocSuperConcept = ocConcept.getSuperClass();
+
+                MetadataGlobal.APIResponseData oConcept = new MetadataGlobal.APIResponseData();
+                oConcept.sReturnConfig = "s3:concept/";
+                MetadataGlobal.APIResponseData oCName = new MetadataGlobal.APIResponseData();
+                oCName.sReturnConfig = "s3:name";
+                oCName.sData = resConcept.getLocalName();
+                MetadataGlobal.APIResponseData oCUri = new MetadataGlobal.APIResponseData();
+                oCUri.sReturnConfig = "s3:uri";
+                oCUri.sData = sConceptUri.get(i);
+                MetadataGlobal.APIResponseData oSuperConcept = new MetadataGlobal.APIResponseData();
+                oSuperConcept.sReturnConfig = "s3:superConcept";
+                if (ocSuperConcept != null)
+                    oSuperConcept.sData = ocSuperConcept.getURI();
+                else
+                    oSuperConcept.sData = "";
+
+                //Instances
+                MetadataGlobal.APIResponseData oInstances = new MetadataGlobal.APIResponseData();
+                oInstances.sReturnConfig = "s3:instances/";
+
+                if (oMembers != null && oMembers.oData != null && oMembers.oData.size() > 0)
+                {
+                    for (MetadataGlobal.APIResponseData oMember : oMembers.oData)
+                    {
+                        OntResource resInstance = omModel.getOntResource(oMember.sData);
+
+                        MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
+                        oInstance.sReturnConfig = "s3:instance/";
+                        MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
+                        oIName.sReturnConfig = "s3:name";
+                        oIName.sData = resInstance.getLocalName();
+                        MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
+                        oIUri.sReturnConfig = "s3:uri";
+                        oIUri.sData = oMember.sData;
+
+                        oInstance.oData.add(oIName);
+                        oInstance.oData.add(oIUri);
+                        //oInstance.oData.add(oProperties);
+                        oInstances.oData.add(oInstance);
+                    }
+                }
+                
+                //Properties
+                MetadataGlobal.APIResponseData oProperties = new MetadataGlobal.APIResponseData();
+                oProperties.sReturnConfig = "s3:properties/";
+
+                //we take only direct associations (true)
+                ExtendedIterator iProperties = ocConcept.listDeclaredProperties(true);
+                while(iProperties.hasNext())
+                {
+                    OntProperty pProperty = (OntProperty)iProperties.next();               
+                    
+                    MetadataGlobal.APIResponseData oProperty = new MetadataGlobal.APIResponseData();
+                    oProperty.sReturnConfig = "s3:property/";
+
+                    MetadataGlobal.APIResponseData oPName = new MetadataGlobal.APIResponseData();
+                    oPName.sReturnConfig = "s3:name";
+                    oPName.sData = pProperty.getLocalName();
+                    MetadataGlobal.APIResponseData oPUri = new MetadataGlobal.APIResponseData();
+                    oPUri.sReturnConfig = "s3:uri";
+                    oPUri.sData = pProperty.getURI();
+                    MetadataGlobal.APIResponseData oPRange = new MetadataGlobal.APIResponseData();
+                    oPRange.sReturnConfig = "s3:range";
+                    if (pProperty.getRange() != null)
+                        oPRange.sData = pProperty.getRange().toString();
+                    else
+                        oPRange.sData = "";
+
+                    oProperty.oData.add(oPName);
+                    oProperty.oData.add(oPUri);
+                    oProperty.oData.add(oPRange);
+                    oProperties.oData.add(oProperty);
+                }
+                
                 oConcept.oData.add(oCName);
                 oConcept.oData.add(oCUri);
                 oConcept.oData.add(oSuperConcept);
                 oConcept.oData.add(oInstances);
+                oConcept.oData.add(oProperties);
                 oData.oData.add(oConcept);
             }
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return oData;
     }
@@ -3782,6 +3857,349 @@ public class MetadataRDFConverter {
         return oProjeprty;
     }
     
+    /**
+     * @summary get api response data for person
+     * @startRealisation Sasa Stojanovic 13.03.2012.
+     * @finalModification Sasa Stojanovic 13.03.2012.
+     * @param sPersonURI - person URI
+     * @return - person api response data
+     */
+    public static MetadataGlobal.APIResponseData GetPersonAPIResponse(String sPersonUri)
+    {
+        MetadataGlobal.APIResponseData oPerson = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resPerson = oModel.getOntResource(sPersonUri);
+            StmtIterator siProperties = resPerson.listProperties();
+            String sFirstName = "";
+            String sLastName = "";
+            
+            MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
+            oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_uri;
+            oPersonUri.sData = sPersonUri;
+            oPerson.oData.add(oPersonUri);
+            
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oPersonData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_id;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email))
+                {
+                    oPersonData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email;
+                    oPersonData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName))
+                {
+                    sFirstName = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName))
+                {
+                    sLastName = sStatement.getObject().toString();
+                }
+                
+                if (oPersonData.sReturnConfig != null)
+                    oPerson.oData.add(oPersonData);
+            }
+            
+            //spajanje imena i prezimena u jedan objekat
+            String sName = sFirstName + " " + sLastName;
+
+            if (!sName.equalsIgnoreCase(" "))
+            {
+                MetadataGlobal.APIResponseData oName = new MetadataGlobal.APIResponseData();
+                oName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_name;
+                oName.sData = sName;
+                oPerson.oData.add(oName);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oPerson;
+        
+    }
+    
+    /**
+     * @summary get api response data for issue comment
+     * @startRealisation Sasa Stojanovic 13.03.2012.
+     * @finalModification Sasa Stojanovic 13.03.2012.
+     * @param sCommentUri - comment URI
+     * @return - comment api response data
+     */
+    public static MetadataGlobal.APIResponseData GetCommentAPIResponse(String sCommentUri)
+    {
+        MetadataGlobal.APIResponseData oComment = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resComment = oModel.getOntResource(sCommentUri);
+            StmtIterator siProperties = resComment.listProperties();
+            
+            MetadataGlobal.APIResponseData oCommentUri = new MetadataGlobal.APIResponseData();
+            oCommentUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+            oCommentUri.sData = sCommentUri;
+            oComment.oData.add(oCommentUri);
+            
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oCommentData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Id;
+                    oCommentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number))
+                {
+                    oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentNumber;
+                    oCommentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Text))
+                {
+                    oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentText;
+                    oCommentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCommentor))
+                {
+                    oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentPerson + "/";
+                    oCommentData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date))
+                {
+                    oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentDate;
+                    oCommentData.sData = sStatement.getObject().toString();
+                }
+                
+                if (oCommentData.sReturnConfig != null)
+                    oComment.oData.add(oCommentData);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oComment;
+        
+    }
+    
+    /**
+     * @summary get api response data for issue attachment
+     * @startRealisation Sasa Stojanovic 13.03.2012.
+     * @finalModification Sasa Stojanovic 13.03.2012.
+     * @param sAttachmentUri - attachment URI
+     * @return - attachment api response data
+     */
+    public static MetadataGlobal.APIResponseData GetAttachmentAPIResponse(String sAttachmentUri)
+    {
+        MetadataGlobal.APIResponseData oAttachment = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resAttachment = oModel.getOntResource(sAttachmentUri);
+            StmtIterator siProperties = resAttachment.listProperties();
+            
+            MetadataGlobal.APIResponseData oAttachmentUri = new MetadataGlobal.APIResponseData();
+            oAttachmentUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Uri;
+            oAttachmentUri.sData = sAttachmentUri;
+            oAttachment.oData.add(oAttachmentUri);
+            
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oAttachmentData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_attachment + MetadataConstants.c_XMLE_Id;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_FileName))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_attachmentFilename;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Type))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_attachmentType;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCreator))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_attachmentCreator + "/";
+                    oAttachmentData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
+                }
+                
+                if (oAttachmentData.sReturnConfig != null)
+                    oAttachment.oData.add(oAttachmentData);
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oAttachment;
+        
+    }
+    
+    /**
+     * @summary get api response data for issue activity
+     * @startRealisation Sasa Stojanovic 13.03.2012.
+     * @finalModification Sasa Stojanovic 13.03.2012.
+     * @param sActivityUri - activity URI
+     * @return - activity api response data
+     */
+    public static MetadataGlobal.APIResponseData GetActivityAPIResponse(String sActivityUri)
+    {
+        MetadataGlobal.APIResponseData oActivity = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resActivity = oModel.getOntResource(sActivityUri);
+            StmtIterator siProperties = resActivity.listProperties();
+            
+            MetadataGlobal.APIResponseData oActivityUri = new MetadataGlobal.APIResponseData();
+            oActivityUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Uri;
+            oActivityUri.sData = sActivityUri;
+            oActivity.oData.add(oActivityUri);
+            
+            MetadataGlobal.APIResponseData oActivityWRA = new MetadataGlobal.APIResponseData();
+            oActivityWRA.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWRA + "/";
+            
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oAttachmentData = new MetadataGlobal.APIResponseData();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasInvolvedPerson))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWho;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed))
+                {
+                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhen;
+                    oAttachmentData.sData = sStatement.getObject().toString();
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_What))
+                {
+                    MetadataGlobal.APIResponseData oWhat = new MetadataGlobal.APIResponseData();
+                    oWhat.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhat;
+                    oWhat.sData = sStatement.getObject().toString();
+                    oActivityWRA.oData.add(oWhat);
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Removed))
+                {
+                    MetadataGlobal.APIResponseData oRemoved = new MetadataGlobal.APIResponseData();
+                    oRemoved.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityRemoved;
+                    oRemoved.sData = sStatement.getObject().toString();
+                    oActivityWRA.oData.add(oRemoved);
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Added))
+                {
+                    MetadataGlobal.APIResponseData oAdded = new MetadataGlobal.APIResponseData();
+                    oAdded.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityAdded;
+                    oAdded.sData = sStatement.getObject().toString();
+                    oActivityWRA.oData.add(oAdded);
+                }
+                
+                if (oAttachmentData.sReturnConfig != null)
+                    oActivity.oData.add(oAttachmentData);
+            }
+            
+            oActivity.oData.add(oActivityWRA);
+        }
+        catch (Exception e)
+        {
+        }
+        return oActivity;
+    }
+    
+    /**
+     * @summary get api response data for person
+     * @startRealisation Sasa Stojanovic 13.03.2012.
+     * @finalModification Sasa Stojanovic 13.03.2012.
+     * @param sPersonURI - person URI
+     * @return - person api response data
+     */
+    public static MetadataGlobal.APIResponseData GetIdAPIResponse(String sUri, String sName)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntResource resData = oModel.getOntResource(sUri);
+            StmtIterator siProperties = resData.listProperties();
+            
+            while (siProperties.hasNext())
+            {
+                Statement sStatement = siProperties.next();
+                String sProperty = sStatement.getPredicate().getURI();
+                
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                {
+                    MetadataGlobal.APIResponseData oId = new MetadataGlobal.APIResponseData();
+                    oId.sReturnConfig = "s3:" + sName + MetadataConstants.c_XMLE_id;
+                    oId.sData = sStatement.getObject().toString();
+                    oData.oData.add(oId);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+        
+    }
+    
+//    MetadataGlobal.APIResponseData oPerson = new MetadataGlobal.APIResponseData();
+//        try
+//        {
+//            MetadataGlobal.APIResponseData oName = new MetadataGlobal.APIResponseData();
+//            MetadataGlobal.APIResponseData oID = new MetadataGlobal.APIResponseData();
+//            MetadataGlobal.APIResponseData oEmail = new MetadataGlobal.APIResponseData();
+//            
+//            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+//            OntResource resPerson = omModel.getOntResource(sPersonURI);
+//            
+//            oName.sData = "";
+//            
+//            DatatypeProperty dtpFirstName = omModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName);
+//            Statement stFirstName = resPerson.getProperty(dtpFirstName);
+//            if (stFirstName != null)
+//                oName.sData = stFirstName.getObject().toString();
+//                
+//            DatatypeProperty dtpLastName = omModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName);
+//            Statement stLastName = resPerson.getProperty(dtpLastName);
+//            if (stLastName != null)
+//                oName.sData += " " + stLastName.getObject().toString();
+//            
+//            DatatypeProperty dtpEmail = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email);
+//            String sEmail = resPerson.getProperty(dtpEmail).asTriple().getObject().toString();
+//            
+//        }
+//        catch (Exception e)
+//        {
+//        }
+//        return oPerson;
     
 //    public static void CreateQuery() throws FileNotFoundException, IOException
 //    {

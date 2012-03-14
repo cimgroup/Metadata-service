@@ -25,56 +25,56 @@
 				<ns1:eventType>request</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
-                                <keui>
+                                <r:forumSensor>
+                                    <!-- forum account id, specified by forum sensor -->
+                                    <r:forumSensorAccountId>0</r:forumSensorAccountId>
                                     <!-- forum item ID -->
-                                    <s1:forumItemId>1423</s1:forumItemId>
+                                    <r:forumItemId>1423</r:forumItemId>
                                     <!-- forum ID -->
-                                    <s1:forumId>3558</s1:forumId>
+                                    <r:forumId>3558</r:forumId>
+                                    <!-- forum name -->
+                                    <r:forumName>KDE Forums</r:forumName>
                                     <!-- thread ID -->
-                                    <s1:threadId>3559</s1:threadId>
+                                    <r:forumThreadId>3559</r:forumThreadId>
                                     <!-- post ID -->
-                                    <s1:postId>3560</s1:postId>
+                                    <r:postId>3560</r:postId>
                                     <!-- time -->
-                                    <s1:time>2011-04-15 10:55:57</s1:time>
+                                    <r:time>2011-04-15 10:55:57</r:time>
                                     <!-- subject -->
-                                    <s1:subject>This is a test subject for post</s1:subject>
+                                    <r:subject><![CDATA[Development :: Re:amaroK and Qt4]]></r:subject>
                                     <!-- body -->
-                                    <s1:body>This is a test body for post</s1:body>
+                                    <r:body><![CDATA[good. Now, where is a good place to start? Maybe to load up the amaroK source code in kdevelop, and start experimenting by touching it here and there?]]></r:body>
                                     <!-- author -->
-                                    <s1:author>
-					<s1:name>Angel Blue</s1:name>
-					<s1:id>angel_blue_co2004@yahoo.com</s1:id>
-                                        <s1:email>angel_blue_co2004@yahoo.com</s1:email>
-                                    </s1:author>
+                                    <r:author>boudewijn</r:author>
                                     <!-- category -->
-                                    <s1:category>xxxxxx</s1:category>
-				</keui>
+                                    <r:category>Development</r:category>
+                                </r:forumSensor>
                                 <o:mdservice>
                                     <o:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:forumPostUri>
-                                    <o:threadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:threadUri>
+                                    <o:forumThreadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:forumThreadUri>
                                     <o:forumUri>http://www.alert-project.eu/ontologies/alert.owl#forum1</o:forumUri>
                                 </o:mdservice>
 				<s1:keui>
-                                    <!-- item Uri -->
-                                    <s1:itemUri></s1:itemUri>
-                                    <!-- title annotations -->
-                                    <s1:titleAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post title]]></s1:titleAnnotated>
-                                    <!-- title concepts -->
-                                    <s1:titleConcepts>
+                                    <!-- subject annotations -->
+                                    <s1:subjectAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post title]]></s1:subjectAnnotated>
+                                    <!-- subject concepts -->
+                                    <s1:subjectConcepts>
                                         <s1:concept>
                                             <s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
-                                            <s1:count>1</s1:count>
+                                            <s1:weight>1</s1:weight>
                                         </s1:concept>
-                                    </s1:titleConcepts>
+                                    </s1:subjectConcepts>
                                     <!-- body annotations -->
                                     <s1:bodyAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post body]]></s1:bodyAnnotated>
                                     <!-- body concepts -->
                                     <s1:bodyConcepts>
                                         <s1:concept>
                                             <s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
-                                            <s1:count>1</s1:count>
+                                            <s1:weight>1</s1:weight>
 					</s1:concept>
                                     </s1:bodyConcepts>
+                                    <s1:itemId>1234</s1:itemId>
+                                    <s1:threadId>12</s1:threadId>
 				</s1:keui>
                             </ns1:eventData>
                         </ns1:payload>
