@@ -296,8 +296,10 @@ public class MetadataConstants {
     public static String c_XMLV_sparql = "sparql";
     public static String c_XMLV_ontModelSpec = "ontModelSpec";
     public static String c_XMLV_productUri = "productUri";
+    public static String c_XMLV_productID = "productID";
     public static String c_XMLV_methodUri = "methodUri";
     public static String c_XMLV_issueUri = "issueUri";
+    public static String c_XMLV_issueID = "issueID";
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
     

@@ -32,9 +32,9 @@
 										<!-- input parameters -->
 										<s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>issueUri</s2:name>
+											<s2:name>issueID</s2:name>
 											<!-- value of parameter -->
-											<s2:value>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s2:value>
+											<s2:value>184671</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>

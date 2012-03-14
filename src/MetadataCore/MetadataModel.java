@@ -260,11 +260,11 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 13.12.2011.
      * @finalModification Sasa Stojanovic 13.12.2011.
      * @param sEventId - event id
-     * @param sProductUri - product URI
+     * @param sProductID - product id
      */
-    static void ac_issue_getAllForProduct(String sEventId, String sProductUri)
+    static void ac_issue_getAllForProduct(String sEventId, String sProductID)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUri);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForProduct(sProductID);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAllForProduct, sEventId, oData);
     }
     
@@ -299,11 +299,11 @@ public class MetadataModel {
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
      * @param sEventId - event id
-     * @param sIssueUri - issue uri
+     * @param sIssueID - issue id
      */
-    static void ac_issue_getInfo(String sEventId, String sIssueUri)
+    static void ac_issue_getInfo(String sEventId, String sIssueID)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getInfo(sIssueUri);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getInfo(sIssueID);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getInfo, sEventId, oData);
     }
     

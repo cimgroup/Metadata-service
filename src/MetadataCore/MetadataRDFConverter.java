@@ -1831,16 +1831,18 @@ public class MetadataRDFConverter {
      * @summary issue_getAllForProduct
      * @startRealisation Sasa Stojanovic 13.12.2011.
      * @finalModification Sasa Stojanovic 13.12.2011.
-     * @param sProductUri - product URI
+     * @param sProductID - product id
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_issue_getAllForProduct(String sProductUri)
+    public static MetadataGlobal.APIResponseData ac_issue_getAllForProduct(String sProductID)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
                         
+            String sProductUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
+
             String sQuery = "SELECT ?issueUri ?issueId ?issueDescription WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
@@ -1968,15 +1970,18 @@ public class MetadataRDFConverter {
      * @summary issue_getInfo
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.
-     * @param sIssueUri - issue URI
+     * @param sIssueID - issue ID
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_issue_getInfo(String sIssueUri)
+    public static MetadataGlobal.APIResponseData ac_issue_getInfo(String sIssueID)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            
+            String sIssueUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, sIssueID);
+            
             OntResource resBug = oModel.getOntResource(sIssueUri);
             StmtIterator siProperties = resBug.listProperties();
             while (siProperties.hasNext())

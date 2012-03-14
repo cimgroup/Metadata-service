@@ -752,7 +752,7 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getAllForProduct /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForProduct))
                 {
-                    String sProductUri = "";
+                    String sProductID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -762,12 +762,12 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_productUri))
-                                sProductUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_productID))
+                                sProductID = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_issue_getAllForProduct(sEventId, sProductUri);
+                    MetadataModel.ac_issue_getAllForProduct(sEventId, sProductID);
                 }
                 
                 ///////////////////////////////// issue_getAllForMethod /////////////////////////////////
@@ -825,7 +825,7 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getInfo /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getInfo))
                 {
-                    String sIssueUri = "";
+                    String sIssueID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -835,12 +835,12 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_issueUri))
-                                sIssueUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_issueID))
+                                sIssueID = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_issue_getInfo(sEventId, sIssueUri);
+                    MetadataModel.ac_issue_getInfo(sEventId, sIssueID);
                 }
                 
                 ///////////////////////////////// issue_getExplicitDuplicates /////////////////////////////////
