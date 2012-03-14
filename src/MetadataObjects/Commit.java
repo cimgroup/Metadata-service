@@ -22,6 +22,7 @@ public class Commit  extends MetadataObject {
     public String m_sCommitMessage;
     public String m_sRevisionTag;
     public File[] m_oHasFile;
+    public Component m_oIsCommitOf;
 
      // </editor-fold>
     

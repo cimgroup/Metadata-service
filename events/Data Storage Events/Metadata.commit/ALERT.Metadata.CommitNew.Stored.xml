@@ -93,6 +93,14 @@
                                             </s:moduleMethods>
 					</s:fileModules>
                                     </s:commitFile>
+                                    <s:commitProduct>
+                                        <!-- id of commit project -->
+                                        <s:productId>solid</s:productId>
+                                        <!-- id of project component -->
+                                        <s:productComponentId>general</s:productComponentId>
+                                        <!-- project version -->
+                                        <s:productVersion>unspecified</s:productVersion>
+                                    </s:commitProduct>
 				</kesi>
                                 <o:mdservice>
                                     <o:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit4</o:commitUri>
@@ -126,6 +134,12 @@
                                             </o:moduleMethods>
                                         </o:fileModules>
                                     </o:commitFile>
+                                    <o:commitProduct>
+                                        <!-- uri of issue project -->
+                                        <o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
+                                        <!-- uri of project component -->
+                                        <o:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</o:productComponentUri>
+                                    </o:commitProduct>
                                 </o:mdservice>
                             </ns1:eventData>
                         </ns1:payload>

@@ -644,8 +644,30 @@ public class MetadataRDFConverter {
                         }
                     }
                 }
-                //end has attachment 
+                //end has attachment
+                
+                //tracker
+                if (oIssue.m_oHasTracker != null && !oIssue.m_oHasMilestone.m_sID.isEmpty())
+                {
+                    ObjectProperty opHasTracker = oModel.getObjectProperty(MetadataConstants.c_NS_w3_flow + MetadataConstants.c_OWLObjectProperty_Tracker);
 
+                    oIssue.m_oHasTracker.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_w3_flow + MetadataConstants.c_OWLClass_Tracker, oIssue.m_oHasTracker.m_sID);
+                    Resource resTracker = oModel.getResource(oIssue.m_oHasTracker.m_sObjectURI);
+                    
+                    DatatypeProperty dtpTrackerURL = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerUrl);
+                    resTracker.removeAll(dtpTrackerURL);
+                    resTracker.addProperty(dtpTrackerURL, oIssue.m_oHasTracker.m_sURL);
+                    
+                    DatatypeProperty dtpTrackerType = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerType);
+                    resTracker.removeAll(dtpTrackerType);
+                    resTracker.addProperty(dtpTrackerType, oIssue.m_oHasTracker.m_sType);
+                    
+                    resBug.removeAll(opHasTracker);
+                    resBug.addProperty(opHasTracker, resTracker.asResource());
+                    oIssue.m_oHasTracker.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueTracker + "/o:" + MetadataConstants.c_XMLE_issueTracker + MetadataConstants.c_XMLE_Uri;
+                }
+                //end tracker 
+                
 //                //AlertEvent
 //                String sEventUri;
 //                if (bIsUpdate)
@@ -893,6 +915,36 @@ public class MetadataRDFConverter {
                         oCommit.m_oHasFile[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_commitFile + "/o:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
                     }
                 }
+            }
+            
+            //Commit product
+            if (oCommit.m_oIsCommitOf != null)
+            {
+                oCommit.m_oIsCommitOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component, oCommit.m_oIsCommitOf.m_sID);
+                ObjectProperty opIsCommitOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf);
+                Resource resIsIssueOf = oModel.getResource(oCommit.m_oIsCommitOf.m_sObjectURI);
+
+                if (oCommit.m_oIsCommitOf.m_oIsComponentOf != null)
+                {
+                    oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sID);
+                    ObjectProperty opIsComponentOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf);
+                    Resource resIsComponentOf = oModel.getResource(oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sObjectURI);
+
+                    if (!oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sVersion.isEmpty())
+                    {
+                        DatatypeProperty dtpVersion = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Version);
+                        resIsComponentOf.removeAll(dtpVersion);
+                        resIsComponentOf.addProperty(dtpVersion, oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sVersion.toString());
+                    }
+
+                    resIsIssueOf.removeAll(opIsComponentOf);
+                    resIsIssueOf.addProperty(opIsComponentOf, resIsComponentOf.asResource());
+                    oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
+                }
+
+                resCommit.removeAll(opIsCommitOf);
+                resCommit.addProperty(opIsCommitOf, resIsIssueOf.asResource());
+                oCommit.m_oIsCommitOf.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_commitProduct + "/o:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
             }
             
 //            //AlertEvent

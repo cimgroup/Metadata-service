@@ -407,6 +407,9 @@ public class MetadataGlobal {
             String sHasConceptObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts;
             String sKeywordAnnotationProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
             String sHasObjectObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject;
+            String sTrackerTypeDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerType;
+            String sTrackerUrlDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerUrl;
+            String sIsCommitOf = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf;
             
             //Sasa Stojanovic
             String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
@@ -526,6 +529,33 @@ public class MetadataGlobal {
                 opIsntPerson.addDomain(ocIdentity);
                 OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
                 opIsntPerson.addRange(ocPerson);
+            }
+            
+            //Creating trackerType DataProperty
+            DatatypeProperty dtpTrackerType = omModel.getDatatypeProperty(sTrackerTypeDataProperty);
+            if (dtpTrackerType == null)
+            {
+                dtpTrackerType = omModel.createDatatypeProperty(sTrackerTypeDataProperty);
+                //dtpTrackerType.addRange(dtpUri);
+            }
+            
+            //Creating trackerUrl DataProperty
+            DatatypeProperty dtpTrackerUrl = omModel.getDatatypeProperty(sTrackerUrlDataProperty);
+            if (dtpTrackerUrl == null)
+            {
+                dtpTrackerUrl = omModel.createDatatypeProperty(sTrackerUrlDataProperty);
+                //dtpTrackerUrl.addRange(dtpUri);
+            }
+            
+            //Creating isCommitOf ObjectProperty
+            ObjectProperty opIsCommitOf = omModel.getObjectProperty(sIsCommitOf);
+            if (opIsCommitOf == null)
+            {
+                opIsCommitOf = omModel.createObjectProperty(sIsntPerson);
+                OntClass ocCommit = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit);
+                opIsCommitOf.addDomain(ocCommit);
+                OntClass ocComponent = omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component);
+                opIsCommitOf.addRange(ocComponent);
             }
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);

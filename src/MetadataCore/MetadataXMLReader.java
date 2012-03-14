@@ -455,16 +455,17 @@ public class MetadataXMLReader {
                     }
                 }
 
+                //IssueTracker
                 NodeList nlIssueTracker = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueTracker);
                 if (nlIssueTracker != null && nlIssueTracker.getLength() > 0)
                 {
-                    for (int i = 0; i < nlIssueTracker.getLength(); i++)
-                    {
-                        Element eIssueTracker = (Element)nlIssueTracker.item(i);
-                        //dodati snimanje za issuetracker
-                    }
+                    Element eIssueTracker = (Element)nlIssueTracker.item(0);
+                    oIssue.m_oHasTracker = new Tracker();
+
+                    oIssue.m_oHasTracker.m_sID = GetValue(eIssueTracker, "s:" + MetadataConstants.c_XMLE_issueTracker + MetadataConstants.c_XMLE_Id);
+                    oIssue.m_oHasTracker.m_sURL = GetValue(eIssueTracker, "s:" + MetadataConstants.c_XMLE_issueTrackerURL);
+                    oIssue.m_oHasTracker.m_sType = GetValue(eIssueTracker, "s:" + MetadataConstants.c_XMLE_issueTrackerType);
                 }
-                
             }
 
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);
@@ -585,6 +586,18 @@ public class MetadataXMLReader {
                         }
                     }
                 }
+            }
+            
+            NodeList nlProduct = dDoc.getElementsByTagName("s:" + MetadataConstants.c_XMLE_commitProduct);   //getting node for tag commitProduct
+            if (nlProduct != null && nlProduct.getLength() > 0)
+            {
+                Element eProduct = (Element) nlProduct.item(0);
+
+                oCommit.m_oIsCommitOf = new Component();
+                oCommit.m_oIsCommitOf.m_sID = GetValue(eProduct, "s:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Id);
+                oCommit.m_oIsCommitOf.m_oIsComponentOf = new Product();
+                oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sID = GetValue(eProduct, "s:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Id);
+                oCommit.m_oIsCommitOf.m_oIsComponentOf.m_sVersion = GetValue(eProduct, "s:" + MetadataConstants.c_XMLE_productVersion);
             }
             
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_kesi);

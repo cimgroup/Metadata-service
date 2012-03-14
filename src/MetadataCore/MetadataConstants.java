@@ -263,6 +263,7 @@ public class MetadataConstants {
     public static String c_XMLE_methodName = "methodName";
     public static String c_XMLE_methodStartLine = "methodStartLine";
     public static String c_XMLE_methodEndLine = "methodEndLine";
+    public static String c_XMLE_commitProduct = "commitProduct";
     
     public static String c_XMLE_competency = "competency";
     public static String c_XMLE_uuid = "uuid";
@@ -364,6 +365,7 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
+    public static String c_OWLClass_Tracker = "Tracker";
     
     //Competence
     public static String c_OWLClass_Competence = "Competence";
@@ -473,6 +475,8 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Email = "email";
     public static String c_OWLDataProperty_FirstName = "firstName";
     public static String c_OWLDataProperty_LastName = "lastName";
+    public static String c_OWLDataProperty_TrackerType = "trackerType";
+    public static String c_OWLDataProperty_TrackerUrl = "trackerUrl";
 
     public static String c_OWLDataProperty_RevisionTag = "revisionTag";
     public static String c_OWLDataProperty_CommitDate = "commitDate";
@@ -528,7 +532,9 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsIssueOf = "isIssueOf";
     public static String c_OWLObjectProperty_IsComponentOf = "isComponentOf";
     public static String c_OWLObjectProperty_RelatedToSourceCode = "relatedtoSourceCode";
-    
+    public static String c_OWLObjectProperty_Tracker = "tracker";
+    public static String c_OWLObjectProperty_IsCommitOf = "isCommitOf";
+   
     public static String c_OWLObjectProperty_IsCommitOfRepository = "isCommitOfRepository";
     public static String c_OWLObjectProperty_HasAuthor = "hasAuthor";
     public static String c_OWLObjectProperty_HasCommitter = "hasCommitter";
@@ -589,6 +595,7 @@ public class MetadataConstants {
     public static String c_NS_purl = "http://purl.org/dc/terms/";
     public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
+    public static String c_NS_w3_flow = "http://www.w3.org/2005/01/wf/flow#";
     public static String c_NS_icep = "http://icep.fzi.de/icepEvents#";
 
     // </editor-fold>

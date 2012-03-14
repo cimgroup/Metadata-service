@@ -4,7 +4,7 @@
  */
 package MetadataObjects;
 
-import MetadataCore.MetadataObject;
+//import MetadataCore.MetadataObject;
 import java.util.Date;
 import org.apache.derby.client.am.DateTime;
 
@@ -12,7 +12,7 @@ import org.apache.derby.client.am.DateTime;
  *
  * @author ivano
  */
-public class Issue extends MetadataObject {
+public class Issue extends Task {
     
      // <editor-fold desc="Members">
     
