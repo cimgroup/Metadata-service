@@ -351,11 +351,11 @@ public class MetadataModel {
      * @startRealisation  Sasa Stojanovic 12.03.2012.
      * @finalModification Sasa Stojanovic 12.03.2012.
      * @param sEventId - event id
-     * @param sProductUri - product uri
+     * @param sProductID - product id
      */
-    static void ac_issue_getOpen(String sEventId, String sProductUri)
+    static void ac_issue_getOpen(String sEventId, String sProductID)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getOpen(sProductUri);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getOpen(sProductID);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getOpen, sEventId, oData);
     }
     

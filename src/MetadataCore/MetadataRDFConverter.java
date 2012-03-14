@@ -1845,7 +1845,7 @@ public class MetadataRDFConverter {
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
                         
-            String sProductUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
+            String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
             String sQuery = "SELECT ?issueUri ?issueId ?issueDescription WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
@@ -1984,7 +1984,7 @@ public class MetadataRDFConverter {
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
-            String sIssueUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, sIssueID);
+            String sIssueUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, sIssueID);
             
             OntResource resBug = oModel.getOntResource(sIssueUri);
             StmtIterator siProperties = resBug.listProperties();
@@ -2442,17 +2442,19 @@ public class MetadataRDFConverter {
      * @summary issue_getOpen
      * @startRealisation  Sasa Stojanovic 12.03.2012.
      * @finalModification Sasa Stojanovic 12.03.2012.
-     * @param sProductUri - product URI
+     * @param sProductID - product id
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_issue_getOpen(String sProductUri)
+    public static MetadataGlobal.APIResponseData ac_issue_getOpen(String sProductID)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
-                    
+            
+            String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
+     
             String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."

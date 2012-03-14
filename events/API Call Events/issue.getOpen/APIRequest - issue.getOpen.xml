@@ -32,9 +32,9 @@
 										<!-- input parameters -->
 										<s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>productUri</s2:name>
+											<s2:name>productID</s2:name>
 											<!-- value of parameter -->
-											<s2:value>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s2:value>
+											<s2:value>solid</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>

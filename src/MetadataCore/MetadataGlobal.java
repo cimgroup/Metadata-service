@@ -262,6 +262,48 @@ public class MetadataGlobal {
     
     /**
      * @summary Get next id for saving
+     * @startRealisation  Dejan Milosavljevic 14.03.2012.
+     * @finalModification Dejan Milosavljevic 14.03.2012.
+     * @param omModel - ontology model
+     * @param ocClass - ontology class
+     * @param sID - id of member
+     * @return object URI
+     */
+    public static String GetObjectURINoCreate(OntModel omModel, String sClassURI, String sID)
+    {
+        try
+        {
+            String sURI = "";
+            
+            if (sID != null && !sID.isEmpty())
+            {
+                String sQuery = "SELECT ?uri WHERE "
+                        + "{?uri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sID + "\" . "
+                        + "?uri a <" + sClassURI + ">}";
+
+                QueryExecution qeURI = QueryExecutionFactory.create(sQuery, omModel);
+                ResultSet rsURI = qeURI.execSelect();
+                              
+                if (rsURI.hasNext())
+                {
+                    QuerySolution qlURI = rsURI.nextSolution();
+                    Resource resMember = qlURI.getResource("?uri");
+                    sURI = resMember.getURI();
+                }
+                
+                qeURI.close();
+            }
+            
+            return sURI;      
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+    }
+    
+    /**
+     * @summary Get next id for saving
      * @startRealisation Sasa Stojanovic 31.10.2011.
      * @finalModification Sasa Stojanovic 31.10.2011.
      * @param omModel - ontology model
