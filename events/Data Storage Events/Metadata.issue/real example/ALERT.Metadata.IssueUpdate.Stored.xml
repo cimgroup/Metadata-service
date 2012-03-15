@@ -26,15 +26,10 @@
 							</ns1:meta>
 							<ns1:eventData>
                                                                 <s:kesi>
-                                                                        <!-- issue id -->
                                                                         <s:issueId>184671</s:issueId>
-                                                                        <!-- issue status (Assigned, Open, Verified, Resolved, Closed) -->
                                                                         <s:issueStatus>Resolved</s:issueStatus>
-                                                                        <!-- issue resolution (Duplicate, Fixed, Invalid, ThirdParty, WontFix, WorksForMe, Later, Remind) -->
                                                                         <s:issueResolution>Fixed</s:issueResolution>
-                                                                        <!-- date time in format yyyy-MM-dd HH:mm -->
                                                                         <s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
-                                                                        <!-- issue comments -->
                                                                         <s:issueComment>
                                                                                 <s:commentId></s:commentId>
                                                                                 <s:commentNumber>1</s:commentNumber>
@@ -46,7 +41,6 @@
                                                                                 </s:commentPerson>
                                                                                 <s:commentDate>2009-03-04 18:11:19</s:commentDate>
                                                                         </s:issueComment>
-                                                                        <!-- issue activities -->
                                                                         <s:issueActivity>
                                                                                 <s:activityId>4125</s:activityId>
                                                                                 <s:activityWho>cumulus0007@gmail.com</s:activityWho>
@@ -64,13 +58,11 @@
                                                                         </s:issueActivity>
                                                                 </s:kesi>
 								<o:mdservice>
-									<!-- issue uri -->
 									<o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
 									<o:issueComment>
 										<o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment2</o:commentUri>
 										<o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:commentPersonUri>
 									</o:issueComment>
-									<!-- issue activities -->
 									<o:issueActivity>
 										<o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1</o:activityUri>
 										<o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:activityWhoUri>

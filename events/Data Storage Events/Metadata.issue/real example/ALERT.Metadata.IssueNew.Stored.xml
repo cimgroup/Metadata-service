@@ -86,37 +86,26 @@
                                                                         </s:issueTracker>
                                                                 </s:kesi>
 								<o:mdservice>
-									<!-- issue uri -->
 									<o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
-									<!-- uri of issue author person -->
 									<o:issueAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:issueAuthorUri>
 									<o:issueProduct>
-										<!-- uri of issue project -->
 										<o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
-										<!-- uri of project component -->
 										<o:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</o:productComponentUri>
 									</o:issueProduct>
 									<o:issueComputerSystem>
-										<!-- uri of computer system -->
 										<o:computerSystemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1</o:computerSystemUri>
 									</o:issueComputerSystem>
-									<!-- uri of issue assigned person -->
 									<o:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:issueAssignedToUri>
-									<!-- uris of issue CC persons -->
 									<o:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:issueCCPersonUri>
-									<!-- uris of related issues -->
 									<o:issueDependsOnUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</o:issueDependsOnUri>
 									<o:issueBlocksUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3</o:issueBlocksUri>
-									<!-- issue comments -->
 									<o:issueComment>
 										<o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</o:commentUri>
 										<o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:commentPersonUri>
 									</o:issueComment>
-									<!-- issue attachments -->
 									<o:issueAttachment>
 										<o:attachmentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Attachment1</o:attachmentUri>
 									</o:issueAttachment>
-									<!-- issue issue tracker -->
 									<o:issueTracker>
 										<o:issueTrackerUri>http://www.alert-project.eu/ontologies/alert_its.owl#IssueTracker1</o:issueTrackerUri>
 									</o:issueTracker>
