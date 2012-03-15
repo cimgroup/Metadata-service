@@ -54,7 +54,7 @@
                                                                                 <s:activityWRA>
                                                                                         <s:activityWhat>Status</s:activityWhat>
                                                                                         <s:activityRemoved>Assigned</s:activityRemoved>
-                                                                                        <s:activityAdded>Fixed</s:activityAdded>
+                                                                                        <s:activityAdded>Resolved</s:activityAdded>
                                                                                 </s:activityWRA>
                                                                                 <s:activityWRA>
                                                                                         <s:activityWhat>Resolution</s:activityWhat>
