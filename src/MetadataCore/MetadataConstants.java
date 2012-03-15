@@ -40,7 +40,7 @@ public class MetadataConstants {
     //public static String c_ET_APICall_request = "Metadata.APICall.request";
     public static String c_ET_ALERT_KESI_APICallRequest = "ALERT.KESI.APICallRequest";
     public static String c_ET_ALERT_KEUI_APICallRequest = "ALERT.KEUI.APICallRequest";
-    public static String c_ET_ALERT_Stardom_APICallRequest = "ALERT.Stardom.APICallRequest";
+    public static String c_ET_ALERT_STARDOM_APICallRequest = "ALERT.STARDOM.APICallRequest";
     public static String c_ET_ALERT_Panteon_APICallRequest = "ALERT.Panteon.APICallRequest";
     //public static String c_ET_APICall_reply = "Metadata.APICall.reply";
     public static String c_ET_ALERT_Metadata_APICallResponse = "ALERT.Metadata.APICallResponse";
@@ -62,13 +62,13 @@ public class MetadataConstants {
     public static String c_ET_ALERT_Metadata_ForumPostNew_Stored = "ALERT.Metadata.ForumPostNew.Stored";
     public static String c_ET_ALERT_MLSensor_MailNew = "ALERT.MLSensor.MailNew";
     public static String c_ET_ALERT_Metadata_MailNew_Stored = "ALERT.Metadata.MailNew.Stored";
-    public static String c_ET_ALERT_Stardom_CompetencyNew = "ALERT.Stardom.CompetencyNew";
-    public static String c_ET_ALERT_Stardom_CompetencyUpdate = "ALERT.Stardom.CompetencyUpdate";
+    public static String c_ET_ALERT_STARDOM_CompetencyNew = "ALERT.STARDOM.CompetencyNew";
+    public static String c_ET_ALERT_STARDOM_CompetencyUpdate = "ALERT.STARDOM.CompetencyUpdate";
     public static String c_ET_ALERT_Metadata_CompetencyNew_Stored = "ALERT.Metadata.CompetencyNew.Stored";
     public static String c_ET_ALERT_Metadata_CompetencyUpdate_Stored = "ALERT.Metadata.CompetencyUpdate.Stored";
-    public static String c_ET_ALERT_Stardom_IdentityNew = "ALERT.Stardom.IdentityNew";
-    public static String c_ET_ALERT_Stardom_IdentityUpdate = "ALERT.Stardom.IdentityUpdate";
-    public static String c_ET_ALERT_Stardom_IdentityRemove = "ALERT.Stardom.IdentityRemove";
+    public static String c_ET_ALERT_STARDOM_IdentityNew = "ALERT.STARDOM.IdentityNew";
+    public static String c_ET_ALERT_STARDOM_IdentityUpdate = "ALERT.STARDOM.IdentityUpdate";
+    public static String c_ET_ALERT_STARDOM_IdentityRemove = "ALERT.STARDOM.IdentityRemove";
     public static String c_ET_ALERT_Metadata_IdentityNew_Stored = "ALERT.Metadata.IdentityNew.Stored";
     public static String c_ET_ALERT_Metadata_IdentityUpdate_Stored = "ALERT.Metadata.IdentityUpdate.Stored";
     public static String c_ET_ALERT_Metadata_IdentityRemove_Stored = "ALERT.Metadata.IdentityRemove.Stored";

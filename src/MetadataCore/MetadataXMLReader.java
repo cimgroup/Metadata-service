@@ -88,7 +88,7 @@ public class MetadataXMLReader {
 //            if(sEventName.equals(MetadataConstants.c_ET_APICall_request))   //if event type is API Call request
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_APICallRequest) ||   //if event type is API Call request
                sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_APICallRequest) ||
-               sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_APICallRequest) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest))
             {
                 APICallRequest(dDoc);
@@ -125,23 +125,23 @@ public class MetadataXMLReader {
             {
                 NewForumPostData(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_CompetencyNew))   //if event type is new competence event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew))   //if event type is new competence event
             {
                 NewUpdateCompetence(dDoc, false);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_CompetencyUpdate))   //if event type is update competence event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyUpdate))   //if event type is update competence event
             {
                 NewUpdateCompetence(dDoc, true);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityNew))   //if event type is new identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityNew))   //if event type is new identity event
             {
                 NewIdentity(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityUpdate))   //if event type is update identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityUpdate))   //if event type is update identity event
             {
                 UpdateIdentity(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_Stardom_IdentityRemove))   //if event type is remove identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityRemove))   //if event type is remove identity event
             {
                 RemoveIdentity(dDoc);
             }
