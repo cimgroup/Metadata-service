@@ -24,39 +24,68 @@
                                 <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
-                                <o:identities>
-                                    <o:identity>
-                                        <o:uuid>51d8ecec1d6ea40106c6c71ffed13547010870b0ab57fe396f5fbb124967e0eb</sm:uuid>
-                                        <o:is>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:person>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:person>
-                                        </o:is>
-                                        <o:isnt>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </o:isnt>
-                                    </o:identity>
-                                    <o:identity>
-                                        <o:uuid>e0b2d72cdd7cc4c80a0a57f7462aece5341b228b139d6ccbfa093853b6a16b6b</sm:uuid>
-                                        <o:isnt>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </o:isnt>
-                                    </o:identity>
-                                    <o:identity>
-                                        <o:uuid>779c5c45ae3932a3fc92d36a3d33f106c99eeaba9e953689a47effdb683247eb</sm:uuid>
-                                        <o:is>
-                                            <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                        </o:is>
-                                    </o:identity>
-                                </o:identities>
+                                <sm:identities>
+                                    <sm:identity>
+                                        <sm:uuid>51d8ecec1d6ea40106c6c71ffed13547010870b0ab57fe396f5fbb124967e0eb</sm:uuid>
+                                        <sm:persons>
+                                            <sm:is>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</sm:uri>
+                                                    <sm:id>fotis@gmail.com</sm:id>
+                                                    <sm:firstname>Fotis</sm:firstname>
+                                                    <sm:lastname>Paraskevopoulos</sm:lastname>
+                                                    <sm:email>fotis@gmail.com</sm:email>
+                                                    <sm:username>fotakis</sm:username>
+                                                </sm:person>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</sm:uri>
+                                                </sm:person>
+                                            </sm:is>
+                                            <sm:isnt>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</sm:uri>
+                                                </sm:person>
+                                            </sm:isnt>
+                                        </sm:persons>
+                                    </sm:identity>
+                                    <sm:identity>
+                                        <sm:uuid>e0b2d72cdd7cc4c80a0a57f7462aece5341b228b139d6ccbfa093853b6a16b6b</sm:uuid>
+                                        <sm:persons>
+                                            <sm:is>
+                                                <sm:person>
+                                                    <sm:firstname>Sasa</sm:firstname>
+                                                    <sm:lastname>Stojanovic</sm:lastname>
+                                                    <sm:email>sasa.stojanovic@gmail.com</sm:email>
+                                                    <sm:username>sasas</sm:username>
+                                                </sm:person>
+                                            </sm:is>
+                                        </sm:persons>
+                                    </sm:identity>
+                                    <sm:identity>
+                                        <sm:uuid>779c5c45ae3932a3fc92d36a3d33f106c99eeaba9e953689a47effdb683247eb</sm:uuid>
+                                        <sm:persons>
+                                            <sm:is>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</sm:uri>
+                                                </sm:person>
+                                            </sm:is>
+                                        </sm:persons>
+                                    </sm:identity>
+                                </sm:identities>
                                 <o:identities>
                                     <o:identity>
                                         <o:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity1</o:identityUri>
+                                        <o:personIsUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:personIsUri>
+                                        <o:personIsUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:personIsUri>
+                                        <o:personIsntUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:personIsntUri>
                                     </o:identity>
                                     <o:identity>
                                         <o:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity2</o:identityUri>
+                                        <o:personIsUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:personIsUri>
                                     </o:identity>
                                     <o:identity>
                                         <o:identityUri>http://www.alert-project.eu/ontologies/alert.owl#Identity3</o:identityUri>
+                                        <o:personIsUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:personIsUri>
                                     </o:identity>
                                 </o:identities>
                             </ns1:eventData>

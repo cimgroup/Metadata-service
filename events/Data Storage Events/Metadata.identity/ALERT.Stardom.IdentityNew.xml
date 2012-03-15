@@ -20,7 +20,7 @@
                                 <ns1:startTime>10010</ns1:startTime>
                                 <ns1:endTime>10010</ns1:endTime>
                                 <!-- name of event -->
-                                <ns1:eventName>ALERT.Stardom.IdentityNew</ns1:eventName>
+                                <ns1:eventName>ALERT.STARDOM.IdentityNew</ns1:eventName>
                                 <ns1:eventId>5748</ns1:eventId>
                                 <ns1:eventType>request</ns1:eventType>
                             </ns1:meta>
@@ -30,27 +30,45 @@
                                         <sm:uuid>51d8ecec1d6ea40106c6c71ffed13547010870b0ab57fe396f5fbb124967e0eb</sm:uuid>
                                         <sm:persons>
                                             <sm:is>
-                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:person>
-                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:person>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</sm:uri>
+                                                    <sm:id>fotis@gmail.com</sm:id>
+                                                    <sm:firstname>Fotis</sm:firstname>
+                                                    <sm:lastname>Paraskevopoulos</sm:lastname>
+                                                    <sm:email>fotis@gmail.com</sm:email>
+                                                    <sm:username>fotakis</sm:username>
+                                                </sm:person>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</sm:uri>
+                                                </sm:person>
                                             </sm:is>
                                             <sm:isnt>
-                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</sm:uri>
+                                                </sm:person>
                                             </sm:isnt>
                                         </sm:persons>
                                     </sm:identity>
                                     <sm:identity>
                                         <sm:uuid>e0b2d72cdd7cc4c80a0a57f7462aece5341b228b139d6ccbfa093853b6a16b6b</sm:uuid>
                                         <sm:persons>
-                                            <sm:isnt>
-                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
-                                            </sm:isnt>
+                                            <sm:is>
+                                                <sm:person>
+                                                    <sm:firstname>Sasa</sm:firstname>
+                                                    <sm:lastname>Stojanovic</sm:lastname>
+                                                    <sm:email>sasa.stojanovic@gmail.com</sm:email>
+                                                    <sm:username>sasas</sm:username>
+                                                </sm:person>
+                                            </sm:is>
                                         </sm:persons>
                                     </sm:identity>
                                     <sm:identity>
                                         <sm:uuid>779c5c45ae3932a3fc92d36a3d33f106c99eeaba9e953689a47effdb683247eb</sm:uuid>
                                         <sm:persons>
                                             <sm:is>
-                                                <o:person>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:person>
+                                                <sm:person>
+                                                    <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</sm:uri>
+                                                </sm:person>
                                             </sm:is>
                                         </sm:persons>
                                     </sm:identity>

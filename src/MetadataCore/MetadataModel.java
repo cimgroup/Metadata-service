@@ -180,7 +180,7 @@ public class MetadataModel {
      */
     static void SaveObjectNewIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
     {
-        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities, false);
         
         //transfering from list to object with a list
         MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
@@ -199,7 +199,7 @@ public class MetadataModel {
      */
     static void UpdateObjectIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
     {
-        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities, true);
         
         //transfering from list to object with a list
         MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
@@ -218,7 +218,7 @@ public class MetadataModel {
      */
     static void RemoveObjectIdentity(String sEventId, Element eOriginalData, Identity[] oIdentities)
     {
-        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities);
+        oIdentities = MetadataRDFConverter.SaveIdentity(oIdentities, false);
         
         //transfering from list to object with a list
         MetadataGlobal.MetadataObjectExt oIdentitiesExt = new MetadataGlobal.MetadataObjectExt();
