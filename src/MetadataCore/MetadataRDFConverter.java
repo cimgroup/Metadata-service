@@ -649,16 +649,16 @@ public class MetadataRDFConverter {
                 //tracker
                 if (oIssue.m_oHasTracker != null && !oIssue.m_oHasMilestone.m_sID.isEmpty())
                 {
-                    ObjectProperty opHasTracker = oModel.getObjectProperty(MetadataConstants.c_NS_w3_flow + MetadataConstants.c_OWLObjectProperty_Tracker);
+                    ObjectProperty opHasTracker = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsIssueOfTracker);
 
-                    oIssue.m_oHasTracker.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_w3_flow + MetadataConstants.c_OWLClass_Tracker, oIssue.m_oHasTracker.m_sID);
+                    oIssue.m_oHasTracker.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_IssueTracker, oIssue.m_oHasTracker.m_sID);
                     Resource resTracker = oModel.getResource(oIssue.m_oHasTracker.m_sObjectURI);
                     
-                    DatatypeProperty dtpTrackerURL = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerUrl);
+                    DatatypeProperty dtpTrackerURL = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLDataProperty_IssueTrackerURL);
                     resTracker.removeAll(dtpTrackerURL);
                     resTracker.addProperty(dtpTrackerURL, oIssue.m_oHasTracker.m_sURL);
                     
-                    DatatypeProperty dtpTrackerType = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_TrackerType);
+                    DatatypeProperty dtpTrackerType = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLDataProperty_IssueTrackerType);
                     resTracker.removeAll(dtpTrackerType);
                     resTracker.addProperty(dtpTrackerType, oIssue.m_oHasTracker.m_sType);
                     

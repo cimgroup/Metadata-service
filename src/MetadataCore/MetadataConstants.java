@@ -365,7 +365,7 @@ public class MetadataConstants {
     public static String c_OWLClass_Component = "Component";
     public static String c_OWLClass_Product = "Product";
     public static String c_OWLClass_Commit = "Commit";
-    public static String c_OWLClass_Tracker = "Tracker";
+    public static String c_OWLClass_IssueTracker = "IssueTracker";
     
     //Competence
     public static String c_OWLClass_Competence = "Competence";
@@ -475,8 +475,8 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Email = "email";
     public static String c_OWLDataProperty_FirstName = "firstName";
     public static String c_OWLDataProperty_LastName = "lastName";
-    public static String c_OWLDataProperty_TrackerType = "trackerType";
-    public static String c_OWLDataProperty_TrackerUrl = "trackerUrl";
+    public static String c_OWLDataProperty_IssueTrackerType = "issueTrackerType";
+    public static String c_OWLDataProperty_IssueTrackerURL = "issueTrackerURL";
 
     public static String c_OWLDataProperty_RevisionTag = "revisionTag";
     public static String c_OWLDataProperty_CommitDate = "commitDate";
@@ -532,7 +532,7 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsIssueOf = "isIssueOf";
     public static String c_OWLObjectProperty_IsComponentOf = "isComponentOf";
     public static String c_OWLObjectProperty_RelatedToSourceCode = "relatedtoSourceCode";
-    public static String c_OWLObjectProperty_Tracker = "tracker";
+    public static String c_OWLObjectProperty_IsIssueOfTracker = "isIssueOfTracker";
     public static String c_OWLObjectProperty_IsCommitOf = "isCommitOf";
    
     public static String c_OWLObjectProperty_IsCommitOfRepository = "isCommitOfRepository";

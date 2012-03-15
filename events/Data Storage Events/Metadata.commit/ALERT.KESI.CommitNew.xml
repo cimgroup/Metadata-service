@@ -93,15 +93,15 @@
 											</s:moduleMethods>
 										</s:fileModules>
 									</s:commitFile>
+                                                                        <s:commitProduct>
+                                                                                <!-- id of commit project -->
+                                                                                <s:productId>solid</s:productId>
+                                                                                <!-- id of project component -->
+                                                                                <s:productComponentId>general</s:productComponentId>
+                                                                                <!-- project version -->
+                                                                                <s:productVersion>unspecified</s:productVersion>
+                                                                        </s:commitProduct>
 								</s:commit>
-                                                                <s:commitProduct>
-									<!-- id of commit project -->
-									<s:productId>solid</s:productId>
-									<!-- id of project component -->
-									<s:productComponentId>general</s:productComponentId>
-									<!-- project version -->
-									<s:productVersion>unspecified</s:productVersion>
-								</s:commitProduct>
 							</ns1:eventData>
 						</ns1:payload>
 					</ns1:event>
