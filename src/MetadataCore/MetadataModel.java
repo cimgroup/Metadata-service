@@ -481,6 +481,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting all commits for product
+     * @startRealisation  Dejan Milosavljevic 15.03.2012.
+     * @finalModification Dejan Milosavljevic 15.03.2012.
+     * @param sEventId - event id
+     * @param sProductID - product id
+     */
+    static void ac_commit_getAllForProduct(String sEventId, String sProductID)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getAllForProduct(sProductID);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getAllForProduct, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting all file data
      * @startRealisation  Dejan Milosavljevic 23.02.2012.
      * @finalModification Dejan Milosavljevic 23.02.2012.

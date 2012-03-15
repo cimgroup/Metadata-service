@@ -921,7 +921,7 @@ public class MetadataRDFConverter {
             if (oCommit.m_oIsCommitOf != null)
             {
                 oCommit.m_oIsCommitOf.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component, oCommit.m_oIsCommitOf.m_sID);
-                ObjectProperty opIsCommitOf = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf);
+                ObjectProperty opIsCommitOf = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf);
                 Resource resIsIssueOf = oModel.getResource(oCommit.m_oIsCommitOf.m_sObjectURI);
 
                 if (oCommit.m_oIsCommitOf.m_oIsComponentOf != null)
@@ -3073,6 +3073,61 @@ public class MetadataRDFConverter {
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary issue_getAllForProduct
+     * @startRealisation  Dejan Milosavljevic 15.03.2012.
+     * @finalModification Dejan Milosavljevic 15.03.2012.
+     * @param sProductID - product id
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_commit_getAllForProduct(String sProductID)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+                        
+            String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
+
+            String sQuery = "SELECT ?commitUri ?commitMessageLog ?commitDate WHERE "
+                    + "{?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf + ">  ?componentUri ."
+                    + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
+                    + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessageLog ."
+                    + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate . }";
+
+            ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsCommit.hasNext())
+            {
+                QuerySolution qsCommit = rsCommit.nextSolution();
+                
+                MetadataGlobal.APIResponseData oCommit = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oCommitUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oCommitMessageLog = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oCommitDate = new MetadataGlobal.APIResponseData();
+                
+                oCommit.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + "/";
+                oCommitUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+                oCommitMessageLog.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitMessageLog;
+                oCommitDate.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitDate;
+                
+                oCommitUri.sData = qsCommit.get("?commitUri").toString();
+                oCommitMessageLog.sData = qsCommit.get("?commitMessageLog").toString();
+                oCommitDate.sData = qsCommit.get("?commitDate").toString();
+                
+                oCommit.oData.add(oCommitUri);
+                oCommit.oData.add(oCommitMessageLog);
+                oCommit.oData.add(oCommitDate);   
+                oData.oData.add(oCommit);
+            }
+
+        }
+        catch (Exception e)
+        {
         }
         return oData;
     }
