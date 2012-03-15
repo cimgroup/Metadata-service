@@ -2202,13 +2202,14 @@ public class MetadataXMLReader {
                             if (nlIs != null && nlIs.getLength() > 0)
                             {
                                 Element eIs = (Element)nlIs.item(0);
-                                NodeList nlPerson = eIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                NodeList nlPerson = eIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                 oIdentity.m_oIs = new foaf_Person[nlPerson.getLength()];
                                 for (int j = 0; j < nlPerson.getLength(); j++)
                                 {
                                     Element ePerson = (Element)nlPerson.item(j);
-                                    oIdentity.m_oIs[j] = new foaf_Person();
-                                    oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    //oIdentity.m_oIs[j] = new foaf_Person();
+                                    //oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    oIdentity.m_oIs[j] = GetPersonObject("sm:", ePerson);
                                 }
                             }
 
@@ -2216,13 +2217,14 @@ public class MetadataXMLReader {
                             if (nlIsnt != null && nlIsnt.getLength() > 0)
                             {
                                 Element eIsnt = (Element)nlIsnt.item(0);
-                                NodeList nlPerson = eIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                NodeList nlPerson = eIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                 oIdentity.m_oIsnt = new foaf_Person[nlPerson.getLength()];
                                 for (int j = 0; j < nlPerson.getLength(); j++)
                                 {
                                     Element ePerson = (Element)nlPerson.item(j);
-                                    oIdentity.m_oIsnt[j] = new foaf_Person();
-                                    oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    //oIdentity.m_oIsnt[j] = new foaf_Person();
+                                    //oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                    oIdentity.m_oIsnt[j] = GetPersonObject("sm:", ePerson);
                                 }
                             }
                         }
@@ -2295,7 +2297,7 @@ public class MetadataXMLReader {
                                         Element eAddIs = (Element)nlAddIs.item(0);
                                         if (eAddIs != null)
                                         {
-                                            NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            NodeList nlPerson = eAddIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                             if (nlPerson != null)
                                             {
                                                 iIsCount += nlPerson.getLength();
@@ -2308,7 +2310,7 @@ public class MetadataXMLReader {
                                         Element eAddIsnt = (Element)nlAddIsnt.item(0);
                                         if (eAddIsnt != null)
                                         {
-                                            NodeList nlPerson = eAddIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            NodeList nlPerson = eAddIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                             if (nlPerson != null)
                                             {
                                                 iIsntCount += nlPerson.getLength();
@@ -2326,14 +2328,14 @@ public class MetadataXMLReader {
                                     Element eRemoveIs = (Element)nlRemoveIs.item(0);
                                     if (eRemoveIs != null)
                                     {
-                                        NodeList nlAllPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                        NodeList nlAllPerson = eRemoveIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_allPerson);
                                         if (nlAllPerson != null && nlAllPerson.getLength() > 0)
                                         {
                                             oIdentity.m_bIsRemoveAll = true;
                                         }
                                         else
                                         {
-                                            NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            NodeList nlPerson = eRemoveIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                             if (nlPerson != null)
                                             {
                                                 iIsCount += nlPerson.getLength();
@@ -2347,14 +2349,14 @@ public class MetadataXMLReader {
                                     Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
                                     if (eRemoveIsnt != null)
                                     {
-                                        NodeList nlAllPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_allPerson);
+                                        NodeList nlAllPerson = eRemoveIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_allPerson);
                                         if (nlAllPerson != null && nlAllPerson.getLength() > 0)
                                         {
                                             oIdentity.m_bIsntRemoveAll = true;
                                         }
                                         else
                                         {
-                                            NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                            NodeList nlPerson = eRemoveIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                             if (nlPerson != null)
                                             {
                                                 iIsntCount += nlPerson.getLength();
@@ -2379,13 +2381,14 @@ public class MetadataXMLReader {
                                 if (nlAddIs != null && nlAddIs.getLength() > 0)
                                 {
                                     Element eAddIs = (Element)nlAddIs.item(0);
-                                    NodeList nlPerson = eAddIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    NodeList nlPerson = eAddIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                     iAddIsCount = nlPerson.getLength();
                                     for (int j = 0; j < nlPerson.getLength(); j++)
                                     {
                                         Element ePerson = (Element)nlPerson.item(j);
-                                        oIdentity.m_oIs[j] = new foaf_Person();
-                                        oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                        //oIdentity.m_oIs[j] = new foaf_Person();
+                                        //oIdentity.m_oIs[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                        oIdentity.m_oIs[j] = GetPersonObject("sm:", ePerson);
                                     }
                                 }
 
@@ -2393,13 +2396,14 @@ public class MetadataXMLReader {
                                 if (nlAddIsnt != null && nlAddIsnt.getLength() > 0)
                                 {
                                     Element eAddIsnt = (Element)nlAddIsnt.item(0);
-                                    NodeList nlPerson = eAddIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                    NodeList nlPerson = eAddIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                     iAddIsntCount = nlPerson.getLength();
                                     for (int j = 0; j < nlPerson.getLength(); j++)
                                     {
                                         Element ePerson = (Element)nlPerson.item(j);
-                                        oIdentity.m_oIsnt[j] = new foaf_Person();
-                                        oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                        //oIdentity.m_oIsnt[j] = new foaf_Person();
+                                        //oIdentity.m_oIsnt[j].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                        oIdentity.m_oIsnt[j] = GetPersonObject("sm:", ePerson);
                                     }
                                 }
                             }
@@ -2415,12 +2419,13 @@ public class MetadataXMLReader {
                                     if (nlRemoveIs != null && nlRemoveIs.getLength() > 0)
                                     {
                                         Element eRemoveIs = (Element)nlRemoveIs.item(0);
-                                        NodeList nlPerson = eRemoveIs.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        NodeList nlPerson = eRemoveIs.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                         for (int j = 0; j < nlPerson.getLength(); j++)
                                         {
                                             Element ePerson = (Element)nlPerson.item(j);
-                                            oIdentity.m_oIs[j + iAddIsCount] = new foaf_Person();
-                                            oIdentity.m_oIs[j + iAddIsCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            //oIdentity.m_oIs[j + iAddIsCount] = new foaf_Person();
+                                            //oIdentity.m_oIs[j + iAddIsCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            oIdentity.m_oIs[j + iAddIsCount] = GetPersonObject("sm:", ePerson);
                                             oIdentity.m_oIs[j + iAddIsCount].m_bRemoved = true;
                                         }
                                     }
@@ -2432,13 +2437,14 @@ public class MetadataXMLReader {
                                     if (nlRemoveIsnt != null && nlRemoveIsnt.getLength() > 0)
                                     {
                                         Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
-                                        NodeList nlPerson = eRemoveIsnt.getElementsByTagName("o:" + MetadataConstants.c_XMLE_person);
+                                        NodeList nlPerson = eRemoveIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
                                         iAddIsntCount = nlPerson.getLength();
                                         for (int j = 0; j < nlPerson.getLength(); j++)
                                         {
                                             Element ePerson = (Element)nlPerson.item(j);
-                                            oIdentity.m_oIsnt[j + iAddIsntCount] = new foaf_Person();
-                                            oIdentity.m_oIsnt[j + iAddIsntCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            //oIdentity.m_oIsnt[j + iAddIsntCount] = new foaf_Person();
+                                            //oIdentity.m_oIsnt[j + iAddIsntCount].m_sObjectURI = ePerson.getFirstChild().getNodeValue();
+                                            oIdentity.m_oIsnt[j + iAddIsntCount] = GetPersonObject("sm:", ePerson);
                                             oIdentity.m_oIsnt[j + iAddIsntCount].m_bRemoved = true;
                                         }
                                     }
@@ -2665,6 +2671,8 @@ public class MetadataXMLReader {
         try
         {
             oPerson.m_sID = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_id);
+            oPerson.m_sObjectURI = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_uri);
+            
             String sName = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_name);
             if (!sName.isEmpty() && sName.indexOf(" ") != -1)
             {
@@ -2676,7 +2684,18 @@ public class MetadataXMLReader {
                 oPerson.m_sFirstName = sName;
                 oPerson.m_sLastName = "";
             }
+            
+            String sFirstName = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_firstname);
+            if (!sFirstName.isEmpty())
+                oPerson.m_sFirstName = sFirstName;
+            
+            String sLastName = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_lastname);
+            if (!sLastName.isEmpty())
+                oPerson.m_sLastName = sLastName;
+            
             oPerson.m_sEmail = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_email);
+            
+            oPerson.m_sUsername = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_username);
         }
         catch (Exception e)
         {

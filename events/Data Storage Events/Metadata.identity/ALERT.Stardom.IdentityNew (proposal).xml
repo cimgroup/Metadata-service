@@ -33,7 +33,7 @@
                                                 <sm:person>
                                                     <sm:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</sm:uri>
                                                     <sm:id>fotis@gmail.com</sm:id>
-                                                    <sm:firsname>Fotis</sm:firsname>
+                                                    <sm:firstname>Fotis</sm:firstname>
                                                     <sm:lastname>Paraskevopoulos</sm:lastname>
                                                     <sm:email>fotis@gmail.com</sm:email>
                                                     <sm:username>fotakis</sm:username>
@@ -54,7 +54,7 @@
                                         <sm:persons>
                                             <sm:is>
                                                 <sm:person>
-                                                    <sm:firsname>Sasa</sm:firsname>
+                                                    <sm:firstname>Sasa</sm:firstname>
                                                     <sm:lastname>Stojanovic</sm:lastname>
                                                     <sm:email>sasa.stojanovic@gmail.com</sm:email>
                                                     <sm:username>sasas</sm:username>

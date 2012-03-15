@@ -1112,12 +1112,29 @@ public class MetadataRDFConverter {
      * @param oPerson - foaf_person object
      * @return - same foaf_person object with filled m_sObjectURI
      */
-    public static void SavePersonData(foaf_Person oPerson, OntModel oModel)
+    public static foaf_Person SavePersonData(foaf_Person oPerson, OntModel oModel)
     {
         try
         {
-            oPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oPerson.m_sID);
+            boolean bSaveId = false;
+            
+            if (oPerson.m_sObjectURI != null && !oPerson.m_sObjectURI.isEmpty())
+            {
+                bSaveId = true;
+            }
+            else
+            {
+                oPerson.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person, oPerson.m_sID);
+            }
+            
             Resource resPerson = oModel.getResource(oPerson.m_sObjectURI);
+            
+            if (bSaveId && oPerson.m_sID != null && !oPerson.m_sID.isEmpty())
+            {
+                DatatypeProperty dtpId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID);
+                resPerson.removeAll(dtpId);
+                resPerson.addProperty(dtpId, oPerson.m_sID);
+            }
             
             if (oPerson.m_sFirstName != null && !oPerson.m_sFirstName.isEmpty())
             {
@@ -1139,10 +1156,18 @@ public class MetadataRDFConverter {
                 resPerson.removeAll(dtpEmail);
                 resPerson.addProperty(dtpEmail, oPerson.m_sEmail);
             }
+            
+            if (oPerson.m_sUsername != null && !oPerson.m_sUsername.isEmpty())
+            {
+                DatatypeProperty dtpUsername = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username);
+                resPerson.removeAll(dtpUsername);
+                resPerson.addProperty(dtpUsername, oPerson.m_sUsername);
+            }
         }
         catch (Exception e)
         {
         }
+        return oPerson;
     }
     
     /**
@@ -1793,8 +1818,8 @@ public class MetadataRDFConverter {
      */
     public static Identity[] SaveIdentity(Identity[] oIdentities)
     {
-        try {
-            
+        try 
+        {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
             for (int i = 0; i < oIdentities.length; i++)
@@ -1821,16 +1846,18 @@ public class MetadataRDFConverter {
                     ObjectProperty opIsPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson);
                     for (int j = 0; j < oIdentities[i].m_oIs.length; j++)
                     {
-                        if (oIdentities[i].m_oIs[j] != null && !oIdentities[i].m_oIs[j].m_sObjectURI.isEmpty())
+                        if (oIdentities[i].m_oIs[j] != null)
                         {
                             if (!oIdentities[i].m_oIs[j].m_bRemoved)
                             {
+                                oIdentities[i].m_oIs[j] = SavePersonData(oIdentities[i].m_oIs[j], oModel);
                                 Resource resIsPerson = oModel.getResource(oIdentities[i].m_oIs[j].m_sObjectURI);
                                 resIdentity.addProperty(opIsPerson, resIsPerson.asResource());
                                 //oIdentities[i].m_oIs[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_is + MetadataConstants.c_XMLE_Uri;
                             }
                             else
                             {
+                                oIdentities[i].m_oIs[j] = SavePersonData(oIdentities[i].m_oIs[j], oModel);
                                 Resource resIsRemove = oModel.getResource(oIdentities[i].m_oIs[j].m_sObjectURI);
                                 oModel.removeAll(resIdentity, opIsPerson, resIsRemove);
                                 //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isRemoved + MetadataConstants.c_XMLE_Uri;
@@ -1845,16 +1872,18 @@ public class MetadataRDFConverter {
                     ObjectProperty opIsntPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson);
                     for (int j = 0; j < oIdentities[i].m_oIsnt.length; j++)
                     {
-                        if (oIdentities[i].m_oIsnt[j] != null && !oIdentities[i].m_oIsnt[j].m_sObjectURI.isEmpty())
+                        if (oIdentities[i].m_oIsnt[j] != null)
                         {
                             if (!oIdentities[i].m_oIsnt[j].m_bRemoved)
                             {
+                                oIdentities[i].m_oIsnt[j] = SavePersonData(oIdentities[i].m_oIsnt[j], oModel);
                                 Resource resIsPerson = oModel.getResource(oIdentities[i].m_oIsnt[j].m_sObjectURI);
                                 resIdentity.addProperty(opIsntPerson, resIsPerson.asResource());
                                 //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isnt + MetadataConstants.c_XMLE_Uri;
                             }
                             else
                             {
+                                oIdentities[i].m_oIsnt[j] = SavePersonData(oIdentities[i].m_oIsnt[j], oModel);
                                 Resource resIsRemove = oModel.getResource(oIdentities[i].m_oIsnt[j].m_sObjectURI);
                                 oModel.removeAll(resIdentity, opIsntPerson, resIsRemove);
                                 //oIdentities[i].m_oIsnt[j].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_isntRemoved + MetadataConstants.c_XMLE_Uri;

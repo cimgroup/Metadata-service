@@ -414,6 +414,7 @@ public class MetadataGlobal {
             String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
             String sIsPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson;
             String sIsntPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson;
+            String sUsername = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username;
             
             OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             
@@ -517,6 +518,13 @@ public class MetadataGlobal {
                 opIsPerson.addDomain(ocIdentity);
                 OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
                 opIsPerson.addRange(ocPerson);
+            }
+            
+            //Creating username DataProperty
+            DatatypeProperty dtpUsername = omModel.getDatatypeProperty(sUsername);
+            if (dtpUsername == null)
+            {
+                dtpUsername = omModel.createDatatypeProperty(sUsername);
             }
             
             //Creating isntPerson ObjectProperty

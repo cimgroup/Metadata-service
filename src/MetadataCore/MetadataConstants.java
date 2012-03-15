@@ -209,6 +209,9 @@ public class MetadataConstants {
     public static String c_XMLE_QueryBugPerson_hasID = "hasID";
     
     public static String c_XMLE_email = "email";
+    public static String c_XMLE_firstname = "firstname";
+    public static String c_XMLE_lastname = "lastname";
+    public static String c_XMLE_username = "username";
     public static String c_XMLE_id = "id";
     
     public static String c_XMLE_result = "result";
@@ -476,6 +479,7 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Email = "email";
     public static String c_OWLDataProperty_FirstName = "firstName";
     public static String c_OWLDataProperty_LastName = "lastName";
+    public static String c_OWLDataProperty_Username = "username";
     public static String c_OWLDataProperty_IssueTrackerType = "issueTrackerType";
     public static String c_OWLDataProperty_IssueTrackerURL = "issueTrackerURL";
 

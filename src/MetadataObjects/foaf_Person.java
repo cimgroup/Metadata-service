@@ -18,6 +18,7 @@ public class foaf_Person extends foaf_Agent {
     public String m_sLastName;
     public String m_sGender;
     public String m_sEmail;
+    public String m_sUsername;
     public SourceCode[] m_oHasExpertiseInSourceCode;
     public PersonRole m_eHasRole;
     public Issue[] m_oIsRelatedToIssue;
