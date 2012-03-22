@@ -89,7 +89,8 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_APICallRequest) ||   //if event type is API Call request
                sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_APICallRequest) ||
-               sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest))
+               sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_Search_APICallRequest))
             {
                 APICallRequest(dDoc);
             }

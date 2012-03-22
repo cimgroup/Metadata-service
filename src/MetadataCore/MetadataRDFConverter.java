@@ -2100,7 +2100,7 @@ public class MetadataRDFConverter {
                 
                 if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
                 {
-                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_id;
+                    oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Id;
                     oIssueData.sData = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL))

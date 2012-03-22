@@ -42,6 +42,7 @@ public class MetadataConstants {
     public static String c_ET_ALERT_KEUI_APICallRequest = "ALERT.KEUI.APICallRequest";
     public static String c_ET_ALERT_STARDOM_APICallRequest = "ALERT.STARDOM.APICallRequest";
     public static String c_ET_ALERT_Panteon_APICallRequest = "ALERT.Panteon.APICallRequest";
+    public static String c_ET_ALERT_Search_APICallRequest = "ALERT.Search.APICallRequest";
     //public static String c_ET_APICall_reply = "Metadata.APICall.reply";
     public static String c_ET_ALERT_Metadata_APICallResponse = "ALERT.Metadata.APICallResponse";
     public static String c_ET_member_request = "Metadata.member.request";
