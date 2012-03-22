@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
-    <s:Header></s:Header>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2">
+    <s:Header/>
     <s:Body>
         <wsnt:Notify>
             <wsnt:NotificationMessage>
-                <wsnt:Topic></wsnt:Topic>
+                <wsnt:Topic/>
                 <wsnt:ProducerReference>
                     <wsa:Address>http://www.alert-project.eu/keui</wsa:Address>
                 </wsnt:ProducerReference>
                 <wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"	xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki"	xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
                         <ns1:head>
                             <ns1:sender>KEUI</ns1:sender>
-                            <ns1:timestamp>10000</ns1:timestamp>
+                            <ns1:timestamp>10003</ns1:timestamp>
                             <ns1:sequencenumber>1</ns1:sequencenumber>
                         </ns1:head>
                         <ns1:payload>
                             <ns1:meta>
                                 <ns1:startTime>10010</ns1:startTime>
-                                <ns1:endTime>10010</ns1:endTime>
-                                <!-- name of event -->
+                                <ns1:endTime>10020</ns1:endTime>
                                 <ns1:eventName>ALERT.KEUI.CommitNew.Annotated</ns1:eventName>
                                 <ns1:eventId>5748</ns1:eventId>
-                                <ns1:eventType>request</ns1:eventType>
+                                <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
                                 <s:kesi>
@@ -41,6 +40,7 @@
                                     <s:commitDate>2012-01-16 16:31</s:commitDate>
                                     <s:commitMessageLog>comment of commit</s:commitMessageLog>
                                     <s:commitFile>
+                                        <s:fileId>11111</s:fileId>
                                         <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
                                         <s:fileAction>Add</s:fileAction>
                                         <s:fileBranch>branch1</s:fileBranch>
@@ -77,8 +77,9 @@
                                     </s:commitFile>
                                     <s:commitFile>
                                         <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
+                                        <s:fileId>21111</s:fileId>
                                         <s:fileAction>Copy</s:fileAction>
-                                        <s:fileBranch>branch1</s:fileBranch>
+                                        <s:fileBranch>branch2</s:fileBranch>
                                         <s:fileModules>
                                             <s:moduleId>2111</s:moduleId>
                                             <s:moduleName>Mod2111</s:moduleName>
@@ -102,7 +103,7 @@
                                     </s:commitProduct>
                                 </s:kesi>
                                 <o:mdservice>
-                                    <o:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit4</o:commitUri>
+                                    <o:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit1</o:commitUri>
                                     <o:commitAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:commitAuthorUri>
                                     <o:commitCommitterUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:commitCommitterUri>
                                     <o:commitRepositoryUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Repository1</o:commitRepositoryUri>
@@ -111,16 +112,16 @@
                                         <o:fileModules>
                                             <o:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module1</o:moduleUri>
                                             <o:moduleMethods>
-                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method1</o:methodUri>
+                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</o:methodUri>
                                             </o:moduleMethods>
                                             <o:moduleMethods>
-                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method2</o:methodUri>
+                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</o:methodUri>
                                             </o:moduleMethods>
                                         </o:fileModules>
                                         <o:fileModules>
                                             <o:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module2</o:moduleUri>
                                             <o:moduleMethods>
-                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method3</o:methodUri>
+                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method3</o:methodUri>
                                             </o:moduleMethods>
                                         </o:fileModules>
                                     </o:commitFile>
@@ -129,35 +130,26 @@
                                         <o:fileModules>
                                             <o:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module3</o:moduleUri>
                                             <o:moduleMethods>
-                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Method4</o:methodUri>
+                                                <o:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method4</o:methodUri>
                                             </o:moduleMethods>
                                         </o:fileModules>
                                     </o:commitFile>
                                     <o:commitProduct>
-                                        <!-- uri of issue project -->
-                                        <o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
-                                        <!-- uri of project component -->
                                         <o:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</o:productComponentUri>
+                                        <o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
                                     </o:commitProduct>
                                 </o:mdservice>
                                 <s1:keui>
-                                    <!-- item Uri -->
-                                    <s1:itemUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit1</s1:itemUri>
-                                    <!-- commit annotations -->
-                                    <s1:commitAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for commit]]></s1:commitAnnotated>
-                                    <!-- commit concepts -->
-                                    <s1:commitConcepts>
-                                    <s1:concept>
-                                        <s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
-                                        <s1:count>1</s1:count>
-                                    </s1:concept>
-                                    </s1:commitConcepts>
-				</s1:keui>
+                                    <s1:commitMessageLogAnnotated><![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r9475">comment</concept> of <concept id="http://ailab.ijs.si/alert/resource/r18367">commit</concept>]]></s1:commitMessageLogAnnotated>
+                                    <s1:commitMessageLogConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r9475</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18367</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commitMessageLogConcepts>
+                                    <s1:itemId>7805</s1:itemId>
+                                    <s1:threadId>123</s1:threadId>
+                                </s1:keui>
                             </ns1:eventData>
-			</ns1:payload>
+                        </ns1:payload>
                     </ns1:event>
-		</wsnt:Message>
+                </wsnt:Message>
             </wsnt:NotificationMessage>
-	</wsnt:Notify>
+        </wsnt:Notify>
     </s:Body>
 </s:Envelope>

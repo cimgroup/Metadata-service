@@ -34,6 +34,7 @@ public class SimpleTopicSubscriber {
         MetadataConstants.c_Topics.add("ALERT.*.IssueNew");
         MetadataConstants.c_Topics.add("ALERT.*.IssueNew.Annotated");
         MetadataConstants.c_Topics.add("ALERT.*.IssueUpdate");
+        MetadataConstants.c_Topics.add("ALERT.*.IssueUpdate.Annotated");
         MetadataConstants.c_Topics.add("ALERT.*.MailNew");
         MetadataConstants.c_Topics.add("ALERT.*.MailNew.Annotated");
 

@@ -398,7 +398,7 @@ public class MetadataGlobal {
             String sAnnotationClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Annotation;
             String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
             String sUriDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri;
-            String sCountDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count;
+            String sWeightDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight;
             String sTextDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text;
             String sForumItemIDDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ForumItemID;
             String sPostTimeDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime;
@@ -440,10 +440,10 @@ public class MetadataGlobal {
             }
             
             //Creating count DataProperty
-            DatatypeProperty dtpCount = omModel.getDatatypeProperty(sCountDataProperty);
-            if (dtpCount == null)
+            DatatypeProperty dtpWeight = omModel.getDatatypeProperty(sWeightDataProperty);
+            if (dtpWeight == null)
             {
-                dtpCount = omModel.createDatatypeProperty(sCountDataProperty);
+                dtpWeight = omModel.createDatatypeProperty(sWeightDataProperty);
             }
             
             //Creating text DataProperty
@@ -608,6 +608,8 @@ public class MetadataGlobal {
         ConceptProp[] oConcepts;
         String[] oKeywords;
         String sHasObjectUri;
+        Integer iItemId;
+        Integer iThreadId;
         
         /**
          * @summary Method for creating keywords from annotatons.
@@ -624,7 +626,7 @@ public class MetadataGlobal {
                     String sValue = oAnnotated[i].sValue;
                     if (!sValue.isEmpty())
                     {
-                        int iIndexS = sValue.indexOf("<concept uri=");
+                        int iIndexS = sValue.indexOf("<concept id=");
                         while (iIndexS != -1)
                         {
                             if (iIndexS != -1)
@@ -644,7 +646,7 @@ public class MetadataGlobal {
                                     }
                                 }
                             }
-                            iIndexS = sValue.indexOf("<concept uri=");
+                            iIndexS = sValue.indexOf("<concept id=");
                         }
                     }
                 }
@@ -692,7 +694,7 @@ public class MetadataGlobal {
         String sName;
         //m_sObjectURI - from MetadataObject
         String sUri;
-        String sCount;
+        String sWeight;
     }
     
     /**

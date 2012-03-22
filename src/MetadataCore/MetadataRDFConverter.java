@@ -647,7 +647,7 @@ public class MetadataRDFConverter {
                 //end has attachment
                 
                 //tracker
-                if (oIssue.m_oHasTracker != null && !oIssue.m_oHasMilestone.m_sID.isEmpty())
+                if (oIssue.m_oHasTracker != null && !oIssue.m_oHasTracker.m_sID.isEmpty())
                 {
                     ObjectProperty opHasTracker = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsIssueOfTracker);
 
@@ -668,19 +668,19 @@ public class MetadataRDFConverter {
                 }
                 //end tracker 
                 
-//                //AlertEvent
-//                String sEventUri;
-//                if (bIsUpdate)
-//                {
-//                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
-//                }
-//                else
-//                {
-//                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
-//                }
-//                Resource resEvent = oModel.getResource(sEventUri);
-//                ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
-//                resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
+                //AlertEvent
+                String sEventUri;
+                if (bIsUpdate)
+                {
+                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ModifiedBug, "");
+                }
+                else
+                {
+                    sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewBug, "");
+                }
+                Resource resEvent = oModel.getResource(sEventUri);
+                ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToBug);
+                resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
 
                 //save data
                 MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -688,6 +688,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception ex)
         {
+            ex.printStackTrace();
         }
         return oIssue;
     }
@@ -947,11 +948,11 @@ public class MetadataRDFConverter {
                 oCommit.m_oIsCommitOf.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_commitProduct + "/o:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
             }
             
-//            //AlertEvent
-//            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_CommitEvent, "");
-//            Resource resEvent = oModel.getResource(sEventUri);
-//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToCommit);
-//            resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_CommitEvent, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToCommit);
+            resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
             
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -1057,11 +1058,11 @@ public class MetadataRDFConverter {
                 resMail.addProperty(dtpBody, oMail.m_sContent);
             }
             
-//            //AlertEvent
-//            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_MailEvent, "");
-//            Resource resEvent = oModel.getResource(sEventUri);
-//            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToMail);
-//            resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_MailEvent, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToMail);
+            resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
             
             //save data
             MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
@@ -1186,6 +1187,21 @@ public class MetadataRDFConverter {
             Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
             if (resObject != null && oAnnotation.oAnnotated != null)
             {
+                //itemId
+                if (oAnnotation.iItemId != null)
+                {
+                    DatatypeProperty dtpItemId = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId);
+                    resObject.removeAll(dtpItemId);
+                    resObject.addProperty(dtpItemId, oAnnotation.iItemId.toString());
+                }
+                //threadId
+                if (oAnnotation.iThreadId != null)
+                {
+                    DatatypeProperty dtpThreadId = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiThreadId);
+                    resObject.removeAll(dtpThreadId);
+                    resObject.addProperty(dtpThreadId, oAnnotation.iThreadId.toString());
+                }
+                
                 //Anotation concepts
                 String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
                 if (oAnnotation.oConcepts != null)
@@ -1209,12 +1225,12 @@ public class MetadataRDFConverter {
                         resConcept.addProperty(dtpUri, oAnnotation.oConcepts[i].sUri);
                         
                         //Count
-                        DatatypeProperty dtpCount = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count);
+                        DatatypeProperty dtpCount = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight);
                         //if (dtpCount == null)
                         //{
-                        //    dtpCount = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count);
+                        //    dtpCount = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight);
                         //}
-                        resConcept.addProperty(dtpCount, oAnnotation.oConcepts[i].sCount);
+                        resConcept.addProperty(dtpCount, oAnnotation.oConcepts[i].sWeight);
                     }
                 }
                 
@@ -1314,29 +1330,29 @@ public class MetadataRDFConverter {
     {
         String sConceptName = "";
         
-        if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
+        if (sAnnotationName.equals(MetadataConstants.c_XMLE_issueDescriptionAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_issueDescriptionConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentTextAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_commentTextConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitMessageLogAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_commitMessageLogConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
         {
             sConceptName = MetadataConstants.c_XMLE_subjectConcepts;
-        }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_descriptionAnnotated))
-        {
-            sConceptName = MetadataConstants.c_XMLE_descriptionConcepts;
-        }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentAnnotated))
-        {
-            sConceptName = MetadataConstants.c_XMLE_commentConcepts;
-        }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitAnnotated))
-        {
-            sConceptName = MetadataConstants.c_XMLE_commitConcepts;
-        }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_titleAnnotated))
-        {
-            sConceptName = MetadataConstants.c_XMLE_titleConcepts;
         }
         else if (sAnnotationName.equals(MetadataConstants.c_XMLE_bodyAnnotated))
         {
             sConceptName = MetadataConstants.c_XMLE_bodyConcepts;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_contentAnnotated))
+        {
+            sConceptName = MetadataConstants.c_XMLE_contentConcepts;
         }
                 
         return sConceptName;
@@ -1353,29 +1369,29 @@ public class MetadataRDFConverter {
     {
         String sAnnotationPropertyName = "";
         
-        if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
-        {
-            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apSubject;
-        }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_descriptionAnnotated))
+        if (sAnnotationName.equals(MetadataConstants.c_XMLE_issueDescriptionAnnotated))
         {
             sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apDescription;
         }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentAnnotated))
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commentTextAnnotated))
         {
             sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apComment;
         }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitAnnotated))
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_commitMessageLogAnnotated))
         {
             sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apCommit;
         }
-        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_titleAnnotated))
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_subjectAnnotated))
         {
-            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apTitle;
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apSubject;
         }
         else if (sAnnotationName.equals(MetadataConstants.c_XMLE_bodyAnnotated))
         {
             sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apBody;
+        }
+        else if (sAnnotationName.equals(MetadataConstants.c_XMLE_contentAnnotated))
+        {
+            sAnnotationPropertyName = MetadataConstants.c_OWLAnnotationProperty_apContent;
         }
        
         return sAnnotationPropertyName;
@@ -1430,7 +1446,7 @@ public class MetadataRDFConverter {
             }
             
             //isAuthorOf
-            if (oForumPost.m_oAuthor != null && !oForumPost.m_oAuthor.m_sID.isEmpty())
+            if (oForumPost.m_oAuthor != null && !oForumPost.m_oAuthor.m_sUsername.isEmpty())
             {
                 SavePersonData(oForumPost.m_oAuthor, omModel);
                 ObjectProperty opHasAuthor = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_Author);
@@ -1470,17 +1486,17 @@ public class MetadataRDFConverter {
                     if (!oForumPost.m_oInForumThread.m_oInForum.m_sName.isEmpty())
                     {
                         DatatypeProperty dtpForumName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Name);
-                        resPost.removeAll(dtpForumName);
-                        resPost.addProperty(dtpForumName, oForumPost.m_oInForumThread.m_oInForum.m_sName);
+                        resForum.removeAll(dtpForumName);
+                        resForum.addProperty(dtpForumName, oForumPost.m_oInForumThread.m_oInForum.m_sName);
                     }
                 }
             }
             
-//            //AlertEvent
-//            String sEventUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_PostEvent, "");
-//            Resource resEvent = omModel.getResource(sEventUri);
-//            ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
-//            resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_PostEvent, "");
+            Resource resEvent = omModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
+            resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
             
             MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
@@ -2036,7 +2052,7 @@ public class MetadataRDFConverter {
             {
                 //if annotation property comment exists
                 String sPropertyURI = siProperties.next().getPredicate().getURI();
-                if (sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject)
+                if (sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription)
                  || sPropertyURI.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription))
                 {
                     sIssueAnnotationStatus = "true";
@@ -2340,7 +2356,7 @@ public class MetadataRDFConverter {
                 String sCQuery = "SELECT ?conceptUri ?conceptDataUri ?conceptDataCount WHERE "
                 + "{<" + sAnnotationUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts + "> ?conceptUri ."
                 + " ?conceptUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri + "> ?conceptDataUri ."
-                + " ?conceptUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Count + "> ?conceptDataCount}";
+                + " ?conceptUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight + "> ?conceptDataCount}";
 //                String sCQuery = "SELECT ?conceptUri ?conceptDataUri ?conceptDataCount WHERE "
 //                + "{<" + sAnnotationUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts + "> ?conceptUri}";
                 ResultSet rsConcepts = QueryExecutionFactory.create(sCQuery, oModel).execSelect();
@@ -2366,7 +2382,7 @@ public class MetadataRDFConverter {
                     oConceptXml.oData.add(oConceptDataUri);
 
                     MetadataGlobal.APIResponseData oConceptDataCount = new MetadataGlobal.APIResponseData();
-                    oConceptDataCount.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_count;
+                    oConceptDataCount.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_weight;
                     oConceptDataCount.sData = sConceptDataCount;
                     oConceptXml.oData.add(oConceptDataCount);
 
@@ -3043,7 +3059,7 @@ public class MetadataRDFConverter {
                     + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description . FILTER regex(?description, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
-                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
                     + "?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Keyword + "> ?keyword . FILTER regex(?keyword, \"" + sKeyword + "\", \"i\")}"
@@ -3376,7 +3392,7 @@ public class MetadataRDFConverter {
             //if keyword exists in subject/body annotation or in mail subject
             String sQuery = "SELECT ?emailUri WHERE {"
                     + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
-                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject . FILTER regex(?subject, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
                     + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
@@ -3422,7 +3438,7 @@ public class MetadataRDFConverter {
             //if keyword exists in title/body annotation or in mail subject
             String sQuery = "SELECT ?postUri WHERE {"
                     + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
-                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
                     + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
@@ -3468,7 +3484,7 @@ public class MetadataRDFConverter {
             //if keyword exists in title/body annotation or in mail subject
             String sQuery = "SELECT ?wikiPageUri WHERE {"
                     + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
-                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?title . FILTER regex(?title, \"" + sKeyword + "\", \"i\")}"
                     + " UNION "
                     + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
                     + "?wikiPagesUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apBody + "> ?body . FILTER regex(?body, \"" + sKeyword + "\", \"i\")}"
@@ -3519,8 +3535,8 @@ public class MetadataRDFConverter {
                     + "FILTER (?issueUri != <" + sIssueUri + ">)}"
                     + " UNION "
                     + "{?issueUri a <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue + "> . "
-                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
-                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject . "
                     + "FILTER (?issueUri != <" + sIssueUri + ">)}"
                     + "}";
             
@@ -3566,7 +3582,7 @@ public class MetadataRDFConverter {
                     + " UNION "
                     + "{?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . "
                     + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apCommit + "> ?subject . "
-                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject}"
                     + "}";
             
             ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
@@ -3610,8 +3626,8 @@ public class MetadataRDFConverter {
                     + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
                     + " UNION "
                     + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> . "
-                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
-                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject}"
                     + "}";
             
             ResultSet rsEmail = QueryExecutionFactory.create(sQuery, oModel).execSelect();
@@ -3655,8 +3671,8 @@ public class MetadataRDFConverter {
                     + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
                     + " UNION "
                     + "{?postUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> . "
-                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?subject . "
-                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "?postUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject}"
                     + "}";
             
             ResultSet rsPost = QueryExecutionFactory.create(sQuery, oModel).execSelect();
@@ -3700,8 +3716,8 @@ public class MetadataRDFConverter {
                     + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?description}"
                     + " UNION "
                     + "{?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> . "
-                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apTitle + "> ?subject . "
-                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject}"
+                    + "?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apSubject + "> ?subject . "
+                    + "<" + sIssueUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apDescription + "> ?subject}"
                     + "}";
             
             ResultSet rsWikiPage = QueryExecutionFactory.create(sQuery, oModel).execSelect();

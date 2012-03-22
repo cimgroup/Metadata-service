@@ -105,7 +105,7 @@ public class MetadataModel {
     static void SaveObjectNewMail(String sEventId, Element eOriginalData, Mail oMail)
     {
         oMail = MetadataRDFConverter.SaveMail(oMail);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_CommitNew_Stored, sEventId, eOriginalData, oMail);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_MailNew_Stored, sEventId, eOriginalData, oMail);
     }
             
 //    /**
@@ -145,6 +145,7 @@ public class MetadataModel {
      */
     static void SaveObjectNewAnnotationData(String sEventName, Document dDoc, AnnotationData oAnnotation)
     {
+        //uncomment this after implementing changes
         oAnnotation = MetadataRDFConverter.SaveAnnotationData(oAnnotation);
         MetadataXMLCreator.CreateXMLNewAnnotationResponse(dDoc, sEventName);
     }

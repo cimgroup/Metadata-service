@@ -130,7 +130,7 @@ public class MetadataXMLReaderTest {
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 0, sOptions);
                 eEventData.appendChild(eAnnotation);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommentNew_Annotated)) //if event type is new comment annotation
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated)) //if event type is new comment annotation
             {
                 //            annotation element
                 Element eAnnotation = CreateAnnotationStructure(dDoc, 1, sOptions);
@@ -1545,11 +1545,11 @@ public class MetadataXMLReaderTest {
     }
     
     /**
-     * Test of NewFWPostAnnotation method, of class MetadataXMLReader.
+     * Test of NewForumPostAnnotation method, of class MetadataXMLReader.
      */
     @Ignore
     @Test
-    public void testNewFWPostAnnotation() {
+    public void testNewForumPostAnnotation() {
         System.out.println("* MetadataXMLReaderTest: NewFWPostAnnotation");
 
         //Forum post
@@ -1557,45 +1557,23 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                                       "KEUI", "Metadata.forumPost.requestAnnotation",
                                       "5748", "00000");
-        AnnotationData resultNull = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
+        AnnotationData resultNull = MetadataXMLReader.NewForumPostAnnotation(dDoc);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestAnnotation",
                              "5748", "22222");
-        AnnotationData resultEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
+        AnnotationData resultEmpty = MetadataXMLReader.NewForumPostAnnotation(dDoc);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.forumPost.requestAnnotation",
                              "5748", "11111");
-        AnnotationData result = MetadataXMLReader.NewFWPostAnnotation(dDoc, true);
+        AnnotationData result = MetadataXMLReader.NewForumPostAnnotation(dDoc);
         assertNotNull(result);
-        
-        //Wiki post
-        //no tags
-        dDoc = CreateTestXML("http://www.alert-project.eu/keui",
-                             "KEUI", "Metadata.wikiPost.requestAnnotation",
-                             "5748", "00000");
-        AnnotationData resultWNull = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
-        assertNotNull(resultWNull);
-        
-        //empty tags
-        dDoc = CreateTestXML("http://www.alert-project.eu/keui",
-                             "KEUI", "Metadata.wikiPost.requestAnnotation",
-                             "5748", "22222");
-        AnnotationData resultWEmpty = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
-        assertNotNull(resultWEmpty);
-            
-        //not empty tags
-        dDoc = CreateTestXML("http://www.alert-project.eu/keui",
-                             "KEUI", "Metadata.wikiPost.requestAnnotation",
-                             "5748", "11111");
-        AnnotationData resultW = MetadataXMLReader.NewFWPostAnnotation(dDoc, false);
-        assertNotNull(resultW);
-        
+
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

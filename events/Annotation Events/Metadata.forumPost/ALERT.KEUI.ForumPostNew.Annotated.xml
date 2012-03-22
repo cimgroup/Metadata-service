@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
-    <s:Header></s:Header>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2">
+    <s:Header/>
     <s:Body>
         <wsnt:Notify>
             <wsnt:NotificationMessage>
-                <wsnt:Topic></wsnt:Topic>
+                <wsnt:Topic/>
                 <wsnt:ProducerReference>
                     <wsa:Address>http://www.alert-project.eu/keui</wsa:Address>
                 </wsnt:ProducerReference>
-		<wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"	xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki"	xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
                         <ns1:head>
                             <ns1:sender>KEUI</ns1:sender>
-                            <ns1:timestamp>10000</ns1:timestamp>
+                            <ns1:timestamp>10003</ns1:timestamp>
                             <ns1:sequencenumber>1</ns1:sequencenumber>
-			</ns1:head>
-			<ns1:payload>
+                        </ns1:head>
+                        <ns1:payload>
                             <ns1:meta>
                                 <ns1:startTime>10010</ns1:startTime>
-				<ns1:endTime>10010</ns1:endTime>
-				<!-- name of event -->
-				<ns1:eventName>ALERT.KEUI.ForumPostNew.Annotated</ns1:eventName>
-				<ns1:eventId>5748</ns1:eventId>
-				<ns1:eventType>request</ns1:eventType>
+                                <ns1:endTime>10020</ns1:endTime>
+                                <ns1:eventName>ALERT.KEUI.ForumPostNew.Annotated</ns1:eventName>
+                                <ns1:eventId>5748</ns1:eventId>
+                                <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
                                 <r:forumSensor>
@@ -50,37 +49,24 @@
                                     <r:category>Development</r:category>
                                 </r:forumSensor>
                                 <o:mdservice>
-                                    <o:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:forumPostUri>
-                                    <o:forumThreadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:forumThreadUri>
+                                    <o:postUri>http://www.alert-project.eu/ontologies/alert.owl#post1</o:postUri>
+                                    <o:threadUri>http://www.alert-project.eu/ontologies/alert.owl#threads1</o:threadUri>
                                     <o:forumUri>http://www.alert-project.eu/ontologies/alert.owl#forum1</o:forumUri>
+                                    <o:authorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:authorUri>
                                 </o:mdservice>
-				<s1:keui>
-                                    <!-- subject annotations -->
-                                    <s1:subjectAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post title]]></s1:subjectAnnotated>
-                                    <!-- subject concepts -->
-                                    <s1:subjectConcepts>
-                                        <s1:concept>
-                                            <s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                    </s1:subjectConcepts>
-                                    <!-- body annotations -->
-                                    <s1:bodyAnnotated><![CDATA[This is test <concept uri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug1">annotation</concept> for post body]]></s1:bodyAnnotated>
-                                    <!-- body concepts -->
-                                    <s1:bodyConcepts>
-                                        <s1:concept>
-                                            <s1:uri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s1:uri>
-                                            <s1:weight>1</s1:weight>
-					</s1:concept>
-                                    </s1:bodyConcepts>
-                                    <s1:itemId>1234</s1:itemId>
+                                <s1:keui>
+                                    <s1:bodyAnnotated><![CDATA[good. Now, where is a good place to start? Maybe to <concept id="http://ailab.ijs.si/alert/resource/r17957">load</concept> <concept id="http://ailab.ijs.si/alert/resource/r8553">up</concept> the amaroK <concept id="http://ailab.ijs.si/alert/resource/r18057">source code</concept> in kdevelop, and start experimenting by touching it here and there?]]></s1:bodyAnnotated>
+                                    <s1:bodyConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17957</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r8553</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18057</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:bodyConcepts>
+                                    <s1:subjectAnnotated><![CDATA[<concept id="KDE/development">Development</concept> :: Re:amaroK and <concept id="http://ailab.ijs.si/alert/resource/r17792">Qt4</concept>]]></s1:subjectAnnotated>
+                                    <s1:subjectConcepts><s1:concept><s1:uri>KDE/development</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17792</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:subjectConcepts>
+                                    <s1:itemId>7805</s1:itemId>
                                     <s1:threadId>12</s1:threadId>
-				</s1:keui>
+                                </s1:keui>
                             </ns1:eventData>
                         </ns1:payload>
                     </ns1:event>
-		</wsnt:Message>
+                </wsnt:Message>
             </wsnt:NotificationMessage>
-	</wsnt:Notify>
+        </wsnt:Notify>
     </s:Body>
 </s:Envelope>

@@ -13,17 +13,17 @@ import java.util.ArrayList;
 public class MetadataConstants {
     
     // <editor-fold desc="Constants">
-    public static String sLocationSaveAlert = "D:\\Alert onlogija\\alert5.owl";
-    public static String sLocationLoadAlert = "file:D:/Alert onlogija/alert5.owl";
+    public static String sLocationSaveAlert = "D:\\Alert onlogija\\alert.owl";
+    public static String sLocationLoadAlert = "file:D:/Alert onlogija/alert.owl";
     public static String sLocationSaveAlertIts = "D:\\Alert onlogija\\alert_its.owl";
     public static String sLocationLoadAlertIts = "file:D:/Alert onlogija/alert_its.owl";
     public static String sLocationSaveAlertScm = "D:\\Alert onlogija\\alert_scm.owl";
     public static String sLocationLoadAlertScm = "file:D:/Alert onlogija/alert_scm.owl";
     
     //public static String sLocationSave = "\\\\hpserver\\Aktuelni projekti\\ALERT\\Kod\\ontology\\alert5.owl";
-    public static String sLocationLoad = "file://hpserver/Aktuelni projekti/ALERT/Kod/ontology/alert5.owl";
-    public static String sLocationSaveLoc = "D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
-    public static String sLocationLoadLoc = "file:D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert5.owl";
+    public static String sLocationLoad = "file://hpserver/Aktuelni projekti/ALERT/Kod/ontology/alert.owl";
+    public static String sLocationSaveLoc = "D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert.owl";
+    public static String sLocationLoadLoc = "file:D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert.owl";
           
     public static String c_http = "http://";
     
@@ -48,8 +48,8 @@ public class MetadataConstants {
     public static String c_ET_member_reply = "Metadata.member.reply";
     public static String c_ET_ALERT_KEUI_IssueNew_Annotated = "ALERT.KEUI.IssueNew.Annotated";
     public static String c_ET_ALERT_Metadata_IssueNew_Updated = "ALERT.Metadata.IssueNew.Updated";
-    public static String c_ET_ALERT_KEUI_CommentNew_Annotated = "ALERT.KEUI.CommentNew.Annotated";
-    public static String c_ET_ALERT_Metadata_CommentNew_Updated = "ALERT.Metadata.CommentNew.Updated";
+    public static String c_ET_ALERT_KEUI_IssueUpdate_Annotated = "ALERT.KEUI.IssueUpdate.Annotated";
+    public static String c_ET_ALERT_Metadata_IssueUpdate_Updated = "ALERT.Metadata.IssueUpdate.Updated";
     public static String c_ET_ALERT_KEUI_CommitNew_Annotated = "ALERT.KEUI.CommitNew.Annotated";
     public static String c_ET_ALERT_Metadata_CommitNew_Updated = "ALERT.Metadata.CommitNew.Updatad";
     public static String c_ET_ALERT_KEUI_ForumPostNew_Annotated = "ALERT.KEUI.ForumPostNew.Annotated";
@@ -57,7 +57,7 @@ public class MetadataConstants {
     public static String c_ET_ALERT_KEUI_MailNew_Annotated = "ALERT.KEUI.MailNew.Annotated";
     public static String c_ET_ALERT_Metadata_MailNew_Updated = "ALERT.Metadata.MailNew.Updated";
     public static String c_ET_ALERT_KEUI_WikiPostNew_Annotated = "ALERT.KEUI.WikiPostNew.Annotated";
-    public static String c_ET_wikiPost_New = "Metadata.wikiPost.New";
+    public static String c_ET_ALERT_WikiSensor_WikiPostNew = "ALERT.WikiSensor.WikiPostNew";
     public static String c_ET_ALERT_ForumSensor_ForumPostNew = "ALERT.ForumSensor.ForumPostNew";
     public static String c_ET_ALERT_Metadata_ForumPostNew_Stored = "ALERT.Metadata.ForumPostNew.Stored";
     public static String c_ET_ALERT_MLSensor_MailNew = "ALERT.MLSensor.MailNew";
@@ -222,27 +222,29 @@ public class MetadataConstants {
     public static String c_XMLE_annotation = "annotation";
     public static String c_XMLE_annotations = "annotations";
     public static String c_XMLE_itemUri = "itemUri";
+    public static String c_XMLE_issueDescriptionAnnotated = "issueDescriptionAnnotated";
+    public static String c_XMLE_commentTextAnnotated = "commentTextAnnotated";
+    public static String c_XMLE_commitMessageLogAnnotated = "commitMessageLogAnnotated";
     public static String c_XMLE_subjectAnnotated = "subjectAnnotated";
-    public static String c_XMLE_descriptionAnnotated = "descriptionAnnotated";
-    public static String c_XMLE_commentAnnotated = "commentAnnotated";
-    public static String c_XMLE_commitAnnotated = "commitAnnotated";
-    public static String c_XMLE_titleAnnotated = "titleAnnotated";
     public static String c_XMLE_bodyAnnotated = "bodyAnnotated";
+    public static String c_XMLE_contentAnnotated = "contentAnnotated";
+    public static String c_XMLE_issueDescriptionConcepts = "issueDescriptionConcepts";
+    public static String c_XMLE_commentTextConcepts = "commentTextConcepts";
+    public static String c_XMLE_commitMessageLogConcepts = "commitMessageLogConcepts";
     public static String c_XMLE_subjectConcepts = "subjectConcepts";
-    public static String c_XMLE_descriptionConcepts = "descriptionConcepts";
-    public static String c_XMLE_commentConcepts = "commentConcepts";
-    public static String c_XMLE_commitConcepts = "commitConcepts";
-    public static String c_XMLE_titleConcepts = "titleConcepts";
     public static String c_XMLE_bodyConcepts = "bodyConcepts";
+    public static String c_XMLE_contentConcepts = "contentConcepts";
     public static String c_XMLE_concept = "concept";
-    public static String c_XMLE_count = "count";
+    public static String c_XMLE_weight = "weight";
     public static String c_XMLE_uri = "uri";
+    public static String c_XMLE_itemId = "itemId";
+    public static String c_XMLE_threadId = "threadId";
 
     public static String c_XMLE_forumSensor = "forumSensor";
     public static String c_XMLE_forum = "forum";
     public static String c_XMLE_forumPost = "forumPost";
     public static String c_XMLE_thread = "thread";
-    public static String c_XMLE_threadId = "threadId";
+    public static String c_XMLE_forumThreadId = "forumThreadId";
     public static String c_XMLE_forumId = "forumId";
     public static String c_XMLE_forumName = "forumName";
     public static String c_XMLE_forumItemId = "forumItemId";
@@ -492,9 +494,11 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Category = "category";
     public static String c_OWLDataProperty_Name = "name";
     public static String c_OWLDataProperty_Uri = "uri";
-    public static String c_OWLDataProperty_Count = "count";
+    public static String c_OWLDataProperty_Weight = "weight";
     public static String c_OWLDataProperty_ForumItemID = "forumItemId";
     public static String c_OWLDataProperty_PostTime = "postTime";
+    public static String c_OWLDataProperty_KeuiItemId = "keuiItemId";
+    public static String c_OWLDataProperty_KeuiThreadId = "keuiThreadId";
     
     public static String c_OWLDataProperty_OnBranch = "onBranch";
     public static String c_OWLDataProperty_StartLine = "startLine";
@@ -578,11 +582,11 @@ public class MetadataConstants {
     
     public static String c_OWLAnnotationProperty_comment = "http://www.w3.org/2000/01/rdf-schema#comment";
     public static String c_OWLAnnotationProperty_apDescription = "apDescription";
-    public static String c_OWLAnnotationProperty_apSubject = "apSubject";
     public static String c_OWLAnnotationProperty_apComment = "apComment";
     public static String c_OWLAnnotationProperty_apCommit = "apCommit";
-    public static String c_OWLAnnotationProperty_apTitle = "apTitle";
+    public static String c_OWLAnnotationProperty_apSubject = "apSubject";
     public static String c_OWLAnnotationProperty_apBody = "apBody";
+    public static String c_OWLAnnotationProperty_apContent = "apContent";
     public static String c_OWLAnnotationProperty_apKeyword = "apKeyword";
     
     // </editor-fold>
