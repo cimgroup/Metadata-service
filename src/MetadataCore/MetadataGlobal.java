@@ -414,6 +414,14 @@ public class MetadataGlobal {
             }
             
             MetadataConstants.sLogFileLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFileLocation");
+            
+            System.out.println("Config file loaded from location: " + sLocation);
+            System.out.println("ActiveMQ address: " + MetadataConstants.sActiveMQAddress);
+            System.out.println("Ontology location: " + MetadataConstants.sLocationSaveAlert);
+            if (MetadataConstants.sLogFileLocation.isEmpty())
+                System.out.println("Log files won't be created");
+            else
+                System.out.println("Log files location: " + MetadataConstants.sLogFileLocation.replace("/", "\\"));
         }
     }
     
