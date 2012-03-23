@@ -67,18 +67,22 @@ public class MetadataXMLReader {
         {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueNew))   //if event type is new issue event
             {
+                System.out.println("Event type: New issue event");
                 NewUpdateIssue(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueUpdate))   //if event type is update issue event
             {
+                System.out.println("Event type: Update issue event");
                 NewUpdateIssue(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_CommitNew))
             {
+                System.out.println("Event type: New commit event");
                 NewCommit(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_MLSensor_MailNew))
             {
+                System.out.println("Event type: New mail event");
                 NewMail(dDoc);
             }
 //            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
@@ -92,6 +96,7 @@ public class MetadataXMLReader {
                sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_Search_APICallRequest))
             {
+                System.out.print("Event type: API Call event; ");
                 APICallRequest(dDoc);
             }
 //            if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
@@ -100,50 +105,62 @@ public class MetadataXMLReader {
 //            }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated)) //if event type is new issue annotation
             {
+                System.out.println("Event type: New issue annotation event");
                 NewIssueAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated)) //if event type is new comment annotation
             {
+                System.out.println("Event type: Update issue annotation event");
                 NewCommentAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
+                System.out.println("Event type: New commit annotation event");
                 NewCommitAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated)) //if event type is new forum post annotation
             {
+                System.out.println("Event type: New forum post annotation event");
                 NewForumPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated)) //if event type is new wiki post annotation
             {
+                System.out.println("Event type: New wiki post annotation event");
                 //NewWikiPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated)) //if event type is new mail annotation
             {
+                System.out.println("Event type: New mail annotation event");
                 NewMailAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew)) //if event type is new forum post
             {
+                System.out.println("Event type: New forum post event");
                 NewForumPostData(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew))   //if event type is new competence event
             {
+                System.out.println("Event type: New competency event");
                 NewUpdateCompetence(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyUpdate))   //if event type is update competence event
             {
+                System.out.println("Event type: Update competency event");
                 NewUpdateCompetence(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityNew))   //if event type is new identity event
             {
+                System.out.println("Event type: New identity event");
                 NewIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityUpdate))   //if event type is update identity event
             {
+                System.out.println("Event type: Update identity event");
                 UpdateIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityRemove))   //if event type is remove identity event
             {
+                System.out.println("Event type: Remove identity event");
                 RemoveIdentity(dDoc);
             }
         }
@@ -742,6 +759,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// sparql /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_sparql))
                 {
+                    System.out.println("API Call type: sparql");
+                    
                     String sSPARQL = "";
                     String sOntModelSpec = "";
                             
@@ -766,6 +785,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getAllForProduct /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForProduct))
                 {
+                    System.out.println("API Call type: issue.getAllForProduct");
+                    
                     String sProductID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -787,6 +808,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getAllForMethod /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForMethod))
                 {
+                    System.out.println("API Call type: issue.getAllForMethod");
+                    
                     ArrayList <String> sMethodUri = new ArrayList();
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -818,6 +841,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getAnnotationStatus /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAnnotationStatus))
                 {
+                    System.out.println("API Call type: issue.getAnnotationStatus");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -839,6 +864,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getInfo /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getInfo))
                 {
+                    System.out.println("API Call type: issue.getInfo");
+                    
                     String sIssueID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -860,6 +887,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getExplicitDuplicates /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getExplicitDuplicates))
                 {
+                    System.out.println("API Call type: issue.getExplicitDuplicates");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -881,6 +910,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getSubjectAreas /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getSubjectAreas))
                 {
+                    System.out.println("API Call type: issue.getSubjectAreas");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -902,6 +933,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getSubjectAreasForOpen /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getSubjectAreasForOpen))
                 {
+                    System.out.println("API Call type: issue.getSubjectAreasForOpen");
+                    
                     String sProductUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -923,6 +956,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getOpen /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getOpen))
                 {
+                    System.out.println("API Call type: issue.getOpen");
+                    
                     String sProductID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -944,6 +979,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// person_getInfo /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_person_getInfo))
                 {
+                    System.out.println("API Call type: person.getInfo");
+                    
                     String sPersonUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -965,6 +1002,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// person_getAllForEmail /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_person_getAllForEmail))
                 {
+                    System.out.println("API Call type: person.getAllForEmail");
+                    
                     String sEmail = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -986,6 +1025,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// identity_getForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_identity_getForPerson))
                 {
+                    System.out.println("API Call type: identity.getForPerson");
+                    
                     String sFirstName = "";
                     String sLastName = "";
                     String sEmail = "";
@@ -1013,6 +1054,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// competency_getForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_competency_getForPerson))
                 {
+                    System.out.println("API Call type: competency.getForPerson");
+                    
                     String sPersonUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1034,6 +1077,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// competency_getPersonForIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_competency_getPersonForIssue))
                 {
+                    System.out.println("API Call type: competency.getPersonForIssue");
+                    
                     String sPersonForIssueSPARQL = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1055,6 +1100,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// method_getAllForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getAllForPerson))
                 {
+                    System.out.println("API Call type: method.getAllForPerson");
+                    
                     String sPersonUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1076,6 +1123,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// method_getRelatedCode /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getRelatedCode))
                 {
+                    System.out.println("API Call type: method.getRelatedCode");
+                    
                     String sPersonUri = "";
                     String sProductUri = "";
                             
@@ -1100,6 +1149,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getRelatedToKeyword))
                 {
+                    System.out.println("API Call type: issue.getRelatedToKeyword");
+                    
                     String sKeyword = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1121,6 +1172,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// commit_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getRelatedToKeyword))
                 {
+                    System.out.println("API Call type: commit.getRelatedToKeyword");
+                    
                     String sKeyword = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1142,6 +1195,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// commit_getAllForProduct /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getAllForProduct))
                 {
+                    System.out.println("API Call type: commit.getAllForProduct");
+                    
                     String sProductID = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1163,6 +1218,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// file_getAll /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_file_getAll))
                 {
+                    System.out.println("API Call type: file.getAll");
+                    
                     String sOffset = "";
                     String sCount = "";
                             
@@ -1187,6 +1244,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// email_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_email_getRelatedToKeyword))
                 {
+                    System.out.println("API Call type: email.getRelatedToKeyword");
+                    
                     String sKeyword = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1208,6 +1267,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// post_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_post_getRelatedToKeyword))
                 {
+                    System.out.println("API Call type: post.getRelatedToKeyword");
+                    
                     String sKeyword = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1229,6 +1290,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// wiki_getRelatedToKeyword /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_wiki_getRelatedToKeyword))
                 {
+                    System.out.println("API Call type: wiki.getRelatedToKeyword");
+                    
                     String sKeyword = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1250,6 +1313,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// issue_getRelatedToIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getRelatedToIssue))
                 {
+                    System.out.println("API Call type: issue.getRelatedToIssue");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1271,6 +1336,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// commit_getRelatedToIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getRelatedToIssue))
                 {
+                    System.out.println("API Call type: commit.getRelatedToIssue");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1292,6 +1359,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// email_getRelatedToIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_email_getRelatedToIssue))
                 {
+                    System.out.println("API Call type: email.getRelatedToIssue");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1313,6 +1382,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// post_getRelatedToIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_post_getRelatedToIssue))
                 {
+                    System.out.println("API Call type: post.getRelatedToIssue");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1334,6 +1405,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// wiki_getRelatedToIssue /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_wiki_getRelatedToIssue))
                 {
+                    System.out.println("API Call type: wiki.getRelatedToIssue");
+                    
                     String sIssueUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -1355,6 +1428,8 @@ public class MetadataXMLReader {
                 ///////////////////////////////// instance_getAllForConcept /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_instance_getAllForConcept))
                 {
+                    System.out.println("API Call type: instance.getAllForConcept");
+                    
                     ArrayList <String> sConceptUri = new ArrayList();
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
@@ -2618,7 +2693,7 @@ public class MetadataXMLReader {
      * @param sTag - tag to read
      * @return value of element
      */
-    private static String GetValue(Element eElement, String sTag)
+    public static String GetValue(Element eElement, String sTag)
     {
         String sElementName = "";
 

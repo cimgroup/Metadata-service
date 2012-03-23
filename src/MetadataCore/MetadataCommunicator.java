@@ -13,6 +13,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import java.io.*;
+import java.sql.Timestamp;
 import org.apache.xerces.dom.DocumentImpl;
 
 /**
@@ -54,7 +55,9 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Request.xml"));
+            java.util.Date dtmNow = new java.util.Date();
+            String sFileName = MetadataConstants.sLogFileLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Request.xml";
+            Result rsLocation = new StreamResult(new File(sFileName));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)
@@ -114,7 +117,9 @@ public class MetadataCommunicator {
 
             //Write the document to a file
             Source srcDocument = new DOMSource(dDoc);
-            Result rsLocation = new StreamResult(new File("D:\\Sasa.Stojanovic\\Response.xml"));
+            java.util.Date dtmNow = new java.util.Date();
+            String sFileName = MetadataConstants.sLogFileLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Response.xml";
+            Result rsLocation = new StreamResult(new File(sFileName));
             tTransformer.transform(srcDocument, rsLocation);
         }
         catch (Exception e)

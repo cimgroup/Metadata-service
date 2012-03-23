@@ -854,7 +854,6 @@ public class MetadataXMLCreator {
                         }
                         catch (Exception e)
                         {
-                            e.printStackTrace();
                         }
                     }
                 }
