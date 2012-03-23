@@ -417,11 +417,23 @@ public class MetadataGlobal {
             
             System.out.println("Config file loaded from location: " + sLocation);
             System.out.println("ActiveMQ address: " + MetadataConstants.sActiveMQAddress);
-            System.out.println("Ontology location: " + MetadataConstants.sLocationSaveAlert);
+            System.out.print("Ontology location: " + MetadataConstants.sLocationSaveAlert.replace("\\", "/"));
+            
+            if (new File(MetadataConstants.sLocationSaveAlert).exists())
+                System.out.println(". Ontology file was found");
+            else
+                System.out.println(". WARNING: Ontology file was not found!");
+            
             if (MetadataConstants.sLogFileLocation.isEmpty())
                 System.out.println("Log files won't be created");
             else
-                System.out.println("Log files location: " + MetadataConstants.sLogFileLocation.replace("/", "\\"));
+            {
+                System.out.print("Log files location: " + MetadataConstants.sLogFileLocation);
+                if (new File(MetadataConstants.sLogFileLocation).exists())
+                    System.out.println(". Directory was found");
+                else
+                    System.out.println(". WARNING: Directory was not found!");
+            }
         }
     }
     
