@@ -112,7 +112,8 @@ public class SimpleTopicSubscriber {
             
             
             topicConnection.start();
-            System.out.println("To end program, enter Q or q, " + "then <return>");
+            System.out.println("######################################################################");
+            System.out.println("Metadata service is ready. To end program, enter Q or q, then <return>");
             inputStreamReader = new InputStreamReader(System.in);
             while (!((answer == 'q') || (answer == 'Q'))) {
                 try {

@@ -24,6 +24,7 @@ public class TextListener implements MessageListener{
         msg = (TextMessage) message;
         java.util.Date dtmNow = new java.util.Date();
         iNumMess++;
+        System.out.println("######################################################################");
         System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(dtmNow.getTime()));
         MetadataCommunicator.ReceiveXML(msg.getText());
         

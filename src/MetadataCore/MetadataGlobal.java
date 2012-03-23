@@ -414,8 +414,9 @@ public class MetadataGlobal {
             }
             
             MetadataConstants.sLogFileLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFileLocation");
-            
+            System.out.println("########################## METADATA SERVICE ##########################");
             System.out.println("Config file loaded from location: " + sLocation);
+            System.out.println("######################################################################");
             System.out.println("ActiveMQ address: " + MetadataConstants.sActiveMQAddress);
             System.out.print("Ontology location: " + MetadataConstants.sLocationSaveAlert.replace("\\", "/"));
             
@@ -434,6 +435,7 @@ public class MetadataGlobal {
                 else
                     System.out.println(". WARNING: Directory was not found!");
             }
+            System.out.println("######################################################################");
         }
     }
     
