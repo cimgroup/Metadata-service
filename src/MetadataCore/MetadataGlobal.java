@@ -412,6 +412,8 @@ public class MetadataGlobal {
                 MetadataConstants.sLocationSaveAlert = sOntologyLocation.replace("/", "\\");
                 MetadataConstants.sLocationLoadAlert = "file:" + sOntologyLocation;
             }
+            
+            MetadataConstants.sLogFileLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFileLocation");
         }
     }
     

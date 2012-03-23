@@ -22,9 +22,9 @@ public class TextListener implements MessageListener{
     try{
         if (message instanceof TextMessage) {
         msg = (TextMessage) message;
-        java.util.Date date= new java.util.Date();
+        java.util.Date dtmNow = new java.util.Date();
         iNumMess++;
-        System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(date.getTime()));
+        System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(dtmNow.getTime()));
         MetadataCommunicator.ReceiveXML(msg.getText());
         
      //   System.out.println("Reading message: " + msg.getText());

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetadataConfig>
 	<ActiveMQAddress>tcp://www.cimcollege.rs:61616</ActiveMQAddress>
-	<OntologyLocation>D:/AlertOntology/alert.owl</OntologyLocation>
+	<OntologyLocation>D:/Alert Onlogija/alert.owl</OntologyLocation>
+        <LogFileLocation>D:/Sasa.Stojanovic/Alert/MetadataLog/</LogFileLocation>
 </MetadataConfig>

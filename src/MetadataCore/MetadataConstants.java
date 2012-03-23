@@ -16,6 +16,7 @@ public class MetadataConstants {
     public static String sLocationSaveAlert = "D:\\Alert onlogija\\alert.owl";
     public static String sLocationLoadAlert = "file:D:/Alert onlogija/alert.owl";
     public static String sActiveMQAddress = "tcp://www.cimcollege.rs:61616";
+    public static String sLogFileLocation = "";
        
     public static String c_http = "http://";
     
