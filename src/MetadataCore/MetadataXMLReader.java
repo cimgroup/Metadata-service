@@ -2618,7 +2618,7 @@ public class MetadataXMLReader {
      * @param sTag - tag to read
      * @return value of element
      */
-    private static String GetValue(Element eElement, String sTag)
+    public static String GetValue(Element eElement, String sTag)
     {
         String sElementName = "";
 

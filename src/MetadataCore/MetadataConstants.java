@@ -15,16 +15,8 @@ public class MetadataConstants {
     // <editor-fold desc="Constants">
     public static String sLocationSaveAlert = "D:\\Alert onlogija\\alert.owl";
     public static String sLocationLoadAlert = "file:D:/Alert onlogija/alert.owl";
-    public static String sLocationSaveAlertIts = "D:\\Alert onlogija\\alert_its.owl";
-    public static String sLocationLoadAlertIts = "file:D:/Alert onlogija/alert_its.owl";
-    public static String sLocationSaveAlertScm = "D:\\Alert onlogija\\alert_scm.owl";
-    public static String sLocationLoadAlertScm = "file:D:/Alert onlogija/alert_scm.owl";
-    
-    //public static String sLocationSave = "\\\\hpserver\\Aktuelni projekti\\ALERT\\Kod\\ontology\\alert5.owl";
-    public static String sLocationLoad = "file://hpserver/Aktuelni projekti/ALERT/Kod/ontology/alert.owl";
-    public static String sLocationSaveLoc = "D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert.owl";
-    public static String sLocationLoadLoc = "file:D:\\Sasa.Stojanovic\\Alert\\Ontologies\\alert.owl";
-          
+    public static String sActiveMQAddress = "tcp://www.cimcollege.rs:61616";
+       
     public static String c_http = "http://";
     
     // <editor-fold desc="Event types">

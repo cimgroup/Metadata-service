@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
+import org.w3c.dom.*;
 
 /**
  *
@@ -387,7 +388,35 @@ public class MetadataGlobal {
     }
     
     /**
-     * @summary Class for storing annotation data.
+     * @summary Method for reading Metadata config
+     * @startRealisation  Sasa Stojanovic 23.03.2012.
+     * @finalModification Sasa Stojanovic 23.03.2012.
+     */
+    public static void ReadConfiguration()
+    {
+        String sLocation = System.getProperty("user.dir") + "\\MetadataConfig.xml";
+        Document dDoc = MetadataCommunicator.LoadXML(sLocation);
+        NodeList nlMetadataConfig = dDoc.getElementsByTagName("MetadataConfig");
+
+        if (nlMetadataConfig != null && nlMetadataConfig.getLength() > 0)
+        {
+            Element eMetadataConfig = (Element) nlMetadataConfig.item(0);
+            
+            String sActiveMQAddress = MetadataXMLReader.GetValue(eMetadataConfig, "ActiveMQAddress");
+            if (!sActiveMQAddress.isEmpty())
+                MetadataConstants.sActiveMQAddress = sActiveMQAddress;
+            
+            String sOntologyLocation = MetadataXMLReader.GetValue(eMetadataConfig, "OntologyLocation");
+            if (!sOntologyLocation.isEmpty())
+            {
+                MetadataConstants.sLocationSaveAlert = sOntologyLocation.replace("/", "\\");
+                MetadataConstants.sLocationLoadAlert = "file:" + sOntologyLocation;
+            }
+        }
+    }
+    
+    /**
+     * @summary Method for expanding ontology
      * @startRealisation  Dejan Milosavljevic 20.01.2012.
      * @finalModification Sasa Stojanovic 04.02.2012.
      */

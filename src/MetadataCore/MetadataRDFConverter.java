@@ -3929,11 +3929,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel;
-            if (sOntClass.contains(MetadataConstants.c_NS_Alert_Its) || sOntClass.contains(MetadataConstants.c_NS_Ifi))
-                oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlertIts);
-            else
-                oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
             OntClass ocMember = oModel.getOntClass(sOntClass);
             
             ExtendedIterator iIterator = ocMember.listInstances();

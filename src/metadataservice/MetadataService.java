@@ -18,6 +18,7 @@ public class MetadataService {
      */
     public static void main(String[] args) {
         //// TO-DO code application logic here
+        MetadataGlobal.ReadConfiguration();
         MetadataGlobal.ExpandOntology();
         SimpleTopicSubscriber.main();
     }
