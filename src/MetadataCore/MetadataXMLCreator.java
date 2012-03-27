@@ -874,8 +874,8 @@ public class MetadataXMLCreator {
     private static Element CreateWSNTStructure(Document dDoc) {
         try
         {
-            Element eEnvelope = dDoc.createElement("s:Envelope");
-            eEnvelope.setAttribute("xmlns:s", "http://www.w3.org/2003/05/soap-envelope");
+            Element eEnvelope = dDoc.createElement("soap:Envelope");
+            eEnvelope.setAttribute("xmlns:soap", "http://www.w3.org/2003/05/soap-envelope");
             eEnvelope.setAttribute("xmlns:wsnt", "http://docs.oasis-open.org/wsn/b-2");
             eEnvelope.setAttribute("xmlns:wsa", "http://www.w3.org/2005/08/addressing");
             dDoc.appendChild(eEnvelope);
@@ -883,11 +883,11 @@ public class MetadataXMLCreator {
             Text tText;
             
             //header element
-            Element eHeader = dDoc.createElement("s:Header");
+            Element eHeader = dDoc.createElement("soap:Header");
             eEnvelope.appendChild(eHeader);
             
             //body element
-            Element eBody = dDoc.createElement("s:Body");
+            Element eBody = dDoc.createElement("soap:Body");
             eEnvelope.appendChild(eBody);
             
                 //notify element

@@ -394,7 +394,7 @@ public class MetadataGlobal {
      */
     public static void ReadConfiguration()
     {
-        String sLocation = System.getProperty("user.dir") + "\\MetadataConfig.xml";
+        String sLocation = System.getProperty("user.dir") + "/MetadataConfig.xml";
         Document dDoc = MetadataCommunicator.LoadXML(sLocation);
         NodeList nlMetadataConfig = dDoc.getElementsByTagName("MetadataConfig");
 
@@ -409,8 +409,11 @@ public class MetadataGlobal {
             String sOntologyLocation = MetadataXMLReader.GetValue(eMetadataConfig, "OntologyLocation");
             if (!sOntologyLocation.isEmpty())
             {
-                MetadataConstants.sLocationSaveAlert = sOntologyLocation.replace("/", "\\");
+                //MetadataConstants.sLocationSaveAlert = sOntologyLocation.replace("/", "\\");
+                //MetadataConstants.sLocationLoadAlert = "file:" + sOntologyLocation;
+                //next two lines works on FZI server
                 MetadataConstants.sLocationLoadAlert = "file:" + sOntologyLocation;
+                MetadataConstants.sLocationSaveAlert = sOntologyLocation;
             }
             
             MetadataConstants.sLogFileLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFileLocation");
