@@ -43,6 +43,7 @@
 					<s:fileId>11111</s:fileId>
 					<!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
 					<s:fileAction>Add</s:fileAction>
+                                        <s:fileName>filename1</s:fileName>
 					<s:fileBranch>branch1</s:fileBranch>
 					<s:fileModules>
                                             <s:moduleId>1111</s:moduleId>
@@ -79,6 +80,7 @@
 					<!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
 					<s:fileId>21111</s:fileId>
 					<s:fileAction>Copy</s:fileAction>
+                                        <s:fileName>filename2</s:fileName>
 					<s:fileBranch>branch2</s:fileBranch>
 					<s:fileModules>
                                             <s:moduleId>2111</s:moduleId>
