@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import org.w3c.dom.*;
 
 /**
@@ -1198,6 +1199,7 @@ public class MetadataXMLReader {
                     System.out.println("API Call type: commit.getAllForProduct");
                     
                     String sProductID = "";
+                    Date dtmFromDate = new Date();
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -1209,10 +1211,12 @@ public class MetadataXMLReader {
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
                             if (sParamName.equals(MetadataConstants.c_XMLV_productID))
                                 sProductID = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_fromDate))
+                                dtmFromDate = MetadataGlobal.GetDateTime(GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value));
                         }
                     }
                     
-                    MetadataModel.ac_commit_getAllForProduct(sEventId, sProductID);
+                    MetadataModel.ac_commit_getAllForProduct(sEventId, sProductID, dtmFromDate);
                 }
                 
                 ///////////////////////////////// file_getAll /////////////////////////////////

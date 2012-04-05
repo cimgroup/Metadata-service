@@ -3147,11 +3147,12 @@ public class MetadataRDFConverter {
     /**
      * @summary issue_getAllForProduct
      * @startRealisation  Dejan Milosavljevic 15.03.2012.
-     * @finalModification Dejan Milosavljevic 15.03.2012.
+     * @finalModification Sasa Stojanovic 05.04.2012.
      * @param sProductID - product id
+     * @param dtmFromDate - date filter
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_commit_getAllForProduct(String sProductID)
+    public static MetadataGlobal.APIResponseData ac_commit_getAllForProduct(String sProductID, Date dtmFromDate)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
@@ -3160,11 +3161,13 @@ public class MetadataRDFConverter {
                         
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
-            String sQuery = "SELECT ?commitUri ?commitMessageLog ?commitDate WHERE "
+            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
+                    + "SELECT ?commitUri ?commitMessageLog ?commitDate WHERE "
                     + "{?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf + ">  ?componentUri ."
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
                     + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessageLog ."
-                    + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate . }";
+                    + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate ."
+                    + " FILTER ( ?commitDate > \"" + dtmFromDate.toString() + "\"^^xsd:date )}";
 
             ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -3195,6 +3198,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return oData;
     }

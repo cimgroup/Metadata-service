@@ -303,6 +303,7 @@ public class MetadataConstants {
     public static String c_XMLV_issueID = "issueID";
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
+    public static String c_XMLV_fromDate = "fromDate";
     
     public static String c_XMLV_personForIssueSPARQL = "personForIssueSPARQL";
     

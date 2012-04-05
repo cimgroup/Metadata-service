@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -488,9 +489,9 @@ public class MetadataModel {
      * @param sEventId - event id
      * @param sProductID - product id
      */
-    static void ac_commit_getAllForProduct(String sEventId, String sProductID)
+    static void ac_commit_getAllForProduct(String sEventId, String sProductID, Date dtmFromDate)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getAllForProduct(sProductID);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getAllForProduct(sProductID, dtmFromDate);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getAllForProduct, sEventId, oData);
     }
     

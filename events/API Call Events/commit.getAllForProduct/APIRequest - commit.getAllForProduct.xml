@@ -38,9 +38,9 @@
 										</s2:inputParameter>
                                                                                 <s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>dateFilter</s2:name>
+											<s2:name>fromDate</s2:name>
 											<!-- value of parameter -->
-											<s2:value>2012-03-16 12:00</s2:value>
+											<s2:value>2012-01-13 12:00</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>
