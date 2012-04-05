@@ -182,6 +182,8 @@
                                                                                                     <s3:count>1</s3:count>
                                                                                                 </s3:concept>
                                                                                             </s3:descriptionConcepts>
+                                                                                            <s3:itemId>7805</s3:itemId>
+                                                                                            <s3:threadId>12</s3:threadId>
                                                                                         </s3:annotations>
 										</s3:issue>
 									</s3:responseData>

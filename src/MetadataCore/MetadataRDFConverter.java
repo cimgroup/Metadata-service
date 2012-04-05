@@ -2083,6 +2083,10 @@ public class MetadataRDFConverter {
     public static MetadataGlobal.APIResponseData ac_issue_getInfo(String sIssueID)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        
+        MetadataGlobal.APIResponseData oAnnotations = new MetadataGlobal.APIResponseData();
+        oAnnotations.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_annotations + "/";
+        
         try
         {
             OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
@@ -2310,11 +2314,26 @@ public class MetadataRDFConverter {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueAttachment + "/";
                     oIssueData.oData.add(GetAttachmentAPIResponse(sStatement.getObject().toString()));
                 }
-                
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasActivity))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueActivity + "/";
                     oIssueData.oData.add(GetActivityAPIResponse(sStatement.getObject().toString()));
+                }
+                
+                //KEUI id-s
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId))
+                {
+                    MetadataGlobal.APIResponseData oKeuiItemId = new MetadataGlobal.APIResponseData();
+                    oKeuiItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                    oKeuiItemId.sData = sStatement.getObject().toString();
+                    oAnnotations.oData.add(oKeuiItemId);
+                }
+                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiThreadId))
+                {
+                    MetadataGlobal.APIResponseData oKeuiThreadId = new MetadataGlobal.APIResponseData();
+                    oKeuiThreadId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_threadId;
+                    oKeuiThreadId.sData = sStatement.getObject().toString();
+                    oAnnotations.oData.add(oKeuiThreadId);
                 }
                 
                 if (oIssueData.sReturnConfig != null)
@@ -2334,9 +2353,6 @@ public class MetadataRDFConverter {
 //                + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Name + "> ?annotationName ."
 //                + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text + "> ?annotationText}";
             ResultSet rsAnnotations = QueryExecutionFactory.create(sAQuery, oModel).execSelect();
-
-            MetadataGlobal.APIResponseData oAnnotations = new MetadataGlobal.APIResponseData();
-            oAnnotations.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_annotations + "/";
 
             while (rsAnnotations.hasNext())
             {
