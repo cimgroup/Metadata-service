@@ -34,7 +34,7 @@
                                     <!-- forum name -->
                                     <r:forumName>KDE Forums</r:forumName>
                                     <!-- thread ID -->
-                                    <r:threadId>3559</r:threadId>
+                                    <r:forumThreadId>3559</r:forumThreadId>
                                     <!-- post ID -->
                                     <r:postId>3560</r:postId>
                                     <!-- time -->
@@ -44,11 +44,7 @@
                                     <!-- body -->
                                     <r:body><![CDATA[good. Now, where is a good place to start? Maybe to load up the amaroK source code in kdevelop, and start experimenting by touching it here and there?]]></r:body>
                                     <!-- author -->
-                                    <r:author>
-                                        <r:name>Angel Blue</r:name>
-                                        <r:id>angel_blue_co2004@yahoo.com</r:id>
-                                        <r:email>angel_blue_co2004@yahoo.com</r:email>
-                                    </r:author>
+                                    <r:author>boudewijn</r:author>
                                     <!-- category -->
                                     <r:category>Development</r:category>
                                 </r:forumSensor>

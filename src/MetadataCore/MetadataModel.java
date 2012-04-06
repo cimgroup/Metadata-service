@@ -263,10 +263,11 @@ public class MetadataModel {
      * @finalModification Sasa Stojanovic 13.12.2011.
      * @param sEventId - event id
      * @param sProductID - product id
+     * @param dtmFromDate - date from filter
      */
-    static void ac_issue_getAllForProduct(String sEventId, String sProductID)
+    static void ac_issue_getAllForProduct(String sEventId, String sProductID, Date dtmFromDate)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForProduct(sProductID);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForProduct(sProductID, dtmFromDate);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAllForProduct, sEventId, oData);
     }
     
@@ -488,11 +489,38 @@ public class MetadataModel {
      * @finalModification Dejan Milosavljevic 15.03.2012.
      * @param sEventId - event id
      * @param sProductID - product id
+     * @param dtmFromDate - date from filter
      */
     static void ac_commit_getAllForProduct(String sEventId, String sProductID, Date dtmFromDate)
     {
         MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getAllForProduct(sProductID, dtmFromDate);       
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getAllForProduct, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all mails for product
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param sEventId - event id
+     * @param dtmFromDate - date from filter
+     */
+    static void ac_mail_getAllForProduct(String sEventId, Date dtmFromDate)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_mail_getAllForProduct(dtmFromDate);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_mail_getAllForProduct, sEventId, oData);
+    }
+    
+    /**
+     * @summary API Call Method for getting all forum posts for product
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param sEventId - event id
+     * @param dtmFromDate - date from filter
+     */
+    static void ac_forumPost_getAllForProduct(String sEventId, Date dtmFromDate)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_forumPost_getAllForProduct(dtmFromDate);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_mail_getAllForProduct, sEventId, oData);
     }
     
     /**

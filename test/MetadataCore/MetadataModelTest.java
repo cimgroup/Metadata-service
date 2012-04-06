@@ -7,6 +7,7 @@ package MetadataCore;
 import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataObjects.*;
 import java.util.ArrayList;
+import java.util.Date;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -147,7 +148,8 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: ac_issue_getAllForProduct");
         String sEventId = "";
         String sProductUri = "";
-        MetadataModel.ac_issue_getAllForProduct(sEventId, sProductUri);
+        Date dtmFromDate = new Date();
+        MetadataModel.ac_issue_getAllForProduct(sEventId, sProductUri, dtmFromDate);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

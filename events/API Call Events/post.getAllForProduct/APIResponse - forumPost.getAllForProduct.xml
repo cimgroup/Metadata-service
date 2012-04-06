@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2">
+    <s:Header/>
+    <s:Body>
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic/>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+                </wsnt:ProducerReference>
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:s2="http://www.alert-project.eu/APIcall-request" xmlns:s3="http://www.alert-project.eu/APIcall-response" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                        <ns1:head>
+                            <ns1:sender>METADATASERVICE</ns1:sender>
+                            <ns1:timestamp>10000</ns1:timestamp>
+                            <ns1:sequencenumber>1</ns1:sequencenumber>
+                        </ns1:head>
+                        <ns1:payload>
+                            <ns1:meta>
+                                <ns1:startTime>10010</ns1:startTime>
+                                <ns1:endTime>10020</ns1:endTime>
+                                <ns1:eventName>ALERT.Metadata.APICallResponse</ns1:eventName>
+                                <ns1:eventId>9856</ns1:eventId>
+                                <ns1:eventType>reply</ns1:eventType>
+                            </ns1:meta>
+                            <ns1:eventData>
+                                <ns1:apiResponse>
+                                    <s3:apiCall>forumPost.getAllForProduct</s3:apiCall>
+                                    <s3:responseData>
+                                        <s3:forumPost>
+                                            <s3:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post1</s3:forumPostUri>
+                                            <s3:forumPostSubject><![CDATA[Development :: Re:amaroK and Qt4]]></s3:forumPostSubject>
+                                            <s3:forumPostAuthor>boudewijn</s3:forumPostAuthor>
+                                            <s3:forumPostTime>Sat, 05 Nov 2011 17:50:11 +0100</s3:forumPostTime>
+                                            <s3:forumPostCategory>Development</s3:forumPostCategory>
+                                        </s3:forumPost>
+                                        <s3:forumPost>
+                                            <s3:forumPostUri>http://www.alert-project.eu/ontologies/alert.owl#post2</s3:forumPostUri>
+                                            <s3:forumPostSubject><![CDATA[Forum post subject 2]]></s3:forumPostSubject>
+                                            <s3:forumPostAuthor>markw</s3:forumPostAuthor>
+                                            <s3:forumPostTime>Sat, 05 Nov 2011 18:34:11 +0100</s3:forumPostTime>
+                                            <s3:forumPostCategory>Development</s3:forumPostCategory>
+                                        </s3:forumPost>
+                                    </s3:responseData>
+                                </ns1:apiResponse>
+                            </ns1:eventData>
+                        </ns1:payload>
+                    </ns1:event>
+                </wsnt:Message>
+            </wsnt:NotificationMessage>
+        </wsnt:Notify>
+    </s:Body>
+</s:Envelope>

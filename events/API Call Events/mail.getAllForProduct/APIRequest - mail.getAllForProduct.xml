@@ -27,20 +27,14 @@
 							<ns1:eventData>
 								<ns1:apiRequest>
 									<!-- name of method -->
-									<s2:apiCall>commit.getAllForProduct</s2:apiCall>
+									<s2:apiCall>mail.getAllForProduct</s2:apiCall>
 									<s2:requestData>
 										<!-- input parameters -->
-										<s2:inputParameter>
-											<!-- name of parameter -->
-											<s2:name>productID</s2:name>
-											<!-- value of parameter -->
-											<s2:value>solid</s2:value>
-										</s2:inputParameter>
                                                                                 <s2:inputParameter>
 											<!-- name of parameter -->
 											<s2:name>fromDate</s2:name>
 											<!-- value of parameter -->
-											<s2:value>2012-01-13 12:00</s2:value>
+											<s2:value>2011-05-13 12:00</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>

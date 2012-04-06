@@ -1938,11 +1938,12 @@ public class MetadataRDFConverter {
     /**
      * @summary issue_getAllForProduct
      * @startRealisation Sasa Stojanovic 13.12.2011.
-     * @finalModification Sasa Stojanovic 13.12.2011.
+     * @finalModification Sasa Stojanovic 06.04.2012.
      * @param sProductID - product id
+     * @param dtmFromDate - date from filter
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_issue_getAllForProduct(String sProductID)
+    public static MetadataGlobal.APIResponseData ac_issue_getAllForProduct(String sProductID, Date dtmFromDate)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
@@ -1951,11 +1952,18 @@ public class MetadataRDFConverter {
                         
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
-            String sQuery = "SELECT ?issueUri ?issueId ?issueDescription WHERE "
+            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                    + "SELECT ?issueUri ?issueId ?issueDescription WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsIssueOf + ">  ?componentUri ."
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
                     + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
-                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription . }";
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened + "> ?issueDateOpened ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified + "> ?issueLastModified ."
+                    + " FILTER ("
+                    + " ?issueDateOpened > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime ||"
+                    + " ?issueLastModified > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime"
+                    + ")}";
 
             ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -1986,6 +1994,7 @@ public class MetadataRDFConverter {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
         }
         return oData;
     }
@@ -3146,11 +3155,11 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getAllForProduct
+     * @summary commit_getAllForProduct
      * @startRealisation  Dejan Milosavljevic 15.03.2012.
-     * @finalModification Sasa Stojanovic 05.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
      * @param sProductID - product id
-     * @param dtmFromDate - date filter
+     * @param dtmFromDate - date from filter
      * @return - APIResponseData object with results
      */
     public static MetadataGlobal.APIResponseData ac_commit_getAllForProduct(String sProductID, Date dtmFromDate)
@@ -3162,7 +3171,7 @@ public class MetadataRDFConverter {
                         
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
-            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
+            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                     + "SELECT ?commitUri ?commitMessageLog ?commitDate WHERE "
                     + "{?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf + ">  ?componentUri ."
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
@@ -3196,6 +3205,131 @@ public class MetadataRDFConverter {
                 oData.oData.add(oCommit);
             }
 
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary mail_getAllForProduct
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param dtmFromDate - date from filter
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_mail_getAllForProduct(Date dtmFromDate)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+
+            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                    + "SELECT ?emailUri ?emailSubject ?emailFrom ?emailDate WHERE "
+                    + "{?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> ."
+                    + " ?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?emailSubject ."
+                    + " ?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_From + "> ?emailFromPerson ."
+                    + " ?emailFromPerson <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?emailFrom ."
+                    + " ?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasCreationDate + "> ?emailDate ."
+                    + " FILTER ( ?emailDate > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )}";
+
+            ResultSet rsMail = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsMail.hasNext())
+            {
+                QuerySolution qsMail = rsMail.nextSolution();
+                
+                MetadataGlobal.APIResponseData oMail = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oMailUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oMailSubject = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oMailFrom = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oMailDate = new MetadataGlobal.APIResponseData();
+                
+                oMail.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + "/";
+                oMailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                oMailSubject.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_emailSubject;
+                oMailFrom.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_emailFrom;
+                oMailDate.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_emailDate;
+                
+                oMailUri.sData = qsMail.get("?emailUri").toString();
+                oMailSubject.sData = "<![CDATA[" + qsMail.get("?emailSubject").toString() + "]]>";
+                oMailFrom.sData = qsMail.get("?emailFrom").toString();
+                oMailDate.sData = MetadataGlobal.FormatDateFromSavingToPublish(qsMail.get("?emailDate").toString());
+                
+                oMail.oData.add(oMailUri);
+                oMail.oData.add(oMailSubject);
+                oMail.oData.add(oMailFrom);
+                oMail.oData.add(oMailDate);
+                oData.oData.add(oMail);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return oData;
+    }
+    
+    /**
+     * @summary forumPost_getAllForProduct
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param dtmFromDate - date from filter
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_forumPost_getAllForProduct(Date dtmFromDate)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        try
+        {
+            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+
+            String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                    + "SELECT ?forumPostUri ?forumPostSubject ?forumPostAuthor ?forumPostTime ?forumPostCategory WHERE "
+                    + "{?forumPostUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> ."
+                    + " ?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?forumPostSubject ."
+                    + " ?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_Author + "> ?forumPostAuthorPerson ."
+                    + " ?forumPostAuthorPerson <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username + "> ?forumPostAuthor ."
+                    + " ?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime + "> ?forumPostTime ."
+                    + " ?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category + "> ?forumPostCategory ."
+                    + " FILTER ( ?forumPostTime > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )}";
+
+            ResultSet rsForumPost = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            
+            while (rsForumPost.hasNext())
+            {
+                QuerySolution qsForumPost = rsForumPost.nextSolution();
+                
+                MetadataGlobal.APIResponseData oForumPost = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oForumPostUri = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oForumPostSubject = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oForumPostAuthor = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oForumPostTime = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oForumPostCategory = new MetadataGlobal.APIResponseData();
+                
+                oForumPost.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPost + "/";
+                oForumPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPost + MetadataConstants.c_XMLE_Uri;
+                oForumPostSubject.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPostSubject;
+                oForumPostAuthor.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPostAuthor;
+                oForumPostTime.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPostTime;
+                oForumPostCategory.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPostCategory;
+                
+                oForumPostUri.sData = qsForumPost.get("?forumPostUri").toString();
+                oForumPostSubject.sData = "<![CDATA[" + qsForumPost.get("?forumPostSubject").toString() + "]]>";
+                oForumPostAuthor.sData = qsForumPost.get("?forumPostAuthor").toString();
+                oForumPostTime.sData = MetadataGlobal.FormatDateFromSavingToPublish(qsForumPost.get("?forumPostTime").toString());
+                oForumPostCategory.sData = qsForumPost.get("?forumPostCategory").toString();
+                
+                oForumPost.oData.add(oForumPostUri);
+                oForumPost.oData.add(oForumPostSubject);
+                oForumPost.oData.add(oForumPostAuthor);
+                oForumPost.oData.add(oForumPostTime);
+                oForumPost.oData.add(oForumPostCategory);
+                oData.oData.add(oForumPost);
+            }
         }
         catch (Exception e)
         {

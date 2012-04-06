@@ -388,15 +388,16 @@ public class MetadataRDFConverterTest {
     public void testAc_issue_getAllForProduct() {
         System.out.println("* MetadataRDFConverterTest: ac_issue_getAllForProduct");
         String sProductUriEmpty = "";
+        Date dtmFromDate = new Date();
         //APIResponseData expResult = null;
-        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUriEmpty);
+        APIResponseData resultNull = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUriEmpty, dtmFromDate);
         //assertEquals(expResult, resultNull);
         assertNotNull(resultNull);
         assertNotNull(resultNull.oData);
         assertEquals(resultNull.oData.size(), 0);
         
         String sProductUri = "http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1";
-        APIResponseData result = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUri);
+        APIResponseData result = MetadataRDFConverter.ac_issue_getAllForProduct(sProductUri, dtmFromDate);
         assertNotNull(result);
         assertNotNull(result.oData);
         assertEquals(result.oData.size() > 0, true);

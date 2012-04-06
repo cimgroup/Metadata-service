@@ -789,6 +789,7 @@ public class MetadataXMLReader {
                     System.out.println("API Call type: issue.getAllForProduct");
                     
                     String sProductID = "";
+                    Date dtmFromDate = new Date();
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -800,10 +801,12 @@ public class MetadataXMLReader {
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
                             if (sParamName.equals(MetadataConstants.c_XMLV_productID))
                                 sProductID = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_fromDate))
+                                dtmFromDate = MetadataGlobal.GetDateTime(GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value));
                         }
                     }
                     
-                    MetadataModel.ac_issue_getAllForProduct(sEventId, sProductID);
+                    MetadataModel.ac_issue_getAllForProduct(sEventId, sProductID, dtmFromDate);
                 }
                 
                 ///////////////////////////////// issue_getAllForMethod /////////////////////////////////
@@ -1217,6 +1220,52 @@ public class MetadataXMLReader {
                     }
                     
                     MetadataModel.ac_commit_getAllForProduct(sEventId, sProductID, dtmFromDate);
+                }
+                
+                ///////////////////////////////// mail_getAllForProduct /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_mail_getAllForProduct))
+                {
+                    System.out.println("API Call type: mail.getAllForProduct");
+                    
+                    Date dtmFromDate = new Date();
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_fromDate))
+                                dtmFromDate = MetadataGlobal.GetDateTime(GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value));
+                        }
+                    }
+                    
+                    MetadataModel.ac_mail_getAllForProduct(sEventId, dtmFromDate);
+                }
+                
+                ///////////////////////////////// forumPost_getAllForProduct /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_forumPost_getAllForProduct))
+                {
+                    System.out.println("API Call type: forumPost.getAllForProduct");
+                    
+                    Date dtmFromDate = new Date();
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_fromDate))
+                                dtmFromDate = MetadataGlobal.GetDateTime(GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value));
+                        }
+                    }
+                    
+                    MetadataModel.ac_forumPost_getAllForProduct(sEventId, dtmFromDate);
                 }
                 
                 ///////////////////////////////// file_getAll /////////////////////////////////

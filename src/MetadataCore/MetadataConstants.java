@@ -207,7 +207,7 @@ public class MetadataConstants {
     public static String c_XMLE_lastname = "lastname";
     public static String c_XMLE_username = "username";
     public static String c_XMLE_id = "id";
-    
+       
     public static String c_XMLE_result = "result";
     public static String c_XMLE_post = "post";
     public static String c_XMLE_wikiPage = "wikiPage";
@@ -248,6 +248,10 @@ public class MetadataConstants {
     public static String c_XMLE_body = "body";
     public static String c_XMLE_author = "author";
     public static String c_XMLE_category = "category";
+    public static String c_XMLE_forumPostSubject = "forumPostSubject";
+    public static String c_XMLE_forumPostAuthor = "forumPostAuthor";
+    public static String c_XMLE_forumPostTime = "forumPostTime";
+    public static String c_XMLE_forumPostCategory = "forumPostCategory";
     
     public static String c_XMLE_commitFile = "commitFile";
     public static String c_XMLE_file = "file";
@@ -282,6 +286,10 @@ public class MetadataConstants {
     public static String c_XMLE_allPerson = "allPerson";
     public static String c_XMLE_isRemoved = "isRemoved";
     public static String c_XMLE_isntRemoved = "isntRemoved";
+    
+    public static String c_XMLE_emailSubject = "emailSubject";
+    public static String c_XMLE_emailFrom = "emailFrom";
+    public static String c_XMLE_emailDate = "emailDate";
     
     // </editor-fold>
     
@@ -350,6 +358,8 @@ public class MetadataConstants {
     public static String c_XMLAC_wiki_getRelatedToKeyword = "wiki.getRelatedToKeyword";
     public static String c_XMLAC_instance_getAllForConcept = "instance.getAllForConcept";
     public static String c_XMLAC_file_getAll = "file.getAll";
+    public static String c_XMLAC_mail_getAllForProduct = "mail.getAllForProduct";
+    public static String c_XMLAC_forumPost_getAllForProduct = "forumPost.getAllForProduct";
     
     // </editor-fold>
     
