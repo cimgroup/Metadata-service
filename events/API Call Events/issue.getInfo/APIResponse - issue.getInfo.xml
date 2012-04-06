@@ -85,12 +85,12 @@
 											<s3:issueDuplicateOfId></s3:issueDuplicateOfId>
 											<s3:issueMergedIntoId></s3:issueMergedIntoId>
 											<!-- date time in format yyyy-MM-dd HH:mm -->
-											<s3:issueDateOpened>2009-02-17 16:31</s3:issueDateOpened>
-											<s3:issueLastModified>2011-04-15 10:55:57</s3:issueLastModified>
+											<s3:issueDateOpened>Tue, 17 Feb 2009 16:31:00 +0100</s3:issueDateOpened>
+											<s3:issueLastModified>Fri, 15 Apr 2011 10:55:57 +0200</s3:issueLastModified>
 											<s3:issueMilestone>
 												<!-- id of milestone -->
 												<s3:milestoneId></s3:milestoneId>
-												<s3:milestoneTarget></s3:milestoneTarget>
+												<s3:milestoneTarget>Tue, 17 Feb 2009 16:31:00 +0100</s3:milestoneTarget>
 											</s3:issueMilestone>
 											<!-- issue comments -->
 											<s3:issueComment>
@@ -113,7 +113,7 @@
 													<s3:id>angel_blue_co2004@yahoo.com</s3:id>
 													<s3:email>angel_blue_co2004@yahoo.com</s3:email>
 												</s3:commentPerson>
-												<s3:commentDate>2009-03-04 18:11:19</s3:commentDate>
+												<s3:commentDate>Wed, 4 Mar 2009 18:11:19 +0100</s3:commentDate>
 											</s3:issueComment>
 											<!-- issue attachments -->
 											<s3:issueAttachment>
@@ -130,7 +130,7 @@
 											<s3:issueActivity>
 												<s3:activityId></s3:activityId>
 												<s3:activityWho>angel_blue_co2004@yahoo.com</s3:activityWho>
-												<s3:activityWhen>2009-03-04 18:11:19</s3:activityWhen>
+												<s3:activityWhen>Wed, 4 Mar 2009 18:11:19 +0100</s3:activityWhen>
 												<s3:activityWRA>
 													<s3:activityWhat>Priority</s3:activityWhat>
 													<s3:activityRemoved>medium</s3:activityRemoved>
@@ -150,7 +150,7 @@
 											<s3:issueActivity>
 												<s3:activityId></s3:activityId>
 												<s3:activityWho>ervin@kde.org</s3:activityWho>
-												<s3:activityWhen>2011-04-15 10:55:57</s3:activityWhen>
+												<s3:activityWhen>Fri, 15 Apr 2011 10:55:57 +0200</s3:activityWhen>
 												<s3:activityWRA>
 													<s3:activityWhat>AssignedTo</s3:activityWhat>
 													<s3:activityRemoved>ervin@kde.org</s3:activityRemoved>

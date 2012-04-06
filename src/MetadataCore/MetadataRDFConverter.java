@@ -7,6 +7,7 @@ package MetadataCore;
 import MetadataCore.MetadataGlobal.AnnotationData;
 import MetadataCore.MetadataGlobal.OntoProperty;
 import MetadataObjects.*;
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.ontology.AnnotationProperty;
 import com.hp.hpl.jena.ontology.DatatypeProperty;
@@ -89,7 +90,7 @@ public class MetadataRDFConverter {
                 {
                     DatatypeProperty dtpBugOpend = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened);
                     resBug.removeAll(dtpBugOpend);
-                    resBug.addProperty(dtpBugOpend, oIssue.m_dtmDateOpened.toString());
+                    resBug.addProperty(dtpBugOpend, MetadataGlobal.FormatDateForSaving(oIssue.m_dtmDateOpened), XSDDatatype.XSDdateTime);
                 }
 
                 //Description
@@ -113,7 +114,7 @@ public class MetadataRDFConverter {
                 {
                     DatatypeProperty dtpBugLastModified = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified);
                     resBug.removeAll(dtpBugLastModified);
-                    resBug.addProperty(dtpBugLastModified, oIssue.m_dtmLastModified.toString());
+                    resBug.addProperty(dtpBugLastModified, MetadataGlobal.FormatDateForSaving(oIssue.m_dtmLastModified), XSDDatatype.XSDdateTime);
                 }
 
                 //Number
@@ -485,7 +486,7 @@ public class MetadataRDFConverter {
                     {
                         DatatypeProperty dtpMilestone= oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Target);
                         resMilestone.removeAll(dtpMilestone);
-                        resMilestone.addProperty(dtpMilestone, oIssue.m_oHasMilestone.m_dtmTarget.toString());
+                        resMilestone.addProperty(dtpMilestone, MetadataGlobal.FormatDateForSaving(oIssue.m_oHasMilestone.m_dtmTarget), XSDDatatype.XSDdateTime);
                     }
                     resBug.removeAll(opHasMilestone);
                     resBug.addProperty(opHasMilestone, resMilestone.asResource());
@@ -514,7 +515,7 @@ public class MetadataRDFConverter {
                             {
                                 DatatypeProperty dtpCommentDate= oModel.getDatatypeProperty( MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date);
                                 resComment.removeAll(dtpCommentDate);
-                                resComment.addProperty(dtpCommentDate, oIssue.m_oHasComment[i].m_dtmDate.toString());
+                                resComment.addProperty(dtpCommentDate, MetadataGlobal.FormatDateForSaving(oIssue.m_oHasComment[i].m_dtmDate), XSDDatatype.XSDdateTime);
                             }
 
                             if (!oIssue.m_oHasComment[i].m_sText.isEmpty())
@@ -626,7 +627,7 @@ public class MetadataRDFConverter {
                             {
                                 DatatypeProperty dtpActivityPerformed = oModel.getDatatypeProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed);
                                 resActivity.removeAll(dtpActivityPerformed);
-                                resActivity.addProperty(dtpActivityPerformed, oIssue.m_oHasActivity[i].m_dtmWhen.toString());
+                                resActivity.addProperty(dtpActivityPerformed, MetadataGlobal.FormatDateForSaving(oIssue.m_oHasActivity[i].m_dtmWhen), XSDDatatype.XSDdateTime);
                             }
 
                             if (oIssue.m_oHasActivity[i].m_oHasInvolvedPerson != null && oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID != null && !oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID.isEmpty())
@@ -755,7 +756,7 @@ public class MetadataRDFConverter {
             {
                 DatatypeProperty dtpCommitDate = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate);
                 resCommit.removeAll(dtpCommitDate);
-                resCommit.addProperty(dtpCommitDate, oCommit.m_dtmCommitDate.toString());
+                resCommit.addProperty(dtpCommitDate, MetadataGlobal.FormatDateForSaving(oCommit.m_dtmCommitDate), XSDDatatype.XSDdateTime);
             }
             
             //commitMessageLog
@@ -1002,7 +1003,7 @@ public class MetadataRDFConverter {
             if (oMail.m_dtmHasCreationDate != null)
             {
                 DatatypeProperty dtpHasCreationDate = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_HasCreationDate);
-                resMail.addProperty(dtpHasCreationDate, oMail.m_dtmHasCreationDate.toString());
+                resMail.addProperty(dtpHasCreationDate, MetadataGlobal.FormatDateForSaving(oMail.m_dtmHasCreationDate), XSDDatatype.XSDdateTime);
             }
             
             //subject
@@ -1426,7 +1427,7 @@ public class MetadataRDFConverter {
             {
                 DatatypeProperty dtpTime = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_PostTime);
                 resPost.removeAll(dtpTime);
-                resPost.addProperty(dtpTime, oForumPost.m_dtmTime.toString());
+                resPost.addProperty(dtpTime, MetadataGlobal.FormatDateForSaving(oForumPost.m_dtmTime), XSDDatatype.XSDdateTime);
             }
             
             //Subject
@@ -1750,10 +1751,10 @@ public class MetadataRDFConverter {
                         if (oAttribute.m_sName.equals(MetadataConstants.c_XMLE_recency))
                         {
                             oAttribute.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Activity_Availability, oAttribute.m_sID);
-                            ObjectProperty opEffectiveness = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
-                            Resource resEffectiveness = omModel.getResource(oAttribute.m_sObjectURI);
+                            ObjectProperty opRecency = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasAttribute);
+                            Resource resRecency = omModel.getResource(oAttribute.m_sObjectURI);
                             oAttribute.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_recency + MetadataConstants.c_XMLE_Uri;
-                            resCompetence.addProperty(opEffectiveness, resEffectiveness.asResource());
+                            resCompetence.addProperty(opRecency, resRecency.asResource());
                             if (oAttribute.m_oHasMetric != null && oAttribute.m_oHasMetric.length > 0)
                             {
                                 for (Metric oMetric: oAttribute.m_oHasMetric)
@@ -1771,9 +1772,9 @@ public class MetadataRDFConverter {
                                         resMetric.addProperty(dtpName, "timeSinceSCMaction");
                                         DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
                                         resMetric.removeAll(dtpValue);
-                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.FormatDateForSaving(MetadataGlobal.GetDateTime(oMetric.m_sMetricValue)), XSDDatatype.XSDdateTime);
                                         
-                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                        resRecency.addProperty(opMetric, resMetric.asResource());
                                     }
                                     //    timeSinceITSaction
                                     if (oMetric.m_sMetricName.equals("timeSinceITSaction") && !oMetric.m_sMetricValue.isEmpty())
@@ -1788,9 +1789,9 @@ public class MetadataRDFConverter {
                                         resMetric.addProperty(dtpName, "timeSinceITSaction");
                                         DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
                                         resMetric.removeAll(dtpValue);
-                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.FormatDateForSaving(MetadataGlobal.GetDateTime(oMetric.m_sMetricValue)), XSDDatatype.XSDdateTime);
                                         
-                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                        resRecency.addProperty(opMetric, resMetric.asResource());
                                     }
                                     //    timeSinceMLaction
                                     if (oMetric.m_sMetricName.equals("timeSinceMLaction") && !oMetric.m_sMetricValue.isEmpty())
@@ -1805,9 +1806,9 @@ public class MetadataRDFConverter {
                                         resMetric.addProperty(dtpName, "timeSinceMLaction");
                                         DatatypeProperty dtpValue = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Time);
                                         resMetric.removeAll(dtpValue);
-                                        resMetric.addProperty(dtpValue, MetadataGlobal.GetDateTime(oMetric.m_sMetricValue).toString());
+                                        resMetric.addProperty(dtpValue, MetadataGlobal.FormatDateForSaving(MetadataGlobal.GetDateTime(oMetric.m_sMetricValue)), XSDDatatype.XSDdateTime);
                                         
-                                        resEffectiveness.addProperty(opMetric, resMetric.asResource());
+                                        resRecency.addProperty(opMetric, resMetric.asResource());
                                     }
                                 }
                             }
@@ -2115,7 +2116,7 @@ public class MetadataRDFConverter {
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDateOpened;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description))
                 {
@@ -2130,7 +2131,7 @@ public class MetadataRDFConverter {
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified))
                 {
                     oIssueData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueLastModified;
-                    oIssueData.sData = sStatement.getObject().toString();
+                    oIssueData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Number))
                 {
@@ -2300,7 +2301,7 @@ public class MetadataRDFConverter {
                     {
                         QuerySolution qsIssue = rsProduct.nextSolution();
 
-                        oMilestoneTarget.sData = qsIssue.get("?milestoneTarget").toString();
+                        oMilestoneTarget.sData = MetadataGlobal.FormatDateFromSavingToPublish(qsIssue.get("?milestoneTarget").toString());
                         oIssueData.oData.add(oMilestoneTarget);
                     }
                 }
@@ -2851,15 +2852,15 @@ public class MetadataRDFConverter {
                         }
                         if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Contribution))
                         {
-                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_contribution + "/";
                         }
                         if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Effectiveness))
                         {
-                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_effectiveness + "/";
                         }
                         if (oClass.hasURI(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Activity_Availability))
                         {
-                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fluency + "/";
+                            oAttribute.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_recency + "/";
                             bIsLevel = false;
                         }
                         
@@ -2896,7 +2897,7 @@ public class MetadataRDFConverter {
                                     QuerySolution qsMetric = rsMetric.nextSolution();
                                     MetadataGlobal.APIResponseData oMetric = new MetadataGlobal.APIResponseData();
                                     oMetric.sReturnConfig = "s3:" + qsMetric.get("?metricName").toString();
-                                    oMetric.sData = qsMetric.get("?time").toString();
+                                    oMetric.sData = MetadataGlobal.FormatDateFromSavingToPublish(qsMetric.get("?time").toString());
                                     
                                     oAttribute.oData.add(oMetric);
                                 }
@@ -3167,7 +3168,7 @@ public class MetadataRDFConverter {
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
                     + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessageLog ."
                     + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate ."
-                    + " FILTER ( ?commitDate > \"" + dtmFromDate.toString() + "\"^^xsd:date )}";
+                    + " FILTER ( ?commitDate > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )}";
 
             ResultSet rsCommit = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -3187,7 +3188,7 @@ public class MetadataRDFConverter {
                 
                 oCommitUri.sData = qsCommit.get("?commitUri").toString();
                 oCommitMessageLog.sData = qsCommit.get("?commitMessageLog").toString();
-                oCommitDate.sData = qsCommit.get("?commitDate").toString();
+                oCommitDate.sData = MetadataGlobal.FormatDateFromSavingToPublish(qsCommit.get("?commitDate").toString());
                 
                 oCommit.oData.add(oCommitUri);
                 oCommit.oData.add(oCommitMessageLog);
@@ -4155,7 +4156,7 @@ public class MetadataRDFConverter {
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Date))
                 {
                     oCommentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentDate;
-                    oCommentData.sData = sStatement.getObject().toString();
+                    oCommentData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
                 }
                 
                 if (oCommentData.sReturnConfig != null)
@@ -4273,7 +4274,7 @@ public class MetadataRDFConverter {
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed))
                 {
                     oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhen;
-                    oAttachmentData.sData = sStatement.getObject().toString();
+                    oAttachmentData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_What))
                 {

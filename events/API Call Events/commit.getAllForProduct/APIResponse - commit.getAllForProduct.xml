@@ -30,12 +30,12 @@
                                         <s3:commit>
                                             <s3:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit1</s3:commitUri>
                                             <s3:commitMessageLog>comment of commit</s3:commitMessageLog>
-                                            <s3:commitDate>Mon Jan 16 16:31:00 CET 2012</s3:commitDate>
+                                            <s3:commitDate>Mon, 16 Jan 2012 16:31:00 +0100</s3:commitDate>
                                         </s3:commit>
                                         <s3:commit>
                                             <s3:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit2</s3:commitUri>
-                                            <s3:commitMessageLog>comment of commit</s3:commitMessageLog>
-                                            <s3:commitDate>Mon Jan 16 16:31:00 CET 2012</s3:commitDate>
+                                            <s3:commitMessageLog>comment of commit 2</s3:commitMessageLog>
+                                            <s3:commitDate>Mon, 16 Jan 2012 16:33:00 +0100</s3:commitDate>
                                         </s3:commit>
                                     </s3:responseData>
                                 </ns1:apiResponse>

@@ -41,6 +41,7 @@ public class MetadataGlobal {
     public static DateFormat m_dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static DateFormat m_dfFormatSS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static DateFormat m_dfFormatTZ = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+    public static DateFormat m_dfFormatSave = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     // </editor-fold>
     
@@ -385,6 +386,51 @@ public class MetadataGlobal {
             }
         }
         return oDate;
+    }
+    
+    /**
+     * @summary get string from date for saving
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param dtmDateTime - date
+     * @return date in string format for saving
+     */
+    public static String FormatDateForSaving(Date dtmDate)
+    {
+        String sDateTime;
+        try
+        {
+            sDateTime = MetadataGlobal.m_dfFormatSave.format(dtmDate);
+            sDateTime = sDateTime.substring(0, sDateTime.length() - 2).concat(":").concat(sDateTime.substring(sDateTime.length() - 2));
+        }
+        catch (Exception e)
+        {
+            sDateTime = "";
+        }
+        return sDateTime;
+    }
+    
+    /**
+     * @summary get string from date for saving
+     * @startRealisation  Sasa Stojanovic 06.04.2012.
+     * @finalModification Sasa Stojanovic 06.04.2012.
+     * @param sInputDate - date in string format for saving
+     * @return date in string format for publish
+     */
+    public static String FormatDateFromSavingToPublish(String sDateTime)
+    {
+        try
+        {
+            sDateTime = sDateTime.substring(0, sDateTime.indexOf("^^"));
+            sDateTime = sDateTime.substring(0, sDateTime.length() - 3).concat(sDateTime.substring(sDateTime.length() - 2));
+            Date dtmDate = m_dfFormatSave.parse(sDateTime);
+            sDateTime = m_dfFormatTZ.format(dtmDate);
+        }
+        catch (Exception e)
+        {
+            sDateTime = "";
+        }
+        return sDateTime;
     }
     
     /**
