@@ -4,6 +4,7 @@
  */
 package MetadataCore;
 
+import com.hp.hpl.jena.ontology.OntModel;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,8 @@ public class MetadataConstants {
     public static String sLocationSaveAlert = "D:\\Alert onlogija\\alert.owl";
     public static String sLocationLoadAlert = "file:D:/Alert onlogija/alert.owl";
     public static String sActiveMQAddress = "tcp://www.cimcollege.rs:61616";
-    public static String sLogFileLocation = "";
+    public static String sBackupFilesLocation = "";
+    public static String sLogFilesLocation = "";
        
     public static String c_http = "http://";
     
@@ -257,6 +259,7 @@ public class MetadataConstants {
     public static String c_XMLE_file = "file";
     public static String c_XMLE_fileAction = "fileAction";
     public static String c_XMLE_fileBranch = "fileBranch";
+    public static String c_XMLE_fileName = "fileName";
     public static String c_XMLE_fileModules = "fileModules";
     public static String c_XMLE_module = "module";
     public static String c_XMLE_moduleName = "moduleName";
@@ -400,6 +403,7 @@ public class MetadataConstants {
     public static String c_OWLClass_Method = "Method";
     public static String c_OWLClass_Annotation = "Annotation";
     public static String c_OWLClass_AnnotationConcept = "AnnotationConcept";
+    public static String c_OWLClass_Repository = "Repository";
     
     public static String c_OWLClass_File = "File";
     public static String c_OWLClass_Module = "Module";
@@ -611,6 +615,11 @@ public class MetadataConstants {
     public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
     public static String c_NS_w3_flow = "http://www.w3.org/2005/01/wf/flow#";
     public static String c_NS_icep = "http://icep.fzi.de/icepEvents#";
+    
+    public static OntModel omModel = null;
+    public static Integer iBackupEventNumber = 0;
+    public static Integer iBackupEventNumberLimit = 300;
+    public static boolean bSilentMode = false;
 
     // </editor-fold>
     

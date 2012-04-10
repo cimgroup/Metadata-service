@@ -128,31 +128,17 @@
 										<s:activityId>4125</s:activityId>
 										<s:activityWho>angel_blue_co2004@yahoo.com</s:activityWho>
 										<s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
-										<s:activityWRA>
-											<s:activityWhat>Priority</s:activityWhat>
-											<s:activityRemoved>3</s:activityRemoved>
-											<s:activityAdded>4</s:activityAdded>
-										</s:activityWRA>
-										<s:activityWRA>
-											<s:activityWhat>CC</s:activityWhat>
-											<s:activityRemoved>lcanas@libresoft.es</s:activityRemoved>
-											<s:activityAdded></s:activityAdded>
-										</s:activityWRA>
-										<s:activityWRA>
-											<s:activityWhat>Severity</s:activityWhat>
-											<s:activityRemoved>normal</s:activityRemoved>
-											<s:activityAdded>blocker</s:activityAdded>
-										</s:activityWRA>
+                                                                                <s:activityWhat>Priority</s:activityWhat>
+                                                                                <s:activityRemoved>3</s:activityRemoved>
+                                                                                <s:activityAdded>4</s:activityAdded>
 									</s:issueActivity>
 									<s:issueActivity>
 										<s:activityId>3631</s:activityId>
 										<s:activityWho>ervin@kde.org</s:activityWho>
 										<s:activityWhen>2011-04-15 10:55:57</s:activityWhen>
-										<s:activityWRA>
-											<s:activityWhat>AssignedTo</s:activityWhat>
-											<s:activityRemoved>ervin@kde.org</s:activityRemoved>
-											<s:activityAdded>afiestas@kde.org</s:activityAdded>
-										</s:activityWRA>
+                                                                                <s:activityWhat>AssignedTo</s:activityWhat>
+                                                                                <s:activityRemoved>ervin@kde.org</s:activityRemoved>
+                                                                                <s:activityAdded>afiestas@kde.org</s:activityAdded>
 									</s:issueActivity>
 									<!-- issue issue tracker -->
 									<s:issueTracker>

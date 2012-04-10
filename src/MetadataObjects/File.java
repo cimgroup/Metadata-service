@@ -22,6 +22,7 @@ public class File extends MetadataObject {
     public FileOperationEvent m_oHasAction;
     public String m_sBranch;
     public Module[] m_oHasModule;
+    public String m_sName;
 
      // </editor-fold>
     

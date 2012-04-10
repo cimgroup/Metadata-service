@@ -57,7 +57,7 @@ public class MetadataRDFConverter {
     {
         try 
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //chech if issue with given id alredy exists
             boolean bNew = MetadataGlobal.IsItNew(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, oIssue.m_sID);
@@ -684,7 +684,7 @@ public class MetadataRDFConverter {
                 resEvent.addProperty(opIsRelatedToBug, resBug.asResource());
 
                 //save data
-                MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+                //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
             }
         }
         catch (Exception ex)
@@ -705,15 +705,16 @@ public class MetadataRDFConverter {
     {
         try {
             
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             oCommit.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit, oCommit.m_sID);
             Resource resCommit = oModel.getResource(oCommit.m_sObjectURI);
             oCommit.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
             
             //commitRepository
-            if (oCommit.m_oIsCommitOfRepository != null && !oCommit.m_oIsCommitOfRepository.m_sObjectURI.isEmpty())
+            if (oCommit.m_oIsCommitOfRepository != null && !oCommit.m_oIsCommitOfRepository.m_sID.isEmpty())
             {
+                oCommit.m_oIsCommitOfRepository.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Repository, oCommit.m_oIsCommitOfRepository.m_sID);
                 ObjectProperty opIsCommitOfRepository = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_IsCommitOfRepository);
                 Resource resIsCommitOfRepository = oModel.getResource(oCommit.m_oIsCommitOfRepository.m_sObjectURI);
                 resCommit.removeAll(opIsCommitOfRepository);
@@ -833,6 +834,15 @@ public class MetadataRDFConverter {
                             resFile.addProperty(dtpOnBranch, oCommit.m_oHasFile[i].m_sBranch);
                         }
                         
+                        //name
+                        if (!oCommit.m_oHasFile[i].m_sName.isEmpty())
+                        {
+                            DatatypeProperty dtpName = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                            resFile.removeAll(dtpName);
+                            resFile.addProperty(dtpName, oCommit.m_oHasFile[i].m_sName);
+                        }
+                        
+                        //module
                         if (oCommit.m_oHasFile[i].m_oHasModule != null)
                         {
                             ObjectProperty opHasModule = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules);
@@ -956,7 +966,7 @@ public class MetadataRDFConverter {
             resEvent.addProperty(opIsRelatedToBug, resCommit.asResource());
             
             //save data
-            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception ex)
         {
@@ -976,7 +986,7 @@ public class MetadataRDFConverter {
     {
         try {
             
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             oMail.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_sID);
             Resource resMail = oModel.getResource(oMail.m_sObjectURI);
@@ -1066,7 +1076,7 @@ public class MetadataRDFConverter {
             resEvent.addProperty(opIsRelatedToBug, resMail.asResource());
             
             //save data
-            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception ex)
         {
@@ -1085,7 +1095,7 @@ public class MetadataRDFConverter {
     {
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
             
             OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
             
@@ -1099,7 +1109,7 @@ public class MetadataRDFConverter {
             DatatypeProperty dtpGender = omModel.getDatatypeProperty(MetadataConstants.c_NS_foaf + "gender");
             inPerson.addProperty(dtpGender, oPerson.m_sGender);
             
-            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {
@@ -1183,7 +1193,7 @@ public class MetadataRDFConverter {
     {
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
             
             Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
             if (resObject != null && oAnnotation.oAnnotated != null)
@@ -1312,7 +1322,7 @@ public class MetadataRDFConverter {
                 }
             }
             
-            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {
@@ -1408,7 +1418,7 @@ public class MetadataRDFConverter {
     {
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
             
             oForumPost.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post, oForumPost.m_sID);
             Resource resPost = omModel.getResource(oForumPost.m_sObjectURI);
@@ -1499,7 +1509,7 @@ public class MetadataRDFConverter {
             ObjectProperty opIsRelatedToBug = omModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToPost);
             resEvent.addProperty(opIsRelatedToBug, resPost.asResource());
             
-            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {
@@ -1518,7 +1528,7 @@ public class MetadataRDFConverter {
     {
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
             
             oCompetence.m_sObjectURI = MetadataGlobal.GetObjectURI(omModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Competence, oCompetence.m_sID);
             Resource resCompetence = omModel.getResource(oCompetence.m_sObjectURI);
@@ -1817,7 +1827,7 @@ public class MetadataRDFConverter {
                 }
             }
 
-            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {
@@ -1837,7 +1847,7 @@ public class MetadataRDFConverter {
     {
         try 
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             for (int i = 0; i < oIdentities.length; i++)
             {
@@ -1924,7 +1934,7 @@ public class MetadataRDFConverter {
 
             
             //save data
-            MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
             
         }
         catch (Exception ex)
@@ -1948,7 +1958,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                         
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
@@ -2011,7 +2021,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                         
             String sQuery = "SELECT ?issueUri WHERE {";
             for (int i = 0; i < sMethodUri.size(); i++)
@@ -2053,7 +2063,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resIssue = oModel.getOntResource(sIssueUri);
             StmtIterator siProperties = resIssue.listProperties();
             
@@ -2099,7 +2109,7 @@ public class MetadataRDFConverter {
         
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             String sIssueUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug, sIssueID);
             
@@ -2473,7 +2483,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resBug = oModel.getOntResource(sIssueUri);
             StmtIterator siProperties = resBug.listProperties();
             while (siProperties.hasNext())
@@ -2520,7 +2530,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
                     
             String sQuery = "SELECT ?issueUri ?issueUrl ?issueId ?issueDescription WHERE "
@@ -2579,7 +2589,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             String sStateOpenUri = MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Open;
             
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
@@ -2640,7 +2650,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resPerson = oModel.getOntResource(sPersonUri);
             StmtIterator siProperties = resPerson.listProperties();
             String sFirstName = "";
@@ -2704,7 +2714,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                         
             String sQuery = "SELECT ?personUri ?personFirstName ?personLastName WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . "
                     + "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . "
@@ -2754,7 +2764,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             if (!sFirstName.isEmpty() || !sLastName.isEmpty() || !sEmail.isEmpty())
             {
@@ -2805,7 +2815,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
                         
             String sQuery = "SELECT ?competencyUri WHERE "
                     + "{?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasCompetences + ">  ?competencyUri ."
@@ -2974,7 +2984,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                      
             String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
                     + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
@@ -3023,7 +3033,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                         
             String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
                     + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
@@ -3123,7 +3133,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if keyword exists in comment annotation or in commit message
             String sQuery = "SELECT ?commitUri WHERE {"
@@ -3167,7 +3177,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
                         
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
@@ -3225,7 +3235,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
 
             String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                     + "SELECT ?emailUri ?emailSubject ?emailFrom ?emailDate WHERE "
@@ -3285,7 +3295,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
 
             String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                     + "SELECT ?forumPostUri ?forumPostSubject ?forumPostAuthor ?forumPostTime ?forumPostCategory WHERE "
@@ -3350,7 +3360,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if files exist in ontology
             String sQuery = "SELECT ?fileUri WHERE "
@@ -3542,7 +3552,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if keyword exists in subject/body annotation or in mail subject
             String sQuery = "SELECT ?emailUri WHERE {"
@@ -3588,7 +3598,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if keyword exists in title/body annotation or in mail subject
             String sQuery = "SELECT ?postUri WHERE {"
@@ -3634,7 +3644,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if keyword exists in title/body annotation or in mail subject
             String sQuery = "SELECT ?wikiPageUri WHERE {"
@@ -3727,7 +3737,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if issue has same description/subject annotation as commit commit annotation
             String sQuery = "SELECT ?commitUri WHERE {"
@@ -3772,7 +3782,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if issue has same description/subject annotation as email body/subject annotation
             String sQuery = "SELECT ?emailUri WHERE {"
@@ -3817,7 +3827,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if issue has same description/subject annotation as post body/title annotation
             String sQuery = "SELECT ?postUri WHERE {"
@@ -3862,7 +3872,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             
             //if issue has same description/subject annotation as wiki page body/title annotation
             String sQuery = "SELECT ?wikiPageUri WHERE {"
@@ -3907,7 +3917,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
                         
             for (int i = 0; i < sConceptUri.size(); i++)
             {
@@ -4084,7 +4094,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntClass ocMember = oModel.getOntClass(sOntClass);
             
             ExtendedIterator iIterator = ocMember.listInstances();
@@ -4122,7 +4132,7 @@ public class MetadataRDFConverter {
             oProjeprty.sName = "";
             oProjeprty.sValue = sMemberURL;
             
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel omModel = MetadataConstants.omModel;
 
             Individual inMember = omModel.getIndividual(sMemberURL);
             StmtIterator iIterator = inMember.listProperties();
@@ -4180,7 +4190,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oPerson = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resPerson = oModel.getOntResource(sPersonUri);
             StmtIterator siProperties = resPerson.listProperties();
             String sFirstName = "";
@@ -4251,7 +4261,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oComment = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resComment = oModel.getOntResource(sCommentUri);
             StmtIterator siProperties = resComment.listProperties();
             
@@ -4316,7 +4326,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oAttachment = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resAttachment = oModel.getOntResource(sAttachmentUri);
             StmtIterator siProperties = resAttachment.listProperties();
             
@@ -4376,7 +4386,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oActivity = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resActivity = oModel.getOntResource(sActivityUri);
             StmtIterator siProperties = resActivity.listProperties();
             
@@ -4385,58 +4395,50 @@ public class MetadataRDFConverter {
             oActivityUri.sData = sActivityUri;
             oActivity.oData.add(oActivityUri);
             
-            MetadataGlobal.APIResponseData oActivityWRA = new MetadataGlobal.APIResponseData();
-            oActivityWRA.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWRA + "/";
+            //MetadataGlobal.APIResponseData oActivityWRA = new MetadataGlobal.APIResponseData();
+            //oActivityWRA.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWRA + "/";
             
             while (siProperties.hasNext())
             {
                 Statement sStatement = siProperties.next();
                 String sProperty = sStatement.getPredicate().getURI();
                 
-                MetadataGlobal.APIResponseData oAttachmentData = new MetadataGlobal.APIResponseData();
+                MetadataGlobal.APIResponseData oActivityData = new MetadataGlobal.APIResponseData();
                 
                 if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
                 {
-                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id;
-                    oAttachmentData.sData = sStatement.getObject().toString();
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id;
+                    oActivityData.sData = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasInvolvedPerson))
                 {
-                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWho;
-                    oAttachmentData.sData = sStatement.getObject().toString();
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWho;
+                    oActivityData.sData = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Performed))
                 {
-                    oAttachmentData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhen;
-                    oAttachmentData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhen;
+                    oActivityData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_What))
                 {
-                    MetadataGlobal.APIResponseData oWhat = new MetadataGlobal.APIResponseData();
-                    oWhat.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhat;
-                    oWhat.sData = sStatement.getObject().toString();
-                    oActivityWRA.oData.add(oWhat);
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityWhat;
+                    oActivityData.sData = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Removed))
                 {
-                    MetadataGlobal.APIResponseData oRemoved = new MetadataGlobal.APIResponseData();
-                    oRemoved.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityRemoved;
-                    oRemoved.sData = sStatement.getObject().toString();
-                    oActivityWRA.oData.add(oRemoved);
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityRemoved;
+                    oActivityData.sData = sStatement.getObject().toString();
                 }
                 if (sProperty.equals(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Added))
                 {
-                    MetadataGlobal.APIResponseData oAdded = new MetadataGlobal.APIResponseData();
-                    oAdded.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityAdded;
-                    oAdded.sData = sStatement.getObject().toString();
-                    oActivityWRA.oData.add(oAdded);
+                    oActivityData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_activityAdded;
+                    oActivityData.sData = sStatement.getObject().toString();
                 }
                 
-                if (oAttachmentData.sReturnConfig != null)
-                    oActivity.oData.add(oAttachmentData);
+                if (oActivityData.sReturnConfig != null)
+                    oActivity.oData.add(oActivityData);
             }
-            
-            oActivity.oData.add(oActivityWRA);
         }
         catch (Exception e)
         {
@@ -4456,7 +4458,7 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
-            OntModel oModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
+            OntModel oModel = MetadataConstants.omModel;
             OntResource resData = oModel.getOntResource(sUri);
             StmtIterator siProperties = resData.listProperties();
             

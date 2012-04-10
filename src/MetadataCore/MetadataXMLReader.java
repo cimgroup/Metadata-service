@@ -69,21 +69,25 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueNew))   //if event type is new issue event
             {
                 System.out.println("Event type: New issue event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssue(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueUpdate))   //if event type is update issue event
             {
                 System.out.println("Event type: Update issue event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssue(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_CommitNew))
             {
                 System.out.println("Event type: New commit event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewCommit(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_MLSensor_MailNew))
             {
                 System.out.println("Event type: New mail event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewMail(dDoc);
             }
 //            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
@@ -107,61 +111,73 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated)) //if event type is new issue annotation
             {
                 System.out.println("Event type: New issue annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewIssueAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated)) //if event type is new comment annotation
             {
                 System.out.println("Event type: Update issue annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewCommentAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
                 System.out.println("Event type: New commit annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewCommitAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated)) //if event type is new forum post annotation
             {
                 System.out.println("Event type: New forum post annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewForumPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated)) //if event type is new wiki post annotation
             {
                 System.out.println("Event type: New wiki post annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 //NewWikiPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated)) //if event type is new mail annotation
             {
                 System.out.println("Event type: New mail annotation event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewMailAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew)) //if event type is new forum post
             {
                 System.out.println("Event type: New forum post event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewForumPostData(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew))   //if event type is new competence event
             {
                 System.out.println("Event type: New competency event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateCompetence(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyUpdate))   //if event type is update competence event
             {
                 System.out.println("Event type: Update competency event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateCompetence(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityNew))   //if event type is new identity event
             {
                 System.out.println("Event type: New identity event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 NewIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityUpdate))   //if event type is update identity event
             {
                 System.out.println("Event type: Update identity event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 UpdateIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityRemove))   //if event type is remove identity event
             {
                 System.out.println("Event type: Remove identity event");
+                MetadataGlobal.BackupProcedure(dDoc);
                 RemoveIdentity(dDoc);
             }
         }
@@ -448,30 +464,19 @@ public class MetadataXMLReader {
                 }
 
                 NodeList nlActivity = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_issueActivity);
-                NodeList nlActivityWRA = eIssue.getElementsByTagName("s:" + MetadataConstants.c_XMLE_activityWRA);
-                if (nlActivityWRA != null && nlActivityWRA.getLength() > 0)
+                oIssue.m_oHasActivity = new Activity[nlActivity.getLength()];
+                for (int i = 0; i < nlActivity.getLength(); i++)
                 {
-                    oIssue.m_oHasActivity = new Activity[nlActivityWRA.getLength()];
-                    int iNum = 0;
-                    for (int i = 0; i < nlActivity.getLength(); i++)
-                    {
-                        Element eActivity = (Element)nlActivity.item(i);
-                        nlActivityWRA = eActivity.getElementsByTagName("s:" + MetadataConstants.c_XMLE_activityWRA);
-                        for (int j = 0; j < nlActivityWRA.getLength(); j++)
-                        {
-                            Element eActivityWRA = (Element)nlActivityWRA.item(j);
-                            oIssue.m_oHasActivity[iNum] = new Activity();
-                            oIssue.m_oHasActivity[iNum].m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id);
-                            oIssue.m_oHasActivity[iNum].m_oHasInvolvedPerson = new foaf_Person();
-                            oIssue.m_oHasActivity[iNum].m_oHasInvolvedPerson.m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWho);
-                            oIssue.m_oHasActivity[iNum].m_dtmWhen = MetadataGlobal.GetDateTime(GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhen));
-                            oIssue.m_oHasActivity[iNum].m_sWhat = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityWhat);
-                            oIssue.m_oHasActivity[iNum].m_sRemoved = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityRemoved);
-                            oIssue.m_oHasActivity[iNum].m_sAdded = GetValue(eActivityWRA, "s:" + MetadataConstants.c_XMLE_activityAdded);
-                            //oIssue.m_oHasActivity[i].m_oIsActivityOf = oIssue;
-                            iNum++;
-                        }
-                    }
+                    Element eActivity = (Element)nlActivity.item(i);
+                    oIssue.m_oHasActivity[i] = new Activity();
+                    oIssue.m_oHasActivity[i].m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activity + MetadataConstants.c_XMLE_Id);
+                    oIssue.m_oHasActivity[i].m_oHasInvolvedPerson = new foaf_Person();
+                    oIssue.m_oHasActivity[i].m_oHasInvolvedPerson.m_sID = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWho);
+                    oIssue.m_oHasActivity[i].m_dtmWhen = MetadataGlobal.GetDateTime(GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhen));
+                    oIssue.m_oHasActivity[i].m_sWhat = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityWhat);
+                    oIssue.m_oHasActivity[i].m_sRemoved = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityRemoved);
+                    oIssue.m_oHasActivity[i].m_sAdded = GetValue(eActivity, "s:" + MetadataConstants.c_XMLE_activityAdded);
+                    //oIssue.m_oHasActivity[i].m_oIsActivityOf = oIssue;
                 }
 
                 //IssueTracker
@@ -523,7 +528,7 @@ public class MetadataXMLReader {
                 eOriginalData = eCommit;
 
                 oCommit.m_oIsCommitOfRepository = new Repository();
-                oCommit.m_oIsCommitOfRepository.m_sObjectURI = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
+                oCommit.m_oIsCommitOfRepository.m_sID = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri);
                 
                 oCommit.m_sRevisionTag = GetValue(eCommit, "s:" + MetadataConstants.c_XMLE_commitRevisionTag);
                 
@@ -570,6 +575,7 @@ public class MetadataXMLReader {
                         if (sFileAction.equalsIgnoreCase("Replace"))
                             oCommit.m_oHasFile[i].m_oHasAction = new ReplaceFile();
                         
+                        oCommit.m_oHasFile[i].m_sName = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileName);
                         oCommit.m_oHasFile[i].m_sBranch = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileBranch);
                         
                         NodeList nlModule = eFile.getElementsByTagName("s:" + MetadataConstants.c_XMLE_fileModules);

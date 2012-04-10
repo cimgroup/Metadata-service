@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,8 +26,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.*;
+
 
 /**
  *
@@ -60,6 +67,161 @@ public class MetadataGlobal {
     {
         super();
     }
+    
+    /**
+     * @summary Load ontology file
+     * @startRealisation Sasa Stojanovic 10.04.2012.
+     * @finalModification Sasa Stojanovic 10.04.2012.
+     */
+    public static void LoadOntology() throws FileNotFoundException, IOException
+    {
+        try
+        {
+            MetadataConstants.omModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM ); //OWL_MEM_RULE_INF
+            MetadataConstants.omModel.read(MetadataConstants.sLocationLoadAlert, "RDF/XML" );
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Save data to owl file
+     * @startRealisation Sasa Stojanovic 10.04.2012.
+     * @finalModification Sasa Stojanovic 10.04.2012.
+     */
+    public static void SaveOntology()
+    {
+        try
+        {
+            File destinationFile = new File(MetadataConstants.sLocationSaveAlert);
+            FileOutputStream fosRemove;
+
+            fosRemove = new FileOutputStream(destinationFile, false);
+
+            MetadataConstants.omModel.write(fosRemove, null);
+
+            fosRemove.flush();
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Backup procedure
+     * @startRealisation Sasa Stojanovic 10.04.2012.
+     * @finalModification Sasa Stojanovic 10.04.2012.
+     */
+    public static void BackupProcedure(Document dDoc)
+    {
+        try
+        {
+            if (!MetadataConstants.bSilentMode)
+            {
+                if (MetadataConstants.iBackupEventNumber > MetadataConstants.iBackupEventNumberLimit)
+                {
+                    StartSaveProcedure();
+                }
+                else
+                {
+                    MetadataConstants.iBackupEventNumber++;
+                    SaveBackupFile(dDoc);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    public static void SaveBackupFile(Document dDoc)
+    {
+        try
+        {
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            tFactory.setAttribute("indent-number", 2);
+            Transformer tTransformer = tFactory.newTransformer();
+            tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
+            tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            Source srcDocument = new DOMSource(dDoc);
+            java.util.Date dtmNow = new java.util.Date();
+            String sFileName = MetadataConstants.sBackupFilesLocation + "E" + MetadataConstants.iBackupEventNumber.toString() + "_" + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Request.xml";
+            Result rsLocation = new StreamResult(new File(sFileName));
+            tTransformer.transform(srcDocument, rsLocation);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Backup procedure
+     * @startRealisation Sasa Stojanovic 10.04.2012.
+     * @finalModification Sasa Stojanovic 10.04.2012.
+     */
+    public static void StartSaveProcedure()
+    {
+        try
+        {
+            SaveOntology();
+            
+            File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
+            File[] fBackupFiles = fBackupFolder.listFiles();
+            for (int i = 0; i < fBackupFiles.length; i++)
+            {
+                if (fBackupFiles[i].isFile())
+                {
+                    fBackupFiles[i].delete();
+                }
+            }            
+            MetadataConstants.iBackupEventNumber = 0;
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
+    /**
+     * @summary Backup procedure
+     * @startRealisation Sasa Stojanovic 10.04.2012.
+     * @finalModification Sasa Stojanovic 10.04.2012.
+     */
+    public static void StartBackupProcedure()
+    {
+        MetadataConstants.bSilentMode = true;
+        try
+        {
+            File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
+            File[] fBackupFiles = fBackupFolder.listFiles();
+
+            for (int i = 0; i < fBackupFiles.length; i++)
+            {
+                if (fBackupFiles[i].isFile())
+                {
+                    Document dDoc;
+                    DocumentBuilderFactory dbfFactory = DocumentBuilderFactory.newInstance();
+                    dbfFactory.setNamespaceAware(true);
+                    DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
+                    dDoc = dbBuilder.parse(fBackupFiles[i]);
+                    dDoc.getDocumentElement().normalize();
+                    MetadataXMLReader.ReadXML(dDoc);
+                    fBackupFiles[i].delete();
+                }
+            }
+            
+            SaveOntology();
+            MetadataConstants.iBackupEventNumber = 0;
+        }
+        catch (Exception e)
+        {
+        }
+        MetadataConstants.bSilentMode = false;
+    }
+    
     
     /**
      * @summary Load ontology file
@@ -461,8 +623,8 @@ public class MetadataGlobal {
                 MetadataConstants.sLocationLoadAlert = "file:" + sOntologyLocation;
                 MetadataConstants.sLocationSaveAlert = sOntologyLocation;
             }
-            
-            MetadataConstants.sLogFileLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFileLocation");
+            MetadataConstants.sBackupFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "BackupFilesLocation");
+            MetadataConstants.sLogFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFilesLocation");
             System.out.println("########################## METADATA SERVICE ##########################");
             System.out.println("Config file loaded from location: " + sLocation);
             System.out.println("######################################################################");
@@ -474,12 +636,18 @@ public class MetadataGlobal {
             else
                 System.out.println(". WARNING: Ontology file was not found!");
             
-            if (MetadataConstants.sLogFileLocation.isEmpty())
+            System.out.print("Backup files location: " + MetadataConstants.sBackupFilesLocation);
+                if (new File(MetadataConstants.sBackupFilesLocation).exists())
+                    System.out.println(". Directory was found");
+                else
+                    System.out.println(". WARNING: Directory was not found!");
+            
+            if (MetadataConstants.sLogFilesLocation.isEmpty())
                 System.out.println("Log files won't be created");
             else
             {
-                System.out.print("Log files location: " + MetadataConstants.sLogFileLocation);
-                if (new File(MetadataConstants.sLogFileLocation).exists())
+                System.out.print("Log files location: " + MetadataConstants.sLogFilesLocation);
+                if (new File(MetadataConstants.sLogFilesLocation).exists())
                     System.out.println(". Directory was found");
                 else
                     System.out.println(". WARNING: Directory was not found!");
@@ -517,152 +685,150 @@ public class MetadataGlobal {
             String sIsPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson;
             String sIsntPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson;
             String sUsername = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username;
-            
-            OntModel omModel = MetadataGlobal.LoadOWL(MetadataConstants.sLocationLoadAlert);
-            
+                       
             //Creating Annotation class if not exist
-            OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
+            OntClass ocAnnotation = MetadataConstants.omModel.getOntClass(sAnnotationClass);
             if (ocAnnotation == null)
             {
-                ocAnnotation = omModel.createClass(sAnnotationClass);
+                ocAnnotation = MetadataConstants.omModel.createClass(sAnnotationClass);
             }
             
             //Creating AnnotationConcept class if not exist
-            OntClass ocConcept = omModel.getOntClass(sConceptClass);
+            OntClass ocConcept = MetadataConstants.omModel.getOntClass(sConceptClass);
             if (ocConcept == null)
             {
-                ocConcept = omModel.createClass(sConceptClass);
+                ocConcept = MetadataConstants.omModel.createClass(sConceptClass);
             }
             
             //Creating uri DataProperty
-            DatatypeProperty dtpUri = omModel.getDatatypeProperty(sUriDataProperty);
+            DatatypeProperty dtpUri = MetadataConstants.omModel.getDatatypeProperty(sUriDataProperty);
             if (dtpUri == null)
             {
-                dtpUri = omModel.createDatatypeProperty(sUriDataProperty);
+                dtpUri = MetadataConstants.omModel.createDatatypeProperty(sUriDataProperty);
             }
             
             //Creating count DataProperty
-            DatatypeProperty dtpWeight = omModel.getDatatypeProperty(sWeightDataProperty);
+            DatatypeProperty dtpWeight = MetadataConstants.omModel.getDatatypeProperty(sWeightDataProperty);
             if (dtpWeight == null)
             {
-                dtpWeight = omModel.createDatatypeProperty(sWeightDataProperty);
+                dtpWeight = MetadataConstants.omModel.createDatatypeProperty(sWeightDataProperty);
             }
             
             //Creating text DataProperty
-            DatatypeProperty dtpText = omModel.getDatatypeProperty(sTextDataProperty);
+            DatatypeProperty dtpText = MetadataConstants.omModel.getDatatypeProperty(sTextDataProperty);
             if (dtpText == null)
             {
-                dtpText = omModel.createDatatypeProperty(sTextDataProperty);
+                dtpText = MetadataConstants.omModel.createDatatypeProperty(sTextDataProperty);
             }
 
             //Creating forumItemId DataProperty
-            DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(sForumItemIDDataProperty);
+            DatatypeProperty dtpForumItemID = MetadataConstants.omModel.getDatatypeProperty(sForumItemIDDataProperty);
             if (dtpForumItemID == null)
             {
-                dtpForumItemID = omModel.createDatatypeProperty(sForumItemIDDataProperty);
+                dtpForumItemID = MetadataConstants.omModel.createDatatypeProperty(sForumItemIDDataProperty);
             }
             
             //Creating postTime DataProperty
-            DatatypeProperty dtpPostTime = omModel.getDatatypeProperty(sPostTimeDataProperty);
+            DatatypeProperty dtpPostTime = MetadataConstants.omModel.getDatatypeProperty(sPostTimeDataProperty);
             if (dtpPostTime == null)
             {
-                dtpPostTime = omModel.createDatatypeProperty(sPostTimeDataProperty);
+                dtpPostTime = MetadataConstants.omModel.createDatatypeProperty(sPostTimeDataProperty);
             }
             
             //Creating body DataProperty
-            DatatypeProperty dtpBody = omModel.getDatatypeProperty(sBodyDataProperty);
+            DatatypeProperty dtpBody = MetadataConstants.omModel.getDatatypeProperty(sBodyDataProperty);
             if (dtpBody == null)
             {
-                dtpBody = omModel.createDatatypeProperty(sBodyDataProperty);
+                dtpBody = MetadataConstants.omModel.createDatatypeProperty(sBodyDataProperty);
             }
 
             //Creating category DataProperty
-            DatatypeProperty dtpCategory = omModel.getDatatypeProperty(sCategoryDataProperty);
+            DatatypeProperty dtpCategory = MetadataConstants.omModel.getDatatypeProperty(sCategoryDataProperty);
             if (dtpCategory == null)
             {
-                dtpCategory = omModel.createDatatypeProperty(sCategoryDataProperty);
+                dtpCategory = MetadataConstants.omModel.createDatatypeProperty(sCategoryDataProperty);
             }
 
             //Creating hasConcepts ObjectProperty
-            ObjectProperty opHasConcepts = omModel.getObjectProperty(sHasConceptObjectProperty);
+            ObjectProperty opHasConcepts = MetadataConstants.omModel.getObjectProperty(sHasConceptObjectProperty);
             if (opHasConcepts == null)
             {
-                opHasConcepts = omModel.createObjectProperty(sHasConceptObjectProperty);
+                opHasConcepts = MetadataConstants.omModel.createObjectProperty(sHasConceptObjectProperty);
             }
             
             //Creating hasObject ObjectProperty
-            ObjectProperty opHasObject = omModel.getObjectProperty(sHasObjectObjectProperty);
+            ObjectProperty opHasObject = MetadataConstants.omModel.getObjectProperty(sHasObjectObjectProperty);
             if (opHasObject == null)
             {
-                opHasObject = omModel.createObjectProperty(sHasObjectObjectProperty);
+                opHasObject = MetadataConstants.omModel.createObjectProperty(sHasObjectObjectProperty);
             }
             
             //Creating apKeyword AnnotationProperty
-            AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordAnnotationProperty);
+            AnnotationProperty apKeyword = MetadataConstants.omModel.getAnnotationProperty(sKeywordAnnotationProperty);
             if (apKeyword == null)
             {
-                apKeyword = omModel.createAnnotationProperty(sKeywordAnnotationProperty);
+                apKeyword = MetadataConstants.omModel.createAnnotationProperty(sKeywordAnnotationProperty);
             }
             
             //Creating attachment DataProperty
-            DatatypeProperty dtpAttachment = omModel.getDatatypeProperty(sAttachmentDataProperty);
+            DatatypeProperty dtpAttachment = MetadataConstants.omModel.getDatatypeProperty(sAttachmentDataProperty);
             if (dtpAttachment == null)
             {
-                dtpAttachment = omModel.createDatatypeProperty(sAttachmentDataProperty);
+                dtpAttachment = MetadataConstants.omModel.createDatatypeProperty(sAttachmentDataProperty);
             }
             
             //Creating isPerson ObjectProperty
-            ObjectProperty opIsPerson = omModel.getObjectProperty(sIsPerson);
+            ObjectProperty opIsPerson = MetadataConstants.omModel.getObjectProperty(sIsPerson);
             if (opIsPerson == null)
             {
-                opIsPerson = omModel.createObjectProperty(sIsPerson);
-                OntClass ocIdentity = omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
+                opIsPerson = MetadataConstants.omModel.createObjectProperty(sIsPerson);
+                OntClass ocIdentity = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
                 opIsPerson.addDomain(ocIdentity);
-                OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
+                OntClass ocPerson = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
                 opIsPerson.addRange(ocPerson);
             }
             
             //Creating username DataProperty
-            DatatypeProperty dtpUsername = omModel.getDatatypeProperty(sUsername);
+            DatatypeProperty dtpUsername = MetadataConstants.omModel.getDatatypeProperty(sUsername);
             if (dtpUsername == null)
             {
-                dtpUsername = omModel.createDatatypeProperty(sUsername);
+                dtpUsername = MetadataConstants.omModel.createDatatypeProperty(sUsername);
             }
             
             //Creating isntPerson ObjectProperty
-            ObjectProperty opIsntPerson = omModel.getObjectProperty(sIsntPerson);
+            ObjectProperty opIsntPerson = MetadataConstants.omModel.getObjectProperty(sIsntPerson);
             if (opIsntPerson == null)
             {
-                opIsntPerson = omModel.createObjectProperty(sIsntPerson);
-                OntClass ocIdentity = omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
+                opIsntPerson = MetadataConstants.omModel.createObjectProperty(sIsntPerson);
+                OntClass ocIdentity = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity);
                 opIsntPerson.addDomain(ocIdentity);
-                OntClass ocPerson = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
+                OntClass ocPerson = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person);
                 opIsntPerson.addRange(ocPerson);
             }
             
             //Creating isIssueOfTracker ObjectProperty
-            ObjectProperty opIsIssueOfTracker = omModel.getObjectProperty(sIsIssueOfTracker);
+            ObjectProperty opIsIssueOfTracker = MetadataConstants.omModel.getObjectProperty(sIsIssueOfTracker);
             if (opIsIssueOfTracker == null)
             {
-                opIsIssueOfTracker = omModel.createObjectProperty(sIsIssueOfTracker);
-                OntClass ocIssue = omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue);
+                opIsIssueOfTracker = MetadataConstants.omModel.createObjectProperty(sIsIssueOfTracker);
+                OntClass ocIssue = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue);
                 opIsIssueOfTracker.addDomain(ocIssue);
-                OntClass ocIssueTracker = omModel.getOntClass(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_IssueTracker);
+                OntClass ocIssueTracker = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_IssueTracker);
                 opIsIssueOfTracker.addRange(ocIssueTracker);
             }
             
             //Creating isCommitOf ObjectProperty
-            ObjectProperty opIsCommitOf = omModel.getObjectProperty(sIsCommitOf);
+            ObjectProperty opIsCommitOf = MetadataConstants.omModel.getObjectProperty(sIsCommitOf);
             if (opIsCommitOf == null)
             {
-                opIsCommitOf = omModel.createObjectProperty(sIsCommitOf);
-                OntClass ocCommit = omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit);
+                opIsCommitOf = MetadataConstants.omModel.createObjectProperty(sIsCommitOf);
+                OntClass ocCommit = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit);
                 opIsCommitOf.addDomain(ocCommit);
-                OntClass ocComponent = omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component);
+                OntClass ocComponent = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Component);
                 opIsCommitOf.addRange(ocComponent);
             }
             
-            MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
+            MetadataGlobal.SaveOWL(MetadataConstants.omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {
