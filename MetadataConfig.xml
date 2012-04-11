@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetadataConfig>
-	<ActiveMQAddress>tcp://laus.perimeter.fzi.de:61616</ActiveMQAddress>
+	<ActiveMQAddress>tcp://www.cimcollege.rs:61616</ActiveMQAddress>
 	<OntologyLocation>D:/MetadataGit/AlertOntology/alert.owl</OntologyLocation>
-    <LogFileLocation>D:/MetadataGit/MetadataLog/</LogFileLocation>
+        <BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
+	<LogFilesLocation>D:/MetadataGit/MetadataLog/</LogFilesLocation>
 </MetadataConfig>
