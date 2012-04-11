@@ -102,12 +102,14 @@ public class SimpleTopicSubscriber {
         
         try{
             topicConnection = topicConnectionFactory.createTopicConnection();
+            topicConnection.setClientID("MetadataService");
             topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             topicListener = new TextListener();
             
             for(int i=0; i<MetadataConstants.c_Topics.size(); i++)
             {
-                topicSubscribers[i] = topicSession.createSubscriber(topics[i]);
+                //topicSubscribers[i] = topicSession.createSubscriber(topics[i]);
+                topicSubscribers[i] = topicSession.createDurableSubscriber(topics[i], "Metadata." + topics[i].getTopicName());
                 topicSubscribers[i].setMessageListener(topicListener);
             }
             
