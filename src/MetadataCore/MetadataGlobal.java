@@ -871,11 +871,11 @@ public class MetadataGlobal {
      */
     public static class AnnotationData extends MetadataObject
     {
-        //m_sObjectURI - from MetadataObject (URI of object wich is being anotated)
+        //m_sObjectURI - from MetadataObject (Ne koristiti) Dejan Milosavljevic 17.04.2012.
         AnnotationProp[] oAnnotated;
-        ConceptProp[] oConcepts;
+        //ConceptProp[] oConcepts; //Dejan Milosavljevic 17.04.2012.
         String[] oKeywords;
-        String sHasObjectUri;
+        //String sHasObjectUri;  //Dejan Milosavljevic 17.04.2012.
         Integer iItemId;
         Integer iThreadId;
         
@@ -927,13 +927,16 @@ public class MetadataGlobal {
     /**
      * @summary Class for storing annotation properties.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 19.01.2012.
+     * @finalModification Dejan Milosavljevic 17.04.2012.
      */
     public static class AnnotationProp extends MetadataObject
     {
         String sName;
         //m_sObjectURI - from MetadataObject
         String sValue;
+        Integer iItemId; //Dejan Milosavljevic 17.04.2012.
+        String sHasObject; //(URI of object wich is being anotated) Dejan Milosavljevic 17.04.2012.
+        ConceptProp[] oConcepts; //Dejan Milosavljevic 17.04.2012.
         
         /**
          * @summary Method for extracting text from xml element.
