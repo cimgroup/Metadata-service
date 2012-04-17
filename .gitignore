@@ -1,3 +1,4 @@
 !/web/WEB-INF/
 /dist/
 /build/
+/nbproject/private/
