@@ -47,7 +47,7 @@ public class MetadataConstants {
     public static String c_ET_ALERT_KEUI_IssueUpdate_Annotated = "ALERT.KEUI.IssueUpdate.Annotated";
     public static String c_ET_ALERT_Metadata_IssueUpdate_Updated = "ALERT.Metadata.IssueUpdate.Updated";
     public static String c_ET_ALERT_KEUI_CommitNew_Annotated = "ALERT.KEUI.CommitNew.Annotated";
-    public static String c_ET_ALERT_Metadata_CommitNew_Updated = "ALERT.Metadata.CommitNew.Updatad";
+    public static String c_ET_ALERT_Metadata_CommitNew_Updated = "ALERT.Metadata.CommitNew.Updated";
     public static String c_ET_ALERT_KEUI_ForumPostNew_Annotated = "ALERT.KEUI.ForumPostNew.Annotated";
     public static String c_ET_ALERT_Metadata_ForumPostNew_Updated = "ALERT.Metadata.ForumPostNew.Updated";
     public static String c_ET_ALERT_KEUI_MailNew_Annotated = "ALERT.KEUI.MailNew.Annotated";
