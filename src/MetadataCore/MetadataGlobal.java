@@ -197,6 +197,12 @@ public class MetadataGlobal {
         {
             File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
             File[] fBackupFiles = fBackupFolder.listFiles();
+            
+            if (fBackupFiles.length > 0)
+            {
+                System.out.println("######################################################################");
+                System.out.println("Backup procedure started, loading events:");
+            }    
 
             for (int i = 0; i < fBackupFiles.length; i++)
             {
@@ -213,7 +219,13 @@ public class MetadataGlobal {
                 }
             }
             
-            SaveOntology();
+            if (fBackupFiles.length > 0)
+            {
+                SaveOntology();
+                System.out.println("Saving into ontology files...");
+                System.out.println("Backup procedure finished.");
+            }
+
             MetadataConstants.iBackupEventNumber = 0;
         }
         catch (Exception e)
