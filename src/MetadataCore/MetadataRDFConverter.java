@@ -2237,6 +2237,9 @@ public class MetadataRDFConverter {
         MetadataGlobal.APIResponseData oAnnotations = new MetadataGlobal.APIResponseData();
         oAnnotations.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_annotations + "/";
         
+        MetadataGlobal.APIResponseData oReferences = new MetadataGlobal.APIResponseData();
+        oReferences.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_references + "/";
+        
         try
         {
             OntModel oModel = MetadataConstants.omModel;
@@ -2635,9 +2638,14 @@ public class MetadataRDFConverter {
                 }
             }
             
+            //References
+            
+            
             //oIssueData.oData.add(oAnnotations);
             if (oAnnotations.sReturnConfig != null)
                 oData.oData.add(oAnnotations);
+            if (oReferences.sReturnConfig != null)
+                oData.oData.add(oReferences);
         }
         catch (Exception e)
         {
