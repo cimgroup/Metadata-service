@@ -209,22 +209,22 @@
                                             </s3:commentText>
                                         </s3:annotations>
                                         <s3:references>
-                                            <issue>
-                                                <issueUri></issueUri>
-                                                <issueDescription></issueDescription>
-                                            </issue>
-                                            <commit>
-                                                <commitUri></commitUri>
-                                                <commitMessageLog></commitMessageLog>
-                                            </commit>
-                                            <email>
-                                                <emailUri></emailUri>
-                                                <subject></subject>
-                                            </email>
-                                            <forumPost>
-                                                <postUri></postUri>
-                                                <subject></subject>
-                                            </forumPost>
+                                            <s3:issue>
+                                                <s3:issueUri></s3:issueUri>
+                                                <s3:issueDescription></s3:issueDescription>
+                                            </s3:issue>
+                                            <s3:commit>
+                                                <s3:commitUri></s3:commitUri>
+                                                <s3:commitMessageLog></s3:commitMessageLog>
+                                            </s3:commit>
+                                            <s3:email>
+                                                <s3:emailUri></s3:emailUri>
+                                                <s3:subject></s3:subject>
+                                            </s3:email>
+                                            <s3:forumPost>
+                                                <s3:postUri></s3:postUri>
+                                                <s3:subject></s3:subject>
+                                            </s3:forumPost>
                                         </s3:references>
                                     </s3:responseData>
                                 </ns1:apiResponse>
