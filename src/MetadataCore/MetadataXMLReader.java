@@ -1670,6 +1670,7 @@ public class MetadataXMLReader {
         }
         catch (Exception e)
         {
+            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Updated, dDoc, null);
             e.printStackTrace();
             return null;
         }
@@ -1804,7 +1805,7 @@ public class MetadataXMLReader {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
                 oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId));
-                oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                //oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
