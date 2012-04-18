@@ -547,6 +547,23 @@ public class MetadataGlobal {
                 oDate = null;
             }
         }
+        if (oDate == null)
+        {
+            try
+            {
+                int iIndex = sDateTime.lastIndexOf(":");
+                if (iIndex != -1)
+                {
+                    String sDateNew = String.format("%s%s", sDateTime.substring(0, iIndex),
+                                                    sDateTime.substring(iIndex + 1, sDateTime.length()));
+                    oDate = m_dfFormatSave.parse(sDateNew);
+                }
+            }
+            catch (Exception e)
+            {
+                oDate = null;
+            }
+        }
         return oDate;
     }
     
