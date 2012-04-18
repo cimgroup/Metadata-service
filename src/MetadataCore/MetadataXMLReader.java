@@ -112,13 +112,13 @@ public class MetadataXMLReader {
             {
                 System.out.println("Event type: New issue annotation event");
                 MetadataGlobal.BackupProcedure(dDoc);
-                NewIssueAnnotation(dDoc);
+                NewUpdateIssueAnnotation(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated)) //if event type is new comment annotation
             {
                 System.out.println("Event type: Update issue annotation event");
                 MetadataGlobal.BackupProcedure(dDoc);
-                NewCommentAnnotation(dDoc);
+                NewUpdateIssueAnnotation(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
@@ -1566,7 +1566,7 @@ public class MetadataXMLReader {
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
-    public static AnnotationData NewIssueAnnotation(Document dDoc)
+    public static AnnotationData NewUpdateIssueAnnotation(Document dDoc, boolean bNew)
     {
         try
         {
@@ -1617,7 +1617,7 @@ public class MetadataXMLReader {
                 
                 //Annotations
                 NodeList nlDescriptionAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_issueDescriptionAnnotated);
-                NodeList nlCommentText = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentText);
+                NodeList nlCommentText = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_issueComment);
                 //NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextAnnotated);
                 //if (nlDescriptionAnnotated != null && nlCommentAnnotated != null)
                 if (nlDescriptionAnnotated != null && nlCommentText != null)
@@ -1760,65 +1760,67 @@ public class MetadataXMLReader {
 //                }
             }
 
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Updated, dDoc, oAnnotation);
+            if (bNew)
+                MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Updated, dDoc, oAnnotation);
+            else
+                MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Updated, dDoc, oAnnotation);
             
             return oAnnotation;
         }
         catch (Exception e)
         {
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueNew_Updated, dDoc, null);
             e.printStackTrace();
             return null;
         }
     }
     
-    /**
-     * @summary Method for reading new comment annotation event from XML.
-     * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 18.04.2012.
-     * @param dDoc - input XML document to read
-     * @return - returns AnnotationData object
-     */
-    public static AnnotationData NewCommentAnnotation(Document dDoc)
-    {
-        try
-        {
-            //String sEventId = GetEventId(dDoc);
-
-            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
-            
-            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
-            if (nlMdservice != null && nlMdservice.getLength() > 0)
-            {
-                Element eMdservice = (Element) nlMdservice.item(0);
-                
-                NodeList nlIssueComment = eMdservice.getElementsByTagName("o:" + MetadataConstants.c_XMLE_issueComment);
-                if (nlIssueComment != null  && nlIssueComment.getLength() > 0)
-                {
-                    Element eIssueComment = (Element) nlIssueComment.item(0);
-                    
-                    String sTag = "o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
-                
-                    //URI
-                    oAnnotation.m_sObjectURI = GetValue(eIssueComment, sTag);
-                }
-            }
-            
-            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag keui
-
-            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
-            {
-                Element eAnnotation = (Element) nlAnnotation.item(0);
-                
-                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
-                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
-                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
-                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
-            
+//    /**
+//     * @summary Method for reading new comment annotation event from XML.
+//     * @startRealisation  Dejan Milosavljevic 17.01.2012.
+//     * @finalModification Dejan Milosavljevic 18.04.2012.
+//     * @param dDoc - input XML document to read
+//     * @return - returns AnnotationData object
+//     */
+//    public static AnnotationData NewCommentAnnotation(Document dDoc)
+//    {
+//        try
+//        {
+//            //String sEventId = GetEventId(dDoc);
+//
+//            AnnotationData oAnnotation = MetadataObjectFactory.CreateNewAnnotation();
+//            
+//            NodeList nlMdservice = dDoc.getElementsByTagName("o:" + MetadataConstants.c_XMLE_mdservice);
+//            if (nlMdservice != null && nlMdservice.getLength() > 0)
+//            {
+//                Element eMdservice = (Element) nlMdservice.item(0);
+//                
+//                NodeList nlIssueComment = eMdservice.getElementsByTagName("o:" + MetadataConstants.c_XMLE_issueComment);
+//                if (nlIssueComment != null  && nlIssueComment.getLength() > 0)
+//                {
+//                    Element eIssueComment = (Element) nlIssueComment.item(0);
+//                    
+//                    String sTag = "o:" + MetadataConstants.c_XMLE_comment + MetadataConstants.c_XMLE_Uri;
+//                
+//                    //URI
+//                    oAnnotation.m_sObjectURI = GetValue(eIssueComment, sTag);
+//                }
+//            }
+//            
+//            NodeList nlAnnotation = dDoc.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_keui);   //getting node for tag keui
+//
+//            if (nlAnnotation != null && nlAnnotation.getLength() > 0)
+//            {
+//                Element eAnnotation = (Element) nlAnnotation.item(0);
+//                
+//                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
+//                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
+//                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+//                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
+//            
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
-                
-                //Annotations
+//                
+//                //Annotations
 //                NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextAnnotated);
 //                if (nlCommentAnnotated != null)
 //                {
@@ -1837,8 +1839,8 @@ public class MetadataXMLReader {
 //                    }
 //                    oAnnotation.SetKeywords();
 //                }
-                
-                //Concepts
+//                
+//                //Concepts
 //                NodeList nlCConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
 //                if (nlCConcepts != null && nlCConcepts.getLength() > 0)
 //                {
@@ -1858,65 +1860,65 @@ public class MetadataXMLReader {
 //                        }
 //                    }
 //                }
-                
-                NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextAnnotated);
-                if (nlCommentAnnotated != null)
-                {
-                    int iCommentLength = nlCommentAnnotated.getLength();
-                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iCommentLength];
-                    if (iCommentLength == 1)
-                    {
-                        Element eCommentAnnotated = (Element)nlCommentAnnotated.item(0);
-                        oAnnotation.oAnnotated[0] = new MetadataGlobal.AnnotationProp();
-                        oAnnotation.oAnnotated[0].sName = MetadataConstants.c_XMLE_commentTextAnnotated;
-                        oAnnotation.oAnnotated[0].SetAnnotationText(eCommentAnnotated);
-                        
-                        NodeList nlCConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
-                        if (nlCConcepts != null && nlCConcepts.getLength() > 0)
-                        {
-                            Element eCommConcepts = (Element) nlCConcepts.item(0);
-                            NodeList nlCommConcepts = eCommConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
-                            if (nlCommConcepts != null)
-                            {
-                                int iCommentCLength = nlCommConcepts.getLength();
-                                oAnnotation.oAnnotated[0].oConcepts = new MetadataGlobal.ConceptProp[iCommentCLength];
-                                for (int i = 0; i < iCommentCLength; i++)
-                                {
-                                    Element eCConcept = (Element)nlCommConcepts.item(i);
-                                    oAnnotation.oAnnotated[0].oConcepts[i] = new MetadataGlobal.ConceptProp();
-                                    oAnnotation.oAnnotated[0].oConcepts[i].sName = MetadataConstants.c_XMLE_commentTextConcepts;
-                                    oAnnotation.oAnnotated[0].oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_uri);
-                                    oAnnotation.oAnnotated[0].oConcepts[i].sWeight = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_weight);
-                                }
-                            }
-                        }
-                    }
-                    oAnnotation.SetKeywords();
-                }
-                
-                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
-                if (nlReferences != null)
-                {
-                    int iLength = nlReferences.getLength();
-                    oAnnotation.oReferences = new String[iLength];
-                    for (int i = 0; i < iLength; i++)
-                    {
-                        Element eReferenceUri = (Element)nlReferences.item(i);
-                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
-                    }
-                }
-            }
-
-            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Updated, dDoc, oAnnotation);
-            
-            return oAnnotation;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//                
+//                NodeList nlCommentAnnotated = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextAnnotated);
+//                if (nlCommentAnnotated != null)
+//                {
+//                    int iCommentLength = nlCommentAnnotated.getLength();
+//                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iCommentLength];
+//                    if (iCommentLength == 1)
+//                    {
+//                        Element eCommentAnnotated = (Element)nlCommentAnnotated.item(0);
+//                        oAnnotation.oAnnotated[0] = new MetadataGlobal.AnnotationProp();
+//                        oAnnotation.oAnnotated[0].sName = MetadataConstants.c_XMLE_commentTextAnnotated;
+//                        oAnnotation.oAnnotated[0].SetAnnotationText(eCommentAnnotated);
+//                        
+//                        NodeList nlCConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
+//                        if (nlCConcepts != null && nlCConcepts.getLength() > 0)
+//                        {
+//                            Element eCommConcepts = (Element) nlCConcepts.item(0);
+//                            NodeList nlCommConcepts = eCommConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
+//                            if (nlCommConcepts != null)
+//                            {
+//                                int iCommentCLength = nlCommConcepts.getLength();
+//                                oAnnotation.oAnnotated[0].oConcepts = new MetadataGlobal.ConceptProp[iCommentCLength];
+//                                for (int i = 0; i < iCommentCLength; i++)
+//                                {
+//                                    Element eCConcept = (Element)nlCommConcepts.item(i);
+//                                    oAnnotation.oAnnotated[0].oConcepts[i] = new MetadataGlobal.ConceptProp();
+//                                    oAnnotation.oAnnotated[0].oConcepts[i].sName = MetadataConstants.c_XMLE_commentTextConcepts;
+//                                    oAnnotation.oAnnotated[0].oConcepts[i].sUri = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_uri);
+//                                    oAnnotation.oAnnotated[0].oConcepts[i].sWeight = GetValue(eCConcept, "s1:" + MetadataConstants.c_XMLE_weight);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    oAnnotation.SetKeywords();
+//                }
+//                
+//                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+//                if (nlReferences != null)
+//                {
+//                    int iLength = nlReferences.getLength();
+//                    oAnnotation.oReferences = new String[iLength];
+//                    for (int i = 0; i < iLength; i++)
+//                    {
+//                        Element eReferenceUri = (Element)nlReferences.item(i);
+//                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+//                    }
+//                }
+//            }
+//
+//            MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Updated, dDoc, oAnnotation);
+//            
+//            return oAnnotation;
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     
     /**
      * @summary Method for reading new commit annotation event from XML.

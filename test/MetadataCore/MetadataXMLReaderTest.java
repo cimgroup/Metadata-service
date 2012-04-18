@@ -1449,7 +1449,7 @@ public class MetadataXMLReaderTest {
     }
     
     /**
-     * Test of NewIssueAnnotation method, of class MetadataXMLReader.
+     * Test of NewUpdateIssueAnnotation method, of class MetadataXMLReader.
      */
     @Test
     public void testNewIssueAnnotation() {
@@ -1459,21 +1459,21 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                                       "KEUI", "Metadata.issue.requestAnnotation",
                                       "5748", "00000");
-        AnnotationData resultNull = MetadataXMLReader.NewIssueAnnotation(dDoc);
+        AnnotationData resultNull = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, true);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.issue.requestAnnotation",
                              "5748", "22222");
-        AnnotationData resultEmpty = MetadataXMLReader.NewIssueAnnotation(dDoc);
+        AnnotationData resultEmpty = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, true);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.issue.requestAnnotation",
                              "5748", "11111");
-        AnnotationData result = MetadataXMLReader.NewIssueAnnotation(dDoc);
+        AnnotationData result = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, true);
         assertNotNull(result);
         
         // TODO review the generated test code and remove the default call to fail.
@@ -1491,21 +1491,21 @@ public class MetadataXMLReaderTest {
         Document dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                                       "KEUI", "Metadata.comment.requestAnnotation",
                                       "5748", "00000");
-        AnnotationData resultNull = MetadataXMLReader.NewCommentAnnotation(dDoc);
+        AnnotationData resultNull = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, false);
         assertNotNull(resultNull);
         
         //empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.comment.requestAnnotation",
                              "5748", "22222");
-        AnnotationData resultEmpty = MetadataXMLReader.NewCommentAnnotation(dDoc);
+        AnnotationData resultEmpty = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, false);
         assertNotNull(resultEmpty);
             
         //not empty tags
         dDoc = CreateTestXML("http://www.alert-project.eu/keui",
                              "KEUI", "Metadata.comment.requestAnnotation",
                              "5748", "11111");
-        AnnotationData result = MetadataXMLReader.NewCommentAnnotation(dDoc);
+        AnnotationData result = MetadataXMLReader.NewUpdateIssueAnnotation(dDoc, false);
         assertNotNull(result);
         
         // TODO review the generated test code and remove the default call to fail.

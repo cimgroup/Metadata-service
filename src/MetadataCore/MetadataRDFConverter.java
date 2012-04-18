@@ -2587,7 +2587,7 @@ public class MetadataRDFConverter {
                         String sCConceptName = GetConceptName(sCAnnotationName);
 
                         MetadataGlobal.APIResponseData oCommentTextXml = new MetadataGlobal.APIResponseData();
-                        oCommentTextXml.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentText + "/";
+                        oCommentTextXml.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueComment + "/";
                         MetadataGlobal.APIResponseData oCommentTextAnnotatedXml = new MetadataGlobal.APIResponseData();
                         oCommentTextAnnotatedXml.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commentTextAnnotated;
                         oCommentTextAnnotatedXml.sData = String.format("<![CDATA[%s]]>", sCAnnotationText);

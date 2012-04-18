@@ -149,7 +149,7 @@
                                                     <s3:weight>1</s3:weight>
                                                 </s3:concept>
                                             </s3:issueDescriptionConcepts>
-                                            <s3:commentText>
+                                            <s3:issueComment>
                                                 <s3:commentTextAnnotated><![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r18520">Version</concept>: (using <concept id="KDE/KDE_4">KDE 4</concept>.<concept id="http://ailab.ijs.si/alert/resource/r17814">2</concept>.0) OS: <concept id="http://ailab.ijs.si/alert/resource/r14937">Linux</concept> <concept id="http://ailab.ijs.si/alert/resource/r18126">Installed</concept> from: <concept id="http://ailab.ijs.si/alert/resource/r18117">Ubuntu</concept> <concept id="http://ailab.ijs.si/alert/resource/r17650">Packages</concept> It would be awesome if <concept id="KDE/KDE">KDE</concept> notifies te <concept id="KDE/user">user</concept> of newly <concept id="http://ailab.ijs.si/alert/resource/r18126">installed</concept> <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>, missing <concept id="http://ailab.ijs.si/alert/resource/r17629">drivers</concept>, <concept id="KDE/programming">programs</concept> to use the connected <concept id="KDE/devices">device</concept>, etc.]]></s3:commentTextAnnotated>
                                                 <s3:commentTextConcepts>
                                                     <s3:concept>
@@ -206,7 +206,7 @@
                                                     </s3:concept>
                                                 </s3:commentTextConcepts>
                                                 <s3:itemId>7805</s3:itemId>
-                                            </s3:commentText>
+                                            </s3:issueComment>
                                         </s3:annotations>
                                         <s3:references>
                                             <s3:issue>
