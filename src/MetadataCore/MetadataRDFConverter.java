@@ -1273,6 +1273,22 @@ public class MetadataRDFConverter {
                     //oAnnotation.oAnnotated[i].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
                     oAnnotation.oAnnotated[i].m_sReturnConfig = "YN#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
                     
+                    //HasObject
+                    if (oAnnotation.m_sObjectURI != null) //Not for Issue
+                    {
+                        Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
+
+                        ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
+                        resAnnotation.addProperty(opHasObject, resObject.asResource());
+                    }
+                    else                                  //For Issue
+                    {
+                        Resource resObject = omModel.getResource(oAnnotation.oAnnotated[i].sHasObject);
+
+                        ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
+                        resAnnotation.addProperty(opHasObject, resObject.asResource());
+                    }
+                    
                     //Name
                     DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
                     resAnnotation.addProperty(dtpName, oAnnotation.oAnnotated[i].sName);
@@ -1306,7 +1322,7 @@ public class MetadataRDFConverter {
                             oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI = sConceptClass + MetadataGlobal.GetNextId(omModel, ocConcept);
 
                             Resource resConcept = omModel.createResource(oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI, ocConcept);
-                            oAnnotation.oAnnotated[i].oConcepts[j].m_sReturnConfig = "YN#s1:" + oAnnotation.oAnnotated[i].oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
+                            oAnnotation.oAnnotated[i].oConcepts[j].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
 
                             //Uri
                             DatatypeProperty dtpUri = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
@@ -2425,13 +2441,14 @@ public class MetadataRDFConverter {
                 }
                 
                 //KEUI id-s (it is in comments now)
-                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId))
-                {
-                    MetadataGlobal.APIResponseData oKeuiItemId = new MetadataGlobal.APIResponseData();
-                    oKeuiItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
-                    oKeuiItemId.sData = sStatement.getObject().toString();
-                    oAnnotations.oData.add(oKeuiItemId);
-                }
+//                if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId))
+//                {
+//                    MetadataGlobal.APIResponseData oKeuiItemId = new MetadataGlobal.APIResponseData();
+//                    oKeuiItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+//                    oKeuiItemId.sData = sStatement.getObject().toString();
+//                    oAnnotations.oData.add(oKeuiItemId);
+//                }
+                
                 //Thread id
                 if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiThreadId))
                 {
@@ -2518,10 +2535,11 @@ public class MetadataRDFConverter {
                 for (String sComment: sCommentUri)
                 {
                     //Find annotations for comment
-                    String sACQuery = "SELECT ?annotationUri ?annotationName ?annotationText WHERE "
+                    String sACQuery = "SELECT ?annotationUri ?annotationName ?annotationText ?itemID WHERE "
                         + "{?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject + "> <" + sComment + "> ."
                         + " ?annotationUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name + "> ?annotationName ."
-                        + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text + "> ?annotationText}";
+                        + " ?annotationUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text + "> ?annotationText ."
+                        + " <" + sComment + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId + "> ?itemID}";
                     ResultSet rsCAnnotations = QueryExecutionFactory.create(sACQuery, oModel).execSelect();
 
                     while (rsCAnnotations.hasNext())
@@ -2531,7 +2549,7 @@ public class MetadataRDFConverter {
                         String sCAnnotationUri = qsCAnnotation.get("?annotationUri").toString();
                         String sCAnnotationName = qsCAnnotation.get("?annotationName").toString();
                         String sCAnnotationText = qsCAnnotation.get("?annotationText").toString();
-
+                        String sCItemID = qsCAnnotation.get("?itemID").toString();
                         String sCConceptName = GetConceptName(sCAnnotationName);
 
                         MetadataGlobal.APIResponseData oCommentTextXml = new MetadataGlobal.APIResponseData();
@@ -2554,11 +2572,11 @@ public class MetadataRDFConverter {
                         
                         while (rsCConcepts.hasNext())
                         {
-                            QuerySolution qsConcept = rsCConcepts.nextSolution();
+                            QuerySolution qsCConcept = rsCConcepts.nextSolution();
 
-                            //String sConceptUri = qsConcept.get("?conceptUri").toString();
-                            String sConceptDataUri = qsConcept.get("?conceptDataUri").toString();
-                            String sConceptDataCount = qsConcept.get("?conceptDataCount").toString();
+                            //String sConceptUri = qsCConcept.get("?conceptUri").toString();
+                            String sConceptDataUri = qsCConcept.get("?conceptDataUri").toString();
+                            String sConceptDataCount = qsCConcept.get("?conceptDataCount").toString();
 
                             MetadataGlobal.APIResponseData oConceptXml = new MetadataGlobal.APIResponseData();
                             oConceptXml.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_concept + "/";
@@ -2575,6 +2593,12 @@ public class MetadataRDFConverter {
 
                             oCConcept.oData.add(oConceptXml);
                         }
+
+                        MetadataGlobal.APIResponseData oItemID = new MetadataGlobal.APIResponseData();
+                        oItemID.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                        oItemID.sData = sCItemID;
+                        oCommentTextXml.oData.add(oItemID);
+                    
                         oAnnotations.oData.add(oCommentTextXml);
                     }
                 }

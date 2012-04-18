@@ -1691,7 +1691,7 @@ public class MetadataXMLReader {
                             oAnnotation.oAnnotated[i + iDescriptionLength].iItemId = Integer.parseInt(GetValue(eCommentText, "s1:" + MetadataConstants.c_XMLE_itemId)); //Dejan Milosavljevic 17.04.2012.
                             
                              //Comment concepts
-                            NodeList nlCommentConcepts = eCommentText.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
+                            NodeList nlCommentConcepts = eCommentText.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
                             if (nlCommentConcepts != null && nlCommentConcepts.getLength() > 0)
                             {
                                 int iCommentCLength = nlCommentConcepts.getLength();
