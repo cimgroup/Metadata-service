@@ -1609,7 +1609,8 @@ public class MetadataXMLReader {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
                 //oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId)); //Dejan Milosavljevic 17.04.2012.
-                oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
                 
 //              //URI
 //              oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
@@ -1688,7 +1689,8 @@ public class MetadataXMLReader {
                             //oAnnotation.oAnnotated[i + iSubjectLength].sValue = eDescAnnotated.getTextContent();
                             oAnnotation.oAnnotated[i + iDescriptionLength].SetAnnotationText(eCommentAnnotated);
                             oAnnotation.oAnnotated[i + iDescriptionLength].sHasObject = sCommentUri[i]; //Dejan Milosavljevic 17.04.2012.
-                            oAnnotation.oAnnotated[i + iDescriptionLength].iItemId = Integer.parseInt(GetValue(eCommentText, "s1:" + MetadataConstants.c_XMLE_itemId)); //Dejan Milosavljevic 17.04.2012.
+                            String sItemId = GetValue(eCommentText, "s1:" + MetadataConstants.c_XMLE_itemId); //Dejan Milosavljevic 18.04.2012.
+                            if (!sItemId.isEmpty()) oAnnotation.oAnnotated[i + iDescriptionLength].iItemId = Integer.parseInt(sItemId); //Dejan Milosavljevic 18.04.2012.
                             
                              //Comment concepts
                             NodeList nlCommentConcepts = eCommentText.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
@@ -1808,8 +1810,10 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
                 
-                oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId));
-                oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
+                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
+                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
             
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
@@ -1945,8 +1949,11 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId));
-                //oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
+                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
+                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
+
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
@@ -2081,8 +2088,10 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId));
-                oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
+                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
+                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
                 
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
@@ -2273,8 +2282,11 @@ public class MetadataXMLReader {
             {
                 Element eAnnotation = (Element) nlAnnotation.item(0);
             
-                oAnnotation.iItemId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId));
-                oAnnotation.iThreadId = Integer.parseInt(GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId));
+                String sItemId = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemId);     //Dejan Milosavljevic 18.04.2012.
+                if (!sItemId.isEmpty()) oAnnotation.iItemId = Integer.parseInt(sItemId);             //Dejan Milosavljevic 18.04.2012.
+                String sTtreadID = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_threadId); //Dejan Milosavljevic 18.04.2012.
+                if (!sTtreadID.isEmpty()) oAnnotation.iThreadId = Integer.parseInt(sTtreadID);       //Dejan Milosavljevic 18.04.2012.
+
 //                //URI
 //                oAnnotation.m_sObjectURI = GetValue(eAnnotation, "s1:" + MetadataConstants.c_XMLE_itemUri);
                 
