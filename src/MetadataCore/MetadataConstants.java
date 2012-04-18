@@ -235,6 +235,7 @@ public class MetadataConstants {
     public static String c_XMLE_uri = "uri";
     public static String c_XMLE_itemId = "itemId";
     public static String c_XMLE_threadId = "threadId";
+    public static String c_XMLE_referenceUri = "referenceUri";
 
     public static String c_XMLE_forumSensor = "forumSensor";
     public static String c_XMLE_forum = "forum";
@@ -584,6 +585,8 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsRelatedToBug = "isRelatedToBug";
     public static String c_OWLObjectProperty_IsRelatedToMail = "isRelatedToMail";
     public static String c_OWLObjectProperty_IsRelatedToPost = "isRelatedToPost";
+    
+    public static String c_OWLObjectProperty_HasReferenceTo = "hasReferenceTo";
 
     // </editor-fold>
             

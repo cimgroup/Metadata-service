@@ -1185,7 +1185,7 @@ public class MetadataRDFConverter {
     /**
      * @summary Save annotation data.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param oAnnotation - AnnotationData object
      * @return - same AnnotationData object with filled m_sObjectURI
      */
@@ -1233,6 +1233,20 @@ public class MetadataRDFConverter {
                             resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
                         }
                     }
+                    
+                    //References
+                    if (oAnnotation.oReferences != null)
+                    {
+                        for (int i = 0; i < oAnnotation.oReferences.length; i++)
+                        {
+                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences[i]);
+                            if (resReferencedObject != null)
+                            {
+                                ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
+                                resObject.addProperty(opHasReferenceTo, resReferencedObject.asResource());
+                            }
+                        }
+                    }
                 }
                 else if (oAnnotation.oAnnotated.length > 0) //For Issue
                 {
@@ -1258,6 +1272,23 @@ public class MetadataRDFConverter {
                             //    apKeyword = omModel.createAnnotationProperty(sKeywordName);
                             //}
                             resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
+                        }
+                    }
+                    
+                    //References
+                    if (oAnnotation.oReferences != null)
+                    {
+                        for (int i = 0; i < oAnnotation.oReferences.length; i++)
+                        {
+                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences[i]);
+                            if (resReferencedObject != null)
+                            {
+                                ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
+                                resObject.addProperty(opHasReferenceTo, resReferencedObject.asResource());
+                                
+                                ObjectProperty opIsReferenced = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
+                                resReferencedObject.addProperty(opIsReferenced, resObject.asResource());
+                            }
                         }
                     }
                 }
