@@ -126,7 +126,7 @@
                                             <s1:weight>1</s1:weight>
                                         </s1:concept>
                                     </s1:issueDescriptionConcepts>
-                                    <s1:commentText>
+                                    <s1:issueComment>
                                         <s1:commentTextAnnotated><![CDATA[*** This bug has been marked as a duplicate of <reference bugUri="http://www.alert-project.eu/ontologies/alert_its.owl#Bug2">bug 174897</reference> *** <concept id="http://ailab.ijs.si/alert/resource/r18520">Version</concept>: (using <concept id="KDE/KDE_4">KDE 4</concept>.<concept id="http://ailab.ijs.si/alert/resource/r17814">2</concept>.0) OS: <concept id="http://ailab.ijs.si/alert/resource/r14937">Linux</concept> <concept id="http://ailab.ijs.si/alert/resource/r18126">Installed</concept> from: <concept id="http://ailab.ijs.si/alert/resource/r18117">Ubuntu</concept> <concept id="http://ailab.ijs.si/alert/resource/r17650">Packages</concept> It would be awesome if <concept id="KDE/KDE">KDE</concept> notifies te <concept id="KDE/user">user</concept> of newly <concept id="http://ailab.ijs.si/alert/resource/r18126">installed</concept> <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>, missing <concept id="http://ailab.ijs.si/alert/resource/r17629">drivers</concept>, <concept id="KDE/programming">programs</concept> to use the connected <concept id="KDE/devices">device</concept>, etc.]]></s1:commentTextAnnotated>
                                         <s1:commentTextConcepts>
                                             <s1:concept>
@@ -186,7 +186,7 @@
                                             <s1:referenceUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s1:referenceUri> 
                                         </s1:commentTextReferences>
                                         <s1:itemId>7805</s1:itemId>
-                                    </s1:commentText>
+                                    </s1:issueComment>
                                     <s1:threadId>12</s1:threadId>
                                 </s1:keui>
                             </ns1:eventData>
