@@ -2639,7 +2639,137 @@ public class MetadataRDFConverter {
             }
             
             //References
+            //  issue
+            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription WHERE "
+                    + "{?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+                    + " ?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> ."
+                    + " OPTIONAL {?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription}}";
+//            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription WHERE "
+//                    + "{?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+//                    + " ?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> ."
+//                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription}";
+            ResultSet rsRefIssue = QueryExecutionFactory.create(sRefIssueQuery, oModel).execSelect();
+                           
+            while (rsRefIssue.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefIssue = new MetadataGlobal.APIResponseData();
+                oRefIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+
+                QuerySolution qsRefIssue = rsRefIssue.nextSolution();
+
+                String sRefIssueUri = qsRefIssue.get("?issueUri").toString();
+                String sRefIssueDescription = "";
+                if (qsRefIssue.get("?issueDescription") != null)
+                    sRefIssueDescription = qsRefIssue.get("?issueDescription").toString();
+                
+                MetadataGlobal.APIResponseData oRefIssueUri = new MetadataGlobal.APIResponseData();
+                oRefIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oRefIssueUri.sData = sRefIssueUri;
+                oRefIssue.oData.add(oRefIssueUri);
+                
+                MetadataGlobal.APIResponseData oRefIssueDesc = new MetadataGlobal.APIResponseData();
+                oRefIssueDesc.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                oRefIssueDesc.sData = sRefIssueDescription;
+                oRefIssue.oData.add(oRefIssueDesc);
+                
+                oReferences.oData.add(oRefIssue);
+            }
+  
+            //  commit
+            String sRefCommitQuery = "SELECT ?commitUri ?commitMessageLog WHERE "
+                    + "{?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+                    + " ?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> ."
+                    + " OPTIONAL {?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessageLog}}";
+            ResultSet rsRefCommit = QueryExecutionFactory.create(sRefCommitQuery, oModel).execSelect();
+                           
+            while (rsRefCommit.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefCommit = new MetadataGlobal.APIResponseData();
+                oRefCommit.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + "/";
+
+                QuerySolution qsRefCommit = rsRefCommit.nextSolution();
+
+                String sRefCommitUri = qsRefCommit.get("?commitUri").toString();
+                String sRefCommitMessageLog = "";
+                if (qsRefCommit.get("?commitMessageLog") != null)
+                    sRefCommitMessageLog = qsRefCommit.get("?commitMessageLog").toString();
+                
+                MetadataGlobal.APIResponseData oRefCommitUri = new MetadataGlobal.APIResponseData();
+                oRefCommitUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
+                oRefCommitUri.sData = sRefCommitUri;
+                oRefCommit.oData.add(oRefCommitUri);
+                
+                MetadataGlobal.APIResponseData oRefCommitMLog = new MetadataGlobal.APIResponseData();
+                oRefCommitMLog.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitMessageLog;
+                oRefCommitMLog.sData = sRefCommitMessageLog;
+                oRefCommit.oData.add(oRefCommitMLog);
+                
+                oReferences.oData.add(oRefCommit);
+            }
             
+            //  email
+            String sRefEmailQuery = "SELECT ?emailUri ?emailSubject WHERE "
+                    + "{?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+                    + " ?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> ."
+                    + " OPTIONAL {?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?emailSubject}}";
+            ResultSet rsRefEmail = QueryExecutionFactory.create(sRefEmailQuery, oModel).execSelect();
+                           
+            while (rsRefEmail.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefEmail = new MetadataGlobal.APIResponseData();
+                oRefEmail.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + "/";
+
+                QuerySolution qsRefEmail = rsRefEmail.nextSolution();
+
+                String sRefEmailUri = qsRefEmail.get("?emailUri").toString();
+                String sRefEmailSubject = "";
+                if (qsRefEmail.get("?emailSubject") != null)
+                    sRefEmailSubject = qsRefEmail.get("?emailSubject").toString();
+                
+                MetadataGlobal.APIResponseData oRefEmailUri = new MetadataGlobal.APIResponseData();
+                oRefEmailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
+                oRefEmailUri.sData = sRefEmailUri;
+                oRefEmail.oData.add(oRefEmailUri);
+                
+                MetadataGlobal.APIResponseData oRefEmailSubject = new MetadataGlobal.APIResponseData();
+                oRefEmailSubject.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_subject;
+                oRefEmailSubject.sData = sRefEmailSubject;
+                oRefEmail.oData.add(oRefEmailSubject);
+                
+                oReferences.oData.add(oRefEmail);
+            }
+            
+            //  forimPost
+            String sRefPostQuery = "SELECT ?forumPostUri ?forumPostSubject WHERE "
+                    + "{?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+                    + " ?forumPostUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> ."
+                    + " OPTIONAL {?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?forumPostSubject}}";
+            ResultSet rsRefPost = QueryExecutionFactory.create(sRefPostQuery, oModel).execSelect();
+                           
+            while (rsRefPost.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefPost = new MetadataGlobal.APIResponseData();
+                oRefPost.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_forumPost + "/";
+
+                QuerySolution qsRefpost = rsRefPost.nextSolution();
+
+                String sRefPostUri = qsRefpost.get("?forumPostUri").toString();
+                String sRefPostSubject = "";
+                if (qsRefpost.get("?forumPostSubject") != null)
+                    sRefPostSubject = qsRefpost.get("?forumPostSubject").toString();
+                
+                MetadataGlobal.APIResponseData oRefPostUri = new MetadataGlobal.APIResponseData();
+                oRefPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
+                oRefPostUri.sData = sRefPostUri;
+                oRefPost.oData.add(oRefPostUri);
+                
+                MetadataGlobal.APIResponseData oRefPostSubject = new MetadataGlobal.APIResponseData();
+                oRefPostSubject.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_subject;
+                oRefPostSubject.sData = sRefPostSubject;
+                oRefPost.oData.add(oRefPostSubject);
+                
+                oReferences.oData.add(oRefPost);
+            }
             
             //oIssueData.oData.add(oAnnotations);
             if (oAnnotations.sReturnConfig != null)
