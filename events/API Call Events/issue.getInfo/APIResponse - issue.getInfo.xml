@@ -208,6 +208,24 @@
                                                 <s3:itemId>7805</s3:itemId>
                                             </s3:commentText>
                                         </s3:annotations>
+                                        <s3:references>
+                                            <issue>
+                                                <issueUri></issueUri>
+                                                <issueDescription></issueDescription>
+                                            </issue>
+                                            <commit>
+                                                <commitUri></commitUri>
+                                                <commitMessageLog></commitMessageLog>
+                                            </commit>
+                                            <email>
+                                                <emailUri></emailUri>
+                                                <subject></subject>
+                                            </email>
+                                            <forumPost>
+                                                <postUri></postUri>
+                                                <subject></subject>
+                                            </forumPost>
+                                        </s3:references>
                                     </s3:responseData>
                                 </ns1:apiResponse>
                             </ns1:eventData>
