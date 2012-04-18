@@ -73,9 +73,40 @@
                                     </o:issueActivity>
                                 </o:mdservice>
                                 <s1:keui>
-                                    <s1:commentTextAnnotated><![CDATA[If a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept> is missing, <concept id="http://ailab.ijs.si/alert/resource/r3772">clicking</concept> on the <concept id="http://ailab.ijs.si/alert/resource/r17717">notification</concept> should <concept id="http://ailab.ijs.si/alert/resource/r3964">open</concept> the <concept id="http://ailab.ijs.si/alert/resource/r16296">package manager</concept> (by default) so the <concept id="KDE/user">user</concept> can <concept id="KDE/find">find</concept> a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept>]]></s1:commentTextAnnotated>
-                                    <s1:commentTextConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r3772</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17717</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r3964</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16296</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>KDE/user</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>KDE/find</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commentTextConcepts>
-                                    <s1:itemId>7805</s1:itemId>
+                                    <s1:commentText>
+                                        <s1:commentTextAnnotated><![CDATA[If a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept> is missing, <concept id="http://ailab.ijs.si/alert/resource/r3772">clicking</concept> on the <concept id="http://ailab.ijs.si/alert/resource/r17717">notification</concept> should <concept id="http://ailab.ijs.si/alert/resource/r3964">open</concept> the <concept id="http://ailab.ijs.si/alert/resource/r16296">package manager</concept> (by default) so the <concept id="KDE/user">user</concept> can <concept id="KDE/find">find</concept> a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept>]]></s1:commentTextAnnotated>
+                                        <s1:commentTextConcepts>
+                                            <s1:concept>
+                                                <s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri>
+                                                <s1:weight>2</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>http://ailab.ijs.si/alert/resource/r3772</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>http://ailab.ijs.si/alert/resource/r17717</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>http://ailab.ijs.si/alert/resource/r3964</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>http://ailab.ijs.si/alert/resource/r16296</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>KDE/user</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                            <s1:concept>
+                                                <s1:uri>KDE/find</s1:uri>
+                                                <s1:weight>1</s1:weight>
+                                            </s1:concept>
+                                        </s1:commentTextConcepts>
+                                        <s1:itemId>7805</s1:itemId>
+                                    </s1:commentText>
                                     <s1:threadId>12</s1:threadId>
                                 </s1:keui>
                             </ns1:eventData>

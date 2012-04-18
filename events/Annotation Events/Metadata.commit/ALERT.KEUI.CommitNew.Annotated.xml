@@ -141,7 +141,16 @@
                                 </o:mdservice>
                                 <s1:keui>
                                     <s1:commitMessageLogAnnotated><![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r9475">comment</concept> of <concept id="http://ailab.ijs.si/alert/resource/r18367">commit</concept>]]></s1:commitMessageLogAnnotated>
-                                    <s1:commitMessageLogConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r9475</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18367</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commitMessageLogConcepts>
+                                    <s1:commitMessageLogConcepts>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r9475</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r18367</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                    </s1:commitMessageLogConcepts>
                                     <s1:itemId>7805</s1:itemId>
                                     <s1:threadId>123</s1:threadId>
                                 </s1:keui>

@@ -58,7 +58,16 @@
                                     <s1:bodyAnnotated><![CDATA[good. Now, where is a good place to start? Maybe to <concept id="http://ailab.ijs.si/alert/resource/r17957">load</concept> <concept id="http://ailab.ijs.si/alert/resource/r8553">up</concept> the amaroK <concept id="http://ailab.ijs.si/alert/resource/r18057">source code</concept> in kdevelop, and start experimenting by touching it here and there?]]></s1:bodyAnnotated>
                                     <s1:bodyConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17957</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r8553</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18057</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:bodyConcepts>
                                     <s1:subjectAnnotated><![CDATA[<concept id="KDE/development">Development</concept> :: Re:amaroK and <concept id="http://ailab.ijs.si/alert/resource/r17792">Qt4</concept>]]></s1:subjectAnnotated>
-                                    <s1:subjectConcepts><s1:concept><s1:uri>KDE/development</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17792</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:subjectConcepts>
+                                    <s1:subjectConcepts>
+                                        <s1:concept>
+                                            <s1:uri>KDE/development</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17792</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                    </s1:subjectConcepts>
                                     <s1:itemId>7805</s1:itemId>
                                     <s1:threadId>12</s1:threadId>
                                 </s1:keui>
