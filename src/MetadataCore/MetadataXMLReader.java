@@ -1562,7 +1562,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new issue annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
@@ -1691,7 +1691,7 @@ public class MetadataXMLReader {
                             oAnnotation.oAnnotated[i + iDescriptionLength].iItemId = Integer.parseInt(GetValue(eCommentText, "s1:" + MetadataConstants.c_XMLE_itemId)); //Dejan Milosavljevic 17.04.2012.
                             
                              //Comment concepts
-                            NodeList nlCommentConcepts = eCommentText.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
+                            NodeList nlCommentConcepts = eCommentText.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
                             if (nlCommentConcepts != null && nlCommentConcepts.getLength() > 0)
                             {
                                 int iCommentCLength = nlCommentConcepts.getLength();
@@ -1708,6 +1708,19 @@ public class MetadataXMLReader {
                         }
                     }
                     oAnnotation.SetKeywords();
+                }
+                
+                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+                if (nlReferences != null)
+                {
+                    int iLength = nlReferences.getLength();
+                    oAnnotation.oReferences = new String[iLength];
+                    for (int i = 0; i < iLength; i++)
+                    {
+                        Element eReferenceUri = (Element)nlReferences.item(i);
+                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                        //oAnnotation.oReferences[i] = GetValue(eReferenceUri, "s1:" + MetadataConstants.c_XMLE_referenceUri);
+                    }
                 }
                 
 //                //Concepts
@@ -1760,7 +1773,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new comment annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
@@ -1877,6 +1890,17 @@ public class MetadataXMLReader {
                     oAnnotation.SetKeywords();
                 }
                 
+                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+                if (nlReferences != null)
+                {
+                    int iLength = nlReferences.getLength();
+                    oAnnotation.oReferences = new String[iLength];
+                    for (int i = 0; i < iLength; i++)
+                    {
+                        Element eReferenceUri = (Element)nlReferences.item(i);
+                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                    }
+                }
             }
 
             MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_IssueUpdate_Updated, dDoc, oAnnotation);
@@ -1893,7 +1917,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new commit annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
@@ -2002,6 +2026,18 @@ public class MetadataXMLReader {
                     }
                     oAnnotation.SetKeywords();
                 }
+                
+                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+                if (nlReferences != null)
+                {
+                    int iLength = nlReferences.getLength();
+                    oAnnotation.oReferences = new String[iLength];
+                    for (int i = 0; i < iLength; i++)
+                    {
+                        Element eReferenceUri = (Element)nlReferences.item(i);
+                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                    }
+                }
             }
 
             MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_CommitNew_Updated, dDoc, oAnnotation);
@@ -2018,7 +2054,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new forum or wiki post annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
@@ -2181,6 +2217,18 @@ public class MetadataXMLReader {
                     }
                     oAnnotation.SetKeywords();
                 }
+                
+                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+                if (nlReferences != null)
+                {
+                    int iLength = nlReferences.getLength();
+                    oAnnotation.oReferences = new String[iLength];
+                    for (int i = 0; i < iLength; i++)
+                    {
+                        Element eReferenceUri = (Element)nlReferences.item(i);
+                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                    }
+                }
             }
 
             MetadataModel.SaveObjectNewAnnotationData(MetadataConstants.c_ET_ALERT_Metadata_ForumPostNew_Updated, dDoc, oAnnotation);
@@ -2197,7 +2245,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new mail annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 17.04.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param dDoc - input XML document to read
      * @return - returns AnnotationData object
      */
@@ -2359,6 +2407,18 @@ public class MetadataXMLReader {
                         }
                     }
                     oAnnotation.SetKeywords();
+                }
+                
+                NodeList nlReferences = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_referenceUri);
+                if (nlReferences != null)
+                {
+                    int iLength = nlReferences.getLength();
+                    oAnnotation.oReferences = new String[iLength];
+                    for (int i = 0; i < iLength; i++)
+                    {
+                        Element eReferenceUri = (Element)nlReferences.item(i);
+                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                    }
                 }
             }
 

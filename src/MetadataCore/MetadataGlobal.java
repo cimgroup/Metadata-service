@@ -547,6 +547,23 @@ public class MetadataGlobal {
                 oDate = null;
             }
         }
+        if (oDate == null)
+        {
+            try
+            {
+                int iIndex = sDateTime.lastIndexOf(":");
+                if (iIndex != -1)
+                {
+                    String sDateNew = String.format("%s%s", sDateTime.substring(0, iIndex),
+                                                    sDateTime.substring(iIndex + 1, sDateTime.length()));
+                    oDate = m_dfFormatSave.parse(sDateNew);
+                }
+            }
+            catch (Exception e)
+            {
+                oDate = null;
+            }
+        }
         return oDate;
     }
     
@@ -679,7 +696,8 @@ public class MetadataGlobal {
             String sHasObjectObjectProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject;
             String sIsCommitOf = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf;
             String sIsIssueOfTracker = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsIssueOfTracker;
-           
+            String sHasReferenceTo = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo;
+
             //Sasa Stojanovic
             String sAttachmentDataProperty = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Attachment;
             String sIsPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson;
@@ -828,6 +846,15 @@ public class MetadataGlobal {
                 opIsCommitOf.addRange(ocComponent);
             }
             
+            //Creating hasReferenceTo ObjectProperty
+            ObjectProperty opHasReferenceTo = MetadataConstants.omModel.getObjectProperty(sHasReferenceTo);
+            if (opHasReferenceTo == null)
+            {
+                opHasReferenceTo = MetadataConstants.omModel.createObjectProperty(sHasReferenceTo);
+                OntClass ocIssue = MetadataConstants.omModel.getOntClass(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Issue);
+                opHasReferenceTo.addRange(ocIssue);
+            }
+            
             MetadataGlobal.SaveOWL(MetadataConstants.omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
@@ -867,7 +894,7 @@ public class MetadataGlobal {
     /**
      * @summary Class for storing annotation data.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 19.01.2012.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      */
     public static class AnnotationData extends MetadataObject
     {
@@ -876,6 +903,7 @@ public class MetadataGlobal {
         //ConceptProp[] oConcepts; //Dejan Milosavljevic 17.04.2012.
         String[] oKeywords;
         //String sHasObjectUri;  //Dejan Milosavljevic 17.04.2012.
+        String[] oReferences;    //Dejan Milosavljevic 18.04.2012.
         Integer iItemId;
         Integer iThreadId;
         
