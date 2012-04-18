@@ -2225,7 +2225,7 @@ public class MetadataRDFConverter {
     /**
      * @summary issue_getInfo
      * @startRealisation Sasa Stojanovic 14.12.2011.
-     * @finalModification Sasa Stojanovic 14.12.2011.
+     * @finalModification Dejan Milosavljevic 18.04.2012.
      * @param sIssueID - issue ID
      * @return - APIResponseData object with results
      */
