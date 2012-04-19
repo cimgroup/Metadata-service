@@ -1185,7 +1185,7 @@ public class MetadataRDFConverter {
     /**
      * @summary Save annotation data.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 18.04.2012.
+     * @finalModification Dejan Milosavljevic 19.04.2012.
      * @param oAnnotation - AnnotationData object
      * @return - same AnnotationData object with filled m_sObjectURI
      */
@@ -1195,8 +1195,6 @@ public class MetadataRDFConverter {
         {
             OntModel omModel = MetadataConstants.omModel;
             
-//            Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
-//            if (resObject != null && oAnnotation.oAnnotated != null)
             if (oAnnotation.oAnnotated != null)
             {
                 if (oAnnotation.m_sObjectURI != null) //Not for Issue
@@ -1226,10 +1224,7 @@ public class MetadataRDFConverter {
                         for (int i = 0; i < oAnnotation.oKeywords.length; i++)
                         {
                             AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordName);
-                            //if (apKeyword == null)
-                            //{
-                            //    apKeyword = omModel.createAnnotationProperty(sKeywordName);
-                            //}
+
                             resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
                         }
                     }
@@ -1267,10 +1262,7 @@ public class MetadataRDFConverter {
                         for (int i = 0; i < oAnnotation.oKeywords.length; i++)
                         {
                             AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordName);
-                            //if (apKeyword == null)
-                            //{
-                            //    apKeyword = omModel.createAnnotationProperty(sKeywordName);
-                            //}
+
                             resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
                         }
                     }
@@ -1298,160 +1290,82 @@ public class MetadataRDFConverter {
                 int iACount = oAnnotation.oAnnotated.length;
                 for (int i = 0; i < iACount; i++)
                 {
-                    OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
-                    oAnnotation.oAnnotated[i].m_sObjectURI = sAnnotationClass + MetadataGlobal.GetNextId(omModel, ocAnnotation);
-                    Resource resAnnotation = omModel.createResource(oAnnotation.oAnnotated[i].m_sObjectURI, ocAnnotation);
-                    //oAnnotation.oAnnotated[i].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
-                    oAnnotation.oAnnotated[i].m_sReturnConfig = "YN#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
-                    
-                    //HasObject
-                    if (oAnnotation.m_sObjectURI != null) //Not for Issue
+                    if (oAnnotation.oAnnotated[i].sValue != null)
                     {
-                        Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
+                        OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
+                        oAnnotation.oAnnotated[i].m_sObjectURI = sAnnotationClass + MetadataGlobal.GetNextId(omModel, ocAnnotation);
+                        Resource resAnnotation = omModel.createResource(oAnnotation.oAnnotated[i].m_sObjectURI, ocAnnotation);
+                        oAnnotation.oAnnotated[i].m_sReturnConfig = "YN#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
 
-                        ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
-                        resAnnotation.addProperty(opHasObject, resObject.asResource());
-                    }
-                    else                                  //For Issue
-                    {
-                        Resource resObject = omModel.getResource(oAnnotation.oAnnotated[i].sHasObject);
-
-                        ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
-                        resAnnotation.addProperty(opHasObject, resObject.asResource());
-                    }
-                    
-                    //Name
-                    DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
-                    resAnnotation.addProperty(dtpName, oAnnotation.oAnnotated[i].sName);
-                    
-                    //Text
-                    DatatypeProperty dtpText = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
-                    resAnnotation.addProperty(dtpText, oAnnotation.oAnnotated[i].sValue);
-                    
-                    //For Issue
-//                    if (oAnnotation.oAnnotated[i].iItemId != null &&
-//                        oAnnotation.oAnnotated[i].m_sName.equals(MetadataConstants.c_XMLE_commentTextAnnotated))
-                    if (oAnnotation.oAnnotated[i].iItemId != null)
-                    {
-                        Resource resObject = omModel.getResource(oAnnotation.oAnnotated[i].sHasObject);
-
-                        //itemId
-                        DatatypeProperty dtpItemId = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId);
-                        resObject.removeAll(dtpItemId);
-                        resObject.addProperty(dtpItemId, oAnnotation.oAnnotated[i].iItemId.toString());
-                    }
-                    
-                    //Anotation concepts
-                    String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
-                    if (oAnnotation.oAnnotated[i].oConcepts != null)
-                    {
-                        int iCCount = oAnnotation.oAnnotated[i].oConcepts.length;
-                        for (int j = 0; j < iCCount; j++)
+                        //HasObject
+                        if (oAnnotation.m_sObjectURI != null) //Not for Issue
                         {
-                            OntClass ocConcept = omModel.getOntClass(sConceptClass);
+                            Resource resObject = omModel.getResource(oAnnotation.m_sObjectURI);
 
-                            oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI = sConceptClass + MetadataGlobal.GetNextId(omModel, ocConcept);
+                            ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
+                            resAnnotation.addProperty(opHasObject, resObject.asResource());
+                        }
+                        else                                  //For Issue
+                        {
+                            Resource resObject = omModel.getResource(oAnnotation.oAnnotated[i].sHasObject);
 
-                            Resource resConcept = omModel.createResource(oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI, ocConcept);
-                            oAnnotation.oAnnotated[i].oConcepts[j].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
+                            ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
+                            resAnnotation.addProperty(opHasObject, resObject.asResource());
+                        }
 
-                            //Uri
-                            DatatypeProperty dtpUri = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
-                            //if (dtpUri == null)
-                            //{
-                            //    dtpUri = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
-                            //}
-                            resConcept.addProperty(dtpUri, oAnnotation.oAnnotated[i].oConcepts[j].sUri);
+                        //Name
+                        DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
+                        resAnnotation.addProperty(dtpName, oAnnotation.oAnnotated[i].sName);
 
-                            //Count
-                            DatatypeProperty dtpCount = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight);
-                            resConcept.addProperty(dtpCount, oAnnotation.oAnnotated[i].oConcepts[j].sWeight);
-                            
-                            ////HasConcept (annotation)
-                            ObjectProperty opHasConcepts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
-                            resAnnotation.addProperty(opHasConcepts, resConcept.asResource());
+                        //Text
+                        DatatypeProperty dtpText = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
+                        resAnnotation.addProperty(dtpText, oAnnotation.oAnnotated[i].sValue);
+
+                        //For Issue
+                        if (oAnnotation.oAnnotated[i].iItemId != null)
+                        {
+                            Resource resObject = omModel.getResource(oAnnotation.oAnnotated[i].sHasObject);
+
+                            //itemId
+                            DatatypeProperty dtpItemId = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId);
+                            resObject.removeAll(dtpItemId);
+                            resObject.addProperty(dtpItemId, oAnnotation.oAnnotated[i].iItemId.toString());
+                        }
+
+                        //Anotation concepts
+                        String sConceptClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_AnnotationConcept;
+                        if (oAnnotation.oAnnotated[i].oConcepts != null)
+                        {
+                            int iCCount = oAnnotation.oAnnotated[i].oConcepts.length;
+                            for (int j = 0; j < iCCount; j++)
+                            {
+                                OntClass ocConcept = omModel.getOntClass(sConceptClass);
+
+                                oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI = sConceptClass + MetadataGlobal.GetNextId(omModel, ocConcept);
+
+                                Resource resConcept = omModel.createResource(oAnnotation.oAnnotated[i].oConcepts[j].m_sObjectURI, ocConcept);
+                                oAnnotation.oAnnotated[i].oConcepts[j].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
+
+                                //Uri
+                                DatatypeProperty dtpUri = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
+                                //if (dtpUri == null)
+                                //{
+                                //    dtpUri = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Uri);
+                                //}
+                                resConcept.addProperty(dtpUri, oAnnotation.oAnnotated[i].oConcepts[j].sUri);
+
+                                //Count
+                                DatatypeProperty dtpCount = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Weight);
+                                resConcept.addProperty(dtpCount, oAnnotation.oAnnotated[i].oConcepts[j].sWeight);
+
+                                ////HasConcept (annotation)
+                                ObjectProperty opHasConcepts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
+                                resAnnotation.addProperty(opHasConcepts, resConcept.asResource());
+                            }
                         }
                     }
-                
-//                //Annotations
-//                String sAnnotationClass = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Annotation;
-//                int iACount = oAnnotation.oAnnotated.length;
-//                for (int i = 0; i < iACount; i++)
-//                {
-//                    OntClass ocAnnotation = omModel.getOntClass(sAnnotationClass);
-//                    oAnnotation.oAnnotated[i].m_sObjectURI = sAnnotationClass + MetadataGlobal.GetNextId(omModel, ocAnnotation);
-//                    Resource resAnnotation = omModel.createResource(oAnnotation.oAnnotated[i].m_sObjectURI, ocAnnotation);
-//                    //oAnnotation.oAnnotated[i].m_sReturnConfig = "YY#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
-//                    oAnnotation.oAnnotated[i].m_sReturnConfig = "YN#s1:" + oAnnotation.oAnnotated[i].sName + MetadataConstants.c_XMLE_Uri;
-//                    
-//                    //Name
-//                    DatatypeProperty dtpName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
-//                    //if (dtpName == null)
-//                    //{
-//                    //    dtpName = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name);
-//                    //}
-//                    resAnnotation.addProperty(dtpName, oAnnotation.oAnnotated[i].sName);
-//                    
-//                    //Text
-//                    DatatypeProperty dtpText = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
-//                    //if (dtpText == null)
-//                    //{
-//                    //    dtpText = omModel.createDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Text);
-//                    //}
-//                    resAnnotation.addProperty(dtpText, oAnnotation.oAnnotated[i].sValue);
-//                        
-//                    //HasConcept
-//                    for (int j = 0; j < oAnnotation.oConcepts.length; j++)
-//                    {
-//                        String sConceptName = GetConceptName(oAnnotation.oAnnotated[i].sName);
-//                        if (!sConceptName.isEmpty() && sConceptName.equals(oAnnotation.oConcepts[j].sName))
-//                        {
-//                            Resource resConcept = omModel.getResource(oAnnotation.oConcepts[j].m_sObjectURI);
-//                            //oAnnotation.oConcepts[j].m_sReturnConfig = "YN#s1:" + oAnnotation.oConcepts[j].sName + MetadataConstants.c_XMLE_Uri;
-//                            ObjectProperty opHasConcepts = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
-//                            //if (opHasConcepts == null)
-//                            //{
-//                            //    opHasConcepts = omModel.createObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasConcepts);
-//                            //}
-//                            resAnnotation.addProperty(opHasConcepts, resConcept.asResource());
-//                        }
-//                    }
-//                    
-//                    //HasObject
-//                    ObjectProperty opHasObject = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasObject);
-//                    resAnnotation.addProperty(opHasObject, resObject.asResource());
-                    
-                    ////Old code
-                    //String sOWLDataProperty = GetAnnotationPropName(oAnnotation.oAnnotated[i].sName);
-                    //if (!sOWLDataProperty.isEmpty())
-                    //{
-                    //    String sOWLFullPropertyName = MetadataConstants.c_NS_Alert + sOWLDataProperty;
-                    //    AnnotationProperty apAnnotation = omModel.getAnnotationProperty(sOWLFullPropertyName);
-                    //    if (apAnnotation == null)
-                    //    {
-                    //        apAnnotation = omModel.createAnnotationProperty(sOWLFullPropertyName);
-                    //    }
-                    //    resObject.addProperty(apAnnotation, oAnnotation.oAnnotated[i].sValue);
-                    //}
                 }
-                
-//                //Kewords
-//                if (oAnnotation.oKeywords != null)
-//                {
-//                    String sKeywordName =  MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLAnnotationProperty_apKeyword;
-//                    for (int i = 0; i < oAnnotation.oKeywords.length; i++)
-//                    {
-//                        AnnotationProperty apKeyword = omModel.getAnnotationProperty(sKeywordName);
-//                        //if (apKeyword == null)
-//                        //{
-//                        //    apKeyword = omModel.createAnnotationProperty(sKeywordName);
-//                        //}
-//                        resObject.addProperty(apKeyword, oAnnotation.oKeywords[i]);
-//                    }
-//                }
             }
-            
-            //MetadataGlobal.SaveOWL(omModel, MetadataConstants.sLocationSaveAlert);
         }
         catch (Exception e)
         {

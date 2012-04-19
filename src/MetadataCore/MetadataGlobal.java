@@ -906,7 +906,7 @@ public class MetadataGlobal {
     /**
      * @summary Class for storing annotation data.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 18.04.2012.
+     * @finalModification Dejan Milosavljevic 19.04.2012.
      */
     public static class AnnotationData extends MetadataObject
     {
@@ -922,7 +922,7 @@ public class MetadataGlobal {
         /**
          * @summary Method for creating keywords from annotatons.
          * @startRealisation  Dejan Milosavljevic 19.01.2012.
-         * @finalModification Dejan Milosavljevic 19.01.2012.
+         * @finalModification Dejan Milosavljevic 19.04.2012.
          */
         public void SetKeywords()
         {
@@ -932,7 +932,7 @@ public class MetadataGlobal {
                 for (int i = 0; i < oAnnotated.length; i++)
                 {
                     String sValue = oAnnotated[i].sValue;
-                    if (!sValue.isEmpty())
+                    if (sValue != null && !sValue.isEmpty())
                     {
                         int iIndexS = sValue.indexOf("<concept id=");
                         while (iIndexS != -1)

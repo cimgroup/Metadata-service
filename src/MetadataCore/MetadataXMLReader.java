@@ -1562,8 +1562,9 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new issue annotation event from XML.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
-     * @finalModification Dejan Milosavljevic 18.04.2012.
+     * @finalModification Dejan Milosavljevic 19.04.2012.
      * @param dDoc - input XML document to read
+     * @param bNew - new or update
      * @return - returns AnnotationData object
      */
     public static AnnotationData NewUpdateIssueAnnotation(Document dDoc, boolean bNew)
@@ -1625,20 +1626,10 @@ public class MetadataXMLReader {
                     int iDescriptionLength = nlDescriptionAnnotated.getLength();
                     //int iCommentLength = nlCommentAnnotated.getLength();
                     int iCommentLength = nlCommentText.getLength();
-                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iDescriptionLength + iCommentLength];
+                    //oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iDescriptionLength + iCommentLength];
+                    oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[1 + iCommentLength];
                     
                     //Description
-//                    if (iDescriptionLength > 0)
-//                    {
-//                        for (int i = 0; i < iDescriptionLength; i++)
-//                        {
-//                            Element eDescriptionAnnotated = (Element)nlDescriptionAnnotated.item(i);
-//                            oAnnotation.oAnnotated[i] = new MetadataGlobal.AnnotationProp();
-//                            oAnnotation.oAnnotated[i].sName = MetadataConstants.c_XMLE_issueDescriptionAnnotated;
-//                            //oAnnotation.oAnnotated[i].sValue = eSubjectAnnotated.getTextContent();
-//                            oAnnotation.oAnnotated[i].SetAnnotationText(eDescriptionAnnotated);
-//                        }
-//                    }
                     if (iDescriptionLength == 1)  //Dejan Milosavljevic 17.04.2012.
                     {
                         Element eDescriptionAnnotated = (Element)nlDescriptionAnnotated.item(0);
@@ -1647,6 +1638,15 @@ public class MetadataXMLReader {
                         oAnnotation.oAnnotated[0].SetAnnotationText(eDescriptionAnnotated);
                         oAnnotation.oAnnotated[0].sHasObject = sIssueUri;
                     }
+                    else //Dejan Milosavljevic 19.04.2012.
+                    {
+                        oAnnotation.oAnnotated[0] = new MetadataGlobal.AnnotationProp();
+                        oAnnotation.oAnnotated[0].sName = MetadataConstants.c_XMLE_issueDescriptionAnnotated;
+                        oAnnotation.oAnnotated[0].sValue = null;
+                        oAnnotation.oAnnotated[0].sHasObject = sIssueUri;
+                        iDescriptionLength = 1;
+                    }
+
                     //Description concepts
                     NodeList nlDescriptionConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_issueDescriptionConcepts);
                     if (nlDescriptionConcepts != null && nlDescriptionConcepts.getLength() > 0)
@@ -1666,17 +1666,6 @@ public class MetadataXMLReader {
                     }
                     
                     //Comment
-                    //if (iCommentLength > 0)
-//                    {
-//                        for (int i = 0; i < iCommentLength; i++)
-//                        {
-//                            Element eCommentAnnotated = (Element)nlCommentAnnotated.item(i);
-//                            oAnnotation.oAnnotated[i + iDescriptionLength] = new MetadataGlobal.AnnotationProp();
-//                            oAnnotation.oAnnotated[i + iDescriptionLength].sName = MetadataConstants.c_XMLE_commentTextAnnotated;
-//                            //oAnnotation.oAnnotated[i + iSubjectLength].sValue = eDescAnnotated.getTextContent();
-//                            oAnnotation.oAnnotated[i + iDescriptionLength].SetAnnotationText(eCommentAnnotated);
-//                        }
-//                    }
                     if (iCommentLength > 0 && sCommentUri != null && sCommentUri.length == iCommentLength) //Dejan Milosavljevic 17.04.2012.
                     {
                         for (int i = 0; i < iCommentLength; i++)
@@ -1724,40 +1713,6 @@ public class MetadataXMLReader {
                         //oAnnotation.oReferences[i] = GetValue(eReferenceUri, "s1:" + MetadataConstants.c_XMLE_referenceUri);
                     }
                 }
-                
-//                //Concepts
-//                NodeList nlDescriptionConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_issueDescriptionConcepts);
-//                NodeList nlCommentConcepts = eAnnotation.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_commentTextConcepts);
-//                if (nlDescriptionConcepts != null && nlCommentConcepts != null &&
-//                    nlDescriptionConcepts.getLength() > 0 && nlCommentConcepts.getLength() > 0)
-//                {
-//                    Element eDescriptionConcepts = (Element) nlDescriptionConcepts.item(0);
-//                    Element eCommentConcepts = (Element) nlCommentConcepts.item(0);
-//                    NodeList nlDescConcepts = eDescriptionConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
-//                    NodeList nlCommConcepts = eCommentConcepts.getElementsByTagName("s1:" + MetadataConstants.c_XMLE_concept);
-//                    if (nlDescConcepts != null && nlCommConcepts != null)
-//                    {
-//                        int iDescriptionLength = nlDescConcepts.getLength();
-//                        int iCommentLength = nlCommConcepts.getLength();
-//                        oAnnotation.oConcepts = new MetadataGlobal.ConceptProp[iDescriptionLength + iCommentLength];
-//                        for (int i = 0; i < iDescriptionLength; i++)
-//                        {
-//                            Element eDescConcept = (Element)nlDescConcepts.item(i);
-//                            oAnnotation.oConcepts[i] = new MetadataGlobal.ConceptProp();
-//                            oAnnotation.oConcepts[i].sName = MetadataConstants.c_XMLE_issueDescriptionConcepts;
-//                            oAnnotation.oConcepts[i].sUri = GetValue(eDescConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
-//                            oAnnotation.oConcepts[i].sWeight = GetValue(eDescConcept, "s1:" + MetadataConstants.c_XMLE_weight);//nlCCount.item(0).getNodeValue();
-//                        }
-//                        for (int i = 0; i < iCommentLength; i++)
-//                        {
-//                            Element eCommConcept = (Element)nlCommConcepts.item(i);
-//                            oAnnotation.oConcepts[i + iDescriptionLength] = new MetadataGlobal.ConceptProp();
-//                            oAnnotation.oConcepts[i + iDescriptionLength].sName = MetadataConstants.c_XMLE_commentTextConcepts;
-//                            oAnnotation.oConcepts[i + iDescriptionLength].sUri = GetValue(eCommConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
-//                            oAnnotation.oConcepts[i + iDescriptionLength].sWeight = GetValue(eCommConcept, "s1:" + MetadataConstants.c_XMLE_weight);//nlCCount.item(0).getNodeValue();
-//                        }
-//                    }
-//                }
             }
 
             if (bNew)
