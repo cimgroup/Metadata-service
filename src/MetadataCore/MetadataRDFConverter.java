@@ -339,7 +339,7 @@ public class MetadataRDFConverter {
                     }
                     resBug.removeAll(opHasComputerSystem);
                     resBug.addProperty(opHasComputerSystem, resComputerSystem.asResource());
-                    oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueComputerSystem + "/s:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
+                    oIssue.m_oHasComputerSystem.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_issueComputerSystem + "/o:" + MetadataConstants.c_XMLE_issueComputerSystem + MetadataConstants.c_XMLE_Uri;
                 }
 
                 //HasPriority
