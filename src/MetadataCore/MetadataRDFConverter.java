@@ -685,13 +685,20 @@ public class MetadataRDFConverter {
 
                 //save data
                 //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+                
+                return oIssue;
+            }
+            else
+            {
+                System.out.println("Issue already stored.");
+                return null;
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
+            return null;
         }
-        return oIssue;
     }
     
     /**
