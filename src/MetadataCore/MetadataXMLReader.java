@@ -2893,7 +2893,6 @@ public class MetadataXMLReader {
                                     {
                                         Element eRemoveIsnt = (Element)nlRemoveIsnt.item(0);
                                         NodeList nlPerson = eRemoveIsnt.getElementsByTagName("sm:" + MetadataConstants.c_XMLE_person);
-                                        iAddIsntCount = nlPerson.getLength();
                                         for (int j = 0; j < nlPerson.getLength(); j++)
                                         {
                                             Element ePerson = (Element)nlPerson.item(j);
