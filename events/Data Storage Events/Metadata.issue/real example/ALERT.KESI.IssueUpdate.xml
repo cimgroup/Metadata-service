@@ -45,16 +45,17 @@
                                                                                 <s:activityId>4125</s:activityId>
                                                                                 <s:activityWho>cumulus0007@gmail.com</s:activityWho>
                                                                                 <s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>Status</s:activityWhat>
-                                                                                        <s:activityRemoved>Assigned</s:activityRemoved>
-                                                                                        <s:activityAdded>Resolved</s:activityAdded>
-                                                                                </s:activityWRA>
-                                                                                <s:activityWRA>
-                                                                                        <s:activityWhat>Resolution</s:activityWhat>
-                                                                                        <s:activityRemoved>---</s:activityRemoved>
-                                                                                        <s:activityAdded>Fixed</s:activityAdded>
-                                                                                </s:activityWRA>
+                                                                                <s:activityWhat>Status</s:activityWhat>
+                                                                                <s:activityRemoved>Assigned</s:activityRemoved>
+                                                                                <s:activityAdded>Resolved</s:activityAdded>
+                                                                        </s:issueActivity>
+                                                                        <s:issueActivity>
+                                                                                <s:activityId>4126</s:activityId>
+                                                                                <s:activityWho>cumulus0007@gmail.com</s:activityWho>
+                                                                                <s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
+                                                                        	<s:activityWhat>Resolution</s:activityWhat>
+                                                                                <s:activityRemoved>---</s:activityRemoved>
+                                                                                <s:activityAdded>Fixed</s:activityAdded>
                                                                         </s:issueActivity>
                                                                 </s:issue>
 							</ns1:eventData>
