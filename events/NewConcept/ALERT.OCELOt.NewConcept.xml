@@ -36,6 +36,11 @@
 										<predicate:linksTo rdf:resource="http://ailab.ijs.si/alert/resource/installed" />
 										<predicate:linksTo rdf:resource="http://ailab.ijs.si/alert/resource/lib" />
 										<predicate:linksTo rdf:resource="http://ailab.ijs.si/alert/resource/amarok" />
+                                                                                <!-- SubClass relations -->
+                                                                                <child>http://ailab.ijs.si/alert/resource/korganizer</child>
+                                                                                <child>http://ailab.ijs.si/alert/resource/installed</child>
+                                                                                <parent>http://ailab.ijs.si/alert/resource/lib</parent>
+                                                                                <parent>http://ailab.ijs.si/alert/resource/amarok</parent>
 									</rdf:Description>
                                                                         <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/korganizer" />
                                                                         <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/installed" />
