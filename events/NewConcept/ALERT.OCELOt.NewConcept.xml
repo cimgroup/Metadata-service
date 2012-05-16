@@ -25,7 +25,7 @@
 							</ns1:meta>
 							<ns1:eventData>
                                                                 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:predicate="http://ailab.ijs.si/alert/predicate/">
-									<rdf:Description about="http://ailab.ijs.si/alert/resource/Linux">
+									<rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/Linux">
 										<rdfs:label xml:lang="en">Linux</rdfs:label>
 										<rdfs:comment>Linux refers to the family of Unix-like computer operating systems using the Linux kernel. Linux can be installed on a wide variety of computer hardware, ranging from mobile phones, tablet computers, routers and video game consoles, to desktop computers, mainframes and supercomputers. Linux is a leading server operating system, and runs the 10 fastest supercomputers in the world. The development of Linux is one of the most prominent examples of free and open source software collaboration; typically all the underlying source code can be used, freely modified, and redistributed, both commercially and non-commercially, by anyone under licenses such as the GNU General Public License. Typically Linux is packaged in a format known as a Linux distribution for desktop and server use. Some popular mainstream Linux distributions include Debian (and its derivatives such as Ubuntu), Fedora and openSUSE. Linux distributions include the Linux kernel, supporting utilities and libraries and usually a large amount of application software to fulfill the distribution's intended use. A distribution oriented toward desktop use may include the X Window System, the GNOME and KDE Plasma desktop environments. Other distributions may include a less resource intensive desktop such as LXDE or Xfce for use on older or less-powerful computers. A distribution intended to run as a server may omit any graphical environment from the standard install and instead include other software such as the Apache HTTP Server and a SSH server like OpenSSH. Because Linux is freely redistributable, it is possible for anyone to create a distribution for any intended use. Commonly used applications with desktop Linux systems include the Mozilla Firefox web browser, the OpenOffice. org or LibreOffice office application suites, and the GIMP image editor. The name "Linux" comes from the Linux kernel, originally written in 1991 by Linus Torvalds. The main supporting user space system tools and libraries from the GNU Project (announced in 1983 by Richard Stallman) are the basis for the Free Software Foundation's preferred name GNU/Linux.</rdfs:comment>
                                                                                 <!-- concept will be always added as a new class -->
@@ -37,10 +37,10 @@
 										<predicate:linksTo rdf:resource="http://ailab.ijs.si/alert/resource/lib" />
 										<predicate:linksTo rdf:resource="http://ailab.ijs.si/alert/resource/amarok" />
                                                                                 <!-- SubClass relations -->
-                                                                                <child>http://ailab.ijs.si/alert/resource/korganizer</child>
-                                                                                <child>http://ailab.ijs.si/alert/resource/installed</child>
-                                                                                <parent>http://ailab.ijs.si/alert/resource/lib</parent>
-                                                                                <parent>http://ailab.ijs.si/alert/resource/amarok</parent>
+                                                                                <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/korganizer" />
+                                                                                <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/installed" />
+                                                                                <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/lib" />
+                                                                                <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/amarok" />
 									</rdf:Description>
                                                                         <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/korganizer" />
                                                                         <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/installed" />
