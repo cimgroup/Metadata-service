@@ -38,8 +38,8 @@
                                                                                         <!-- SubClass relations -->
                                                                                         <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/korganizer" />
                                                                                         <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/installed" />
-                                                                                        <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/lib" />
-                                                                                        <rdfs:subClassOf rdf:resource="http://ailab.ijs.si/alert/resource/amarok" />
+                                                                                        <rdfs:superClassOf rdf:resource="http://ailab.ijs.si/alert/resource/lib" />
+                                                                                        <rdfs:superClassOf rdf:resource="http://ailab.ijs.si/alert/resource/amarok" />
                                                                                 </rdf:Description>
                                                                                 <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/korganizer" />
                                                                                 <rdf:Description rdf:about="http://ailab.ijs.si/alert/resource/installed" />
