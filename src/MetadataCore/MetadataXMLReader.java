@@ -180,6 +180,12 @@ public class MetadataXMLReader {
                 MetadataGlobal.BackupProcedure(dDoc);
                 RemoveIdentity(dDoc);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_OCELOt_NewConcept))   //if event type is remove identity event
+            {
+                System.out.println("Event type: New concept event");
+                MetadataGlobal.BackupProcedure(dDoc);
+                NewConcept(dDoc);
+            }
         }
         catch (Exception e)
         {
@@ -2974,6 +2980,102 @@ public class MetadataXMLReader {
         }
     }
     
+    /**
+     * @summary Method for reading new concept event from XML
+     * @startRealisation Sasa Stojanovic 17.05.2012.
+     * @finalModification Sasa Stojanovic 17.05.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Concept objects
+     */
+    public static Concept[] NewConcept(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            NodeList nlRDF = dDoc.getElementsByTagName("rdf:" + MetadataConstants.c_XMLE_RDF);
+
+            if (nlRDF != null && nlRDF.getLength() > 0)
+            {
+                Element eRDF = (Element) nlRDF.item(0);
+                eOriginalData = eRDF;
+
+                NodeList nlConcept = eRDF.getElementsByTagName("rdf:" + MetadataConstants.c_XMLE_Description);
+                if (nlConcept != null && nlConcept.getLength() > 0)
+                {
+                    Concept[] oConcepts = new Concept[nlConcept.getLength()];
+                    for (int i = 0; i < nlConcept.getLength(); i++)
+                    {
+                        Element eConcept = (Element)nlConcept.item(i);
+                        
+                        Concept oConcept = MetadataObjectFactory.CreateNewConcept();
+                        oConcept.m_sObjectURI = eConcept.getAttribute("rdf:" + MetadataConstants.c_XMLEA_about);
+                        oConcept.m_sLabel = GetValue(eConcept, "rdfs:" + MetadataConstants.c_XMLE_label);
+                        oConcept.m_sComment = GetValue(eConcept, "rdfs:" + MetadataConstants.c_XMLE_comment);
+                        
+                        NodeList nlSameAs = eConcept.getElementsByTagName("owl:" + MetadataConstants.c_XMLE_sameAs);
+                        if (nlSameAs != null && nlSameAs.getLength() > 0)
+                        {
+                            oConcept.m_sSameAs = new String[nlSameAs.getLength()];
+                            for (int j = 0; j < nlSameAs.getLength(); j++)
+                            {
+                                Element eSameAs = (Element)nlSameAs.item(j);
+                                oConcept.m_sSameAs[j] = eSameAs.getAttribute("rdf:" + MetadataConstants.c_XMLEA_resource);
+                            }
+                        }
+                        
+                        NodeList nlLinksTo = eConcept.getElementsByTagName("predicate:" + MetadataConstants.c_XMLE_linksTo);
+                        if (nlLinksTo != null && nlLinksTo.getLength() > 0)
+                        {
+                            oConcept.m_sLinksTo = new String[nlLinksTo.getLength()];
+                            for (int j = 0; j < nlLinksTo.getLength(); j++)
+                            {
+                                Element eLinksTo = (Element)nlLinksTo.item(j);
+                                oConcept.m_sLinksTo[j] = eLinksTo.getAttribute("rdf:" + MetadataConstants.c_XMLEA_resource);
+                            }
+                        }
+                        
+                        NodeList nlSubClassOf = eConcept.getElementsByTagName("rdfs:" + MetadataConstants.c_XMLE_subClassOf);
+                        if (nlSubClassOf != null && nlSubClassOf.getLength() > 0)
+                        {
+                            oConcept.m_sSubClassOf = new String[nlSubClassOf.getLength()];
+                            for (int j = 0; j < nlSubClassOf.getLength(); j++)
+                            {
+                                Element eSubClassOf = (Element)nlSubClassOf.item(j);
+                                oConcept.m_sSubClassOf[j] = eSubClassOf.getAttribute("rdf:" + MetadataConstants.c_XMLEA_resource);
+                            }
+                        }
+                        
+                        NodeList nlSuperClassOf = eConcept.getElementsByTagName("rdfs:" + MetadataConstants.c_XMLE_superClassOf);
+                        if (nlSuperClassOf != null && nlSuperClassOf.getLength() > 0)
+                        {
+                            oConcept.m_sSuperClassOf = new String[nlSuperClassOf.getLength()];
+                            for (int j = 0; j < nlSuperClassOf.getLength(); j++)
+                            {
+                                Element eSuperClassOf = (Element)nlSuperClassOf.item(j);
+                                oConcept.m_sSuperClassOf[j] = eSuperClassOf.getAttribute("rdf:" + MetadataConstants.c_XMLEA_resource);
+                            }
+                        }
+                        
+                        oConcepts[i] = oConcept;
+                    }
+                    
+                    //eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_stardom);
+                    //MetadataModel.SaveObjectNewConcept(sEventId, eOriginalData, oConcepts);
+                    
+                    return oConcepts;
+                }
+            }
+            return null;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     // </editor-fold>
 
     // <editor-fold desc="XML reading methods">
@@ -3089,6 +3191,23 @@ public class MetadataXMLReader {
 
         return sElementName;
     }
+    
+    
+    /**
+     * @summary Method for returning attribute of element
+     * @startRealisation Sasa Stojanovic 17.05.2012.
+     * @finalModification Sasa Stojanovic 17.05.2012.
+     * @param eElement - element to read
+     * @param sAttribute - attribute to read
+     * @return attribute of element
+     */
+    public static String GetAttribute(Element eElement, String sAttribute)
+    {
+        String sAttributeValue = "";
+        sAttributeValue = eElement.getAttribute(sAttribute);
+        return sAttributeValue;
+    }
+    
 
     /**
      * @summary Method for returning eventId

@@ -14,10 +14,10 @@ import MetadataObjects.*;
 public class MetadataObjectFactory {
     
     /** 
-     * @summary Method for creating new bug
+     * @summary Method for creating new issue
      * @startRealisation Sasa Stojanovic 24.06.2011.
      * @finalModification Sasa Stojanovic 24.06.2011.
-     * @return Bug object
+     * @return Issue object
      */
     public static Issue CreateNewIssue()
     {
@@ -97,7 +97,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new component
      * @startRealisation Sasa Stojanovic 31.10.2011.
      * @finalModification Sasa Stojanovic 31.10.2011.
-     * @return MetadataPerson object
+     * @return Component object
      */
     public static Component CreateNewComponent() {
         try
@@ -116,7 +116,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new annotation.
      * @startRealisation  Dejan Milosavljevic 16.01.2012.
      * @finalModification Dejan Milosavljevic 16.01.2012.
-     * @return Bug object
+     * @return AnnotationData object
      */
     public static AnnotationData CreateNewAnnotation()
     {
@@ -136,7 +136,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new forum post.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
      * @finalModification Sasa Stojanovic 21.02.2012
-     * @return Bug object
+     * @return ForumPost object
      */
     public static ForumPost CreateNewForumPost()
     {
@@ -156,7 +156,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new competence.
      * @startRealisation  Dejan Milosavljevic 02.02.2012.
      * @finalModification Dejan Milosavljevic 02.02.2012.
-     * @return Bug object
+     * @return Competence object
      */
     public static Competence CreateNewCompetence()
     {
@@ -177,7 +177,7 @@ public class MetadataObjectFactory {
      * @summary Method for creating new identity
      * @startRealisation Sasa Stojanovic 04.02.2012.
      * @finalModification Sasa Stojanovic 04.02.2012.
-     * @return Bug object
+     * @return Identity object
      */
     public static Identity CreateNewIdentity()
     {
@@ -185,6 +185,27 @@ public class MetadataObjectFactory {
         {
             Identity oIdentity = new Identity();
             return oIdentity;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    /** 
+     * @summary Method for creating new concept
+     * @startRealisation Sasa Stojanovic 17.05.2012.
+     * @finalModification Sasa Stojanovic 17.05.2012.
+     * @return Concept object
+     */
+    public static Concept CreateNewConcept()
+    {
+        try
+        {
+            Concept oConcept = new Concept();
+            return oConcept;
         }
         catch(Exception e)
         {
