@@ -1997,68 +1997,83 @@ public class MetadataRDFConverter {
      * @summary Save concept data
      * @startRealisation Sasa Stojanovic 17.05.2012.
      * @finalModification Sasa Stojanovic 17.05.2012.
-     * @param oConcept - identity objects with data
+     * @param oConcepts - identity objects with data
      * @return identity objects with uri-s
      */
-    public static Concept[] SaveConcept(Concept[] oConcept)
+    public static Concept[] SaveConcept(Concept[] oConcepts)
     {
         try 
         {
             OntModel oModel = MetadataConstants.omAnnotation;
             
-            for (int i = 0; i < oConcept.length; i++)
+            for (int i = 0; i < oConcepts.length; i++)
             {
-                if (oConcept[i].m_sObjectURI != null && !oConcept[i].m_sObjectURI.isEmpty())
+                if (oConcepts[i].m_sObjectURI != null && !oConcepts[i].m_sObjectURI.isEmpty())
                 {
-                    OntClass ocConcept = oModel.getOntClass(oConcept[i].m_sObjectURI);
+                    OntClass ocConcept = oModel.getOntClass(oConcepts[i].m_sObjectURI);
                     if (ocConcept == null)
                     {
-                        ocConcept = oModel.createClass(oConcept[i].m_sObjectURI);
+                        ocConcept = oModel.createClass(oConcepts[i].m_sObjectURI);
                     }
-                                       
-                    AnnotationProperty apLabel = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Label);
-                    ocConcept.addProperty(apLabel, oConcept[i].m_sLabel);
+                    oConcepts[i].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_concept + MetadataConstants.c_XMLE_Uri;
                     
-                    AnnotationProperty apComment = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Comment);
-                    ocConcept.addProperty(apComment, oConcept[i].m_sComment);
+                    if (oConcepts[i].m_sLabel != null && !oConcepts[i].m_sLabel.isEmpty())
+                    {
+                        AnnotationProperty apLabel = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Label);
+                        ocConcept.addProperty(apLabel, oConcepts[i].m_sLabel);
+                    }
                     
-                    if (oConcept[i].m_sSameAs != null)
+                    if (oConcepts[i].m_sComment != null && !oConcepts[i].m_sComment.isEmpty())
+                    {
+                        AnnotationProperty apComment = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Comment);
+                        ocConcept.addProperty(apComment, oConcepts[i].m_sComment);
+                    }
+                    
+                    if (oConcepts[i].m_sSameAs != null)
                     {
                         AnnotationProperty apSameAs = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_owl + MetadataConstants.c_OWLAnnotationProperty_SameAs);
-                        for (int j = 0; j < oConcept[i].m_sSameAs.length; j++)
+                        for (int j = 0; j < oConcepts[i].m_sSameAs.length; j++)
                         {
-                            ocConcept.addProperty(apSameAs, oConcept[i].m_sSameAs[j]);
+                            ocConcept.addProperty(apSameAs, oConcepts[i].m_sSameAs[j]);
                         }
                     }
                     
-                    if (oConcept[i].m_sLinksTo != null)
+                    if (oConcepts[i].m_sLinksTo != null)
                     {
                         AnnotationProperty apLinksTo = oModel.getAnnotationProperty(MetadataConstants.c_NS_ijs_predicate + MetadataConstants.c_OWLAnnotationProperty_LinksTo);
-                        for (int j = 0; j < oConcept[i].m_sLinksTo.length; j++)
+                        for (int j = 0; j < oConcepts[i].m_sLinksTo.length; j++)
                         {
-                            ocConcept.addProperty(apLinksTo, oConcept[i].m_sLinksTo[j]);
+                            ocConcept.addProperty(apLinksTo, oConcepts[i].m_sLinksTo[j]);
                         }
                     }
                     
-                    if (oConcept[i].m_sSubClassOf != null)
+                    if (oConcepts[i].m_sSubClassOf != null)
                     {
-                        for (int j = 0; j < oConcept[i].m_sSubClassOf.length; j++)
+                        for (int j = 0; j < oConcepts[i].m_sSubClassOf.length; j++)
                         {
-                            if (!oConcept[i].m_sSubClassOf[j].isEmpty())
+                            if (!oConcepts[i].m_sSubClassOf[j].isEmpty())
                             {
-                                OntClass ocSuper = oModel.getOntClass(oConcept[i].m_sSubClassOf[j]);
+                                OntClass ocSuper = oModel.getOntClass(oConcepts[i].m_sSubClassOf[j]);
+                                if (ocSuper == null)
+                                {
+                                    ocSuper = oModel.createClass(oConcepts[i].m_sSubClassOf[j]);
+                                }
                                 ocConcept.addSuperClass(ocSuper);
                             }
                         }
                     }
                     
-                    if (oConcept[i].m_sSuperClassOf != null)
+                    if (oConcepts[i].m_sSuperClassOf != null)
                     {
-                        for (int j = 0; j < oConcept[i].m_sSuperClassOf.length; j++)
+                        for (int j = 0; j < oConcepts[i].m_sSuperClassOf.length; j++)
                         {
-                            if (!oConcept[i].m_sSuperClassOf[j].isEmpty())
+                            if (!oConcepts[i].m_sSuperClassOf[j].isEmpty())
                             {
-                                OntClass ocSub = oModel.getOntClass(oConcept[i].m_sSuperClassOf[j]);
+                                OntClass ocSub = oModel.getOntClass(oConcepts[i].m_sSuperClassOf[j]);
+                                if (ocSub == null)
+                                {
+                                    ocSub = oModel.createClass(oConcepts[i].m_sSuperClassOf[j]);
+                                }
                                 ocConcept.addSubClass(ocSub);
                             }
                         }
@@ -2073,7 +2088,7 @@ public class MetadataRDFConverter {
         catch (Exception ex)
         {
         }
-        return oConcept;
+        return oConcepts;
     }
     
     // <editor-fold desc="API Calls">

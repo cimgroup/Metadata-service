@@ -240,9 +240,16 @@ public class MetadataModel {
      * @param sEventId - event id
      * @param oConcepts - concepts object
      */
-    static void SaveObjectNewConcept(String sEventId, Concept[] oConcepts)
+    static void SaveObjectNewConcept(String sEventId, Element eOriginalData, Concept[] oConcepts)
     {
         oConcepts = MetadataRDFConverter.SaveConcept(oConcepts);
+        
+        //transfering from list to object with a list
+        MetadataGlobal.MetadataObjectExt oConceptsExt = new MetadataGlobal.MetadataObjectExt();
+        oConceptsExt.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_concepts + "/";
+        oConceptsExt.m_oObjects = oConcepts;
+        
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ConceptNew_Stored, sEventId, eOriginalData, oConceptsExt);
     }
     
     /**

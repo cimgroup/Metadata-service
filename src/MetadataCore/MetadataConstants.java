@@ -68,7 +68,8 @@ public class MetadataConstants {
     public static String c_ET_ALERT_Metadata_IdentityNew_Stored = "ALERT.Metadata.IdentityNew.Stored";
     public static String c_ET_ALERT_Metadata_IdentityUpdate_Stored = "ALERT.Metadata.IdentityUpdate.Stored";
     public static String c_ET_ALERT_Metadata_IdentityRemove_Stored = "ALERT.Metadata.IdentityRemove.Stored";
-    public static String c_ET_ALERT_OCELOt_NewConcept = "ALERT.OCELOt.NewConcept";
+    public static String c_ET_ALERT_OCELOt_ConceptNew = "ALERT.OCELOt.ConceptNew";
+    public static String c_ET_ALERT_Metadata_ConceptNew_Stored = "ALERT.Metadata.ConceptNew.Stored";
     
     // </editor-fold>
        
@@ -296,6 +297,8 @@ public class MetadataConstants {
     public static String c_XMLE_emailFrom = "emailFrom";
     public static String c_XMLE_emailDate = "emailDate";
     
+    public static String c_XMLE_concepts = "concepts";
+    public static String c_XMLE_newRDFData = "newRDFData";
     public static String c_XMLE_RDF = "RDF";
     public static String c_XMLE_Description = "Description";
     public static String c_XMLE_label = "label";

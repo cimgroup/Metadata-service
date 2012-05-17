@@ -180,7 +180,7 @@ public class MetadataXMLReader {
                 MetadataGlobal.BackupProcedure(dDoc);
                 RemoveIdentity(dDoc);
             }
-            if(sEventName.equals(MetadataConstants.c_ET_ALERT_OCELOt_NewConcept))   //if event type is remove identity event
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_OCELOt_ConceptNew))   //if event type is remove identity event
             {
                 System.out.println("Event type: New concept event");
                 MetadataGlobal.BackupProcedure(dDoc);
@@ -2992,6 +2992,13 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+            
+            NodeList nlNewRDFData = dDoc.getElementsByTagName("ns1:" + MetadataConstants.c_XMLE_newRDFData);
+            if (nlNewRDFData != null && nlNewRDFData.getLength() > 0)
+            {
+                eOriginalData = (Element) nlNewRDFData.item(0);
+            }
 
             NodeList nlRDF = dDoc.getElementsByTagName("rdf:" + MetadataConstants.c_XMLE_RDF);
 
@@ -3059,7 +3066,7 @@ public class MetadataXMLReader {
                         oConcepts[i] = oConcept;
                     }
                     
-                    MetadataModel.SaveObjectNewConcept(sEventId, oConcepts);
+                    MetadataModel.SaveObjectNewConcept(sEventId, eOriginalData, oConcepts);
                     
                     return oConcepts;
                 }
