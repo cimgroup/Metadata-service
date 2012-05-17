@@ -8,7 +8,7 @@ import MetadataCore.MetadataObject;
 
 /**
  *
- * @author ivano
+ * @author Sasa.Stojanovic
  */
 public class Concept extends MetadataObject {
     
@@ -32,8 +32,8 @@ public class Concept extends MetadataObject {
     
     /**
      * @summary Constructor
-     * @startRealisation Ivan Obradovic 22.08.2011.
-     * @finalModification Ivan Obradovic 22.08.2011.
+     * @startRealisation Sasa Stojanovic 17.04.2012.
+     * @finalModification Sasa Stojanovic 17.04.2012.
      */
     public Concept()
     {

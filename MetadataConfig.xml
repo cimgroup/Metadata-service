@@ -2,6 +2,6 @@
 <MetadataConfig>
 	<ActiveMQAddress>tcp://www.cimcollege.rs:61616</ActiveMQAddress>
 	<OntologyLocation>D:/MetadataGit/AlertOntology/alert.owl</OntologyLocation>
-        <BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
+    <BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
 	<LogFilesLocation>D:/MetadataGit/MetadataLog/</LogFilesLocation>
 </MetadataConfig>

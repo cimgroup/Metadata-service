@@ -2992,14 +2992,12 @@ public class MetadataXMLReader {
         try
         {
             String sEventId = GetEventId(dDoc);
-            Element eOriginalData = null;  //element for original data
 
             NodeList nlRDF = dDoc.getElementsByTagName("rdf:" + MetadataConstants.c_XMLE_RDF);
 
             if (nlRDF != null && nlRDF.getLength() > 0)
             {
                 Element eRDF = (Element) nlRDF.item(0);
-                eOriginalData = eRDF;
 
                 NodeList nlConcept = eRDF.getElementsByTagName("rdf:" + MetadataConstants.c_XMLE_Description);
                 if (nlConcept != null && nlConcept.getLength() > 0)
@@ -3061,8 +3059,7 @@ public class MetadataXMLReader {
                         oConcepts[i] = oConcept;
                     }
                     
-                    //eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "s:" + MetadataConstants.c_XMLE_stardom);
-                    //MetadataModel.SaveObjectNewConcept(sEventId, eOriginalData, oConcepts);
+                    MetadataModel.SaveObjectNewConcept(sEventId, oConcepts);
                     
                     return oConcepts;
                 }

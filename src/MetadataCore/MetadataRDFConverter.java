@@ -1993,6 +1993,89 @@ public class MetadataRDFConverter {
         return oIdentities;
     }
     
+    /**
+     * @summary Save concept data
+     * @startRealisation Sasa Stojanovic 17.05.2012.
+     * @finalModification Sasa Stojanovic 17.05.2012.
+     * @param oConcept - identity objects with data
+     * @return identity objects with uri-s
+     */
+    public static Concept[] SaveConcept(Concept[] oConcept)
+    {
+        try 
+        {
+            OntModel oModel = MetadataConstants.omAnnotation;
+            
+            for (int i = 0; i < oConcept.length; i++)
+            {
+                if (oConcept[i].m_sObjectURI != null && !oConcept[i].m_sObjectURI.isEmpty())
+                {
+                    OntClass ocConcept = oModel.getOntClass(oConcept[i].m_sObjectURI);
+                    if (ocConcept == null)
+                    {
+                        ocConcept = oModel.createClass(oConcept[i].m_sObjectURI);
+                    }
+                                       
+                    AnnotationProperty apLabel = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Label);
+                    ocConcept.addProperty(apLabel, oConcept[i].m_sLabel);
+                    
+                    AnnotationProperty apComment = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Comment);
+                    ocConcept.addProperty(apComment, oConcept[i].m_sComment);
+                    
+                    if (oConcept[i].m_sSameAs != null)
+                    {
+                        AnnotationProperty apSameAs = oModel.getAnnotationProperty(MetadataConstants.c_NS_w3_owl + MetadataConstants.c_OWLAnnotationProperty_SameAs);
+                        for (int j = 0; j < oConcept[i].m_sSameAs.length; j++)
+                        {
+                            ocConcept.addProperty(apSameAs, oConcept[i].m_sSameAs[j]);
+                        }
+                    }
+                    
+                    if (oConcept[i].m_sLinksTo != null)
+                    {
+                        AnnotationProperty apLinksTo = oModel.getAnnotationProperty(MetadataConstants.c_NS_ijs_predicate + MetadataConstants.c_OWLAnnotationProperty_LinksTo);
+                        for (int j = 0; j < oConcept[i].m_sLinksTo.length; j++)
+                        {
+                            ocConcept.addProperty(apLinksTo, oConcept[i].m_sLinksTo[j]);
+                        }
+                    }
+                    
+                    if (oConcept[i].m_sSubClassOf != null)
+                    {
+                        for (int j = 0; j < oConcept[i].m_sSubClassOf.length; j++)
+                        {
+                            if (!oConcept[i].m_sSubClassOf[j].isEmpty())
+                            {
+                                OntClass ocSuper = oModel.getOntClass(oConcept[i].m_sSubClassOf[j]);
+                                ocConcept.addSuperClass(ocSuper);
+                            }
+                        }
+                    }
+                    
+                    if (oConcept[i].m_sSuperClassOf != null)
+                    {
+                        for (int j = 0; j < oConcept[i].m_sSuperClassOf.length; j++)
+                        {
+                            if (!oConcept[i].m_sSuperClassOf[j].isEmpty())
+                            {
+                                OntClass ocSub = oModel.getOntClass(oConcept[i].m_sSuperClassOf[j]);
+                                ocConcept.addSubClass(ocSub);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            //save data
+            //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+            
+        }
+        catch (Exception ex)
+        {
+        }
+        return oConcept;
+    }
+    
     // <editor-fold desc="API Calls">
     
     /**

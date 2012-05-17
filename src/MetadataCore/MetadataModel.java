@@ -233,6 +233,18 @@ public class MetadataModel {
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_IdentityRemove_Stored, sEventId, eOriginalData, oIdentitiesExt);
     }
     
+    /** 
+     * @summary Method for saving new concept
+     * @startRealisation Sasa Stojanovic 17.05.2012.
+     * @finalModification Sasa Stojanovic 17.05.2012.
+     * @param sEventId - event id
+     * @param oConcepts - concepts object
+     */
+    static void SaveObjectNewConcept(String sEventId, Concept[] oConcepts)
+    {
+        oConcepts = MetadataRDFConverter.SaveConcept(oConcepts);
+    }
+    
     /**
      * @summary API Call Method for executing custom SPARQL query
      * @startRealisation Sasa Stojanovic 15.12.2011.

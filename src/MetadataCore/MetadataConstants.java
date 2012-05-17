@@ -613,6 +613,12 @@ public class MetadataConstants {
     public static String c_OWLAnnotationProperty_apContent = "apContent";
     public static String c_OWLAnnotationProperty_apKeyword = "apKeyword";
     
+    public static String c_OWLAnnotationProperty_Label = "label";
+    public static String c_OWLAnnotationProperty_Comment = "comment";
+    public static String c_OWLAnnotationProperty_SameAs = "sameAs";
+    public static String c_OWLAnnotationProperty_LinksTo = "linksTo";
+    
+    
     // </editor-fold>
     
     public static ArrayList <String> c_Topics = new ArrayList<String>();
@@ -629,9 +635,12 @@ public class MetadataConstants {
     public static String c_NS_w3_rdf_syntax = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static String c_NS_w3_rdf_schema = "http://www.w3.org/2000/01/rdf-schema#";
     public static String c_NS_w3_flow = "http://www.w3.org/2005/01/wf/flow#";
+    public static String c_NS_w3_owl = "http://www.w3.org/2002/27/owl#";
+    public static String c_NS_ijs_predicate = "http://ailab.ijs.si/alert/predicate/";
     public static String c_NS_icep = "http://icep.fzi.de/icepEvents#";
     
     public static OntModel omModel = null;
+    public static OntModel omAnnotation = null;
     public static Integer iBackupEventNumber = 0;
     public static Integer iBackupEventNumberLimit = 300;
     public static boolean bSilentMode = false;

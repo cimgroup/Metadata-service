@@ -77,8 +77,12 @@ public class MetadataGlobal {
     {
         try
         {
-            MetadataConstants.omModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM ); //OWL_MEM_RULE_INF
+            MetadataConstants.omModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
             MetadataConstants.omModel.read(MetadataConstants.sLocationLoadAlert, "RDF/XML" );
+            
+            //delete this code when annotation ontology gets integrated
+            MetadataConstants.omAnnotation = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
+            MetadataConstants.omAnnotation.read(MetadataConstants.sLocationLoadAlert.replace("alert.owl", "AnnotationOntology.rdf"), "RDF/XML" );
         }
         catch (Exception e)
         {
@@ -96,12 +100,16 @@ public class MetadataGlobal {
         {
             File destinationFile = new File(MetadataConstants.sLocationSaveAlert);
             FileOutputStream fosRemove;
-
             fosRemove = new FileOutputStream(destinationFile, false);
-
             MetadataConstants.omModel.write(fosRemove, null);
-
             fosRemove.flush();
+            
+            //delete this code when annotation ontology gets integrated
+            File destinationAnnotationFile = new File(MetadataConstants.sLocationSaveAlert.replace("alert.owl", "AnnotationOntology.rdf"));
+            FileOutputStream fosAnnotationRemove;
+            fosAnnotationRemove = new FileOutputStream(destinationAnnotationFile, false);
+            MetadataConstants.omAnnotation.write(fosAnnotationRemove, null);
+            fosAnnotationRemove.flush();
         }
         catch (Exception e)
         {
@@ -221,8 +229,8 @@ public class MetadataGlobal {
             
             if (fBackupFiles.length > 0)
             {
-                SaveOntology();
                 System.out.println("Saving into ontology files...");
+                SaveOntology();
                 System.out.println("Backup procedure finished.");
             }
 
@@ -867,7 +875,33 @@ public class MetadataGlobal {
                 opHasReferenceTo.addRange(ocIssue);
             }
             
+            //Creating annotation properties for new concepts in annotation ontology
+            AnnotationProperty apLabel = MetadataConstants.omAnnotation.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Label);
+            if (apLabel == null)
+            {
+                apLabel = MetadataConstants.omAnnotation.createAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Label);
+            }  
+            AnnotationProperty apComment = MetadataConstants.omAnnotation.getAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Comment);
+            if (apComment == null)
+            {
+                apComment = MetadataConstants.omAnnotation.createAnnotationProperty(MetadataConstants.c_NS_w3_rdf_schema + MetadataConstants.c_OWLAnnotationProperty_Comment);
+            }
+            AnnotationProperty apSameAs = MetadataConstants.omAnnotation.getAnnotationProperty(MetadataConstants.c_NS_w3_owl + MetadataConstants.c_OWLAnnotationProperty_SameAs);
+            if (apSameAs == null)
+            {
+                apSameAs = MetadataConstants.omAnnotation.createAnnotationProperty(MetadataConstants.c_NS_w3_owl + MetadataConstants.c_OWLAnnotationProperty_SameAs);
+            }
+            AnnotationProperty apLinksTo = MetadataConstants.omAnnotation.getAnnotationProperty(MetadataConstants.c_NS_ijs_predicate + MetadataConstants.c_OWLAnnotationProperty_LinksTo);
+            if (apLinksTo == null)
+            {
+                apLinksTo = MetadataConstants.omAnnotation.createAnnotationProperty(MetadataConstants.c_NS_ijs_predicate + MetadataConstants.c_OWLAnnotationProperty_LinksTo);
+            }
+            
+            
             MetadataGlobal.SaveOWL(MetadataConstants.omModel, MetadataConstants.sLocationSaveAlert);
+            
+            //delete this code when annotation ontology gets integrated
+            MetadataGlobal.SaveOWL(MetadataConstants.omAnnotation, MetadataConstants.sLocationSaveAlert.replace("alert.owl", "AnnotationOntology.rdf"));
         }
         catch (Exception e)
         {
