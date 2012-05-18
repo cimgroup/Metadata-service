@@ -32,14 +32,14 @@
                                         <s3:commitAuthor>
                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s3:uri>
                                             <s3:name>Sasa Stojanovic</s3:name>
-                                            <s3:id>sasa.stojanovic@cimcollege.rs</s3:id>
-                                            <s3:email>sasa.stojanovic@cimcollege.rs</s3:email>
+                                            <s3:id>sasa.stojanovic@cimgrupa.eu</s3:id>
+                                            <s3:email>sasa.stojanovic@cimgrupa.eu</s3:email>
                                         </s3:commitAuthor>
                                         <s3:commitCommitter>
                                             <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</s3:uri>
                                             <s3:name>Ivan Obradovic</s3:name>
-                                            <s3:id>ivan.obradovic@cimcollege.rs</s3:id>
-                                            <s3:email>ivan.obradovic@cimcollege.rs</s3:email>
+                                            <s3:id>ivan.obradovic@cimgrupa.eu</s3:id>
+                                            <s3:email>ivan.obradovic@cimgrupa.eu</s3:email>
                                         </s3:commitCommitter>
                                         <s3:commitDate>Tue, 17 Feb 2009 16:31:37 +0100</s3:commitDate>
                                         <s3:commitMessageLog>comment of commit</s3:commitMessageLog>
