@@ -30,90 +30,90 @@
                                         <s3:commitRepositoryUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Repository1</s3:commitRepositoryUri>
                                         <s3:commitRevisionTag>1</s3:commitRevisionTag>
                                         <s3:commitAuthor>
-                                                <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s3:uri>
-                                                <s3:name>Sasa Stojanovic</s3:name>
-                                                <s3:id>sasa.stojanovic@cimcollege.rs</s3:id>
-                                                <s3:email>sasa.stojanovic@cimcollege.rs</s3:email>
+                                            <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s3:uri>
+                                            <s3:name>Sasa Stojanovic</s3:name>
+                                            <s3:id>sasa.stojanovic@cimcollege.rs</s3:id>
+                                            <s3:email>sasa.stojanovic@cimcollege.rs</s3:email>
                                         </s3:commitAuthor>
                                         <s3:commitCommitter>
-                                                <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</s3:uri>
-                                                <s3:name>Ivan Obradovic</s3:name>
-                                                <s3:id>ivan.obradovic@cimcollege.rs</s3:id>
-                                                <s3:email>ivan.obradovic@cimcollege.rs</s3:email>
+                                            <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</s3:uri>
+                                            <s3:name>Ivan Obradovic</s3:name>
+                                            <s3:id>ivan.obradovic@cimcollege.rs</s3:id>
+                                            <s3:email>ivan.obradovic@cimcollege.rs</s3:email>
                                         </s3:commitCommitter>
                                         <s3:commitDate>Tue, 17 Feb 2009 16:31:37 +0100</s3:commitDate>
                                         <s3:commitMessageLog>comment of commit</s3:commitMessageLog>
                                         <s3:commitFile>
-                                                <s3:fileUri>http://www.alert-project.eu/ontologies/alert_scm.owl#File1</s3:fileUri>
-                                                <s3:fileId>11111</s3:fileId>
-                                                <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
-                                                <s3:fileAction>Add</s3:fileAction>
-                                                <s3:fileName>filename1</s3:fileName>
-                                                <s3:fileBranch>branch1</s3:fileBranch>
-                                                <s3:fileModules>
-                                                        <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module1</s3:moduleUri>
-                                                        <s3:moduleId>1111</s3:moduleId>
-                                                        <s3:moduleName>Mod111</s3:moduleName>
-                                                        <s3:moduleStartLine>100</s3:moduleStartLine>
-                                                        <s3:moduleEndLine>199</s3:moduleEndLine>
-                                                        <s3:moduleMethods>
-                                                                <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</s3:methodUri>
-                                                                <s3:methodId>111</s3:methodId>
-                                                                <s3:methodName>Meth111</s3:methodName>
-                                                                <s3:methodStartLine>100</s3:methodStartLine>
-                                                                <s3:methodEndLine>149</s3:methodEndLine>
-                                                        </s3:moduleMethods>
-                                                        <s3:moduleMethods>
-                                                                <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</s3:methodUri>
-                                                                <s3:methodId>112</s3:methodId>
-                                                                <s3:methodName>Meth112</s3:methodName>
-                                                                <s3:methodStartLine>150</s3:methodStartLine>
-                                                                <s3:methodEndLine>199</s3:methodEndLine>
-                                                        </s3:moduleMethods>
-                                                </s3:fileModules>
-                                                <s3:fileModules>
-                                                        <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module2</s3:moduleUri>
-                                                        <s3:moduleId>1211</s3:moduleId>
-                                                        <s3:moduleName>Mod1211</s3:moduleName>
-                                                        <s3:moduleStartLine>200</s3:moduleStartLine>
-                                                        <s3:moduleEndLine>299</s3:moduleEndLine>
-                                                        <s3:moduleMethods>
-                                                                <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method3</s3:methodUri>
-                                                                <s3:methodId>121</s3:methodId>
-                                                                <s3:methodName>Meth121</s3:methodName>
-                                                                <s3:methodStartLine>200</s3:methodStartLine>
-                                                                <s3:methodEndLine>299</s3:methodEndLine>
-                                                        </s3:moduleMethods>
-                                                </s3:fileModules>
+                                            <s3:fileUri>http://www.alert-project.eu/ontologies/alert_scm.owl#File1</s3:fileUri>
+                                            <s3:fileId>11111</s3:fileId>
+                                            <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
+                                            <s3:fileAction>Add</s3:fileAction>
+                                            <s3:fileName>filename1</s3:fileName>
+                                            <s3:fileBranch>branch1</s3:fileBranch>
+                                            <s3:fileModules>
+                                                <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module1</s3:moduleUri>
+                                                <s3:moduleId>1111</s3:moduleId>
+                                                <s3:moduleName>Mod111</s3:moduleName>
+                                                <s3:moduleStartLine>100</s3:moduleStartLine>
+                                                <s3:moduleEndLine>199</s3:moduleEndLine>
+                                                <s3:moduleMethods>
+                                                    <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</s3:methodUri>
+                                                    <s3:methodId>111</s3:methodId>
+                                                    <s3:methodName>Meth111</s3:methodName>
+                                                    <s3:methodStartLine>100</s3:methodStartLine>
+                                                    <s3:methodEndLine>149</s3:methodEndLine>
+                                                </s3:moduleMethods>
+                                                <s3:moduleMethods>
+                                                    <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</s3:methodUri>
+                                                    <s3:methodId>112</s3:methodId>
+                                                    <s3:methodName>Meth112</s3:methodName>
+                                                    <s3:methodStartLine>150</s3:methodStartLine>
+                                                    <s3:methodEndLine>199</s3:methodEndLine>
+                                                </s3:moduleMethods>
+                                            </s3:fileModules>
+                                            <s3:fileModules>
+                                                <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module2</s3:moduleUri>
+                                                <s3:moduleId>1211</s3:moduleId>
+                                                <s3:moduleName>Mod1211</s3:moduleName>
+                                                <s3:moduleStartLine>200</s3:moduleStartLine>
+                                                <s3:moduleEndLine>299</s3:moduleEndLine>
+                                                <s3:moduleMethods>
+                                                    <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method3</s3:methodUri>
+                                                    <s3:methodId>121</s3:methodId>
+                                                    <s3:methodName>Meth121</s3:methodName>
+                                                    <s3:methodStartLine>200</s3:methodStartLine>
+                                                    <s3:methodEndLine>299</s3:methodEndLine>
+                                                </s3:moduleMethods>
+                                            </s3:fileModules>
                                         </s3:commitFile>
                                         <s3:commitFile>
-                                                <s3:fileUri>http://www.alert-project.eu/ontologies/alert_scm.owl#File2</s3:fileUri>
-                                                <s3:fileId>21111</s3:fileId>
-                                                <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
-                                                <s3:fileAction>Copy</s3:fileAction>
-                                                <s3:fileName>filename2</s3:fileName>
-                                                <s3:fileBranch>branch2</s3:fileBranch>
-                                                <s3:fileModules>
-                                                        <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module3</s3:moduleUri>
-                                                        <s3:moduleId>2111</s3:moduleId>
-                                                        <s3:moduleName>Mod2111</s3:moduleName>
-                                                        <s3:moduleStartLine>300</s3:moduleStartLine>
-                                                        <s3:moduleEndLine>399</s3:moduleEndLine>
-                                                        <s3:moduleMethods>
-                                                                <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method4</s3:methodUri>
-                                                                <s3:methodId>211</s3:methodId>
-                                                                <s3:methodName>Meth211</s3:methodName>
-                                                                <s3:methodStartLine>300</s3:methodStartLine>
-                                                                <s3:methodEndLine>399</s3:methodEndLine>
-                                                        </s3:moduleMethods>
-                                                </s3:fileModules>
+                                            <s3:fileUri>http://www.alert-project.eu/ontologies/alert_scm.owl#File2</s3:fileUri>
+                                            <s3:fileId>21111</s3:fileId>
+                                            <!-- file action (Add, Copy, Delete, Modify, Rename, Replace) -->
+                                            <s3:fileAction>Copy</s3:fileAction>
+                                            <s3:fileName>filename2</s3:fileName>
+                                            <s3:fileBranch>branch2</s3:fileBranch>
+                                            <s3:fileModules>
+                                                <s3:moduleUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Module3</s3:moduleUri>
+                                                <s3:moduleId>2111</s3:moduleId>
+                                                <s3:moduleName>Mod2111</s3:moduleName>
+                                                <s3:moduleStartLine>300</s3:moduleStartLine>
+                                                <s3:moduleEndLine>399</s3:moduleEndLine>
+                                                <s3:moduleMethods>
+                                                    <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method4</s3:methodUri>
+                                                    <s3:methodId>211</s3:methodId>
+                                                    <s3:methodName>Meth211</s3:methodName>
+                                                    <s3:methodStartLine>300</s3:methodStartLine>
+                                                    <s3:methodEndLine>399</s3:methodEndLine>
+                                                </s3:moduleMethods>
+                                            </s3:fileModules>
                                         </s3:commitFile>
                                         <s3:commitProduct>
-                                                <s3:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s3:productUri>
-                                                <s3:productId>solid</s3:productId>
-                                                <s3:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</s3:productComponentUri>
-                                                <s3:productComponentId>general</s3:productComponentId>
-                                                <s3:productVersion>unspecified</s3:productVersion>
+                                            <s3:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</s3:productUri>
+                                            <s3:productId>solid</s3:productId>
+                                            <s3:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</s3:productComponentUri>
+                                            <s3:productComponentId>general</s3:productComponentId>
+                                            <s3:productVersion>unspecified</s3:productVersion>
                                         </s3:commitProduct>
                                         <s3:references>
                                             <s3:issue>
