@@ -181,6 +181,7 @@ public class MetadataConstants {
     public static String c_XMLE_commitCommtter = "commitCommitter";
     public static String c_XMLE_commitDate = "commitDate";
     public static String c_XMLE_commitMessageLog = "commitMessageLog";
+    public static String c_XMLE_commitFileNumber = "commitFileNumber";
     
     public static String c_XMLE_message = "message";
     public static String c_XMLE_from = "from";

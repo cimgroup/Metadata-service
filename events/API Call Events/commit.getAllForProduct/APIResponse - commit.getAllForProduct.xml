@@ -31,11 +31,25 @@
                                             <s3:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit1</s3:commitUri>
                                             <s3:commitMessageLog>comment of commit</s3:commitMessageLog>
                                             <s3:commitDate>Mon, 16 Jan 2012 16:31:00 +0100</s3:commitDate>
+                                            <s3:commitAuthor>
+                                                <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s3:uri>
+                                                <s3:name>Sasa Stojanovic</s3:name>
+                                                <s3:id>sasa.stojanovic@cimgrupa.eu</s3:id>
+                                                <s3:email>sasa.stojanovic@cimgrupa.eu</s3:email>
+                                            </s3:commitAuthor>
+                                            <s3:commitFileNumber>2</s3:commitFileNumber>
                                         </s3:commit>
                                         <s3:commit>
                                             <s3:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit2</s3:commitUri>
                                             <s3:commitMessageLog>comment of commit 2</s3:commitMessageLog>
                                             <s3:commitDate>Mon, 16 Jan 2012 16:33:00 +0100</s3:commitDate>
+                                            <s3:commitAuthor>
+                                                <s3:uri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</s3:uri>
+                                                <s3:name>Ivan Obradovic</s3:name>
+                                                <s3:id>ivan.obradovic@cimgrupa.eu</s3:id>
+                                                <s3:email>ivan.obradovic@cimgrupa.eu</s3:email>
+                                            </s3:commitAuthor>
+                                            <s3:commitFileNumber>1</s3:commitFileNumber>
                                         </s3:commit>
                                     </s3:responseData>
                                 </ns1:apiResponse>
