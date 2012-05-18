@@ -753,7 +753,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new api request event from XML
      * @startRealisation  Sasa Stojanovic     06.09.2011.
-     * @finalModification Dejan Milosavljevic 04.02.2012.
+     * @finalModification Dejan Milosavljevic 18.05.2012.
      * @param dDoc - input XML document to read
      */
     private static void APICallRequest(Document dDoc) {
@@ -1232,6 +1232,29 @@ public class MetadataXMLReader {
                     }
                     
                     MetadataModel.ac_commit_getAllForProduct(sEventId, sProductID, dtmFromDate);
+                }
+                
+                ///////////////////////////////// commit_getInfo /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_commit_getInfo))
+                {
+                    System.out.println("API Call type: commit.getInfo");
+                    
+                    String sCommitUri = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_commitUri))
+                                sCommitUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_commit_getInfo(sEventId, sCommitUri);
                 }
                 
                 ///////////////////////////////// mail_getAllForProduct /////////////////////////////////

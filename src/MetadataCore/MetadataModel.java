@@ -520,6 +520,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting commit info
+     * @startRealisation Sasa Stojanovic 18.05.2012.
+     * @finalModification Sasa Stojanovic 18.05.2012.
+     * @param sEventId - event id
+     * @param sCommitUri - issue id
+     */
+    static void ac_commit_getInfo(String sEventId, String sCommitUri)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_commit_getInfo(sCommitUri);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_commit_getInfo, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting all mails for product
      * @startRealisation  Sasa Stojanovic 06.04.2012.
      * @finalModification Sasa Stojanovic 06.04.2012.

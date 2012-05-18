@@ -331,6 +331,7 @@ public class MetadataConstants {
     public static String c_XMLV_issueDuplicatesSPARQL = "issueDuplicatesSPARQL";
     public static String c_XMLV_keyword = "keyword";
     public static String c_XMLV_fromDate = "fromDate";
+    public static String c_XMLV_commitUri = "commitUri";
     
     public static String c_XMLV_personForIssueSPARQL = "personForIssueSPARQL";
     
@@ -352,6 +353,7 @@ public class MetadataConstants {
     public static String c_XMLAC_commit_getRelatedToIssue = "commit.getRelatedToIssue";
     public static String c_XMLAC_commit_getRelatedToKeyword = "commit.getRelatedToKeyword";
     public static String c_XMLAC_commit_getAllForProduct = "commit.getAllForProduct";
+    public static String c_XMLAC_commit_getInfo = "commit.getInfo";
     public static String c_XMLAC_competency_getForPerson = "competency.getForPerson";
     public static String c_XMLAC_competency_getPersonForIssue = "competency.getPersonForIssue";
     public static String c_XMLAC_identity_getForPerson = "identity.getForPerson";

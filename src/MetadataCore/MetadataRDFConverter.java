@@ -3595,6 +3595,314 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary issue_getInfo
+     * @startRealisation Sasa Stojanovic 18.05.2012.
+     * @finalModification Sasa Stojanovic 18.05.2012.
+     * @param sCommitUri - commit URI
+     * @return - APIResponseData object with results
+     */
+    public static MetadataGlobal.APIResponseData ac_commit_getInfo(String sCommitUri)
+    {
+        MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
+        
+        try
+        {
+            OntModel oModel = MetadataConstants.omModel;
+            
+            OntResource resCommit = oModel.getOntResource(sCommitUri);
+            StmtIterator siCommitProperties = resCommit.listProperties();
+            while (siCommitProperties.hasNext())
+            {
+                Statement sStatement = siCommitProperties.next();
+                String sCommitProperty = sStatement.getPredicate().getURI();
+                
+                MetadataGlobal.APIResponseData oCommitData = new MetadataGlobal.APIResponseData();
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_IsCommitOfRepository))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitRepository + MetadataConstants.c_XMLE_Uri;
+                    oCommitData.sData = sStatement.getObject().toString();
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_RevisionTag))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitRevisionTag;
+                    oCommitData.sData = sStatement.getObject().toString();
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitAuthor + "/";
+                    oCommitData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitCommtter + "/";
+                    oCommitData.oData.add(GetPersonAPIResponse(sStatement.getObject().toString()));
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitDate;
+                    oCommitData.sData = MetadataGlobal.FormatDateFromSavingToPublish(sStatement.getObject().toString());
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitMessageLog;
+                    oCommitData.sData = sStatement.getObject().toString();
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsCommitOf))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitProduct + "/";
+                    
+                    MetadataGlobal.APIResponseData oProductUri = new MetadataGlobal.APIResponseData();
+                    MetadataGlobal.APIResponseData oComponentUri = new MetadataGlobal.APIResponseData();
+                    MetadataGlobal.APIResponseData oProductVersion = new MetadataGlobal.APIResponseData();
+                    
+                    oProductUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_product + MetadataConstants.c_XMLE_Uri;
+                    oComponentUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_productComponent + MetadataConstants.c_XMLE_Uri;
+                    oProductVersion.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_productVersion;
+                    
+                    oComponentUri.sData = sStatement.getObject().toString();
+                    oCommitData.oData.add(oComponentUri);
+                    oCommitData.oData.add(GetIdAPIResponse(oComponentUri.sData, MetadataConstants.c_XMLE_productComponent));
+                    
+                    String sQuery = "SELECT ?productUri ?productVersion WHERE "
+                    + "{<" + oComponentUri.sData + ">  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> ?productUri ."
+                    + " ?productUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Version + "> ?productVersion}";
+
+                    ResultSet rsProduct = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+
+                    if (rsProduct.hasNext())
+                    {
+                        QuerySolution qsIssue = rsProduct.nextSolution();
+
+                        oProductUri.sData = qsIssue.get("?productUri").toString();
+                        oProductVersion.sData = qsIssue.get("?productVersion").toString();
+
+                        oCommitData.oData.add(oProductUri);
+                        oCommitData.oData.add(GetIdAPIResponse(oProductUri.sData, MetadataConstants.c_XMLE_product));
+                        oCommitData.oData.add(oProductVersion);
+                    }
+                }
+                
+                if (sCommitProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile))
+                {
+                    oCommitData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitFile + "/";
+
+                    //Load file data
+                    String sFileUri = sStatement.getObject().toString();
+                    OntResource resFile = oModel.getOntResource(sFileUri);
+
+                    MetadataGlobal.APIResponseData oFUri = new MetadataGlobal.APIResponseData();
+                    oFUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
+                    oFUri.sData = sFileUri;
+                    oCommitData.oData.add(oFUri);
+
+                    StmtIterator siFileProperties = resFile.listProperties();
+                    while (siFileProperties.hasNext())
+                    {
+                        Statement sFileStatement = siFileProperties.next();
+                        String sProperty = sFileStatement.getPredicate().getURI();
+                        
+                        MetadataGlobal.APIResponseData oFileData = new MetadataGlobal.APIResponseData();
+                        
+                        //File id
+                        if (sProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                        {
+                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Id;
+                            oFileData.sData = sFileStatement.getObject().toString();
+                        }
+                        
+                        //File name
+                        if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                        {
+                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileName;
+                            oFileData.sData = sFileStatement.getObject().toString();
+                        }
+                        
+                        //File branch
+                        if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_OnBranch))
+                        {
+                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileBranch;
+                            oFileData.sData = sFileStatement.getObject().toString();
+                        }
+                        
+                        //File action
+                        if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAction))
+                        {
+                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileAction;
+                            
+                            String sQuery = "SELECT ?actionType WHERE "
+                            + "{<" + sFileStatement.getObject().toString() + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAction + "> ?actionType ."
+                            + " <" + sFileStatement.getObject().toString() + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommit + "> <" + sCommitUri + ">}";
+                            ResultSet rsAction = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+                            if (rsAction.hasNext())
+                            {
+                                QuerySolution qsIssue = rsAction.nextSolution();
+                                oFileData.sData = qsIssue.get("?actionType").toString().replace(MetadataConstants.c_NS_Alert_Scm, "");
+                            }
+                        }
+
+                        //Modules
+                        if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules))
+                        {
+                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
+
+                            //Load module data
+                            String sModuleUri = sFileStatement.getObject().toString();
+                            OntResource resModule = oModel.getOntResource(sModuleUri);
+
+                            MetadataGlobal.APIResponseData oMUri = new MetadataGlobal.APIResponseData();
+                            oMUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
+                            oMUri.sData = sModuleUri;
+                            oFileData.oData.add(oMUri);
+
+                            StmtIterator siModuleProps = resModule.listProperties();
+                            while (siModuleProps.hasNext())
+                            {
+                                Statement sMStatement = siModuleProps.next();
+                                String sMProperty = sMStatement.getPredicate().getURI();
+                                
+                                MetadataGlobal.APIResponseData oModuleData = new MetadataGlobal.APIResponseData();
+
+                                //ID
+                                if (sMProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                {
+                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id;
+                                    oModuleData.sData = sMStatement.getObject().toString();
+                                }
+
+                                //Name
+                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                                {
+                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
+                                    oModuleData.sData = sMStatement.getObject().toString();
+                                }
+
+                                //Start line
+                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                                {
+                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleStartLine;
+                                    oModuleData.sData = sMStatement.getObject().toString();
+                                }
+
+                                //End line
+                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                                {
+                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleEndLine;
+                                    oModuleData.sData = sMStatement.getObject().toString();
+                                }
+
+                                //Methods
+                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods))
+                                {
+                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleMethods + "/";
+                                    
+                                    //Load method data
+                                    String sMethodUri = sMStatement.getObject().toString();
+                                    OntResource resMethod = oModel.getOntResource(sMethodUri);
+                                    
+                                    MetadataGlobal.APIResponseData oMetUri = new MetadataGlobal.APIResponseData();
+                                    oMetUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                    oMetUri.sData = sMethodUri;
+                                    oModuleData.oData.add(oMetUri);
+
+                                    StmtIterator siMethodProps = resMethod.listProperties();
+                                    while (siMethodProps.hasNext())
+                                    {
+                                        Statement sMetStatement = siMethodProps.next();
+                                        String sMetProperty = sMetStatement.getPredicate().getURI();
+                                        
+                                        MetadataGlobal.APIResponseData oMethodData = new MetadataGlobal.APIResponseData();
+
+                                        //ID
+                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                        {
+                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id;
+                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                        }
+
+                                        //Name
+                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                                        {
+                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
+                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                        }
+
+                                        //Start line
+                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                                        {
+                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodStartLine;
+                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                        }
+
+                                        //End line
+                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                                        {
+                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodEndLine;
+                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                        }
+                                        oModuleData.oData.add(oMethodData);
+                                    }
+                                }
+                                oFileData.oData.add(oModuleData);
+                            }
+                        }
+                        oCommitData.oData.add(oFileData);
+                    }
+                }
+                oData.oData.add(oCommitData);
+            }
+            
+            //References with issues
+            MetadataGlobal.APIResponseData oReferences = new MetadataGlobal.APIResponseData();
+            oReferences.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_references + "/";
+        
+            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription WHERE "
+                    + "{ <" + sCommitUri + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> ?issueUri ."
+                    + " ?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> ."
+                    + " OPTIONAL {?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription}}";
+            ResultSet rsRefIssue = QueryExecutionFactory.create(sRefIssueQuery, oModel).execSelect();
+                           
+            while (rsRefIssue.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefIssue = new MetadataGlobal.APIResponseData();
+                oRefIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + "/";
+
+                QuerySolution qsRefIssue = rsRefIssue.nextSolution();
+
+                String sRefIssueUri = qsRefIssue.get("?issueUri").toString();
+                String sRefIssueDescription = "";
+                if (qsRefIssue.get("?issueDescription") != null)
+                    sRefIssueDescription = qsRefIssue.get("?issueDescription").toString();
+                
+                MetadataGlobal.APIResponseData oRefIssueUri = new MetadataGlobal.APIResponseData();
+                oRefIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                oRefIssueUri.sData = sRefIssueUri;
+                oRefIssue.oData.add(oRefIssueUri);
+                
+                MetadataGlobal.APIResponseData oRefIssueDesc = new MetadataGlobal.APIResponseData();
+                oRefIssueDesc.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issueDescription;
+                oRefIssueDesc.sData = sRefIssueDescription;
+                oRefIssue.oData.add(oRefIssueDesc);
+                
+                oReferences.oData.add(oRefIssue);
+            }
+            
+            if (oReferences.sReturnConfig != null)
+                oData.oData.add(oReferences);
+        }
+        catch (Exception e)
+        {
+        }
+        return oData;
+    }
+    
+    /**
      * @summary mail_getAllForProduct
      * @startRealisation  Sasa Stojanovic 06.04.2012.
      * @finalModification Sasa Stojanovic 06.04.2012.
