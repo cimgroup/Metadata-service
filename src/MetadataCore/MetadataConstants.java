@@ -425,6 +425,7 @@ public class MetadataConstants {
     public static String c_OWLClass_Module = "Module";
     
     //action
+    public static String c_OWLClass_Action = "Action";
     public static String c_OWLClass_Add = "Add";
     public static String c_OWLClass_Copy = "Copy";
     public static String c_OWLClass_Delete = "Delete";
@@ -582,6 +583,7 @@ public class MetadataConstants {
             
     public static String c_OWLObjectProperty_HasFile = "hasFile";
     public static String c_OWLObjectProperty_HasAction = "hasAction";
+    public static String c_OWLObjectProperty_HasCommit = "hasCommit";
     public static String c_OWLObjectProperty_HasModules = "hasModules";
     public static String c_OWLObjectProperty_HasMethods = "hasMethods";
     

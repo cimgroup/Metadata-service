@@ -791,7 +791,11 @@ public class MetadataRDFConverter {
                         if (oCommit.m_oHasFile[i].m_oHasAction != null)
                         {
                             ObjectProperty opHasAction = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAction);
-                            resFile.removeAll(opHasAction);
+                            ObjectProperty opHasCommit = oModel.getObjectProperty(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommit);
+                            
+                            Resource resAction = oModel.getResource(MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Action, ""));
+                            resAction.addProperty(opHasCommit, resCommit.asResource());
+                            resFile.addProperty(opHasAction, resAction.asResource());
                             
                             Class clsHasAction = oCommit.m_oHasFile[i].m_oHasAction.getClass();
                             Class clsAddFile = AddFile.class;
@@ -804,32 +808,32 @@ public class MetadataRDFConverter {
                             if (clsHasAction.equals(clsAddFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Add);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                             if (clsHasAction.equals(clsCopyFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Copy);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                             if (clsHasAction.equals(clsDeleteFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Delete);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                             if (clsHasAction.equals(clsModifyFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Modify);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                             if (clsHasAction.equals(clsRenameFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Rename);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                             if (clsHasAction.equals(clsReplaceFile))
                             {
                                 OntClass ocHasAction = oModel.getOntClass(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Replace);
-                                resFile.addProperty(opHasAction, ocHasAction.asResource());
+                                resAction.addProperty(opHasAction, ocHasAction.asResource());
                             }
                         }
 
