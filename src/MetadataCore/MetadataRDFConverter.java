@@ -4667,20 +4667,22 @@ public class MetadataRDFConverter {
                     for (MetadataGlobal.APIResponseData oMember : oMembers.oData)
                     {
                         OntResource resInstance = omModel.getOntResource(oMember.sData);
+                        if (resInstance != null)
+                        {
+                            MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
+                            oInstance.sReturnConfig = "s3:instance/";
+                            MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
+                            oIName.sReturnConfig = "s3:name";
+                            oIName.sData = resInstance.getLocalName();
+                            MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
+                            oIUri.sReturnConfig = "s3:uri";
+                            oIUri.sData = oMember.sData;
 
-                        MetadataGlobal.APIResponseData oInstance = new MetadataGlobal.APIResponseData();
-                        oInstance.sReturnConfig = "s3:instance/";
-                        MetadataGlobal.APIResponseData oIName = new MetadataGlobal.APIResponseData();
-                        oIName.sReturnConfig = "s3:name";
-                        oIName.sData = resInstance.getLocalName();
-                        MetadataGlobal.APIResponseData oIUri = new MetadataGlobal.APIResponseData();
-                        oIUri.sReturnConfig = "s3:uri";
-                        oIUri.sData = oMember.sData;
-
-                        oInstance.oData.add(oIName);
-                        oInstance.oData.add(oIUri);
-                        //oInstance.oData.add(oProperties);
-                        oInstances.oData.add(oInstance);
+                            oInstance.oData.add(oIName);
+                            oInstance.oData.add(oIUri);
+                            //oInstance.oData.add(oProperties);
+                            oInstances.oData.add(oInstance);
+                        }
                     }
                 }
                 
