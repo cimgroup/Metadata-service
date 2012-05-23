@@ -1196,7 +1196,7 @@ public class MetadataRDFConverter {
     /**
      * @summary Save annotation data.
      * @startRealisation  Dejan Milosavljevic 17.01.2012.
-     * @finalModification Dejan Milosavljevic 19.04.2012.
+     * @finalModification Sasa Stojanovic 23.05.2012.
      * @param oAnnotation - AnnotationData object
      * @return - same AnnotationData object with filled m_sObjectURI
      */
@@ -1250,6 +1250,7 @@ public class MetadataRDFConverter {
                             {
                                 ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
                                 resObject.addProperty(opHasReferenceTo, resReferencedObject.asResource());
+                                resReferencedObject.addProperty(opHasReferenceTo, resObject.asResource());
                             }
                         }
                     }
@@ -1288,9 +1289,7 @@ public class MetadataRDFConverter {
                             {
                                 ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
                                 resObject.addProperty(opHasReferenceTo, resReferencedObject.asResource());
-                                
-                                ObjectProperty opIsReferenced = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
-                                resReferencedObject.addProperty(opIsReferenced, resObject.asResource());
+                                resReferencedObject.addProperty(opHasReferenceTo, resObject.asResource());
                             }
                         }
                     }
