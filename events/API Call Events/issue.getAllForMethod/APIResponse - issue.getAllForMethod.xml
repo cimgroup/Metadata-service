@@ -31,24 +31,24 @@
 									<s3:responseData>
                                                                                 <s3:method>
                                                                                     <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method1</s3:methodUri>
-                                                                                    <s3:methodIssues>
+                                                                                    <s3:methodIssue>
                                                                                         <s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s3:issueUri>
                                                                                         <!-- relationLevel: 1 - direct with method, 2 - with method module, 3 - with method file, 4 - with method commit -->
                                                                                         <s3:relationLevel>1</s3:relationLevel>
-                                                                                    </s3:methodIssues>
-                                                                                    <s3:methodIssues>
+                                                                                    </s3:methodIssue>
+                                                                                    <s3:methodIssue>
                                                                                         <s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s3:issueUri>
                                                                                         <!-- relationLevel: 1 - direct with method, 2 - with method module, 3 - with method file, 4 - with method commit -->
                                                                                         <s3:relationLevel>3</s3:relationLevel>
-                                                                                    </s3:methodIssues>
+                                                                                    </s3:methodIssue>
                                                                                 </s3:method>
                                                                                 <s3:method>
                                                                                     <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method2</s3:methodUri>
-                                                                                    <s3:methodIssues>
+                                                                                    <s3:methodIssue>
                                                                                         <s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3</s3:issueUri>
                                                                                         <!-- relationLevel: 1 - direct with method, 2 - with method module, 3 - with method file, 4 - with method commit -->
                                                                                         <s3:relationLevel>4</s3:relationLevel>
-                                                                                    </s3:methodIssues>
+                                                                                    </s3:methodIssue>
                                                                                 </s3:method>
                                                                                 <s3:method>
                                                                                     <s3:methodUri>http://www.alert-project.eu/ontologies/alert.owl#Method3</s3:methodUri>

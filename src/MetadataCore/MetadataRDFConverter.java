@@ -2175,27 +2175,117 @@ public class MetadataRDFConverter {
         try
         {
             OntModel oModel = MetadataConstants.omModel;
-                        
-            String sQuery = "SELECT ?issueUri WHERE {";
+            
             for (int i = 0; i < sMethodUri.size(); i++)
             {
-                if (i > 0)
-                    sQuery += " UNION ";
-                sQuery += "{?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_RelatedToSourceCode + "> <" + sMethodUri.get(i) + ">}";
-            }
-            sQuery += "}";
+                MetadataGlobal.APIResponseData oMethod = new MetadataGlobal.APIResponseData();
+                oMethod.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + "/";
                 
-            ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
-            
-            while (rsIssue.hasNext())
-            {
-                QuerySolution qsIssue = rsIssue.nextSolution();
+                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                oMethodUri.sData = sMethodUri.get(i);
+                oMethod.oData.add(oMethodUri);
                 
-                MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
-                oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
-                oIssueUri.sData = qsIssue.get("?issueUri").toString();
-
-                oData.oData.add(oIssueUri);
+                //direct relations with issues
+                String sQuery1 = "SELECT ?issueUri WHERE {<" + sMethodUri.get(i) + "> <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> ?issueUri . "
+                        + "?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + ">}";
+                ResultSet rsIssue1 = QueryExecutionFactory.create(sQuery1, oModel).execSelect();
+                while (rsIssue1.hasNext())
+                {
+                    MetadataGlobal.APIResponseData oMethodIssue = new MetadataGlobal.APIResponseData();
+                    oMethodIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodIssue + "/";
+                    
+                    QuerySolution qsIssue = rsIssue1.nextSolution();
+                    MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                    oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                    oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                    oMethodIssue.oData.add(oIssueUri);
+                    MetadataGlobal.APIResponseData oRelationLevel = new MetadataGlobal.APIResponseData();
+                    oRelationLevel.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_relationLevel;
+                    oRelationLevel.sData = "1";
+                    oMethodIssue.oData.add(oRelationLevel);
+                    
+                    oMethod.oData.add(oMethodIssue);
+                }
+                
+                //relations through modules
+                String sQuery2 = "SELECT ?issueUri WHERE "
+                        + "{?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> <" + sMethodUri.get(i) + "> . "
+                        + "?moduleUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> ?issueUri . "
+                        + "?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> . "
+                        + "?moduleUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Module + ">}";
+                ResultSet rsIssue2 = QueryExecutionFactory.create(sQuery2, oModel).execSelect();
+                while (rsIssue2.hasNext())
+                {
+                    MetadataGlobal.APIResponseData oMethodIssue = new MetadataGlobal.APIResponseData();
+                    oMethodIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodIssue + "/";
+                    
+                    QuerySolution qsIssue = rsIssue2.nextSolution();
+                    MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                    oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                    oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                    oMethodIssue.oData.add(oIssueUri);
+                    MetadataGlobal.APIResponseData oRelationLevel = new MetadataGlobal.APIResponseData();
+                    oRelationLevel.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_relationLevel;
+                    oRelationLevel.sData = "2";
+                    oMethodIssue.oData.add(oRelationLevel);
+                    
+                    oMethod.oData.add(oMethodIssue);
+                }
+                
+                //relations through files
+                String sQuery3 = "SELECT ?issueUri WHERE "
+                        + "{?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+                        + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> <" + sMethodUri.get(i) + "> . "
+                        + "?fileUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> ?issueUri . "
+                        + "?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> . "
+                        + "?fileUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_File + "> . "
+                        + "?moduleUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Module + ">}";
+                ResultSet rsIssue3 = QueryExecutionFactory.create(sQuery3, oModel).execSelect();
+                while (rsIssue3.hasNext())
+                {
+                    MetadataGlobal.APIResponseData oMethodIssue = new MetadataGlobal.APIResponseData();
+                    oMethodIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodIssue + "/";
+                    
+                    QuerySolution qsIssue = rsIssue3.nextSolution();
+                    MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                    oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                    oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                    oMethodIssue.oData.add(oIssueUri);
+                    MetadataGlobal.APIResponseData oRelationLevel = new MetadataGlobal.APIResponseData();
+                    oRelationLevel.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_relationLevel;
+                    oRelationLevel.sData = "3";
+                    oMethodIssue.oData.add(oRelationLevel);
+                    
+                    oMethod.oData.add(oMethodIssue);
+                }
+                
+                //relations through commits
+                String sQuery4 = "SELECT ?issueUri WHERE "
+                        + "{?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> <" + sMethodUri.get(i) + "> . "
+                        + "?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> ?issueUri . "
+                        + "?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> . "
+                        + "?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + ">}";
+                ResultSet rsIssue4 = QueryExecutionFactory.create(sQuery4, oModel).execSelect();
+                while (rsIssue4.hasNext())
+                {
+                    MetadataGlobal.APIResponseData oMethodIssue = new MetadataGlobal.APIResponseData();
+                    oMethodIssue.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodIssue + "/";
+                    
+                    QuerySolution qsIssue = rsIssue4.nextSolution();
+                    MetadataGlobal.APIResponseData oIssueUri = new MetadataGlobal.APIResponseData();
+                    oIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
+                    oIssueUri.sData = qsIssue.get("?issueUri").toString();
+                    oMethodIssue.oData.add(oIssueUri);
+                    MetadataGlobal.APIResponseData oRelationLevel = new MetadataGlobal.APIResponseData();
+                    oRelationLevel.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_relationLevel;
+                    oRelationLevel.sData = "4";
+                    oMethodIssue.oData.add(oRelationLevel);
+                    
+                    oMethod.oData.add(oMethodIssue);
+                }
+                
+                oData.oData.add(oMethod);
             }
         }
         catch (Exception e)
@@ -3505,34 +3595,6 @@ public class MetadataRDFConverter {
                 }
                 oData.oData.add(oFile);
             }
-            
-                     
-//            sFilesQuery = "SELECT DISTINCT ?methodUri WHERE {"
-//                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
-//                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
-//                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
-//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
-//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
-//                    + " UNION "
-//                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
-//                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
-//                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
-//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
-//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersonUri + "> }"
-//                    + "}";
-//                            
-//            ResultSet rsMethod = QueryExecutionFactory.create(sFilesQuery, oModel).execSelect();
-//            
-//            while (rsMethod.hasNext())
-//            {
-//                QuerySolution qsMethod = rsMethod.nextSolution();
-//                
-//                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
-//                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
-//                oMethodUri.sData = qsMethod.get("?methodUri").toString();
-//
-//                oData.oData.add(oMethodUri);
-//            }
         }
         catch (Exception e)
         {

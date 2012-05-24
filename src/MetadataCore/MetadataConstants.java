@@ -273,6 +273,7 @@ public class MetadataConstants {
     public static String c_XMLE_methodName = "methodName";
     public static String c_XMLE_methodStartLine = "methodStartLine";
     public static String c_XMLE_methodEndLine = "methodEndLine";
+    public static String c_XMLE_methodIssue = "methodIssue";
     public static String c_XMLE_commitProduct = "commitProduct";
     
     public static String c_XMLE_competency = "competency";
@@ -298,6 +299,8 @@ public class MetadataConstants {
     public static String c_XMLE_emailFrom = "emailFrom";
     public static String c_XMLE_emailDate = "emailDate";
     
+    public static String c_XMLE_relationLevel = "relationLevel";
+    
     public static String c_XMLE_concepts = "concepts";
     public static String c_XMLE_newRDFData = "newRDFData";
     public static String c_XMLE_RDF = "RDF";
@@ -307,7 +310,7 @@ public class MetadataConstants {
     public static String c_XMLE_linksTo = "linksTo";
     public static String c_XMLE_subClassOf = "subClassOf";
     public static String c_XMLE_superClassOf = "superClassOf";
-    
+       
     public static String c_XMLEA_about = "about";
     public static String c_XMLEA_resource = "resource";
     
