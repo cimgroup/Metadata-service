@@ -345,6 +345,8 @@ public class MetadataConstants {
     
     public static String c_XMLV_offset = "offset";
     public static String c_XMLV_count = "count";
+    
+    public static String c_XMLV_uuid = "uuid";
 
     // </editor-fold>
     
@@ -370,7 +372,7 @@ public class MetadataConstants {
     public static String c_XMLAC_issue_getOpen = "issue.getOpen";
     public static String c_XMLAC_email_getRelatedToIssue = "email.getRelatedToIssue";
     public static String c_XMLAC_email_getRelatedToKeyword = "email.getRelatedToKeyword";
-    public static String c_XMLAC_method_getAllForPerson = "method.getAllForPerson";
+    public static String c_XMLAC_method_getAllForIdentity = "method.getAllForIdentity";
     public static String c_XMLAC_method_getRelatedCode = "method.getRelatedCode";
     public static String c_XMLAC_person_getAllForEmail = "person.getAllForEmail";
     public static String c_XMLAC_person_getInfo = "person.getInfo";

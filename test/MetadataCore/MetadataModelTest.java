@@ -269,7 +269,7 @@ public class MetadataModelTest {
     }
 
     /**
-     * Test of ac_method_getAllForPerson method, of class MetadataModel.
+     * Test of ac_method_getAllForIdentity method, of class MetadataModel.
      */
     @Ignore
     @Test
@@ -277,7 +277,7 @@ public class MetadataModelTest {
         System.out.println("* MetadataModelTest: ac_method_getAllForPerson");
         String sEventId = "";
         String sPersonUri = "";
-        MetadataModel.ac_method_getAllForPerson(sEventId, sPersonUri);
+        MetadataModel.ac_method_getAllForIdentity(sEventId, sPersonUri);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

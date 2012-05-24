@@ -923,12 +923,14 @@ public class MetadataRDFConverter {
                                                 }
 
                                                 resModule.addProperty(opHasMethod, resMethod.asResource());
+                                                resCommit.addProperty(opHasMethod, resMethod.asResource());
                                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_moduleMethods + "/o:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
                                             }
                                         }
                                     }
                                     
                                     resFile.addProperty(opHasModule, resModule.asResource());
+                                    resCommit.addProperty(opHasModule, resModule.asResource());
                                     oCommit.m_oHasFile[i].m_oHasModule[j].m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_fileModules + "/o:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
                                 }
                             }
@@ -3345,43 +3347,192 @@ public class MetadataRDFConverter {
     /**
      * @summary method_getAllForPerson
      * @startRealisation Sasa Stojanovic 18.01.2012.
-     * @finalModification Sasa Stojanovic 18.01.2012.
-     * @param sPersonUri - person uri
+     * @finalModification Sasa Stojanovic 24.05.2012.
+     * @param sIdentityId - identity id
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_method_getAllForPerson(String sPersonUri)
+    public static MetadataGlobal.APIResponseData ac_method_getAllForIdentity(String sIdentityId)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataConstants.omModel;
-                     
-            String sQuery = "SELECT DISTINCT ?methodUri WHERE {"
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
-                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
-                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
-                    + " UNION "
-                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
-                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
-                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
-                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersonUri + "> }"
-                    + "}";
-                            
-            ResultSet rsMethod = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
-            while (rsMethod.hasNext())
+            //get list of persons for identity
+            ArrayList <String> sPersons = new ArrayList<String>();
+            String sQuery = "SELECT DISTINCT ?personUri WHERE "
+                    + "{ ?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . "
+                    + "?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson + "> ?personUri . "
+                    + "?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> \"" + sIdentityId + "\" }";
+                            
+            ResultSet rsPersons = QueryExecutionFactory.create(sQuery, oModel).execSelect();
+            while (rsPersons.hasNext())
             {
-                QuerySolution qsMethod = rsMethod.nextSolution();
-                
-                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
-                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
-                oMethodUri.sData = qsMethod.get("?methodUri").toString();
-
-                oData.oData.add(oMethodUri);
+                QuerySolution qsPersons = rsPersons.nextSolution();
+                sPersons.add(qsPersons.get("?personUri").toString());
             }
+            
+            //get list of commits related to identity persons
+            ArrayList <String> sCommits = new ArrayList<String>();
+            String sCommitQuery = "SELECT DISTINCT ?commitUri WHERE {"
+                    + "?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> . ";
+            for (int i = 0; i < sPersons.size(); i++)
+            {
+                if (i > 0)
+                {
+                    sCommitQuery += " UNION ";
+                }
+                sCommitQuery += "{ ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersons.get(i) + "> }"
+                    + " UNION "
+                    + "{ ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersons.get(i) + "> }";
+            }
+            sCommitQuery += "}";
+            
+            ResultSet rsCommits = QueryExecutionFactory.create(sCommitQuery, oModel).execSelect();
+            while (rsCommits.hasNext())
+            {
+                QuerySolution qsCommits = rsCommits.nextSolution();
+                sCommits.add(qsCommits.get("?commitUri").toString());
+            }
+            
+            //get files from commits
+            String sFilesQuery = "SELECT DISTINCT ?fileUri ?fileName ?fileBranch WHERE {"
+                    + "?fileUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_File + "> . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name + "> ?fileName . "
+                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_OnBranch + "> ?fileBranch . ";
+            for (int i = 0; i < sCommits.size(); i++)
+            {
+                if (i > 0)
+                {
+                    sFilesQuery += " UNION ";
+                }
+                sFilesQuery += "{ <" + sCommits.get(i) + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri }";
+            }
+            sFilesQuery += "}";
+                            
+            ResultSet rsFiles = QueryExecutionFactory.create(sFilesQuery, oModel).execSelect();
+            while (rsFiles.hasNext())
+            {
+                MetadataGlobal.APIResponseData oFile = new MetadataGlobal.APIResponseData();
+                oFile.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + "/";
+                
+                QuerySolution qsFiles = rsFiles.nextSolution();
+                
+                MetadataGlobal.APIResponseData oFileUri = new MetadataGlobal.APIResponseData();
+                oFileUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Uri;
+                oFileUri.sData = qsFiles.get("?fileUri").toString();
+                oFile.oData.add(oFileUri);
+                
+                MetadataGlobal.APIResponseData oFileName = new MetadataGlobal.APIResponseData();
+                oFileName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileName;
+                oFileName.sData = qsFiles.get("?fileName").toString();
+                oFile.oData.add(oFileName);
+                
+                MetadataGlobal.APIResponseData oFileBranch = new MetadataGlobal.APIResponseData();
+                oFileBranch.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileBranch;
+                oFileBranch.sData = qsFiles.get("?fileBranch").toString();
+                oFile.oData.add(oFileBranch);
+                
+                //get get modules from file and commits
+                String sModulesQuery = "SELECT DISTINCT ?moduleUri ?moduleName WHERE {"
+                        + "?moduleUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Module + "> . "
+                        + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name + "> ?moduleName . "
+                        + "<" + oFileUri.sData + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . ";
+                for (int i = 0; i < sCommits.size(); i++)
+                {
+                    if (i > 0)
+                    {
+                        sModulesQuery += " UNION ";
+                    }
+                    sModulesQuery += "{ <" + sCommits.get(i) + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri }";
+                }
+                sModulesQuery += "}";
+                
+                ResultSet rsModules = QueryExecutionFactory.create(sModulesQuery, oModel).execSelect();
+                while (rsModules.hasNext())
+                {
+                    MetadataGlobal.APIResponseData oModule = new MetadataGlobal.APIResponseData();
+                    oModule.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
+
+                    QuerySolution qsModule = rsModules.nextSolution();
+
+                    MetadataGlobal.APIResponseData oModuleUri = new MetadataGlobal.APIResponseData();
+                    oModuleUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
+                    oModuleUri.sData = qsModule.get("?moduleUri").toString();
+                    oModule.oData.add(oModuleUri);
+
+                    MetadataGlobal.APIResponseData oModuleName = new MetadataGlobal.APIResponseData();
+                    oModuleName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
+                    oModuleName.sData = qsModule.get("?moduleName").toString();
+                    oModule.oData.add(oModuleName);
+                    
+                    //get get methods from module and commits
+                    String sMethodsQuery = "SELECT DISTINCT ?methodUri ?methodName WHERE {"
+                            + "?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+                            + "?methodUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name + "> ?methodName . "
+                            + "<" + oModuleUri.sData + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . ";
+                    for (int i = 0; i < sCommits.size(); i++)
+                    {
+                        if (i > 0)
+                        {
+                            sMethodsQuery += " UNION ";
+                        }
+                        sMethodsQuery += "{ <" + sCommits.get(i) + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri }";
+                    }
+                    sMethodsQuery += "}";
+
+                    ResultSet rsMethods = QueryExecutionFactory.create(sMethodsQuery, oModel).execSelect();
+                    while (rsMethods.hasNext())
+                    {
+                        MetadataGlobal.APIResponseData oMethod = new MetadataGlobal.APIResponseData();
+                        oMethod.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleMethods + "/";
+
+                        QuerySolution qsMethod = rsMethods.nextSolution();
+
+                        MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+                        oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                        oMethodUri.sData = qsMethod.get("?methodUri").toString();
+                        oMethod.oData.add(oMethodUri);
+
+                        MetadataGlobal.APIResponseData oMethodName = new MetadataGlobal.APIResponseData();
+                        oMethodName.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
+                        oMethodName.sData = qsMethod.get("?methodName").toString();
+                        oMethod.oData.add(oMethodName);
+                        
+                        oModule.oData.add(oMethod);
+                    }
+                    oFile.oData.add(oModule);
+                }
+                oData.oData.add(oFile);
+            }
+            
+                     
+//            sFilesQuery = "SELECT DISTINCT ?methodUri WHERE {"
+//                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+//                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+//                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasAuthor + "> <" + sPersonUri + "> }"
+//                    + " UNION "
+//                    + "{ ?methodUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method + "> . "
+//                    + "?moduleUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> ?methodUri . "
+//                    + "?fileUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> ?moduleUri . "
+//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?fileUri . "
+//                    + "?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasCommitter + "> <" + sPersonUri + "> }"
+//                    + "}";
+//                            
+//            ResultSet rsMethod = QueryExecutionFactory.create(sFilesQuery, oModel).execSelect();
+//            
+//            while (rsMethod.hasNext())
+//            {
+//                QuerySolution qsMethod = rsMethod.nextSolution();
+//                
+//                MetadataGlobal.APIResponseData oMethodUri = new MetadataGlobal.APIResponseData();
+//                oMethodUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+//                oMethodUri.sData = qsMethod.get("?methodUri").toString();
+//
+//                oData.oData.add(oMethodUri);
+//            }
         }
         catch (Exception e)
         {
@@ -3774,106 +3925,134 @@ public class MetadataRDFConverter {
                         //Modules
                         if (sProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules))
                         {
-                            oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
-
-                            //Load module data
                             String sModuleUri = sFileStatement.getObject().toString();
-                            OntResource resModule = oModel.getOntResource(sModuleUri);
+                            
+                            String sModuleQuery = "SELECT (count(*) AS ?number) WHERE "
+                                    + "{<" + sCommitUri + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasModules + "> <" + sModuleUri + ">}";
 
-                            MetadataGlobal.APIResponseData oMUri = new MetadataGlobal.APIResponseData();
-                            oMUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
-                            oMUri.sData = sModuleUri;
-                            oFileData.oData.add(oMUri);
+                            ResultSet rsModuleNumber = QueryExecutionFactory.create(sModuleQuery, oModel).execSelect();
 
-                            StmtIterator siModuleProps = resModule.listProperties();
-                            while (siModuleProps.hasNext())
+                            while (rsModuleNumber.hasNext())
                             {
-                                Statement sMStatement = siModuleProps.next();
-                                String sMProperty = sMStatement.getPredicate().getURI();
+                                QuerySolution qsModuleNumber = rsModuleNumber.nextSolution();
+                                String sModuleNumber = qsModuleNumber.get("?number").toString();
+                                sModuleNumber = sModuleNumber.substring(0, sModuleNumber.indexOf("^^"));
                                 
-                                MetadataGlobal.APIResponseData oModuleData = new MetadataGlobal.APIResponseData();
-
-                                //ID
-                                if (sMProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                if (sModuleNumber.equals("1"))
                                 {
-                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id;
-                                    oModuleData.sData = sMStatement.getObject().toString();
-                                }
+                                    oFileData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_fileModules + "/";
+                                    OntResource resModule = oModel.getOntResource(sModuleUri);
 
-                                //Name
-                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
-                                {
-                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
-                                    oModuleData.sData = sMStatement.getObject().toString();
-                                }
+                                    MetadataGlobal.APIResponseData oMUri = new MetadataGlobal.APIResponseData();
+                                    oMUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Uri;
+                                    oMUri.sData = sModuleUri;
+                                    oFileData.oData.add(oMUri);
 
-                                //Start line
-                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
-                                {
-                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleStartLine;
-                                    oModuleData.sData = sMStatement.getObject().toString();
-                                }
-
-                                //End line
-                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
-                                {
-                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleEndLine;
-                                    oModuleData.sData = sMStatement.getObject().toString();
-                                }
-
-                                //Methods
-                                if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods))
-                                {
-                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleMethods + "/";
-                                    
-                                    //Load method data
-                                    String sMethodUri = sMStatement.getObject().toString();
-                                    OntResource resMethod = oModel.getOntResource(sMethodUri);
-                                    
-                                    MetadataGlobal.APIResponseData oMetUri = new MetadataGlobal.APIResponseData();
-                                    oMetUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
-                                    oMetUri.sData = sMethodUri;
-                                    oModuleData.oData.add(oMetUri);
-
-                                    StmtIterator siMethodProps = resMethod.listProperties();
-                                    while (siMethodProps.hasNext())
+                                    StmtIterator siModuleProps = resModule.listProperties();
+                                    while (siModuleProps.hasNext())
                                     {
-                                        Statement sMetStatement = siMethodProps.next();
-                                        String sMetProperty = sMetStatement.getPredicate().getURI();
-                                        
-                                        MetadataGlobal.APIResponseData oMethodData = new MetadataGlobal.APIResponseData();
+                                        Statement sMStatement = siModuleProps.next();
+                                        String sMProperty = sMStatement.getPredicate().getURI();
+
+                                        MetadataGlobal.APIResponseData oModuleData = new MetadataGlobal.APIResponseData();
 
                                         //ID
-                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                        if (sMProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
                                         {
-                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id;
-                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                            oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id;
+                                            oModuleData.sData = sMStatement.getObject().toString();
                                         }
 
                                         //Name
-                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                                        if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
                                         {
-                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
-                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                            oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleName;
+                                            oModuleData.sData = sMStatement.getObject().toString();
                                         }
 
                                         //Start line
-                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                                        if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
                                         {
-                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodStartLine;
-                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                            oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleStartLine;
+                                            oModuleData.sData = sMStatement.getObject().toString();
                                         }
 
                                         //End line
-                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                                        if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
                                         {
-                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodEndLine;
-                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                            oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleEndLine;
+                                            oModuleData.sData = sMStatement.getObject().toString();
                                         }
-                                        oModuleData.oData.add(oMethodData);
+
+                                        //Methods
+                                        if (sMProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods))
+                                        {
+                                            String sMethodUri = sMStatement.getObject().toString();
+                                            
+                                            String sMethodQuery = "SELECT (count(*) AS ?number) WHERE "
+                                                    + "{<" + sCommitUri + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasMethods + "> <" + sMethodUri + ">}";
+
+                                            ResultSet rsMethodNumber = QueryExecutionFactory.create(sMethodQuery, oModel).execSelect();
+
+                                            while (rsMethodNumber.hasNext())
+                                            {
+                                                QuerySolution qsMethodNumber = rsMethodNumber.nextSolution();
+                                                String sMethodNumber = qsMethodNumber.get("?number").toString();
+                                                sMethodNumber = sMethodNumber.substring(0, sMethodNumber.indexOf("^^"));
+
+                                                if (sMethodNumber.equals("1"))
+                                                {
+                                                    oModuleData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_moduleMethods + "/";
+                                                    OntResource resMethod = oModel.getOntResource(sMethodUri);
+
+                                                    MetadataGlobal.APIResponseData oMetUri = new MetadataGlobal.APIResponseData();
+                                                    oMetUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Uri;
+                                                    oMetUri.sData = sMethodUri;
+                                                    oModuleData.oData.add(oMetUri);
+
+                                                    StmtIterator siMethodProps = resMethod.listProperties();
+                                                    while (siMethodProps.hasNext())
+                                                    {
+                                                        Statement sMetStatement = siMethodProps.next();
+                                                        String sMetProperty = sMetStatement.getPredicate().getURI();
+
+                                                        MetadataGlobal.APIResponseData oMethodData = new MetadataGlobal.APIResponseData();
+
+                                                        //ID
+                                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID))
+                                                        {
+                                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id;
+                                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                                        }
+
+                                                        //Name
+                                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Name))
+                                                        {
+                                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodName;
+                                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                                        }
+
+                                                        //Start line
+                                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_StartLine))
+                                                        {
+                                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodStartLine;
+                                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                                        }
+
+                                                        //End line
+                                                        if (sMetProperty.equals(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_EndLine))
+                                                        {
+                                                            oMethodData.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_methodEndLine;
+                                                            oMethodData.sData = sMetStatement.getObject().toString();
+                                                        }
+                                                        oModuleData.oData.add(oMethodData);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        oFileData.oData.add(oModuleData);
                                     }
                                 }
-                                oFileData.oData.add(oModuleData);
                             }
                         }
                         oCommitData.oData.add(oFileData);

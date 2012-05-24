@@ -454,14 +454,14 @@ public class MetadataModel {
     /**
      * @summary API Call Method for getting method for person
      * @startRealisation Sasa Stojanovic 18.01.2012.
-     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 23.05.2012.
      * @param sEventId - event id
-     * @param sPersonUri - person uri
+     * @param sIdentityId - identity id
      */
-    static void ac_method_getAllForPerson(String sEventId, String sPersonUri)
+    static void ac_method_getAllForIdentity(String sEventId, String sIdentityId)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUri);       
-        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_method_getAllForPerson, sEventId, oData);
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_method_getAllForIdentity(sIdentityId);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_method_getAllForIdentity, sEventId, oData);
     }
     
     

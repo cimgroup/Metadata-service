@@ -643,21 +643,21 @@ public class MetadataRDFConverterTest {
     }
 
     /**
-     * Test of ac_method_getAllForPerson method, of class MetadataRDFConverter.
+     * Test of ac_method_getAllForIdentity method, of class MetadataRDFConverter.
      */
     @Test
     public void testAc_method_getAllForPerson() {
         System.out.println("* MetadataRDFConverterTest: ac_method_getAllForPerson");
         String sPersonUriNull = "";
         //APIResponseData expResult = null;
-        APIResponseData resultNull = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUriNull);
+        APIResponseData resultNull = MetadataRDFConverter.ac_method_getAllForIdentity(sPersonUriNull);
         //assertEquals(expResult, resultNull);
         assertNotNull(resultNull);
         assertNotNull(resultNull.oData);
         assertEquals(resultNull.oData.size(), 0);
         
         String sPersonUri = "http://www.alert-project.eu/ontologies/alert_scm.owl#Person1";
-        APIResponseData result = MetadataRDFConverter.ac_method_getAllForPerson(sPersonUri);
+        APIResponseData result = MetadataRDFConverter.ac_method_getAllForIdentity(sPersonUri);
         assertNotNull(result);
         assertNotNull(result.oData);
         assertEquals(result.oData.size() > 0, true);

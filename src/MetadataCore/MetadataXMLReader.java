@@ -1114,11 +1114,11 @@ public class MetadataXMLReader {
                 }
                 
                 ///////////////////////////////// method_getAllForPerson /////////////////////////////////
-                if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getAllForPerson))
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getAllForIdentity))
                 {
-                    System.out.println("API Call type: method.getAllForPerson");
+                    System.out.println("API Call type: method.getAllForIdentity");
                     
-                    String sPersonUri = "";
+                    String sIdentityId = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -1128,12 +1128,12 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_personUri))
-                                sPersonUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_uuid))
+                                sIdentityId = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_method_getAllForPerson(sEventId, sPersonUri);
+                    MetadataModel.ac_method_getAllForIdentity(sEventId, sIdentityId);
                 }
                 
                 ///////////////////////////////// method_getRelatedCode /////////////////////////////////
