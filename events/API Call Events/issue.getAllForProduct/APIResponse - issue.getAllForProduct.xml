@@ -32,17 +32,17 @@
 										<!-- list (or any other structure) of results -->
 										<s3:issue>
 											<s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</s3:issueUri>
-											<s3:issueId>111</s3:issueUri>
+											<s3:issueId>111</s3:issueId>
 											<s3:issueDescription>Issue 1 description</s3:issueDescription>
 										</s3:issue>
 										<s3:issue>
 											<s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2</s3:issueUri>
-											<s3:issueId>126294</s3:issueUri>
+											<s3:issueId>126294</s3:issueId>
 											<s3:issueDescription>Issue 2 description</s3:issueDescription>
 										</s3:issue>
 										<s3:issue>
 											<s3:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3</s3:issueUri>
-											<s3:issueId>295653</s3:issueUri>
+											<s3:issueId>295653</s3:issueId>
 											<s3:issueDescription>Issue 3 description</s3:issueDescription>
 										</s3:issue>
 									</s3:responseData>
