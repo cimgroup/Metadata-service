@@ -2121,12 +2121,9 @@ public class MetadataRDFConverter {
                     + " ?componentUri  <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_IsComponentOf + "> <" + sProductUri + "> ."
                     + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?issueId ."
                     + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription ."
-                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened + "> ?issueDateOpened ."
-                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified + "> ?issueLastModified ."
-                    + " FILTER ("
-                    + " ?issueDateOpened > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime ||"
-                    + " ?issueLastModified > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime"
-                    + ")}";
+                    + " OPTIONAL { ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_DateOpened + "> ?issueDateOpened . FILTER ( ?issueDateOpened > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )} ."
+                    + " OPTIONAL { ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_LastModified + "> ?issueLastModified . FILTER ( ?issueLastModified > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )}"
+                    + "}";
 
             ResultSet rsIssue = QueryExecutionFactory.create(sQuery, oModel).execSelect();
             
@@ -3761,10 +3758,7 @@ public class MetadataRDFConverter {
         try
         {
             OntModel oModel = MetadataConstants.omModel;
-            
-            MetadataGlobal.APIResponseData oCommit = new MetadataGlobal.APIResponseData();
-            oCommit.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + "/";
-                        
+                      
             String sProductUri = MetadataGlobal.GetObjectURINoCreate(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Product, sProductID);
 
             String sQuery = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
@@ -3780,6 +3774,9 @@ public class MetadataRDFConverter {
             
             while (rsCommit.hasNext())
             {
+                MetadataGlobal.APIResponseData oCommit = new MetadataGlobal.APIResponseData();
+                oCommit.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + "/";
+            
                 QuerySolution qsCommit = rsCommit.nextSolution();
                 
                 MetadataGlobal.APIResponseData oCommitUri = new MetadataGlobal.APIResponseData();
@@ -3800,29 +3797,29 @@ public class MetadataRDFConverter {
                 oCommit.oData.add(oCommitUri);
                 oCommit.oData.add(oCommitMessageLog);
                 oCommit.oData.add(oCommitDate);
-                oCommit.oData.add(oCommitAuthor);                
-            }
-            
-            String sQueryNumber = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                oCommit.oData.add(oCommitAuthor);
+                
+                String sQueryNumber = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                     + "SELECT (count(?commitFile) AS ?commitFileNumber) WHERE "
-                    + "{?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?commitFile ."
-                    + " ?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate ."
+                    + "{<" + oCommitUri.sData + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLObjectProperty_HasFile + "> ?commitFile ."
+                    + " <" + oCommitUri.sData + "> <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitDate + "> ?commitDate ."
                     + " FILTER ( ?commitDate > \"" + MetadataGlobal.FormatDateForSaving(dtmFromDate) + "\"^^xsd:dateTime )}";
 
-            ResultSet rsCommitFileNumber = QueryExecutionFactory.create(sQueryNumber, oModel).execSelect();
-            
-            while (rsCommitFileNumber.hasNext())
-            {
-                QuerySolution qsCommit = rsCommitFileNumber.nextSolution();
-                MetadataGlobal.APIResponseData oCommitFileNumber = new MetadataGlobal.APIResponseData();
-                oCommitFileNumber.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitFileNumber;
-                String sFileNumber = qsCommit.get("?commitFileNumber").toString();
-                sFileNumber = sFileNumber.substring(0, sFileNumber.indexOf("^^"));
-                oCommitFileNumber.sData = sFileNumber;
-                oCommit.oData.add(oCommitFileNumber);
+                ResultSet rsCommitFileNumber = QueryExecutionFactory.create(sQueryNumber, oModel).execSelect();
+
+                while (rsCommitFileNumber.hasNext())
+                {
+                    QuerySolution qsCommitFile = rsCommitFileNumber.nextSolution();
+                    MetadataGlobal.APIResponseData oCommitFileNumber = new MetadataGlobal.APIResponseData();
+                    oCommitFileNumber.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commitFileNumber;
+                    String sFileNumber = qsCommitFile.get("?commitFileNumber").toString();
+                    sFileNumber = sFileNumber.substring(0, sFileNumber.indexOf("^^"));
+                    oCommitFileNumber.sData = sFileNumber;
+                    oCommit.oData.add(oCommitFileNumber);
+                }
+
+                oData.oData.add(oCommit);
             }
-            
-            oData.oData.add(oCommit);
         }
         catch (Exception e)
         {
