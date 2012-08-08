@@ -638,7 +638,7 @@ public class MetadataConstants {
     
     public static String c_OWLObjectProperty_HasReferenceTo = "hasReferenceTo";
     
-    public static String c_OWLObjectProperty_IsAuthorOf = "isAuthorOf";
+    public static String c_OWLObjectProperty_HasContributors = "hasContributors";
 
     // </editor-fold>
             

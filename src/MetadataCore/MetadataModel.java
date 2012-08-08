@@ -119,9 +119,9 @@ public class MetadataModel {
      * @param sEventId - event id
      * @param oWikiPage - wiki page object
      */
-    static void SaveObjectNewWikiPage(String sEventId, Element eOriginalData, WikiPage oWikiPage)
+    static void SaveObjectNewWikiPage(String sEventId, Element eOriginalData, WikiPage oWikiPage, boolean bIsUpdate)
     {
-        oWikiPage = MetadataRDFConverter.SaveWikiPage(oWikiPage);
+        oWikiPage = MetadataRDFConverter.SaveWikiPage(oWikiPage, bIsUpdate);
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleAdded_Stored, sEventId, eOriginalData, oWikiPage);
     }
             

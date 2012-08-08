@@ -94,7 +94,13 @@ public class MetadataXMLReader {
             {
                 System.out.println("Event type: New wiki page event");
                 MetadataGlobal.BackupProcedure(dDoc);
-                NewWikiPage(dDoc);
+                NewUpdateWikiPage(dDoc, false);
+            }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleModified))
+            {
+                System.out.println("Event type: Update wiki page event");
+                MetadataGlobal.BackupProcedure(dDoc);
+                NewUpdateWikiPage(dDoc, true);
             }
 //            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
 //            {
@@ -724,13 +730,13 @@ public class MetadataXMLReader {
     }
     
     /**
-     * @summary Method for reading new wiki page event from XML
+     * @summary Method for reading new/update wiki page event from XML
      * @startRealisation Sasa Stojanovic 08.08.2012.
      * @finalModification Sasa Stojanovic 08.08.2012.
      * @param dDoc - input XML document to read
      * @return - returns wiki page object
      */
-    public static WikiPage NewWikiPage(Document dDoc)
+    public static WikiPage NewUpdateWikiPage(Document dDoc, boolean bIsUpdate)
     {
         try
         {
@@ -762,7 +768,7 @@ public class MetadataXMLReader {
                 oWikiPage.m_bIsMinor = sIsMinor.equals("true");
             }
             
-            MetadataModel.SaveObjectNewWikiPage(sEventId, eOriginalData, oWikiPage);
+            MetadataModel.SaveObjectNewWikiPage(sEventId, eOriginalData, oWikiPage, bIsUpdate);
             
             return oWikiPage;
         }

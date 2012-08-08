@@ -28,15 +28,15 @@
                                     <r2:url>en.wikipedia.org/MainPage</r2:url>
                                     <r2:id>2342342</r2:id>
                                     <r2:title>Main Page</r2:title>
-                                    <r2:rawText></r2:rawText>
+                                    <r2:rawText>New wiki page raw text</r2:rawText>
                                     <r2:user>
-                                        <r2:id>riemer@fzi.de</r2:id>
-                                        <r2:name>Dominik</r2:name>
-                                        <r2:email>riemer@fzi.de</r2:email>
-                                        <r2:editCount>23</r2:editCount>
+                                        <r2:id>sasa.stojanovic@cimgrupa.eu</r2:id>
+                                        <r2:name>Sasa Stojanovic</r2:name>
+                                        <r2:email>sasa.stojanovic@cimgrupa.eu</r2:email>
+                                        <r2:editCount>36</r2:editCount>
                                     </r2:user>
-                                    <r2:comment>Edit Comments</r2:comment>
-                                    <r2:isMinor>true/false</r2:isMinor>
+                                    <r2:comment>edit comment by Sasa</r2:comment>
+                                    <r2:isMinor>false</r2:isMinor>
                                 </r2:wikiSensor>
                             </ns1:eventData>
                         </ns1:payload>
