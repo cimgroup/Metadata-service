@@ -102,6 +102,12 @@ public class MetadataXMLReader {
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateWikiPage(dDoc, true);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleDeleted))
+            {
+                System.out.println("Event type: Remove wiki page event");
+                MetadataGlobal.BackupProcedure(dDoc);
+                RemoveWikiPage(dDoc);
+            }
 //            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
 //            {
 //                NewPerson(dDoc);
@@ -769,6 +775,51 @@ public class MetadataXMLReader {
             }
             
             MetadataModel.SaveObjectNewWikiPage(sEventId, eOriginalData, oWikiPage, bIsUpdate);
+            
+            return oWikiPage;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading remove wiki page event from XML
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns wiki page object
+     */
+    public static WikiPage RemoveWikiPage(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            WikiPage oWikiPage = MetadataObjectFactory.CreateNewWikiPage();
+
+            NodeList nlWikiPage = dDoc.getElementsByTagName("r2:" + MetadataConstants.c_XMLE_wikiSensor);   //getting node for tag commit
+
+            if (nlWikiPage != null && nlWikiPage.getLength() > 0)
+            {
+                Element eWikiPage = (Element) nlWikiPage.item(0);
+                eOriginalData = eWikiPage;
+               
+                oWikiPage.m_sID = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_id);
+                oWikiPage.m_sSource = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_source);
+                NodeList nlAuthor = eWikiPage.getElementsByTagName("r2:" + MetadataConstants.c_XMLE_user);
+                if (nlAuthor != null && nlAuthor.getLength() > 0)
+                {
+                    Element eAuthor = (Element) nlAuthor.item(0);
+                    oWikiPage.m_oAuthor = GetPersonObject("r2:", eAuthor);
+                }
+                oWikiPage.m_sEditComment = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_comment);
+            }
+            
+            MetadataModel.RemoveWikiPage(sEventId, eOriginalData, oWikiPage);
             
             return oWikiPage;
         }

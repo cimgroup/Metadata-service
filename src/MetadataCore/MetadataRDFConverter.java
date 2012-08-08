@@ -1201,8 +1201,53 @@ public class MetadataRDFConverter {
         {
             ex.printStackTrace();
             return null;
+        } 
+    }
+    
+    /**
+     * @summary Remove wiki page
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param oWikiPage - wiki page object with data
+     * @return wiki page object with uri-s
+     */
+    public static WikiPage RemoveWikiPage(WikiPage oWikiPage)
+    {
+        try {
+            
+            OntModel oModel = MetadataConstants.omModel;
+           
+            oWikiPage.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage, oWikiPage.m_sID);
+            Resource resWikiPage = oModel.getResource(oWikiPage.m_sObjectURI);
+            oWikiPage.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+            
+            //author data change
+            if (oWikiPage.m_oAuthor != null && !oWikiPage.m_oAuthor.m_sID.isEmpty())
+            {
+                SavePersonData(oWikiPage.m_oAuthor, oModel);
+            }
+            
+            resWikiPage.removeProperties();
+
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_ArticleDeleted, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToWikiArticle = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToWikiArticle);
+            resEvent.addProperty(opIsRelatedToWikiArticle, resWikiPage.asResource());
+            //edit comment
+            if (!oWikiPage.m_sEditComment.isEmpty())
+            {
+                DatatypeProperty dtpComment = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Comment);
+                resEvent.addProperty(dtpComment, oWikiPage.m_sEditComment);
+            }
+
+            return oWikiPage;
         }
-        
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        } 
     }
     
     /**

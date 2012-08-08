@@ -30,9 +30,9 @@
                                         <r2:id>riemer@fzi.de</r2:id>
                                         <r2:name>Dominik</r2:name>
                                         <r2:email>riemer@fzi.de</r2:email>
-                                        <r2:editCount>23</r2:editCount>
+                                        <r2:editCount>24</r2:editCount>
                                     </r2:user>
-                                    <r2:comment>Edit Comments</r2:comment>
+                                    <r2:comment>Remove comment</r2:comment>
                                 </r2:wikiSensor>
                             </ns1:eventData>
                         </ns1:payload>

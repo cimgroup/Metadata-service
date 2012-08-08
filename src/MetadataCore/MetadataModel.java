@@ -122,7 +122,23 @@ public class MetadataModel {
     static void SaveObjectNewWikiPage(String sEventId, Element eOriginalData, WikiPage oWikiPage, boolean bIsUpdate)
     {
         oWikiPage = MetadataRDFConverter.SaveWikiPage(oWikiPage, bIsUpdate);
-        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleAdded_Stored, sEventId, eOriginalData, oWikiPage);
+        if (!bIsUpdate)
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleAdded_Stored, sEventId, eOriginalData, oWikiPage);
+        else
+            MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleModified_Stored, sEventId, eOriginalData, oWikiPage);
+    }
+    
+    /** 
+     * @summary Method for removing wiki page
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param sEventId - event id
+     * @param oWikiPage - wiki page object
+     */
+    static void RemoveWikiPage(String sEventId, Element eOriginalData, WikiPage oWikiPage)
+    {
+        oWikiPage = MetadataRDFConverter.RemoveWikiPage(oWikiPage);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleDeleted_Stored, sEventId, eOriginalData, oWikiPage);
     }
             
 //    /**
