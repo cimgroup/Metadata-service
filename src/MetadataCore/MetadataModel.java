@@ -323,6 +323,19 @@ public class MetadataModel {
     }
     
     /**
+     * @summary API Call Method for getting method for person
+     * @startRealisation Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 23.05.2012.
+     * @param sEventId - event id
+     * @param sIdentityId - identity id
+     */
+    static void ac_issue_getAllForIdentity(String sEventId, String sIdentityId)
+    {
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_issue_getAllForIdentity(sIdentityId);       
+        MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_issue_getAllForIdentity, sEventId, oData);
+    }
+    
+    /**
      * @summary API Call Method for getting all issues for method
      * @startRealisation Sasa Stojanovic 14.12.2011.
      * @finalModification Sasa Stojanovic 14.12.2011.

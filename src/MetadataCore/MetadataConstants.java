@@ -37,6 +37,7 @@ public class MetadataConstants {
     public static String c_ET_ALERT_KEUI_APICallRequest = "ALERT.KEUI.APICallRequest";
     public static String c_ET_ALERT_STARDOM_APICallRequest = "ALERT.STARDOM.APICallRequest";
     public static String c_ET_ALERT_Panteon_APICallRequest = "ALERT.Panteon.APICallRequest";
+    public static String c_ET_ALERT_UI_APICallRequest = "ALERT.UI.APICallRequest";
     public static String c_ET_ALERT_Search_APICallRequest = "ALERT.Search.APICallRequest";
     //public static String c_ET_APICall_reply = "Metadata.APICall.reply";
     public static String c_ET_ALERT_Metadata_APICallResponse = "ALERT.Metadata.APICallResponse";
@@ -378,6 +379,7 @@ public class MetadataConstants {
     public static String c_XMLAC_competency_getForPerson = "competency.getForPerson";
     public static String c_XMLAC_competency_getPersonForIssue = "competency.getPersonForIssue";
     public static String c_XMLAC_identity_getForPerson = "identity.getForPerson";
+    public static String c_XMLAC_issue_getAllForIdentity = "issue.getAllForIdentity";
     public static String c_XMLAC_issue_getAllForMethod = "issue.getAllForMethod";
     public static String c_XMLAC_issue_getAllForProduct = "issue.getAllForProduct";
     public static String c_XMLAC_issue_getAnnotationStatus = "issue.getAnnotationStatus";

@@ -117,6 +117,7 @@ public class MetadataXMLReader {
                sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_Panteon_APICallRequest) ||
+               sEventName.equals(MetadataConstants.c_ET_ALERT_UI_APICallRequest) ||
                sEventName.equals(MetadataConstants.c_ET_ALERT_Search_APICallRequest))
             {
                 System.out.print("Event type: API Call event; ");
@@ -934,6 +935,29 @@ public class MetadataXMLReader {
                     MetadataModel.ac_issue_getAllForProduct(sEventId, sProductID, dtmFromDate);
                 }
                 
+                ///////////////////////////////// issue_getAllForIdentity /////////////////////////////////
+                if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForIdentity))
+                {
+                    System.out.println("API Call type: issue.getAllForIdentity");
+                    
+                    String sIdentityId = "";
+                            
+                    NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
+
+                    if (nlInputParameter != null && nlInputParameter.getLength() > 0)
+                    {
+                        for (int i = 0; i < nlInputParameter.getLength(); i++)
+                        {
+                            Element eInputParameter = (Element) nlInputParameter.item(i);
+                            String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_uuid))
+                                sIdentityId = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                        }
+                    }
+                    
+                    MetadataModel.ac_issue_getAllForIdentity(sEventId, sIdentityId);
+                }
+                
                 ///////////////////////////////// issue_getAllForMethod /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_issue_getAllForMethod))
                 {
@@ -1226,7 +1250,7 @@ public class MetadataXMLReader {
                     MetadataModel.ac_competency_getPersonForIssue(sEventId, sPersonForIssueSPARQL);
                 }
                 
-                ///////////////////////////////// method_getAllForPerson /////////////////////////////////
+                ///////////////////////////////// method_getAllForIdentity /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_method_getAllForIdentity))
                 {
                     System.out.println("API Call type: method.getAllForIdentity");
