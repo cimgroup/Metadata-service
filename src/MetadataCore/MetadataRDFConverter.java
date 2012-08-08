@@ -1225,6 +1225,7 @@ public class MetadataRDFConverter {
             if (oWikiPage.m_oAuthor != null && !oWikiPage.m_oAuthor.m_sID.isEmpty())
             {
                 SavePersonData(oWikiPage.m_oAuthor, oModel);
+                oWikiPage.m_oAuthor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_user + MetadataConstants.c_XMLE_Uri;
             }
             
             resWikiPage.removeProperties();
