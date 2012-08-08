@@ -1098,6 +1098,88 @@ public class MetadataRDFConverter {
     }
     
     /**
+     * @summary Save wiki page data
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param oWikiPage - wiki page object with data
+     * @return wiki page object with uri-s
+     */
+    public static WikiPage SaveWikiPage(WikiPage oWikiPage)
+    {
+        try {
+            
+            OntModel oModel = MetadataConstants.omModel;
+            
+            oWikiPage.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage, oWikiPage.m_sID);
+            Resource resWikiPage = oModel.getResource(oWikiPage.m_sObjectURI);
+            oWikiPage.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+            
+            //source
+            if (!oWikiPage.m_sSource.isEmpty())
+            {
+                DatatypeProperty dtpSource = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Source);
+                resWikiPage.addProperty(dtpSource, oWikiPage.m_sSource);
+            }
+            
+            //url
+            if (!oWikiPage.m_sURL.isEmpty())
+            {
+                DatatypeProperty dtpURL = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_URL);
+                resWikiPage.addProperty(dtpURL, oWikiPage.m_sURL);
+            }
+            
+            //title
+            if (!oWikiPage.m_sTitle.isEmpty())
+            {
+                DatatypeProperty dtpSubject = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
+                resWikiPage.addProperty(dtpSubject, oWikiPage.m_sTitle);
+            }
+            
+            //raw text
+            if (!oWikiPage.m_sRawText.isEmpty())
+            {
+                DatatypeProperty dtpRawText = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_RawText);
+                resWikiPage.addProperty(dtpRawText, oWikiPage.m_sRawText);
+            }
+            
+            //author
+            if (oWikiPage.m_oAuthor != null && !oWikiPage.m_oAuthor.m_sID.isEmpty())
+            {
+                SavePersonData(oWikiPage.m_oAuthor, oModel);
+                ObjectProperty opAuthor = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_Author);
+                Resource resAuthor = oModel.getResource(oWikiPage.m_oAuthor.m_sObjectURI);
+                resWikiPage.addProperty(opAuthor, resAuthor.asResource());
+                oWikiPage.m_oAuthor.m_sReturnConfig = "YN#o:" + MetadataConstants.c_XMLE_user + MetadataConstants.c_XMLE_Uri;
+            }
+            
+            //AlertEvent
+            String sEventUri = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_icep + MetadataConstants.c_OWLClass_NewArticle, "");
+            Resource resEvent = oModel.getResource(sEventUri);
+            ObjectProperty opIsRelatedToWikiArticle = oModel.getObjectProperty(MetadataConstants.c_NS_icep + MetadataConstants.c_OWLObjectProperty_IsRelatedToWikiArticle);
+            resEvent.addProperty(opIsRelatedToWikiArticle, resWikiPage.asResource());
+            //edit comment
+            if (!oWikiPage.m_sEditComment.isEmpty())
+            {
+                DatatypeProperty dtpComment = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Comment);
+                resEvent.addProperty(dtpComment, oWikiPage.m_sEditComment);
+            }
+            //is minor
+            if (oWikiPage.m_bIsMinor != null)
+            {
+                DatatypeProperty dtpIsMinor = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_IsMinor);
+                resEvent.addProperty(dtpIsMinor, oWikiPage.m_bIsMinor.toString());
+            }
+            
+            //save data
+            //MetadataGlobal.SaveOWL(oModel, MetadataConstants.sLocationSaveAlert);
+        }
+        catch (Exception ex)
+        {
+        }
+        return oWikiPage;
+    }
+    
+    /**
      * @summary Save person data
      * @startRealisation Sasa Stojanovic 02.09.2011.
      * @finalModification Sasa Stojanovic 06.09.2011.
@@ -1187,6 +1269,13 @@ public class MetadataRDFConverter {
                 DatatypeProperty dtpUsername = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username);
                 resPerson.removeAll(dtpUsername);
                 resPerson.addProperty(dtpUsername, oPerson.m_sUsername);
+            }
+            
+            if (oPerson.m_sWikiEditCount != null && !oPerson.m_sWikiEditCount.isEmpty())
+            {
+                DatatypeProperty dtpWikiEditCount = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_WikiEditCount);
+                resPerson.removeAll(dtpWikiEditCount);
+                resPerson.addProperty(dtpWikiEditCount, oPerson.m_sWikiEditCount);
             }
         }
         catch (Exception e)

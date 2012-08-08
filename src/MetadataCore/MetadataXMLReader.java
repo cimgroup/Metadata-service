@@ -90,6 +90,12 @@ public class MetadataXMLReader {
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewMail(dDoc);
             }
+            if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleAdded))
+            {
+                System.out.println("Event type: New wiki page event");
+                MetadataGlobal.BackupProcedure(dDoc);
+                NewWikiPage(dDoc);
+            }
 //            if(sEventName.equals(MetadataConstants.c_ET_person_requestNew))   //if event type is new person
 //            {
 //                NewPerson(dDoc);
@@ -709,6 +715,56 @@ public class MetadataXMLReader {
             MetadataModel.SaveObjectNewMail(sEventId, eOriginalData, oMail);
             
             return oMail;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading new wiki page event from XML
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns wiki page object
+     */
+    public static WikiPage NewWikiPage(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            WikiPage oWikiPage = MetadataObjectFactory.CreateNewWikiPage();
+
+            NodeList nlWikiPage = dDoc.getElementsByTagName("r2:" + MetadataConstants.c_XMLE_wikiSensor);   //getting node for tag commit
+
+            if (nlWikiPage != null && nlWikiPage.getLength() > 0)
+            {
+                Element eWikiPage = (Element) nlWikiPage.item(0);
+                eOriginalData = eWikiPage;
+               
+                oWikiPage.m_sID = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_id);
+                oWikiPage.m_sSource = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_source);
+                oWikiPage.m_sURL = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_url);
+                oWikiPage.m_sTitle = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_title);
+                oWikiPage.m_sRawText = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_rawText);
+                NodeList nlAuthor = eWikiPage.getElementsByTagName("r2:" + MetadataConstants.c_XMLE_user);
+                if (nlAuthor != null && nlAuthor.getLength() > 0)
+                {
+                    Element eAuthor = (Element) nlAuthor.item(0);
+                    oWikiPage.m_oAuthor = GetPersonObject("r2:", eAuthor);
+                }
+                oWikiPage.m_sEditComment = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_comment);
+                String sIsMinor = GetValue(eWikiPage, "r2:" + MetadataConstants.c_XMLE_isMinor);
+                oWikiPage.m_bIsMinor = sIsMinor.equals("true");
+            }
+            
+            MetadataModel.SaveObjectNewWikiPage(sEventId, eOriginalData, oWikiPage);
+            
+            return oWikiPage;
         }
         catch (Exception e)
         {
@@ -3296,6 +3352,8 @@ public class MetadataXMLReader {
             oPerson.m_sEmail = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_email);
             
             oPerson.m_sUsername = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_username);
+            
+            oPerson.m_sWikiEditCount = GetValue(ePerson, sPrefix + MetadataConstants.c_XMLE_editCount);
         }
         catch (Exception e)
         {

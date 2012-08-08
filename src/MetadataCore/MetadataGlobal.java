@@ -723,6 +723,11 @@ public class MetadataGlobal {
             String sIsPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson;
             String sIsntPerson = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsntPerson;
             String sUsername = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Username;
+            String sSource = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Source;
+            String sRawText = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_RawText;
+            String sWikiEditCount = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_WikiEditCount;
+            String sComment = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Comment;
+            String sIsMinor = MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_IsMinor;
                        
             //Creating Annotation class if not exist
             OntClass ocAnnotation = MetadataConstants.omModel.getOntClass(sAnnotationClass);
@@ -785,6 +790,41 @@ public class MetadataGlobal {
             if (dtpCategory == null)
             {
                 dtpCategory = MetadataConstants.omModel.createDatatypeProperty(sCategoryDataProperty);
+            }
+            
+            //Creating source DataProperty
+            DatatypeProperty dtpSource = MetadataConstants.omModel.getDatatypeProperty(sSource);
+            if (dtpSource == null)
+            {
+                dtpSource = MetadataConstants.omModel.createDatatypeProperty(sSource);
+            }
+            
+            //Creating raw text DataProperty
+            DatatypeProperty dtpRawText = MetadataConstants.omModel.getDatatypeProperty(sRawText);
+            if (dtpRawText == null)
+            {
+                dtpRawText = MetadataConstants.omModel.createDatatypeProperty(sRawText);
+            }
+            
+            //Creating wiki edit count DataProperty
+            DatatypeProperty dtpWikiEditCount = MetadataConstants.omModel.getDatatypeProperty(sWikiEditCount);
+            if (dtpWikiEditCount == null)
+            {
+                dtpWikiEditCount = MetadataConstants.omModel.createDatatypeProperty(sWikiEditCount);
+            }
+            
+            //Creating comment DataProperty
+            DatatypeProperty dtpComment = MetadataConstants.omModel.getDatatypeProperty(sComment);
+            if (dtpComment == null)
+            {
+                dtpComment = MetadataConstants.omModel.createDatatypeProperty(sComment);
+            }
+            
+            //Creating is minor DataProperty
+            DatatypeProperty dtpIsMinor = MetadataConstants.omModel.getDatatypeProperty(sIsMinor);
+            if (dtpIsMinor == null)
+            {
+                dtpIsMinor = MetadataConstants.omModel.createDatatypeProperty(sIsMinor);
             }
 
             //Creating hasConcepts ObjectProperty

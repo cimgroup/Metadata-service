@@ -58,6 +58,12 @@ public class MetadataConstants {
     public static String c_ET_ALERT_Metadata_ForumPostNew_Stored = "ALERT.Metadata.ForumPostNew.Stored";
     public static String c_ET_ALERT_MLSensor_MailNew = "ALERT.MLSensor.MailNew";
     public static String c_ET_ALERT_Metadata_MailNew_Stored = "ALERT.Metadata.MailNew.Stored";
+    public static String c_ET_ALERT_WikiSensor_ArticleAdded = "ALERT.WikiSensor.ArticleAdded";
+    public static String c_ET_ALERT_Metadata_ArticleAdded_Stored = "ALERT.Metadata.ArticleAdded.Stored";
+    public static String c_ET_ALERT_WikiSensor_ArticleModified = "ALERT.WikiSensor.ArticleModified";
+    public static String c_ET_ALERT_Metadata_ArticleModified_Stored = "ALERT.Metadata.ArticleModified.Stored";
+    public static String c_ET_ALERT_WikiSensor_ArticleDeleted = "ALERT.WikiSensor.ArticleDeleted";
+    public static String c_ET_ALERT_Metadata_ArticleDeleted_Stored = "ALERT.Metadata.ArticleDeleted.Stored";
     public static String c_ET_ALERT_STARDOM_CompetencyNew = "ALERT.STARDOM.CompetencyNew";
     public static String c_ET_ALERT_STARDOM_CompetencyUpdate = "ALERT.STARDOM.CompetencyUpdate";
     public static String c_ET_ALERT_Metadata_CompetencyNew_Stored = "ALERT.Metadata.CompetencyNew.Stored";
@@ -190,6 +196,14 @@ public class MetadataConstants {
     public static String c_XMLE_references = "references";
     public static String c_XMLE_attachments = "attachments";
     
+    public static String c_XMLE_wikiSensor = "wikiSensor";
+    public static String c_XMLE_source = "source";
+    public static String c_XMLE_url = "url";
+    public static String c_XMLE_title = "title";
+    public static String c_XMLE_rawText = "rawText";
+    public static String c_XMLE_user = "user";
+    public static String c_XMLE_isMinor = "isMinor";
+    
     public static String c_XMLE_person = "person";
     public static String c_XMLE_persons = "persons";
     public static String c_XMLE_personFirstName = "personFirstName";
@@ -212,6 +226,7 @@ public class MetadataConstants {
     public static String c_XMLE_lastname = "lastname";
     public static String c_XMLE_username = "username";
     public static String c_XMLE_id = "id";
+    public static String c_XMLE_editCount = "editCount";
        
     public static String c_XMLE_result = "result";
     public static String c_XMLE_post = "post";
@@ -474,6 +489,9 @@ public class MetadataConstants {
     public static String c_OWLClass_NewBug = "NewBug";
     public static String c_OWLClass_MailEvent = "MailEvent";
     public static String c_OWLClass_PostEvent = "PostEvent";
+    public static String c_OWLClass_NewArticle = "NewArticle";
+    public static String c_OWLClass_ArticleModified = "ArticleModified";
+    public static String c_OWLClass_ArticleDeleted = "ArticleDeleted";
     
     // </editor-fold>
     
@@ -547,6 +565,12 @@ public class MetadataConstants {
     public static String c_OWLDataProperty_Time = "time";
     public static String c_OWLDataProperty_Level = "level";
     
+    public static String c_OWLDataProperty_Source = "source";
+    public static String c_OWLDataProperty_RawText = "rawText";
+    public static String c_OWLDataProperty_WikiEditCount = "wikiEditCount";
+    public static String c_OWLDataProperty_Comment = "comment";
+    public static String c_OWLDataProperty_IsMinor = "isMinor";
+    
     // </editor-fold>
     
     // <editor-fold desc="Ontology ObjectProperty">
@@ -610,8 +634,11 @@ public class MetadataConstants {
     public static String c_OWLObjectProperty_IsRelatedToBug = "isRelatedToBug";
     public static String c_OWLObjectProperty_IsRelatedToMail = "isRelatedToMail";
     public static String c_OWLObjectProperty_IsRelatedToPost = "isRelatedToPost";
+    public static String c_OWLObjectProperty_IsRelatedToWikiArticle = "isRelatedToWikiArticle";
     
     public static String c_OWLObjectProperty_HasReferenceTo = "hasReferenceTo";
+    
+    public static String c_OWLObjectProperty_IsAuthorOf = "isAuthorOf";
 
     // </editor-fold>
             

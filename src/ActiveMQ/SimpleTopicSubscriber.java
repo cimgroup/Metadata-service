@@ -34,6 +34,12 @@ public class SimpleTopicSubscriber {
         MetadataConstants.c_Topics.add("ALERT.*.IssueUpdate.Annotated");
         MetadataConstants.c_Topics.add("ALERT.*.MailNew");
         MetadataConstants.c_Topics.add("ALERT.*.MailNew.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.ArticleAdded");
+        //MetadataConstants.c_Topics.add("ALERT.*.ArticleAdded.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.ArticleModified");
+        //MetadataConstants.c_Topics.add("ALERT.*.ArticleModified.Annotated");
+        MetadataConstants.c_Topics.add("ALERT.*.ArticleDeleted");
+        //MetadataConstants.c_Topics.add("ALERT.*.ArticleDeleted.Annotated");
         MetadataConstants.c_Topics.add("ALERT.*.ConceptNew");
 //        MetadataConstants.c_Topics.add("ALERT.Metadata.Test");
 

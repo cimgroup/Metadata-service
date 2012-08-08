@@ -213,4 +213,24 @@ public class MetadataObjectFactory {
             return null;
         }
     }
+    
+    /** 
+     * @summary Method for creating new wiki page
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @return WikiPage object
+     */
+    public static WikiPage CreateNewWikiPage()
+    {
+        try
+        {
+            WikiPage oWikiPage = new WikiPage();
+            return oWikiPage;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

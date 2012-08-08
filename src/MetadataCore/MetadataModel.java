@@ -111,6 +111,19 @@ public class MetadataModel {
         oMail = MetadataRDFConverter.SaveMail(oMail);
         MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_MailNew_Stored, sEventId, eOriginalData, oMail);
     }
+    
+    /** 
+     * @summary Method for saving new wiki page
+     * @startRealisation Sasa Stojanovic 08.08.2012.
+     * @finalModification Sasa Stojanovic 08.08.2012.
+     * @param sEventId - event id
+     * @param oWikiPage - wiki page object
+     */
+    static void SaveObjectNewWikiPage(String sEventId, Element eOriginalData, WikiPage oWikiPage)
+    {
+        oWikiPage = MetadataRDFConverter.SaveWikiPage(oWikiPage);
+        MetadataXMLCreator.CreateXMLNewItemResponse(MetadataConstants.c_ET_ALERT_Metadata_ArticleAdded_Stored, sEventId, eOriginalData, oWikiPage);
+    }
             
 //    /**
 //     * @summary Method for saving new person
