@@ -1,0 +1,44 @@
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:p="http://www.alert-project.eu/panteon-events" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <s:Header/>
+    <s:Body>
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic/>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/wikisensor</wsa:Address>
+                </wsnt:ProducerReference>
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                        <ns1:head>
+                            <ns1:sender>WikiSensor</ns1:sender>
+                            <ns1:timestamp>10000</ns1:timestamp>
+                            <ns1:sequencenumber>1</ns1:sequencenumber>
+                        </ns1:head>
+                        <ns1:payload>
+                            <ns1:meta>
+                                <ns1:startTime>1333449365843</ns1:startTime>
+                                <ns1:endTime>1333449365843</ns1:endTime>
+                                <ns1:eventName>ALERT.WikiSensor.ArticleDeleted</ns1:eventName>
+                                <ns1:eventId>1333449365843</ns1:eventId>
+                                <ns1:eventType>SystemEvent</ns1:eventType>
+                            </ns1:meta>
+                            <ns1:eventData>
+                                <r2:wikiSensor>
+                                    <r2:source>KDEBase</r2:source>
+                                    <r2:id>2342342</r2:id>
+                                    <r2:user>
+                                        <r2:id>23423423</r2:id>
+                                        <r2:name>Dominik</r2:name>
+                                        <r2:email>riemer@fzi.de</r2:email>
+                                        <r2:editCount>23</r2:editCount>
+                                    </r2:user>
+                                    <r2:comment>Edit Comments</r2:comment>
+                                </r2:wikiSensor>
+                            </ns1:eventData>
+                        </ns1:payload>
+                    </ns1:event>
+                </wsnt:Message>
+            </wsnt:NotificationMessage>
+        </wsnt:Notify>
+    </s:Body>
+</s:Envelope>
