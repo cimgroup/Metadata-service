@@ -1005,9 +1005,11 @@ public class MetadataGlobal {
             {
                 for (int i = 0; i < oAnnotated.length; i++)
                 {
-                    String sValue = oAnnotated[i].sValue;
-                    if (sValue != null && !sValue.isEmpty())
+                    //String sValue = oAnnotated[i].sValue;
+                    //if (sValue != null && !sValue.isEmpty())
+                    if (oAnnotated[i].sValue != null && !oAnnotated[i].sValue.isEmpty())
                     {
+                        String sValue = oAnnotated[i].sValue;
                         int iIndexS = sValue.indexOf("<concept id=");
                         while (iIndexS != -1)
                         {
