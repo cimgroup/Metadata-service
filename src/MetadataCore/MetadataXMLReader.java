@@ -2487,7 +2487,7 @@ public class MetadataXMLReader {
                     int iSubjectLength = nlSubjectAnnotated.getLength();
                     int iContentLength = nlContentAnnotated.getLength();
                     oAnnotation.oAnnotated = new MetadataGlobal.AnnotationProp[iSubjectLength + iContentLength];
-                    if (iSubjectLength == 0)
+                    if (iSubjectLength == 1)
                     {
                         Element eSubjectAnnotated = (Element)nlSubjectAnnotated.item(0);
                         oAnnotation.oAnnotated[0] = new MetadataGlobal.AnnotationProp();
@@ -2503,7 +2503,7 @@ public class MetadataXMLReader {
                             {
                                 int iSubjectCLength = nlSubjectConcepts.getLength();
                                 oAnnotation.oAnnotated[0].oConcepts = new MetadataGlobal.ConceptProp[iSubjectCLength];
-                                for (int i = 0; i < iSubjectLength; i++)
+                                for (int i = 0; i < iSubjectCLength; i++)
                                 {
                                     Element eSConcept = (Element)nlSubjectConcepts.item(i);
                                     oAnnotation.oAnnotated[0].oConcepts[i] = new MetadataGlobal.ConceptProp();
