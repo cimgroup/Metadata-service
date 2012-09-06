@@ -173,7 +173,7 @@ public class MetadataCommunicator {
             factory.setNamespaceAware(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            return builder.parse(new ByteArrayInputStream(sDoc.getBytes()));
+            return builder.parse(new ByteArrayInputStream(sDoc.getBytes("UTF-8")));
         }
         catch (Exception ex)
         {
