@@ -21,15 +21,23 @@ public class TextListener implements MessageListener{
     TextMessage msg = null;
     try{
         if (message instanceof TextMessage) {
-        msg = (TextMessage) message;
-        java.util.Date dtmNow = new java.util.Date();
-        iNumMess++;
-        System.out.println("######################################################################");
-        System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(dtmNow.getTime()));
-        MetadataCommunicator.ReceiveXML(msg.getText());
+            msg = (TextMessage) message;
+            java.util.Date dtmNow = new java.util.Date();
+            iNumMess++;
+            System.out.println("######################################################################");
+            System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(dtmNow.getTime()));
+            MetadataCommunicator.ReceiveXML(msg.getText());
         
      //   System.out.println("Reading message: " + msg.getText());
-        } else {
+        } else if (message instanceof BytesMessage) {
+            BytesMessage msgb = (BytesMessage) message;
+            java.util.Date dtmNow = new java.util.Date();
+            iNumMess++;
+            System.out.println("######################################################################");
+            System.out.println("Receiving message " + iNumMess.toString() + ". at: " + new Timestamp(dtmNow.getTime()));
+            MetadataCommunicator.ReceiveXML(msgb.readUTF());
+        }
+        else {
             System.out.println("Message of wrong type: " + message.getClass().getName());
         }
     }catch (JMSException e){

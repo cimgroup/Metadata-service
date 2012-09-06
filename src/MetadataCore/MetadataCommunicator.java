@@ -48,7 +48,7 @@ public class MetadataCommunicator {
             Transformer tTransformer = tFactory.newTransformer();
             tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
             tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            //tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             //tTransformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
             tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
             tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
