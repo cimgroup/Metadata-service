@@ -103,6 +103,8 @@ public class MetadataCommunicator {
                 transformer.transform(source, result);
                 m_sXML = stringWriter.getBuffer().toString();
                 //SimpleTopicPublisher.publish("MetadataOut", m_sXML);
+                java.util.Date date= new java.util.Date();
+                System.out.println("Event processed at: " + new Timestamp(date.getTime()) + ". Sending...");
                 SimpleTopicPublisher.publish(sTopicName, m_sXML);
 
 

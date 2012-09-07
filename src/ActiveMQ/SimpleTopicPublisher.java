@@ -65,26 +65,31 @@ public class SimpleTopicPublisher {
     * Send messages, varying text slightly.
     * Finally, close connection.
 */
-        try {
-            topicConnection = topicConnectionFactory.createTopicConnection();
-            topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
-            topicPublisher = topicSession.createPublisher(topic);
-            message = topicSession.createTextMessage();
-            for (int i = 0; i < NUM_MSGS; i++) {
-                message.setText(xml);
-                //System.out.println("Publishing message: " + message.getText());
-                java.util.Date date= new java.util.Date();
-                System.out.println("Publishing message at: " + new Timestamp(date.getTime()));
-                topicPublisher.publish(message);
+        boolean bEventSend = false;
+        while (!bEventSend)
+        {
+            try {
+                topicConnection = topicConnectionFactory.createTopicConnection();
+                topicSession = topicConnection.createTopicSession(false,Session.AUTO_ACKNOWLEDGE);
+                topicPublisher = topicSession.createPublisher(topic);
+                message = topicSession.createTextMessage();
+                for (int i = 0; i < NUM_MSGS; i++) {
+                    message.setText(xml);
+                    topicPublisher.publish(message);
+                    java.util.Date date= new java.util.Date();
+                    System.out.println("Publishing message at: " + new Timestamp(date.getTime()));
+                    bEventSend = true;
+                }
+            } catch (JMSException e){
+                System.out.println("Exception occurred: " + e.toString());
+                System.out.println("Resending event...");
+            } finally {
+                if(topicConnection != null){
+                    try{
+                        topicConnection.close();
+                    }catch (JMSException e){}
+                }
             }
-        } catch (JMSException e){
-            System.out.println("Exception occurred: " + e.toString());
-        } finally {
-            if(topicConnection != null){
-                try{
-                    topicConnection.close();
-                }catch (JMSException e){}
-            }
-        }     
+        }
     }
 }

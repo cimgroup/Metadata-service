@@ -499,7 +499,7 @@ public class MetadataRDFConverter {
                     ObjectProperty opHasComment = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasComment);
                     for (int i = 0; i < oIssue.m_oHasComment.length; i++)
                     {
-                        if (oIssue.m_oHasComment[i] != null && (!oIssue.m_oHasComment[i].m_sID.isEmpty() || !oIssue.m_oHasComment[i].m_sText.isEmpty()))
+                        if (oIssue.m_oHasComment[i] != null)
                         {
                             oIssue.m_oHasComment[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLClass_Comment, oIssue.m_oHasComment[i].m_sID);
                             Resource resComment = oModel.getResource(oIssue.m_oHasComment[i].m_sObjectURI);

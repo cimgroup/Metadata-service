@@ -175,6 +175,9 @@ public class MetadataGlobal {
     {
         try
         {
+            System.out.println("######################################################################");
+            System.out.println("Backup procedure started, saving data into ontology files...");
+            
             SaveOntology();
             
             File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
@@ -187,6 +190,10 @@ public class MetadataGlobal {
                 }
             }            
             MetadataConstants.iBackupEventNumber = 0;
+            
+            System.out.println("Backup procedure finished, data is stored into files.");
+            System.out.println("######################################################################");
+            
         }
         catch (Exception e)
         {
