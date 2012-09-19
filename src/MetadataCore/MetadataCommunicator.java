@@ -54,7 +54,7 @@ public class MetadataCommunicator {
             tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
             //Write the document to a file
-            if (!MetadataConstants.sLogFilesLocation.isEmpty())
+            if (!MetadataConstants.sLogFilesLocation.isEmpty() && !MetadataConstants.bOnlyOutputEventLog)
             {
                 Source srcDocument = new DOMSource(dDoc);
                 java.util.Date dtmNow = new java.util.Date();

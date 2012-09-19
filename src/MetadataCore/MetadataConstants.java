@@ -686,6 +686,7 @@ public class MetadataConstants {
     public static Integer iBackupEventNumber = 0;
     public static Integer iBackupEventNumberLimit = 300;
     public static boolean bSilentMode = false;
+    public static boolean bOnlyOutputEventLog = false;
 
     // </editor-fold>
     

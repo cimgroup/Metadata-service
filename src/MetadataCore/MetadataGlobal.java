@@ -127,7 +127,7 @@ public class MetadataGlobal {
         {
             if (!MetadataConstants.bSilentMode)
             {
-                if (MetadataConstants.iBackupEventNumber > MetadataConstants.iBackupEventNumberLimit)
+                if (MetadataConstants.iBackupEventNumber >= MetadataConstants.iBackupEventNumberLimit)
                 {
                     StartSaveProcedure();
                 }
@@ -189,7 +189,7 @@ public class MetadataGlobal {
                     fBackupFiles[i].delete();
                 }
             }            
-            MetadataConstants.iBackupEventNumber = 0;
+            MetadataConstants.iBackupEventNumber = 1;
             
             System.out.println("Backup procedure finished, data is stored into files.");
             System.out.println("######################################################################");
@@ -669,6 +669,15 @@ public class MetadataGlobal {
             }
             MetadataConstants.sBackupFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "BackupFilesLocation");
             MetadataConstants.sLogFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFilesLocation");
+            MetadataConstants.iBackupEventNumber = Integer.parseInt(MetadataXMLReader.GetValue(eMetadataConfig, "BackupAfertEvents"));
+            if (MetadataXMLReader.GetValue(eMetadataConfig, "LogFilesLocation").equalsIgnoreCase("true"))
+            {
+                MetadataConstants.bOnlyOutputEventLog = true;
+            }
+            else
+            {
+                MetadataConstants.bOnlyOutputEventLog = false;
+            }
             System.out.println("########################## METADATA SERVICE ##########################");
             System.out.println("Config file loaded from location: " + sLocation);
             System.out.println("######################################################################");
