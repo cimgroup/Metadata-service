@@ -672,7 +672,7 @@ public class MetadataGlobal {
             MetadataConstants.sBackupFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "BackupFilesLocation");
             MetadataConstants.sLogFilesLocation = MetadataXMLReader.GetValue(eMetadataConfig, "LogFilesLocation");
             MetadataConstants.iBackupEventNumberLimit = Integer.parseInt(MetadataXMLReader.GetValue(eMetadataConfig, "BackupAfertEvents"));
-            if (MetadataXMLReader.GetValue(eMetadataConfig, "LogFilesLocation").equalsIgnoreCase("true"))
+            if (MetadataXMLReader.GetValue(eMetadataConfig, "OnlyOutputEventLog").equalsIgnoreCase("true"))
             {
                 MetadataConstants.bOnlyOutputEventLog = true;
             }
