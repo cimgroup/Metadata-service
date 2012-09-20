@@ -106,31 +106,30 @@ public class MetadataCommunicator {
                 java.util.Date date= new java.util.Date();
                 System.out.println("Event processed at: " + new Timestamp(date.getTime()) + ". Sending...");
                 SimpleTopicPublisher.publish(sTopicName, m_sXML);
+            }
+            
+            //For testing purposes only
+            if (!MetadataConstants.sLogFilesLocation.isEmpty())
+            {
+                //Create transformer
+                //Transformer tTransformer = TransformerFactory.newInstance().newTransformer();
+                TransformerFactory tFactory = TransformerFactory.newInstance();
+                tFactory.setAttribute("indent-number", 2);
+                Transformer tTransformer = tFactory.newTransformer();
+                //Output Types (text/xml/html)
+                tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
+                tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+                tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                //tTransformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+                tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-
-                //For testing purposes only
-                if (!MetadataConstants.sLogFilesLocation.isEmpty())
-                {
-                    //Create transformer
-                    //Transformer tTransformer = TransformerFactory.newInstance().newTransformer();
-                    TransformerFactory tFactory = TransformerFactory.newInstance();
-                    tFactory.setAttribute("indent-number", 2);
-                    Transformer tTransformer = tFactory.newTransformer();
-                    //Output Types (text/xml/html)
-                    tTransformer.setOutputProperty(OutputKeys.METHOD, "xml");           
-                    tTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-                    tTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                    //tTransformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
-                    tTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                    tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-                    //Write the document to a file
-                    Source srcDocument = new DOMSource(dDoc);
-                    java.util.Date dtmNow = new java.util.Date();
-                    String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Response.xml";
-                    Result rsLocation = new StreamResult(new File(sFileName));
-                    tTransformer.transform(srcDocument, rsLocation);
-                }
+                //Write the document to a file
+                Source srcDocument = new DOMSource(dDoc);
+                java.util.Date dtmNow = new java.util.Date();
+                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Response.xml";
+                Result rsLocation = new StreamResult(new File(sFileName));
+                tTransformer.transform(srcDocument, rsLocation);
             }
         }
         catch (Exception e)

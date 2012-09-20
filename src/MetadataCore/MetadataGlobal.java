@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -212,6 +213,7 @@ public class MetadataGlobal {
         {
             File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
             File[] fBackupFiles = fBackupFolder.listFiles();
+            Arrays.sort(fBackupFiles, new WindowsExplorerFileNameComparator());
             
             if (fBackupFiles.length > 0)
             {
