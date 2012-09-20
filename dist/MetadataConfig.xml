@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetadataConfig>
 	<ActiveMQAddress>tcp://93.87.17.115:61616</ActiveMQAddress>
-	<OntologyLocation>D:/MetadataGit/AlertOntology/alert.owl</OntologyLocation>
-    <BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
+	<OntologyLocation>D:/MetadataGit/MetadataService/dist/AlertOntology/alert.owl</OntologyLocation>
+    <BackupFilesLocation>D:/MetadataGit/MetadataService/dist/MetadataBackup/</BackupFilesLocation>
 	<LogFilesLocation></LogFilesLocation>
 </MetadataConfig>
