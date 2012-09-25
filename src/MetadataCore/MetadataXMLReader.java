@@ -1180,9 +1180,7 @@ public class MetadataXMLReader {
                 {
                     System.out.println("API Call type: identity.getForPerson");
                     
-                    String sFirstName = "";
-                    String sLastName = "";
-                    String sEmail = "";
+                    String sPersonUri = "";
                             
                     NodeList nlInputParameter = dDoc.getElementsByTagName("s2:" + MetadataConstants.c_XMLE_inputParameter);   //getting node for apirequest
 
@@ -1192,18 +1190,14 @@ public class MetadataXMLReader {
                         {
                             Element eInputParameter = (Element) nlInputParameter.item(i);
                             String sParamName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_name);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_firstName))
-                                sFirstName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_lastName))
-                                sLastName = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
-                            if (sParamName.equals(MetadataConstants.c_XMLV_email))
-                                sEmail = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
+                            if (sParamName.equals(MetadataConstants.c_XMLV_personUri))
+                                sPersonUri = GetValue(eInputParameter, "s2:" + MetadataConstants.c_XMLE_value);
                         }
                     }
                     
-                    MetadataModel.ac_identity_getForPerson(sEventId, sFirstName, sLastName, sEmail);
+                    MetadataModel.ac_identity_getForPerson(sEventId, sPersonUri);
                 }
-                
+                                
                 ///////////////////////////////// competency_getForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_competency_getForPerson))
                 {

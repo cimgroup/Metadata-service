@@ -246,10 +246,8 @@ public class MetadataModelTest {
     public void testAc_identity_getForPerson() {
         System.out.println("* MetadataModelTest: ac_identity_getForPerson");
         String sEventId = "";
-        String sFirstName = "";
-        String sLastName = "";
-        String sEmail = "";
-        MetadataModel.ac_identity_getForPerson(sEventId, sFirstName, sLastName, sEmail);
+        String sPersonUri = "";
+        MetadataModel.ac_identity_getForPerson(sEventId, sPersonUri);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
