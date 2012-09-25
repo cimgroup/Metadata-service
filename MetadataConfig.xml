@@ -3,7 +3,7 @@
 	<ActiveMQAddress>tcp://93.87.17.115:61616</ActiveMQAddress>
 	<OntologyLocation>D:/MetadataGit/AlertOntology/alert.owl</OntologyLocation>
 	<BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
-        <BackupAfertEvents>500</BackupAfertEvents>
+        <BackupAfertEvents>1000</BackupAfertEvents>
 	<LogFilesLocation>D:/MetadataGit/MetadataLog/</LogFilesLocation>
         <OnlyOutputEventLog>true</OnlyOutputEventLog>
 </MetadataConfig>

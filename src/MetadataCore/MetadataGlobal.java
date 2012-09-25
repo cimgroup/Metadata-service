@@ -14,10 +14,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.XSD;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.text.DateFormat;
@@ -117,6 +115,20 @@ public class MetadataGlobal {
         }
     }
     
+    public static void SaveOntologyAlternative()
+    {
+        try
+        {
+            File destinationFile = new File(MetadataConstants.sLocationSaveAlert);
+            FileWriter writer = new FileWriter(destinationFile);
+            MetadataConstants.omModel.write(writer);
+            writer.flush();
+        }
+        catch (Exception e)
+        {
+        }
+    }
+    
     /**
      * @summary Backup procedure
      * @startRealisation Sasa Stojanovic 10.04.2012.
@@ -176,10 +188,10 @@ public class MetadataGlobal {
     {
         try
         {
-            System.out.println("######################################################################");
+            System.out.println("----------------------------------------------------------------------");
             System.out.println("Backup procedure started, saving data into ontology files...");
             
-            SaveOntology();
+            SaveOntologyAlternative();
             
             File fBackupFolder = new File(MetadataConstants.sBackupFilesLocation);
             File[] fBackupFiles = fBackupFolder.listFiles();
@@ -193,7 +205,7 @@ public class MetadataGlobal {
             MetadataConstants.iBackupEventNumber = 1;
             
             System.out.println("Backup procedure finished, data is stored into files.");
-            System.out.println("######################################################################");
+            System.out.println("----------------------------------------------------------------------");
             
         }
         catch (Exception e)
@@ -225,21 +237,31 @@ public class MetadataGlobal {
             {
                 if (fBackupFiles[i].isFile())
                 {
-                    Document dDoc;
-                    DocumentBuilderFactory dbfFactory = DocumentBuilderFactory.newInstance();
-                    dbfFactory.setNamespaceAware(true);
-                    DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
-                    dDoc = dbBuilder.parse(fBackupFiles[i]);
-                    dDoc.getDocumentElement().normalize();
-                    MetadataXMLReader.ReadXML(dDoc);
-                    fBackupFiles[i].delete();
+                    Integer iEventNumber = i;
+                    try
+                    {
+                        Document dDoc;
+                        DocumentBuilderFactory dbfFactory = DocumentBuilderFactory.newInstance();
+                        dbfFactory.setNamespaceAware(true);
+                        DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
+                        dDoc = dbBuilder.parse(fBackupFiles[i]);
+                        dDoc.getDocumentElement().normalize();
+                        java.util.Date dtmNow = new java.util.Date();
+                        System.out.print("Event " + iEventNumber.toString() + ". start processing at: " + (new Timestamp(dtmNow.getTime())).toString() + " / ");
+                        MetadataXMLReader.ReadXML(dDoc);
+                        fBackupFiles[i].delete();
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.print("Event " + iEventNumber.toString() + ". failed to process.");
+                    }
                 }
             }
             
             if (fBackupFiles.length > 0)
             {
                 System.out.println("Saving into ontology files...");
-                SaveOntology();
+                SaveOntologyAlternative();
                 System.out.println("Backup procedure finished.");
             }
 
