@@ -596,20 +596,16 @@ public class MetadataRDFConverterTest {
     @Test
     public void testAc_identity_getForPerson() {
         System.out.println("* MetadataRDFConverterTest: ac_identity_getForPerson");
-        String sFirstNameNull = "";
-        String sLastNameNull = "";
-        String sEmailNull = "";
+        String sPersonUriNull = "";
         //APIResponseData expResult = null;
-        APIResponseData resultNull = MetadataRDFConverter.ac_identity_getForPerson(sFirstNameNull, sLastNameNull, sEmailNull);
+        APIResponseData resultNull = MetadataRDFConverter.ac_identity_getForPerson(sPersonUriNull);
         //assertEquals(expResult, resultNull);
         assertNotNull(resultNull);
         assertNotNull(resultNull.oData);
         assertEquals(resultNull.oData.size(), 0);
         
-        String sFirstName = "Sasa";
-        String sLastName = "Stojanovic";
-        String sEmail = "sasa.stojanovic@cimcollege.rs";
-        APIResponseData result = MetadataRDFConverter.ac_identity_getForPerson(sFirstName, sLastName, sEmail);
+        String sPersonUri = "http://www.alert-project.eu/ontologies/alert_scm.owl#Person1";
+        APIResponseData result = MetadataRDFConverter.ac_identity_getForPerson(sPersonUri);
         assertNotNull(result);
         assertNotNull(result.oData);
         assertEquals(result.oData.size() > 0, true);

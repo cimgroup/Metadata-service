@@ -707,6 +707,8 @@ public class MetadataGlobal {
                 else
                     System.out.println(". WARNING: Directory was not found!");
             }
+            
+            System.out.println("Backup event limit: " + MetadataConstants.iBackupEventNumberLimit.toString());
             System.out.println("######################################################################");
         }
     }

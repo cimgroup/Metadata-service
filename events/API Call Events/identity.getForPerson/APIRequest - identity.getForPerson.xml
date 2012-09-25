@@ -32,21 +32,9 @@
 										<!-- input parameters -->
 										<s2:inputParameter>
 											<!-- name of parameter -->
-											<s2:name>firstName</s2:name>
+											<s2:name>personUri</s2:name>
 											<!-- value of parameter -->
-											<s2:value>Sasa</s2:value>
-										</s2:inputParameter>
-										<s2:inputParameter>
-											<!-- name of parameter -->
-											<s2:name>lastName</s2:name>
-											<!-- value of parameter -->
-											<s2:value>Stojanovic</s2:value>
-										</s2:inputParameter>
-										<s2:inputParameter>
-											<!-- name of parameter -->
-											<s2:name>email</s2:name>
-											<!-- value of parameter -->
-											<s2:value>sasa.stojanovic@cimcollege.rs</s2:value>
+											<s2:value>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</s2:value>
 										</s2:inputParameter>
 									</s2:requestData>
 								</ns1:apiRequest>

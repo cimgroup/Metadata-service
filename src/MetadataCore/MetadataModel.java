@@ -455,18 +455,16 @@ public class MetadataModel {
     /**
      * @summary API Call Method for getting identity for provided person information
      * @startRealisation Sasa Stojanovic 18.01.2012.
-     * @finalModification Sasa Stojanovic 18.01.2012.
+     * @finalModification Sasa Stojanovic 25.09.2012.
      * @param sEventId - event id
-     * @param sFirstName - person first name
-     * @param sLastName - person last name
-     * @param sEmail - person email
+     * @param sPersonUri - person uri
      */
-    static void ac_identity_getForPerson(String sEventId, String sFirstName, String sLastName, String sEmail)
+    static void ac_identity_getForPerson(String sEventId, String sPersonUri)
     {
-        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_identity_getForPerson(sFirstName, sLastName, sEmail);       
+        MetadataGlobal.APIResponseData oData = MetadataRDFConverter.ac_identity_getForPerson(sPersonUri);
         MetadataXMLCreator.CreateXMLAPIResponse(MetadataConstants.c_XMLAC_identity_getForPerson, sEventId, oData);
     }
-    
+
     /**
      * @summary API Call Method for getting competency for person
      * @startRealisation  Dejan Milosavljevic 04.02.2012.

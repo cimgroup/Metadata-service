@@ -3589,35 +3589,25 @@ public class MetadataRDFConverter {
     }
     
     /**
-     * @summary issue_getRelatedToKeyword
+     * @summary identity_getForPerson
      * @startRealisation Sasa Stojanovic 18.01.2012.
-     * @finalModification Sasa Stojanovic 18.01.2012.
-     * @param sFirstName - person first name
-     * @param sLastName - person last name
-     * @param sEmail - person email
+     * @finalModification Sasa Stojanovic 25.09.2012.
+     * @param sPersonUri - person uri
      * @return - APIResponseData object with results
      */
-    public static MetadataGlobal.APIResponseData ac_identity_getForPerson(String sFirstName, String sLastName, String sEmail)
+    public static MetadataGlobal.APIResponseData ac_identity_getForPerson(String sPersonUri)
     {
         MetadataGlobal.APIResponseData oData = new MetadataGlobal.APIResponseData();
         try
         {
             OntModel oModel = MetadataConstants.omModel;
             
-            if (!sFirstName.isEmpty() || !sLastName.isEmpty() || !sEmail.isEmpty())
+            if (!sPersonUri.isEmpty())
             {
-                //if person has same data as identity
-                String sQuery = "SELECT ?personUri WHERE {?personUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Person + "> . ";
-                
-                if (!sFirstName.isEmpty())
-                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_FirstName + "> ?firstName . FILTER regex(?firstName, \"" + sFirstName + "\", \"i\") . ";
-                            
-                if (!sLastName.isEmpty())
-                    sQuery += "?personUri <" + MetadataConstants.c_NS_foaf + MetadataConstants.c_OWLDataProperty_LastName + "> ?lastName . FILTER regex(?lastName, \"" + sLastName + "\", \"i\") . ";
-                
-                if (!sEmail.isEmpty())
-                    sQuery += "?personUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_Email + "> ?email . FILTER regex(?email, \"" + sEmail + "\", \"i\") . ";
-                
+                String sQuery = "SELECT ?uuid WHERE {"
+                        + "?identityUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Identity + "> . "
+                        + "?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ID + "> ?uuid . "
+                        + "?identityUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_IsPerson + "> <" + sPersonUri + ">";
                 sQuery += "}";
 
                 ResultSet rsPerson = QueryExecutionFactory.create(sQuery, oModel).execSelect();
@@ -3627,8 +3617,8 @@ public class MetadataRDFConverter {
                     QuerySolution qsPerson = rsPerson.nextSolution();
 
                     MetadataGlobal.APIResponseData oPersonUri = new MetadataGlobal.APIResponseData();
-                    oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_person + MetadataConstants.c_XMLE_Uri;
-                    oPersonUri.sData = qsPerson.get("?personUri").toString();
+                    oPersonUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_uuid;
+                    oPersonUri.sData = qsPerson.get("?uuid").toString();
 
                     oData.oData.add(oPersonUri);
                 }
@@ -3640,6 +3630,7 @@ public class MetadataRDFConverter {
         }
         return oData;
     }
+    
     
     /**
      * @summary competency_getForPerson
