@@ -1178,7 +1178,7 @@ public class MetadataXMLReader {
                 ///////////////////////////////// identity_getForPerson /////////////////////////////////
                 if (sAPICall.equals(MetadataConstants.c_XMLAC_identity_getForPerson))
                 {
-                    System.out.println("API Call type: identity.getForPersonUri");
+                    System.out.println("API Call type: identity.getForPerson");
                     
                     String sPersonUri = "";
                             
