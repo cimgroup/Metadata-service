@@ -20,9 +20,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -140,15 +138,8 @@ public class MetadataGlobal {
         {
             if (!MetadataConstants.bSilentMode)
             {
-                if (MetadataConstants.iBackupEventNumber >= MetadataConstants.iBackupEventNumberLimit)
-                {
-                    StartSaveProcedure();
-                }
-                else
-                {
                     MetadataConstants.iBackupEventNumber++;
                     SaveBackupFile(dDoc);
-                }
             }
         }
         catch (Exception e)
@@ -188,7 +179,7 @@ public class MetadataGlobal {
     {
         try
         {
-            System.out.println("----------------------------------------------------------------------");
+            System.out.println("######################################################################");
             System.out.println("Backup procedure started, saving data into ontology files...");
             
             SaveOntologyAlternative();
@@ -205,7 +196,7 @@ public class MetadataGlobal {
             MetadataConstants.iBackupEventNumber = 1;
             
             System.out.println("Backup procedure finished, data is stored into files.");
-            System.out.println("----------------------------------------------------------------------");
+            System.out.println("######################################################################");
             
         }
         catch (Exception e)
@@ -266,6 +257,41 @@ public class MetadataGlobal {
             }
 
             MetadataConstants.iBackupEventNumber = 0;
+            
+            //Creating new thread for online backup procedure
+            Runnable rListener = new Runnable() {
+                @Override
+                public void run() {
+                    while (true)
+                    {
+                        try
+                        {
+                            Calendar cldBackup = Calendar.getInstance();
+                            Date dtmNow = new Date();
+                            cldBackup.setTime(dtmNow);
+                            cldBackup.set(Calendar.HOUR_OF_DAY, 6);
+                            cldBackup.set(Calendar.MINUTE, 0);
+                            cldBackup.set(Calendar.SECOND, 0);
+                            if (dtmNow.getHours() > 6)
+                                cldBackup.add(Calendar.DATE,1);
+                            Long iSleep = cldBackup.getTimeInMillis() - dtmNow.getTime();
+                            Thread.sleep(iSleep);
+                            
+                            if (MetadataConstants.iBackupEventNumber >= MetadataConstants.iBackupEventNumberLimit)
+                            {
+                                MetadataConstants.bBackupProcedure = true;
+                                StartSaveProcedure();
+                                MetadataConstants.bBackupProcedure = false;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }
+            };
+            Thread thrListener = new Thread(rListener);
+            thrListener.start();
         }
         catch (Exception e)
         {

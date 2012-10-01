@@ -20,6 +20,10 @@ public class TextListener implements MessageListener{
     public void onMessage(Message message) {
     TextMessage msg = null;
     try{
+        while(MetadataConstants.bBackupProcedure)
+        {
+            Thread.sleep(1000);
+        }
         if (message instanceof TextMessage) {
             msg = (TextMessage) message;
             java.util.Date dtmNow = new java.util.Date();
