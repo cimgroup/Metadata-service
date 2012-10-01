@@ -167,7 +167,7 @@ public class MetadataGlobal {
             tTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             Source srcDocument = new DOMSource(dDoc);
             java.util.Date dtmNow = new java.util.Date();
-            String sFileName = MetadataConstants.sBackupFilesLocation + "E" + MetadataConstants.iBackupEventNumber.toString() + "_" + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Request.xml";
+            String sFileName = MetadataConstants.sBackupFilesLocation + "E" + MetadataConstants.iBackupEventNumber.toString() + "_" + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_" + UUID.randomUUID().toString() + "_Request.xml";
             Result rsLocation = new StreamResult(new File(sFileName));
             tTransformer.transform(srcDocument, rsLocation);
         }

@@ -14,6 +14,7 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import java.io.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 import org.apache.xerces.dom.DocumentImpl;
 
 /**
@@ -58,7 +59,7 @@ public class MetadataCommunicator {
             {
                 Source srcDocument = new DOMSource(dDoc);
                 java.util.Date dtmNow = new java.util.Date();
-                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Request.xml";
+                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_" + UUID.randomUUID().toString() + "_Request.xml";
                 Result rsLocation = new StreamResult(new File(sFileName));
                 tTransformer.transform(srcDocument, rsLocation);
             }
@@ -127,7 +128,7 @@ public class MetadataCommunicator {
                 //Write the document to a file
                 Source srcDocument = new DOMSource(dDoc);
                 java.util.Date dtmNow = new java.util.Date();
-                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_Response.xml";
+                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_" + UUID.randomUUID().toString() + "_Response.xml";
                 Result rsLocation = new StreamResult(new File(sFileName));
                 tTransformer.transform(srcDocument, rsLocation);
             }
