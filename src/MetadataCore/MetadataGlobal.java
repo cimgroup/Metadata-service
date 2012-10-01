@@ -121,6 +121,12 @@ public class MetadataGlobal {
             FileWriter writer = new FileWriter(destinationFile);
             MetadataConstants.omModel.write(writer);
             writer.flush();
+            
+            //delete this code when annotation ontology gets integrated
+            File destinationAnnotationFile = new File(MetadataConstants.sLocationSaveAlert.replace("alert.owl", "AnnotationOntology.rdf"));
+            FileWriter writerAnnotation = new FileWriter(destinationAnnotationFile);
+            MetadataConstants.omAnnotation.write(writerAnnotation);
+            writerAnnotation.flush();
         }
         catch (Exception e)
         {
