@@ -30,6 +30,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.*;
+import org.xml.sax.InputSource;
 
 
 /**
@@ -241,7 +242,13 @@ public class MetadataGlobal {
                         DocumentBuilderFactory dbfFactory = DocumentBuilderFactory.newInstance();
                         dbfFactory.setNamespaceAware(true);
                         DocumentBuilder dbBuilder = dbfFactory.newDocumentBuilder();
-                        dDoc = dbBuilder.parse(fBackupFiles[i]);
+                        //dDoc = dbBuilder.parse(fBackupFiles[i]);
+                        //new UTF-8 file reading code start
+                        InputStream inputStream= new FileInputStream(fBackupFiles[i]);
+                        Reader rReader = new InputStreamReader(inputStream,"UTF-8");
+                        InputSource isSource = new InputSource(rReader);
+                        dDoc = dbBuilder.parse(isSource);
+                        //new UTF-8 file reading code end
                         dDoc.getDocumentElement().normalize();
                         java.util.Date dtmNow = new java.util.Date();
                         System.out.print("Event " + iEventNumber.toString() + ". start processing at: " + (new Timestamp(dtmNow.getTime())).toString() + " / ");
