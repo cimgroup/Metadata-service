@@ -88,7 +88,7 @@ public class MetadataXMLReader {
             {
                 System.out.println("Event type: New mail event");
                 MetadataGlobal.BackupProcedure(dDoc);
-                NewMail(dDoc);
+                NewMailLight(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleAdded))
             {
@@ -167,7 +167,7 @@ public class MetadataXMLReader {
             {
                 System.out.println("Event type: New forum post event");
                 MetadataGlobal.BackupProcedure(dDoc);
-                NewForumPostData(dDoc);
+                NewForumPostDataLight(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew))   //if event type is new competence event
             {
@@ -532,7 +532,7 @@ public class MetadataXMLReader {
     /**
      * @summary Method for reading new commit event from XML
      * @startRealisation Sasa Stojanovic 16.01.2012.
-     * @finalModification Sasa Stojanovic 16.01.2012.
+     * @finalModification Sasa Stojanovic 22.10.2012.
      * @param dDoc - input XML document to read
      * @return - returns Commit object
      */
@@ -584,7 +584,9 @@ public class MetadataXMLReader {
                         Element eFile = (Element)nlFile.item(i);
                         oCommit.m_oHasFile[i] = new File();
                         
-                        oCommit.m_oHasFile[i].m_sID = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Id);
+                        //oCommit.m_oHasFile[i].m_sID = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_file + MetadataConstants.c_XMLE_Id);
+                        oCommit.m_oHasFile[i].m_sID = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileName);
+                        String sFileId = oCommit.m_oHasFile[i].m_sID;
                         
                         String sFileAction = GetValue(eFile, "s:" + MetadataConstants.c_XMLE_fileAction);
                         if (sFileAction.equalsIgnoreCase("Add"))
@@ -612,7 +614,10 @@ public class MetadataXMLReader {
                                 Element eModule = (Element)nlModule.item(j);
                                 oCommit.m_oHasFile[i].m_oHasModule[j] = new Module();
 
-                                oCommit.m_oHasFile[i].m_oHasModule[j].m_sID = GetValue(eModule, "s:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id);
+                                //oCommit.m_oHasFile[i].m_oHasModule[j].m_sID = GetValue(eModule, "s:" + MetadataConstants.c_XMLE_module + MetadataConstants.c_XMLE_Id);
+                                oCommit.m_oHasFile[i].m_oHasModule[j].m_sID = sFileId + "*" + GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleName);
+                                String sModuleId = oCommit.m_oHasFile[i].m_oHasModule[j].m_sID;
+                                
                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_sName = GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleName);
                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_iStartLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleStartLine));
                                 oCommit.m_oHasFile[i].m_oHasModule[j].m_iEndLine = Integer.parseInt(GetValue(eModule, "s:" + MetadataConstants.c_XMLE_moduleEndLine));
@@ -626,7 +631,9 @@ public class MetadataXMLReader {
                                         Element eMethod = (Element)nlMethod.item(k);
                                         oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k] = new Method();
 
-                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID = GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id);
+                                        //oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID = GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_method + MetadataConstants.c_XMLE_Id);
+                                        oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sID = sModuleId + "*" + GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodName);
+                                        
                                         oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_sName = GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodName);
                                         oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iStartLine = Integer.parseInt(GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodStartLine));
                                         oCommit.m_oHasFile[i].m_oHasModule[j].m_oHasMethod[k].m_iEndLine = Integer.parseInt(GetValue(eMethod, "s:" + MetadataConstants.c_XMLE_methodEndLine));
@@ -722,6 +729,64 @@ public class MetadataXMLReader {
                 
                 oMail.m_sContent = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_content);
                 
+            }
+            
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r1:" + MetadataConstants.c_XMLE_mlsensor);
+            MetadataModel.SaveObjectNewMail(sEventId, eOriginalData, oMail);
+            
+            return oMail;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading new mail event from XML (only data that is used by other components)
+     * @startRealisation Sasa Stojanovic 19.10.2012.
+     * @finalModification Sasa Stojanovic 19.02.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns Mail object
+     */
+    public static Mail NewMailLight(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+
+            Mail oMail = MetadataObjectFactory.CreateNewMail();
+
+            NodeList nlMail = dDoc.getElementsByTagName("r1:" + MetadataConstants.c_XMLE_message);   //getting node for tag message
+
+            if (nlMail != null && nlMail.getLength() > 0)
+            {
+                Element eMail = (Element) nlMail.item(0);
+                eOriginalData = eMail;
+                
+                oMail.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_message + MetadataConstants.c_XMLE_Id);
+
+                oMail.m_oFrom = new foaf_Person();
+                oMail.m_oFrom.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_from);
+                oMail.m_oFrom.m_sEmail = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_from);
+                                
+                oMail.m_sSubject = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_subject);
+                
+                oMail.m_oInReplyTo = new Mail();
+                oMail.m_oInReplyTo.m_sID = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_inReplyTo);
+                
+                String sReferences = GetValue(eMail, "r1:" + MetadataConstants.c_XMLE_references);
+                int iReferencesCount = sReferences.replaceAll("[^>]", "").length(); //get number of references
+                oMail.m_oReferences = new Mail[iReferencesCount];
+                for (int i = 0; i < iReferencesCount; i++)
+                {
+                    oMail.m_oReferences[i] = new Mail();
+                    oMail.m_oReferences[i].m_sID = sReferences.substring(0, sReferences.indexOf(">") + 1);
+                    sReferences = sReferences.substring(sReferences.indexOf(">") + 1);
+                }
+               
             }
             
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r1:" + MetadataConstants.c_XMLE_mlsensor);
@@ -2623,6 +2688,63 @@ public class MetadataXMLReader {
                 
                 //category
                 oForumPost.m_sCategory = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_category);
+            }
+
+            eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r:" + MetadataConstants.c_XMLE_forumSensor);
+            MetadataModel.SaveObjectNewForumPost(sEventId, eOriginalData, oForumPost);
+            
+            return oForumPost;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * @summary Method for reading new forum post event from XML (only data that is used by other components)
+     * @startRealisation  Dejan Milosavljevic 19.10.2012.
+     * @finalModification Sasa Stojanovic 19.10.2012.
+     * @param dDoc - input XML document to read
+     * @return - returns ForumPost object
+     */
+    public static ForumPost NewForumPostDataLight(Document dDoc)
+    {
+        try
+        {
+            String sEventId = GetEventId(dDoc);
+            Element eOriginalData = null;  //element for original data
+            
+            ForumPost oForumPost = MetadataObjectFactory.CreateNewForumPost();
+
+            NodeList nlForum = dDoc.getElementsByTagName("r:" + MetadataConstants.c_XMLE_forumSensor);   //getting node for tag forum
+
+            if (nlForum != null && nlForum.getLength() > 0)
+            {
+                Element eForum = (Element) nlForum.item(0);
+                eOriginalData = eForum;
+                
+                //forumItemID
+                oForumPost.m_sForumItemID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumItemId);
+                
+                //forumID
+                oForumPost.m_oInForumThread = new ForumThread();
+                oForumPost.m_oInForumThread.m_oInForum = new Forum();
+                oForumPost.m_oInForumThread.m_oInForum.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumId);
+
+                //threadID
+                oForumPost.m_oInForumThread.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_forumThreadId);
+
+                //postID
+                oForumPost.m_sID = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_postId);
+
+                //subject
+                oForumPost.m_sSubject = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_subject);
+
+                //author
+                oForumPost.m_oAuthor = new foaf_Person();
+                oForumPost.m_oAuthor.m_sUsername = GetValue(eForum, "r:" + MetadataConstants.c_XMLE_author);
             }
 
             eOriginalData = ChangeElementTagName(dDoc, eOriginalData, "r:" + MetadataConstants.c_XMLE_forumSensor);
