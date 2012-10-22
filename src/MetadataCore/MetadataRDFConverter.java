@@ -1006,14 +1006,14 @@ public class MetadataRDFConverter {
             oMail.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
             
             //messageId
-            if (!oMail.m_sMessageId.isEmpty())
+            if (oMail.m_sMessageId != null && !oMail.m_sMessageId.isEmpty())
             {
                 DatatypeProperty dtpMessageId = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_MessageId);
                 resMail.addProperty(dtpMessageId, oMail.m_sMessageId);
             }
             
             //from
-            if (oMail.m_oFrom != null && !oMail.m_oFrom.m_sID.isEmpty())
+            if (oMail.m_oFrom != null && oMail.m_oFrom.m_sID != null && !oMail.m_oFrom.m_sID.isEmpty())
             {
                 SavePersonData(oMail.m_oFrom, oModel);
                 ObjectProperty opFrom = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_From);
@@ -1030,14 +1030,14 @@ public class MetadataRDFConverter {
             }
             
             //subject
-            if (!oMail.m_sSubject.isEmpty())
+            if (oMail.m_sSubject != null && !oMail.m_sSubject.isEmpty())
             {
                 DatatypeProperty dtpSubject = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
                 resMail.addProperty(dtpSubject, oMail.m_sSubject);
             }
             
             //in reply to
-            if (oMail.m_oInReplyTo != null && !oMail.m_oInReplyTo.m_sID.isEmpty())
+            if (oMail.m_oInReplyTo != null && oMail.m_oInReplyTo.m_sID != null && !oMail.m_oInReplyTo.m_sID.isEmpty())
             {
                 oMail.m_oInReplyTo.m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_oInReplyTo.m_sID);
                 ObjectProperty opInReplyTo = oModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_InReplyTo);
@@ -1052,7 +1052,7 @@ public class MetadataRDFConverter {
                 ObjectProperty opReferences = oModel.getObjectProperty(MetadataConstants.c_NS_purl + MetadataConstants.c_OWLObjectProperty_References);
                 for (int i = 0; i < oMail.m_oReferences.length; i++)
                 {
-                    if (oMail.m_oReferences[i] != null && !oMail.m_oReferences[i].m_sID.isEmpty())
+                    if (oMail.m_oReferences[i] != null && oMail.m_oReferences[i].m_sID != null && !oMail.m_oReferences[i].m_sID.isEmpty())
                     {
                         oMail.m_oReferences[i].m_sObjectURI = MetadataGlobal.GetObjectURI(oModel, MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email, oMail.m_oReferences[i].m_sID);
                         Resource resReferences = oModel.getResource(oMail.m_oReferences[i].m_sObjectURI);
@@ -1076,7 +1076,7 @@ public class MetadataRDFConverter {
             }
             
             //content
-            if (!oMail.m_sContent.isEmpty())
+            if (oMail.m_sContent != null && !oMail.m_sContent.isEmpty())
             {
                 DatatypeProperty dtpBody = oModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
                 resMail.addProperty(dtpBody, oMail.m_sContent);
@@ -1641,7 +1641,7 @@ public class MetadataRDFConverter {
             oForumPost.m_sReturnConfig = "YY#o:" + MetadataConstants.c_XMLE_mdservice + "/o:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
             
             //ForumItemID
-            if (!oForumPost.m_sForumItemID.isEmpty())
+            if (oForumPost.m_sForumItemID != null && !oForumPost.m_sForumItemID.isEmpty())
             {
                 DatatypeProperty dtpForumItemID = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_ForumItemID);
                 resPost.removeAll(dtpForumItemID);
@@ -1657,7 +1657,7 @@ public class MetadataRDFConverter {
             }
             
             //Subject
-            if (!oForumPost.m_sSubject.isEmpty())
+            if (oForumPost.m_sSubject != null && !oForumPost.m_sSubject.isEmpty())
             {
                 DatatypeProperty dtpSubject = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject);
                 resPost.removeAll(dtpSubject);
@@ -1665,7 +1665,7 @@ public class MetadataRDFConverter {
             }
 
             //Body
-            if (!oForumPost.m_sBody.isEmpty())
+            if (oForumPost.m_sBody != null && !oForumPost.m_sBody.isEmpty())
             {
                 DatatypeProperty dtpBody = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Body);
                 resPost.removeAll(dtpBody);
@@ -1673,7 +1673,7 @@ public class MetadataRDFConverter {
             }
             
             //isAuthorOf
-            if (oForumPost.m_oAuthor != null && !oForumPost.m_oAuthor.m_sUsername.isEmpty())
+            if (oForumPost.m_oAuthor != null && oForumPost.m_oAuthor.m_sUsername != null && !oForumPost.m_oAuthor.m_sUsername.isEmpty())
             {
                 SavePersonData(oForumPost.m_oAuthor, omModel);
                 ObjectProperty opHasAuthor = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_Author);
@@ -1684,7 +1684,7 @@ public class MetadataRDFConverter {
             }
             
             //Category
-            if (!oForumPost.m_sCategory.isEmpty())
+            if (oForumPost.m_sCategory != null && !oForumPost.m_sCategory.isEmpty())
             {
                 DatatypeProperty dtpCategory = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Category);
                 resPost.removeAll(dtpCategory);
@@ -1710,7 +1710,7 @@ public class MetadataRDFConverter {
                     resForum.addProperty(opHasThreads, resThread.asResource());
                     
                     //forum name
-                    if (!oForumPost.m_oInForumThread.m_oInForum.m_sName.isEmpty())
+                    if (oForumPost.m_oInForumThread.m_oInForum.m_sName != null && !oForumPost.m_oInForumThread.m_oInForum.m_sName.isEmpty())
                     {
                         DatatypeProperty dtpForumName = omModel.getDatatypeProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Name);
                         resForum.removeAll(dtpForumName);
