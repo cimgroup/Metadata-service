@@ -1406,9 +1406,9 @@ public class MetadataRDFConverter {
                     //References
                     if (oAnnotation.oReferences != null)
                     {
-                        for (int i = 0; i < oAnnotation.oReferences.length; i++)
+                        for (int i = 0; i < oAnnotation.oReferences.size(); i++)
                         {
-                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences[i]);
+                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences.get(i));
                             if (resReferencedObject != null)
                             {
                                 ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);
@@ -1445,9 +1445,9 @@ public class MetadataRDFConverter {
                     //References
                     if (oAnnotation.oReferences != null)
                     {
-                        for (int i = 0; i < oAnnotation.oReferences.length; i++)
+                        for (int i = 0; i < oAnnotation.oReferences.size(); i++)
                         {
-                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences[i]);
+                            Resource resReferencedObject = omModel.getResource(oAnnotation.oReferences.get(i));
                             if (resReferencedObject != null)
                             {
                                 ObjectProperty opHasReferenceTo = omModel.getObjectProperty(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo);

@@ -1029,6 +1029,30 @@ public class MetadataGlobal {
         }
     }
     
+    /**
+     * @summary check if concept is related with code
+     * @startRealisation  Sasa Stojanovic 22.10.2012.
+     * @finalModification Sasa Stojanovic 22.10.2012.
+     * @param sConceptUri - URI of concept
+     * @return true if concept is related with code
+     */
+    public static boolean CheckConcept(String sConceptUri)
+    {
+        boolean bCodeRelated = false;
+        try
+        {
+            if (sConceptUri.startsWith(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit) ||
+                sConceptUri.startsWith(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_File) ||
+                sConceptUri.startsWith(MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Module) ||
+                sConceptUri.startsWith(MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Method))
+                bCodeRelated = true;
+        }
+        catch (Exception e)
+        {
+        }
+        return bCodeRelated;
+    }
+    
      // </editor-fold>
     
     // <editor-fold desc="Classes">
@@ -1070,7 +1094,7 @@ public class MetadataGlobal {
         //ConceptProp[] oConcepts; //Dejan Milosavljevic 17.04.2012.
         String[] oKeywords;
         //String sHasObjectUri;  //Dejan Milosavljevic 17.04.2012.
-        String[] oReferences;    //Dejan Milosavljevic 18.04.2012.
+        ArrayList <String> oReferences = new ArrayList();    //Dejan Milosavljevic 18.04.2012.
         Integer iItemId;
         Integer iThreadId;
         

@@ -1887,6 +1887,10 @@ public class MetadataXMLReader {
                             oAnnotation.oAnnotated[0].oConcepts[i].sName = MetadataConstants.c_XMLE_issueDescriptionConcepts;
                             oAnnotation.oAnnotated[0].oConcepts[i].sUri = GetValue(eDescConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
                             oAnnotation.oAnnotated[0].oConcepts[i].sWeight = GetValue(eDescConcept, "s1:" + MetadataConstants.c_XMLE_weight);//nlCCount.item(0).getNodeValue();
+                            
+                            //if concept is related with code add direct connection
+                            if (MetadataGlobal.CheckConcept(oAnnotation.oAnnotated[0].oConcepts[i].sUri))
+                                oAnnotation.oReferences.add(oAnnotation.oAnnotated[0].oConcepts[i].sUri);
                         }
                     }
                     
@@ -1919,6 +1923,10 @@ public class MetadataXMLReader {
                                     oAnnotation.oAnnotated[i + iDescriptionLength].oConcepts[j].sName = MetadataConstants.c_XMLE_commentTextConcepts;
                                     oAnnotation.oAnnotated[i + iDescriptionLength].oConcepts[j].sUri = GetValue(eCommConcept, "s1:" + MetadataConstants.c_XMLE_uri);//nlCID.item(0).getNodeValue();
                                     oAnnotation.oAnnotated[i + iDescriptionLength].oConcepts[j].sWeight = GetValue(eCommConcept, "s1:" + MetadataConstants.c_XMLE_weight);//nlCCount.item(0).getNodeValue();
+                                    
+                                    //if concept is related with code add direct connection
+                                    if (MetadataGlobal.CheckConcept(oAnnotation.oAnnotated[i + iDescriptionLength].oConcepts[j].sUri))
+                                        oAnnotation.oReferences.add(oAnnotation.oAnnotated[i + iDescriptionLength].oConcepts[j].sUri);
                                 }
                             }
                         }
@@ -1930,11 +1938,11 @@ public class MetadataXMLReader {
                 if (nlReferences != null)
                 {
                     int iLength = nlReferences.getLength();
-                    oAnnotation.oReferences = new String[iLength];
+                    //oAnnotation.oReferences = new String[iLength];
                     for (int i = 0; i < iLength; i++)
                     {
                         Element eReferenceUri = (Element)nlReferences.item(i);
-                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                        oAnnotation.oReferences.add(eReferenceUri.getFirstChild().getNodeValue());
                         //oAnnotation.oReferences[i] = GetValue(eReferenceUri, "s1:" + MetadataConstants.c_XMLE_referenceUri);
                     }
                 }
@@ -2220,11 +2228,10 @@ public class MetadataXMLReader {
                 if (nlReferences != null)
                 {
                     int iLength = nlReferences.getLength();
-                    oAnnotation.oReferences = new String[iLength];
                     for (int i = 0; i < iLength; i++)
                     {
                         Element eReferenceUri = (Element)nlReferences.item(i);
-                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                        oAnnotation.oReferences.add(eReferenceUri.getFirstChild().getNodeValue());
                     }
                 }
             }
@@ -2413,11 +2420,10 @@ public class MetadataXMLReader {
                 if (nlReferences != null)
                 {
                     int iLength = nlReferences.getLength();
-                    oAnnotation.oReferences = new String[iLength];
                     for (int i = 0; i < iLength; i++)
                     {
                         Element eReferenceUri = (Element)nlReferences.item(i);
-                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                        oAnnotation.oReferences.add(eReferenceUri.getFirstChild().getNodeValue());
                     }
                 }
             }
@@ -2607,11 +2613,10 @@ public class MetadataXMLReader {
                 if (nlReferences != null)
                 {
                     int iLength = nlReferences.getLength();
-                    oAnnotation.oReferences = new String[iLength];
                     for (int i = 0; i < iLength; i++)
                     {
                         Element eReferenceUri = (Element)nlReferences.item(i);
-                        oAnnotation.oReferences[i] = eReferenceUri.getFirstChild().getNodeValue();
+                        oAnnotation.oReferences.add(eReferenceUri.getFirstChild().getNodeValue());
                     }
                 }
             }
