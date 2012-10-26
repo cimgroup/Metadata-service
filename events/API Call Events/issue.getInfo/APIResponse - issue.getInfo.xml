@@ -210,22 +210,22 @@
                                         </s3:annotations>
                                         <s3:references>
                                             <s3:issue>
+                                                <s3:threadId>12</s3:threadId>
                                                 <s3:issueUri></s3:issueUri>
-                                                <s1:threadId>12</s1:threadId>
                                                 <s3:issueDescription></s3:issueDescription>
                                             </s3:issue>
                                             <s3:commit>
-                                                <s1:threadId>12</s1:threadId>
+                                                <s3:threadId>12</s3:threadId>
                                                 <s3:commitUri></s3:commitUri>
                                                 <s3:commitMessageLog></s3:commitMessageLog>
                                             </s3:commit>
                                             <s3:email>
-                                                <s1:threadId>12</s1:threadId>
+                                                <s3:threadId>12</s3:threadId>
                                                 <s3:emailUri></s3:emailUri>
                                                 <s3:subject></s3:subject>
                                             </s3:email>
                                             <s3:forumPost>
-                                                <s1:threadId>12</s1:threadId>
+                                                <s3:threadId>12</s3:threadId>
                                                 <s3:postUri></s3:postUri>
                                                 <s3:subject></s3:subject>
                                             </s3:forumPost>
