@@ -3117,6 +3117,47 @@ public class MetadataRDFConverter {
                 oReferences.oData.add(oRefPost);
             }
             
+            //  wikiPost
+            String sRefWikiQuery = "SELECT ?wikiPageUri ?wikiPageRawText ?itemId WHERE "
+                    + "{?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
+                    + " ?wikiPageUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_WikiPage + "> ."
+                    + " ?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId + "> ?itemId ."
+                    + " OPTIONAL {?wikiPageUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_RawText + "> ?wikiPageRawText}}";
+            ResultSet rsRefWiki = QueryExecutionFactory.create(sRefWikiQuery, oModel).execSelect();
+                           
+            while (rsRefWiki.hasNext())
+            {
+                MetadataGlobal.APIResponseData oRefWiki = new MetadataGlobal.APIResponseData();
+                oRefWiki.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_wikiPage + "/";
+
+                QuerySolution qsRefWiki = rsRefWiki.nextSolution();
+
+                String sRefWikiUri = qsRefWiki.get("?wikiPageUri").toString();
+                String sRefWikiRawText = "";
+                String sRefItemId = "";
+                if (qsRefWiki.get("?wikiPageRawText") != null)
+                    sRefWikiRawText = qsRefWiki.get("?wikiPageRawText").toString();
+                if (qsRefWiki.get("?itemId") != null)
+                    sRefItemId = qsRefWiki.get("?itemId").toString();
+                
+                MetadataGlobal.APIResponseData oRefWikiUri = new MetadataGlobal.APIResponseData();
+                oRefWikiUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_wikiPage + MetadataConstants.c_XMLE_Uri;
+                oRefWikiUri.sData = sRefWikiUri;
+                oRefWiki.oData.add(oRefWikiUri);
+                
+                MetadataGlobal.APIResponseData oRefWikiTextRaw = new MetadataGlobal.APIResponseData();
+                oRefWikiTextRaw.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_rawText;
+                oRefWikiTextRaw.sData = sRefWikiRawText;
+                oRefWiki.oData.add(oRefWikiTextRaw);
+                
+                MetadataGlobal.APIResponseData oRefItemId = new MetadataGlobal.APIResponseData();
+                oRefItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                oRefItemId.sData = sRefItemId;
+                oRefWiki.oData.add(oRefItemId);
+                
+                oReferences.oData.add(oRefWiki);
+            }
+            
             //oIssueData.oData.add(oAnnotations);
             if (oAnnotations.sReturnConfig != null)
                 oData.oData.add(oAnnotations);

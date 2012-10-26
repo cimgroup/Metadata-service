@@ -210,25 +210,30 @@
                                         </s3:annotations>
                                         <s3:references>
                                             <s3:issue>
-                                                <s3:threadId>12</s3:threadId>
+                                                <s3:threadId></s3:threadId>
                                                 <s3:issueUri></s3:issueUri>
                                                 <s3:issueDescription></s3:issueDescription>
                                             </s3:issue>
                                             <s3:commit>
-                                                <s3:threadId>12</s3:threadId>
+                                                <s3:itemId></s3:itemId>
                                                 <s3:commitUri></s3:commitUri>
                                                 <s3:commitMessageLog></s3:commitMessageLog>
                                             </s3:commit>
                                             <s3:email>
-                                                <s3:threadId>12</s3:threadId>
+                                                <s3:itemId></s3:itemId>
                                                 <s3:emailUri></s3:emailUri>
                                                 <s3:subject></s3:subject>
                                             </s3:email>
                                             <s3:forumPost>
-                                                <s3:threadId>12</s3:threadId>
+                                                <s3:itemId></s3:itemId>
                                                 <s3:postUri></s3:postUri>
                                                 <s3:subject></s3:subject>
                                             </s3:forumPost>
+                                            <s3:wikiPage>
+                                                <s3:itemId></s3:itemId>
+                                                <s3:wikiPageUri></s3:wikiPageUri>
+                                                <s3:rawText></s3:rawText>
+                                            </s3:wikiPage>
                                         </s3:references>
                                     </s3:responseData>
                                 </ns1:apiResponse>
