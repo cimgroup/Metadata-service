@@ -2954,14 +2954,11 @@ public class MetadataRDFConverter {
             
             //References
             //  issue
-            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription WHERE "
+            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription ?threadId WHERE "
                     + "{?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
                     + " ?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> ."
+                    + " ?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiThreadId + "> ?threadId ."
                     + " OPTIONAL {?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription}}";
-//            String sRefIssueQuery = "SELECT ?issueUri ?issueDescription WHERE "
-//                    + "{?issueUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
-//                    + " ?issueUri a <" + MetadataConstants.c_NS_Alert_Its + MetadataConstants.c_OWLClass_Bug + "> ."
-//                    + " ?issueUri <" + MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLDataProperty_Description + "> ?issueDescription}";
             ResultSet rsRefIssue = QueryExecutionFactory.create(sRefIssueQuery, oModel).execSelect();
                            
             while (rsRefIssue.hasNext())
@@ -2973,8 +2970,11 @@ public class MetadataRDFConverter {
 
                 String sRefIssueUri = qsRefIssue.get("?issueUri").toString();
                 String sRefIssueDescription = "";
+                String sRefThreadId = "";
                 if (qsRefIssue.get("?issueDescription") != null)
                     sRefIssueDescription = qsRefIssue.get("?issueDescription").toString();
+                if (qsRefIssue.get("?threadId") != null)
+                    sRefThreadId = qsRefIssue.get("?threadId").toString();
                 
                 MetadataGlobal.APIResponseData oRefIssueUri = new MetadataGlobal.APIResponseData();
                 oRefIssueUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_issue + MetadataConstants.c_XMLE_Uri;
@@ -2986,13 +2986,19 @@ public class MetadataRDFConverter {
                 oRefIssueDesc.sData = sRefIssueDescription;
                 oRefIssue.oData.add(oRefIssueDesc);
                 
+                MetadataGlobal.APIResponseData oRefThreadId = new MetadataGlobal.APIResponseData();
+                oRefThreadId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_threadId;
+                oRefThreadId.sData = sRefThreadId;
+                oRefIssue.oData.add(oRefThreadId);
+                
                 oReferences.oData.add(oRefIssue);
             }
   
             //  commit
-            String sRefCommitQuery = "SELECT ?commitUri ?commitMessageLog WHERE "
+            String sRefCommitQuery = "SELECT ?commitUri ?commitMessageLog ?itemId WHERE "
                     + "{?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
                     + " ?commitUri a <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLClass_Commit + "> ."
+                    + " ?commitUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId + "> ?itemId ."
                     + " OPTIONAL {?commitUri <" + MetadataConstants.c_NS_Alert_Scm + MetadataConstants.c_OWLDataProperty_CommitMessage + "> ?commitMessageLog}}";
             ResultSet rsRefCommit = QueryExecutionFactory.create(sRefCommitQuery, oModel).execSelect();
                            
@@ -3005,8 +3011,11 @@ public class MetadataRDFConverter {
 
                 String sRefCommitUri = qsRefCommit.get("?commitUri").toString();
                 String sRefCommitMessageLog = "";
+                String sRefItemId = "";
                 if (qsRefCommit.get("?commitMessageLog") != null)
                     sRefCommitMessageLog = qsRefCommit.get("?commitMessageLog").toString();
+                if (qsRefCommit.get("?itemId") != null)
+                    sRefItemId = qsRefCommit.get("?itemId").toString();
                 
                 MetadataGlobal.APIResponseData oRefCommitUri = new MetadataGlobal.APIResponseData();
                 oRefCommitUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_commit + MetadataConstants.c_XMLE_Uri;
@@ -3018,13 +3027,19 @@ public class MetadataRDFConverter {
                 oRefCommitMLog.sData = sRefCommitMessageLog;
                 oRefCommit.oData.add(oRefCommitMLog);
                 
+                MetadataGlobal.APIResponseData oRefItemId = new MetadataGlobal.APIResponseData();
+                oRefItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                oRefItemId.sData = sRefItemId;
+                oRefCommit.oData.add(oRefItemId);
+                
                 oReferences.oData.add(oRefCommit);
             }
             
             //  email
-            String sRefEmailQuery = "SELECT ?emailUri ?emailSubject WHERE "
+            String sRefEmailQuery = "SELECT ?emailUri ?emailSubject ?itemId WHERE "
                     + "{?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
                     + " ?emailUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_Email + "> ."
+                    + " ?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId + "> ?itemId ."
                     + " OPTIONAL {?emailUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?emailSubject}}";
             ResultSet rsRefEmail = QueryExecutionFactory.create(sRefEmailQuery, oModel).execSelect();
                            
@@ -3037,8 +3052,11 @@ public class MetadataRDFConverter {
 
                 String sRefEmailUri = qsRefEmail.get("?emailUri").toString();
                 String sRefEmailSubject = "";
+                String sRefItemId = "";
                 if (qsRefEmail.get("?emailSubject") != null)
                     sRefEmailSubject = qsRefEmail.get("?emailSubject").toString();
+                if (qsRefEmail.get("?itemId") != null)
+                    sRefItemId = qsRefEmail.get("?itemId").toString();
                 
                 MetadataGlobal.APIResponseData oRefEmailUri = new MetadataGlobal.APIResponseData();
                 oRefEmailUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_email + MetadataConstants.c_XMLE_Uri;
@@ -3050,13 +3068,19 @@ public class MetadataRDFConverter {
                 oRefEmailSubject.sData = sRefEmailSubject;
                 oRefEmail.oData.add(oRefEmailSubject);
                 
+                MetadataGlobal.APIResponseData oRefItemId = new MetadataGlobal.APIResponseData();
+                oRefItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                oRefItemId.sData = sRefItemId;
+                oRefEmail.oData.add(oRefItemId);
+                
                 oReferences.oData.add(oRefEmail);
             }
             
-            //  forimPost
-            String sRefPostQuery = "SELECT ?forumPostUri ?forumPostSubject WHERE "
+            //  forumPost
+            String sRefPostQuery = "SELECT ?forumPostUri ?forumPostSubject ?itemId WHERE "
                     + "{?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLObjectProperty_HasReferenceTo + "> <" + sIssueUri + "> ."
                     + " ?forumPostUri a <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLClass_post + "> ."
+                    + " ?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_KeuiItemId + "> ?itemId ."
                     + " OPTIONAL {?forumPostUri <" + MetadataConstants.c_NS_Alert + MetadataConstants.c_OWLDataProperty_Subject + "> ?forumPostSubject}}";
             ResultSet rsRefPost = QueryExecutionFactory.create(sRefPostQuery, oModel).execSelect();
                            
@@ -3069,8 +3093,11 @@ public class MetadataRDFConverter {
 
                 String sRefPostUri = qsRefpost.get("?forumPostUri").toString();
                 String sRefPostSubject = "";
+                String sRefItemId = "";
                 if (qsRefpost.get("?forumPostSubject") != null)
                     sRefPostSubject = qsRefpost.get("?forumPostSubject").toString();
+                if (qsRefpost.get("?itemId") != null)
+                    sRefItemId = qsRefpost.get("?itemId").toString();
                 
                 MetadataGlobal.APIResponseData oRefPostUri = new MetadataGlobal.APIResponseData();
                 oRefPostUri.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_post + MetadataConstants.c_XMLE_Uri;
@@ -3081,6 +3108,11 @@ public class MetadataRDFConverter {
                 oRefPostSubject.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_subject;
                 oRefPostSubject.sData = sRefPostSubject;
                 oRefPost.oData.add(oRefPostSubject);
+                
+                MetadataGlobal.APIResponseData oRefItemId = new MetadataGlobal.APIResponseData();
+                oRefItemId.sReturnConfig = "s3:" + MetadataConstants.c_XMLE_itemId;
+                oRefItemId.sData = sRefItemId;
+                oRefPost.oData.add(oRefItemId);
                 
                 oReferences.oData.add(oRefPost);
             }
