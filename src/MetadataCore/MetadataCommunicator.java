@@ -15,6 +15,7 @@ import javax.xml.transform.stream.*;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.UUID;
+import javax.naming.spi.DirectoryManager;
 import org.apache.xerces.dom.DocumentImpl;
 
 /**
@@ -110,7 +111,7 @@ public class MetadataCommunicator {
             }
             
             //For testing purposes only
-            if (!MetadataConstants.sLogFilesLocation.isEmpty())
+            if (!MetadataConstants.sLogFilesLocation.isEmpty() || MetadataConstants.bStoreOutputEventsInSeparateFolders)
             {
                 //Create transformer
                 //Transformer tTransformer = TransformerFactory.newInstance().newTransformer();
@@ -128,9 +129,26 @@ public class MetadataCommunicator {
                 //Write the document to a file
                 Source srcDocument = new DOMSource(dDoc);
                 java.util.Date dtmNow = new java.util.Date();
-                String sFileName = MetadataConstants.sLogFilesLocation + (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_" + UUID.randomUUID().toString() + "_Response.xml";
-                Result rsLocation = new StreamResult(new File(sFileName));
-                tTransformer.transform(srcDocument, rsLocation);
+                String sFileName = (new Timestamp(dtmNow.getTime())).toString().replace(" ","_").replace("-","_").replace(":","_").replace(".","_") + "_" + UUID.randomUUID().toString() + "_Response.xml";
+                if (!MetadataConstants.sLogFilesLocation.isEmpty())
+                {
+                    if(!MetadataConstants.bStoreOutputEventsInSeparateFolders)
+                    {
+                        String sLocation = MetadataConstants.sLogFilesLocation + sFileName;
+                        Result rsLocation = new StreamResult(new File(sLocation));
+                        tTransformer.transform(srcDocument, rsLocation);
+                    }
+                    else
+                    {
+                        if (!new File(MetadataConstants.sLogFilesLocation + MetadataConstants.sOutputFolderName + "/").exists())
+                        {
+                            new File(MetadataConstants.sLogFilesLocation + MetadataConstants.sOutputFolderName + "/").mkdirs();
+                        }
+                        String sLocation = MetadataConstants.sLogFilesLocation + MetadataConstants.sOutputFolderName + "/" + sFileName;
+                        Result rsLocation = new StreamResult(new File(sLocation));
+                        tTransformer.transform(srcDocument, rsLocation);
+                    }
+                }
             }
         }
         catch (Exception e)

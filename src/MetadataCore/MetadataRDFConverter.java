@@ -176,7 +176,7 @@ public class MetadataRDFConverter {
                 }
 
                 //HasReporter
-                if (oIssue.m_oHasReporter != null && !oIssue.m_oHasReporter.m_sID.isEmpty())
+                if (oIssue.m_oHasReporter != null && (!oIssue.m_oHasReporter.m_sID.isEmpty() || !oIssue.m_oHasReporter.m_sEmail.isEmpty()))
                 {
                     SavePersonData(oIssue.m_oHasReporter, oModel);
                     ObjectProperty opHasReporter = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasReporter);
@@ -419,7 +419,7 @@ public class MetadataRDFConverter {
                 //end has severity
 
                 //HasAssignee
-                if (oIssue.m_oHasAssignee != null && !oIssue.m_oHasAssignee.m_sID.isEmpty())
+                if (oIssue.m_oHasAssignee != null && (!oIssue.m_oHasAssignee.m_sID.isEmpty() || !oIssue.m_oHasAssignee.m_sEmail.isEmpty()))
                 {
                     SavePersonData(oIssue.m_oHasAssignee, oModel);
                     ObjectProperty opHasAssignee = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasAssignee);
@@ -435,7 +435,7 @@ public class MetadataRDFConverter {
                     ObjectProperty opHasCCPerson = oModel.getObjectProperty(MetadataConstants.c_NS_Ifi + MetadataConstants.c_OWLObjectProperty_HasCCPerson);
                     for (int i = 0; i < oIssue.m_oHasCCPerson.length; i++)
                     {
-                        if (oIssue.m_oHasCCPerson[i] != null && !oIssue.m_oHasCCPerson[i].m_sID.isEmpty())
+                        if (oIssue.m_oHasCCPerson[i] != null && (!oIssue.m_oHasCCPerson[i].m_sID.isEmpty() || !oIssue.m_oHasCCPerson[i].m_sEmail.isEmpty()))
                         {
                             if (!oIssue.m_oHasCCPerson[i].m_bRemoved)
                             {
@@ -1287,7 +1287,7 @@ public class MetadataRDFConverter {
     /**
      * @summary Save person data
      * @startRealisation Sasa Stojanovic 02.09.2011.
-     * @finalModification Sasa Stojanovic 06.09.2011.
+     * @finalModification Sasa Stojanovic 19.12.2012.
      * @param oPerson - foaf_person object
      * @return - same foaf_person object with filled m_sObjectURI
      */
@@ -1307,6 +1307,15 @@ public class MetadataRDFConverter {
             }
             
             Resource resPerson = oModel.getResource(oPerson.m_sObjectURI);
+            
+            //if there is no ID provided, id will take a value of email or username
+            if (bSaveId && (oPerson.m_sID == null || oPerson.m_sID.isEmpty()))
+            {
+                if (oPerson.m_sEmail != null && !oPerson.m_sEmail.isEmpty())
+                    oPerson.m_sID = oPerson.m_sEmail;
+                else if (oPerson.m_sUsername != null && !oPerson.m_sUsername.isEmpty())
+                    oPerson.m_sID = oPerson.m_sUsername;
+            }
             
             if (bSaveId && oPerson.m_sID != null && !oPerson.m_sID.isEmpty())
             {

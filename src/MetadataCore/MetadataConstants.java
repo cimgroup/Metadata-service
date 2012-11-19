@@ -688,6 +688,9 @@ public class MetadataConstants {
     public static boolean bSilentMode = false;
     public static boolean bOnlyOutputEventLog = false;
     public static boolean bBackupProcedure = false;
+    
+    public static boolean bStoreOutputEventsInSeparateFolders = true;
+    public static String sOutputFolderName = "Events";
 
     // </editor-fold>
     

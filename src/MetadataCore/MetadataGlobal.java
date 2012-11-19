@@ -741,6 +741,14 @@ public class MetadataGlobal {
             {
                 MetadataConstants.bOnlyOutputEventLog = false;
             }
+            if (MetadataXMLReader.GetValue(eMetadataConfig, "StoreOutputEventsInSeparateFolders").equalsIgnoreCase("true"))
+            {
+                MetadataConstants.bStoreOutputEventsInSeparateFolders = true;
+            }
+            else
+            {
+                MetadataConstants.bStoreOutputEventsInSeparateFolders = false;
+            }
             System.out.println("########################## METADATA SERVICE ##########################");
             System.out.println("Config file loaded from location: " + sLocation);
             System.out.println("######################################################################");

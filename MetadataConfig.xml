@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetadataConfig>
 	<ActiveMQAddress>tcp://127.0.0.1:61616</ActiveMQAddress>
-	<OntologyLocation>D:/MetadataGit/AlertOntologyImport/alert.owl</OntologyLocation>
+	<OntologyLocation>D:/MetadataGit/AlertOntology/alert.owl</OntologyLocation>
 	<BackupFilesLocation>D:/MetadataGit/MetadataBackup/</BackupFilesLocation>
-        <BackupAfertEvents>10000</BackupAfertEvents>
+        <BackupAfertEvents>100</BackupAfertEvents>
 	<LogFilesLocation>D:/MetadataGit/MetadataLog/</LogFilesLocation>
-        <OnlyOutputEventLog>false</OnlyOutputEventLog>
+        <OnlyOutputEventLog>true</OnlyOutputEventLog>
+        <StoreOutputEventsInSeparateFolders>true</StoreOutputEventsInSeparateFolders>
 </MetadataConfig>

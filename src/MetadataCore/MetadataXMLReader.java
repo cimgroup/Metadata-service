@@ -69,42 +69,49 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueNew))   //if event type is new issue event
             {
                 System.out.println("Event type: New issue event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KESI_IssueNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssue(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_IssueUpdate))   //if event type is update issue event
             {
                 System.out.println("Event type: Update issue event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KESI_IssueUpdate;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssue(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KESI_CommitNew))
             {
                 System.out.println("Event type: New commit event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KESI_CommitNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewCommit(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_MLSensor_MailNew))
             {
                 System.out.println("Event type: New mail event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_MLSensor_MailNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewMailLight(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleAdded))
             {
                 System.out.println("Event type: New wiki page event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_WikiSensor_ArticleAdded;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateWikiPage(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleModified))
             {
                 System.out.println("Event type: Update wiki page event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_WikiSensor_ArticleModified;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateWikiPage(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_WikiSensor_ArticleDeleted))
             {
                 System.out.println("Event type: Remove wiki page event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_WikiSensor_ArticleDeleted;
                 MetadataGlobal.BackupProcedure(dDoc);
                 RemoveWikiPage(dDoc);
             }
@@ -121,6 +128,7 @@ public class MetadataXMLReader {
                sEventName.equals(MetadataConstants.c_ET_ALERT_Search_APICallRequest))
             {
                 System.out.print("Event type: API Call event; ");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_UI_APICallRequest;
                 APICallRequest(dDoc);
             }
 //            if(sEventName.equals(MetadataConstants.c_ET_member_request))   //if event type is member request
@@ -130,78 +138,91 @@ public class MetadataXMLReader {
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated)) //if event type is new issue annotation
             {
                 System.out.println("Event type: New issue annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_IssueNew_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssueAnnotation(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated)) //if event type is new comment annotation
             {
                 System.out.println("Event type: Update issue annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_IssueUpdate_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateIssueAnnotation(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated)) //if event type is new commit annotation
             {
                 System.out.println("Event type: New commit annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_CommitNew_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewCommitAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated)) //if event type is new forum post annotation
             {
                 System.out.println("Event type: New forum post annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_ForumPostNew_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewForumPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated)) //if event type is new wiki post annotation
             {
                 System.out.println("Event type: New wiki post annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_WikiPostNew_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 //NewWikiPostAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated)) //if event type is new mail annotation
             {
                 System.out.println("Event type: New mail annotation event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_KEUI_MailNew_Annotated;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewMailAnnotation(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew)) //if event type is new forum post
             {
                 System.out.println("Event type: New forum post event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_ForumSensor_ForumPostNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewForumPostDataLight(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew))   //if event type is new competence event
             {
                 System.out.println("Event type: New competency event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_STARDOM_CompetencyNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateCompetence(dDoc, false);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_CompetencyUpdate))   //if event type is update competence event
             {
                 System.out.println("Event type: Update competency event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_STARDOM_CompetencyUpdate;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewUpdateCompetence(dDoc, true);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityNew))   //if event type is new identity event
             {
                 System.out.println("Event type: New identity event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_STARDOM_IdentityNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityUpdate))   //if event type is update identity event
             {
                 System.out.println("Event type: Update identity event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_STARDOM_IdentityUpdate;
                 MetadataGlobal.BackupProcedure(dDoc);
                 UpdateIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_STARDOM_IdentityRemove))   //if event type is remove identity event
             {
                 System.out.println("Event type: Remove identity event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_STARDOM_IdentityRemove;
                 MetadataGlobal.BackupProcedure(dDoc);
                 RemoveIdentity(dDoc);
             }
             if(sEventName.equals(MetadataConstants.c_ET_ALERT_OCELOt_ConceptNew))   //if event type is remove identity event
             {
                 System.out.println("Event type: New concept event");
+                MetadataConstants.sOutputFolderName = MetadataConstants.c_ET_ALERT_OCELOt_ConceptNew;
                 MetadataGlobal.BackupProcedure(dDoc);
                 NewConcept(dDoc);
             }
