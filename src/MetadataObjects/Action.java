@@ -12,12 +12,12 @@ import MetadataCore.MetadataObject;
  */
 public class Action extends MetadataObject {
     
-     // <editor-fold desc="Members">
+    // <editor-fold desc="Members">
     
     public Commit m_oIsActionOf;
     public String m_sOnBranch;
 
-     // </editor-fold>
+    // </editor-fold>
     
     // <editor-fold desc="Properties">
     
@@ -37,7 +37,7 @@ public class Action extends MetadataObject {
         m_sOnBranch = sOnBranch;
     }
     
-     // </editor-fold>
+    // </editor-fold>
     
     // <editor-fold desc="Methods">
     
@@ -51,5 +51,5 @@ public class Action extends MetadataObject {
         super();
     }
     
-     // </editor-fold>
+    // </editor-fold>
 }
